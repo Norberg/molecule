@@ -124,13 +124,13 @@ class Universe:
 	def create_elements(self, elements):
 		list_of_elements = list()
 		for element in elements:
-			list_of_elements.append(Atom(element))
+			list_of_elements.append(Element(element))
 		return tuple(list_of_elements)
 
 universe = Universe()
 
-class Atom(pygame.sprite.Sprite):
-	"""Atom - The universal buildning block"""
+class Element(pygame.sprite.Sprite):
+	"""Element - The universal building block of atoms and molecules"""
 	def __init__(self, symbol):
 		pygame.sprite.Sprite.__init__(self)
 		self.symbol = symbol
@@ -196,8 +196,8 @@ def main():
 	pygame.display.flip()
 
 	clock = pygame.time.Clock()
-	elements = universe.create_elements(["H", "O", "OH", "O", "H"])#, "CO2", "CH4"])
-	atoms = pygame.sprite.RenderPlain(elements)
+	e = universe.create_elements(["H", "O", "OH", "O", "H", "CO2", "CH4"])
+	elements = pygame.sprite.RenderPlain(e)
 	active = None
 	while 1:
 		clock.tick(60)
@@ -207,23 +207,23 @@ def main():
 			elif event.type == KEYDOWN and event.key == K_ESCAPE:
 				return
 			elif event.type == MOUSEBUTTONDOWN:
-				for atom in atoms.sprites():
-					if atom.clicked():
-						active = atom
+				for element in elements.sprites():
+					if element.clicked():
+						active = element
 						break
 			elif event.type is MOUSEBUTTONUP and active != None: 
 				active.unclicked()
 				active = None
+
 		if active != None:
-			for collition in pygame.sprite.spritecollide(active, atoms, False):
+			for collition in pygame.sprite.spritecollide(active, elements, False):
 				if collition != active:
 					if active.react(collition):
 						collition.kill()	
 					
-		atoms.update()
-
+		elements.update()
 		screen.blit(background, (0, 0))
-		atoms.draw(screen)
+		elements.draw(screen)
 		pygame.display.flip()
 
 
