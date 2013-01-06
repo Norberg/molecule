@@ -173,61 +173,77 @@ class Element(pygame.sprite.Sprite):
 			print "Created:", reaction, "from ", self.symbol,"+", other.symbol
 			return universe.create_elements(reaction, pos = self.rect.midtop)
 
-def main():
-	pygame.init()
-	screen = pygame.display.set_mode((640,480))
-	pygame.display.set_caption('Molecule - A molecule builing puzzle game')
+class Game:
+	def __init__(self):
+		pygame.init()
+		self.screen = pygame.display.set_mode((640,480))
+		pygame.display.set_caption('Molecule - A molecule builing puzzle game')
 
-	background = pygame.Surface(screen.get_size())
-	background = background.convert()
-	background.fill((250, 250, 250))
+		self.background = pygame.Surface(self.screen.get_size())
+		self.background = self.background.convert()
+		self.background.fill((250, 250, 250))
 
-	if pygame.font:
-		font = pygame.font.Font(None, 36)
-		text = font.render("Create a water molecule", 1, (10, 10, 10))
-		textpos = text.get_rect(centerx=background.get_width()/2)
-		background.blit(text, textpos)
+		if pygame.font:
+			font = pygame.font.Font(None, 36)
+			text = font.render("Create a water molecule", 1, (10, 10, 10))
+			textpos = text.get_rect(centerx=self.background.get_width()/2)
+			self.background.blit(text, textpos)
 
-	screen.blit(background, (0, 0))
-	pygame.display.flip()
-
-	clock = pygame.time.Clock()
-	e = universe.create_elements(["H", "O", "OH", "O", "H", "CO2", "CH4"])
-	elements = pygame.sprite.RenderUpdates(e)
-	active = None
-	while 1:
-		clock.tick(60)
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				return
-			elif event.type == KEYDOWN and event.key == K_ESCAPE:
-				return
-			elif event.type == MOUSEBUTTONDOWN:
-				for element in reversed(elements.sprites()):
-					if element.clicked():
-						active = element
-						break
-			elif event.type is MOUSEBUTTONUP and active != None: 
-				active.unclicked()
-				active = None
-
-		if active != None:
-			for collition in pygame.sprite.spritecollide(active, elements, False):
-				if collition != active:
-					new_elements = active.react(collition)
-					if new_elements != None:
-						collition.kill()
-						active.kill()
-						active = None
-						elements.add(new_elements)
-					break	
-		elements.update()
-		screen.blit(background, (0, 0))
-		#if active != None:
-		#	pygame.draw.rect(screen, pygame.color.Color("black"), active.rect)
-		elements.draw(screen)
+		self.screen.blit(self.background, (0, 0))
 		pygame.display.flip()
 
+		self.clock = pygame.time.Clock()
+
+	def game_loop(self):
+		self.run_level(1)	
+	
+	def run_level(self, level):
+		e = universe.create_elements(["H", "O", "OH", "O", "H", "CO2", "CH4"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		self.active = None
+		while 1:
+			if self.event_loop() == QUIT:
+				return QUIT
+
+	def event_loop(self):
+		self.clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == QUIT:
+				return QUIT
+			elif event.type == KEYDOWN and event.key == K_ESCAPE:
+				return QUIT
+			elif event.type == MOUSEBUTTONDOWN:
+				for element in reversed(self.elements.sprites()):
+					if element.clicked():
+						self.active = element
+						break
+			elif event.type is MOUSEBUTTONUP and self.active != None: 
+				self.active.unclicked()
+				self.active = None
+
+		if self.active != None:
+			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
+				if collition != self.active:
+					new_elements = self.active.react(collition)
+					if new_elements != None:
+						collition.kill()
+						self.active.kill()
+						self.active = None
+						self.elements.add(new_elements)
+					break	
+		self.elements.update()
+		self.screen.blit(self.background, (0, 0))
+		#if active != None:
+		#	pygame.draw.rect(screen, pygame.color.Color("black"), active.rect)
+		self.elements.draw(self.screen)
+		pygame.display.flip()
+			
+
+	
+
+def main():
+	game = Game()
+	game.game_loop()
 
 if __name__ == '__main__':
 	try:
