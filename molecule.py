@@ -69,31 +69,21 @@ class Universe:
 
 	def pos2cord_link(self, pos, direction):
 		x, y = self.pos2cord(pos)
-		if direction == "top":
-			return (x+1, y-3)
-		elif direction == "bottom":
+		if direction == "bottom":
 			return (x+1, y+2)
 		elif direction == "left":
 			return (x-2, y)
-		elif direction == "right":
-			return (x+3, y)
 				
 	def create_links(self, layout):
 		links = pygame.Surface((160,160), 0, self.create_atom('O', copy=False))
 		for pos in layout.keys():
 				x,y = pos
-				if layout.has_key((x, y-1)): #Top
-					link_pos = self.pos2cord_link(pos, "top")
-					links.blit(self.link_top, link_pos)
-				elif layout.has_key((x, y+1)): #Bottom
+				if layout.has_key((x, y+1)): #Bottom
 					link_pos = self.pos2cord_link(pos, "bottom")
 					links.blit(self.link_bottom, link_pos)
-				elif layout.has_key((x-1, y)): #Left
+				if layout.has_key((x-1, y)): #Left
 					link_pos = self.pos2cord_link(pos, "left")
 					links.blit(self.link_left, link_pos)
-				elif layout.has_key((x+1, y)): #Right
-					link_pos = self.pos2cord_link(pos, "right")
-					links.blit(self.link_right, link_pos)
 		return links
 
 	def create_molecule(self, symbol):
@@ -102,13 +92,13 @@ class Universe:
 
 		layout = self.molecule_table(symbol)
 		if layout != None:
-			molecule = pygame.Surface((160,160), 0, self.create_atom('O', copy=False))
+			links = self.create_links(layout)
+			molecule = pygame.Surface((160,160), 0, links)
+			molecule.blit(links, (0,0))
 			for pos in layout.keys():
 				symbol = layout[pos]
 				atom = self.create_atom(symbol, copy=False)
 				molecule.blit(atom, self.pos2cord(pos))
-			links = self.create_links(layout)
-			molecule.blit(links, (0,0))
 			return molecule
 
 	def is_atom(self, symbol):
