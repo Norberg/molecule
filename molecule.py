@@ -16,7 +16,7 @@ class Universe:
 			if b == 'H':
 				return "OH"
 			elif b == 'O':
-				return "OO"
+				return "O2"
 			elif b == 'H2':
 				return "H2O"
 		elif a == 'H':
@@ -37,6 +37,19 @@ class Universe:
 			layout[(1,1)] = 'H'	
 			layout[(2,1)] = 'O'
 			layout[(3,1)] = 'H'	
+		elif molecule == "O2":
+			layout[(1,1)] = 'O'	
+			layout[(2,1)] = 'O'	
+		elif molecule == "CO2":
+			layout[(1,1)] = 'O'	
+			layout[(2,1)] = 'C'
+			layout[(3,1)] = 'O'	
+		elif molecule == "CH4":
+			layout[(2,2)] = 'C'	
+			layout[(2,1)] = 'H'	
+			layout[(1,2)] = 'H'	
+			layout[(2,3)] = 'H'	
+			layout[(3,2)] = 'H'	
 		else:
 			print "No layout found for:", molecule
 			return None
@@ -83,8 +96,10 @@ class Universe:
 					links.blit(self.link_right, link_pos)
 		return links
 
-
 	def create_molecule(self, symbol):
+		if self.is_atom(symbol):
+			return self.create_atom(symbol)
+
 		layout = self.molecule_table(symbol)
 		if layout != None:
 			molecule = pygame.Surface((160,160), 0, self.create_atom('O', copy=False))
@@ -95,7 +110,23 @@ class Universe:
 			links = self.create_links(layout)
 			molecule.blit(links, (0,0))
 			return molecule
-			
+
+	def is_atom(self, symbol):
+		if len(symbol) == 1: # H, O, F etc.
+			return True
+		elif len(symbol) == 2 and symbol[1].islower(): #Fe, Mg, Na etc.
+			return True
+		elif len(symbol) == 3 and symbol[1:3].islower(): #Uut, Uup, Uus etc.
+			return True
+		else:
+			return False
+
+	def create_elements(self, elements):
+		list_of_elements = list()
+		for element in elements:
+			list_of_elements.append(Atom(element))
+		return tuple(list_of_elements)
+
 universe = Universe()
 
 class Atom(pygame.sprite.Sprite):
@@ -103,7 +134,7 @@ class Atom(pygame.sprite.Sprite):
 	def __init__(self, symbol):
 		pygame.sprite.Sprite.__init__(self)
 		self.symbol = symbol
-		self.image = pygame.image.load("img/atom-" + self.symbol.lower() + ".png")
+		self.image = universe.create_molecule(symbol)
 		self.rect = self.image.get_rect()	
 		self.rect.move_ip(random.randint(10, 600), random.randint(10, 400))
 		self.active = False
@@ -165,10 +196,8 @@ def main():
 	pygame.display.flip()
 
 	clock = pygame.time.Clock()
-	H1 = Atom('H')
-	H2 = Atom('H')
-	O1 = Atom('O')
-	atoms = pygame.sprite.RenderPlain((H1, H2, O1))
+	elements = universe.create_elements(["H", "O", "OH", "O", "H"])#, "CO2", "CH4"])
+	atoms = pygame.sprite.RenderPlain(elements)
 	active = None
 	while 1:
 		clock.tick(60)
@@ -199,4 +228,9 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+	try:
+		main()
+	except KeyboardInterrupt:
+		from guppy import hpy
+		h = hpy()
+		print h.heap()
