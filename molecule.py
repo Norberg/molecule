@@ -37,7 +37,7 @@ class Game:
 			result = self.run_level(level)
 			if result == "victory":
 				self.write_on_background("Congratulation, you finnished the level")
-				self.wait(5)
+				self.wait(2)
 				continue
 			elif result == QUIT:
 				return

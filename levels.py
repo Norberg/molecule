@@ -13,7 +13,7 @@ class BaseLevel:
 		for element in elements:
 			if to_create.has_key(element.symbol):
 				to_create[element.symbol] -= 1
-		for element, amount in to_create:
+		for element, amount in to_create.iteritems():
 			if amount > 0:
 				return
 		return "victory"
@@ -40,5 +40,5 @@ class Level_2(BaseLevel):
 		to_create = dict()
 		to_create["CO"] = 1
 		to_create["H2"] =  3
-		return match_molecule()	
+		return self.match_molecule(self.elements, to_create)	
 				
