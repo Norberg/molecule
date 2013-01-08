@@ -130,6 +130,15 @@ class Universe:
 				pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
 			list_of_elements.append(Element(element, pos))
 		return tuple(list_of_elements)
+	
+	def react(self, a, b):
+		reaction = self.reaction_table(a.symbol, b.symbol)
+		if reaction == None:
+			reaction = self.reaction_table(b.symbol, a.symbol)
+		if reaction != None:
+			print "Created:", reaction, "from ", a.symbol,"+", b.symbol
+			return self.create_elements(reaction, pos = a.rect.midtop)
+
 
 class Element(pygame.sprite.Sprite):
 	"""Element - The universal building block of atoms and molecules"""
@@ -164,12 +173,4 @@ class Element(pygame.sprite.Sprite):
 			return True
 		else:
 			return False
-
-	def react(self, other):
-		reaction = self.universe.reaction_table(self.symbol, other.symbol)
-		if reaction == None:
-			reaction = self.universe.reaction_table(other.symbol, self.symbol)
-		if reaction != None:
-			print "Created:", reaction, "from ", self.symbol,"+", other.symbol
-			return self.universe.create_elements(reaction, pos = self.rect.midtop)
 

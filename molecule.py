@@ -79,7 +79,7 @@ class Game:
 		if self.active != None:
 			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
 				if collition != self.active:
-					new_elements = self.active.react(collition)
+					new_elements = self.universe.react(self.active, collition)
 					if new_elements != None:
 						collition.kill()
 						self.active.kill()
