@@ -1,20 +1,36 @@
-import time, os, random, inspect
+import getopt, sys, time, os, random, inspect
  
 import pygame
 from pygame.locals import *
 
 import levels
 from Universe import Universe, Element
-DEBUG = False
+
+class Config:
+	__config = dict() #Share config by all instance of this class
+	def ___init__(self):
+		self.__dict = self.__config
+
+	def __init__(self, DEBUG = False, level = 1):
+		self.__dict = self.__config
+		self.DEBUG = DEBUG
+		self.level = level
+		
 
 class Game:
 	def __init__(self):
+		self.universe = Universe()
+		self.last_collision = 0
+		self.config = Config()
+		self.universe.config = self.config
+		self.handle_cmd_options()	
+		self.init_pygame()
+		
+	def init_pygame(self):	
 		pygame.init()
 		self.screen = pygame.display.set_mode((640,480))
 		pygame.display.set_caption('Molecule - A molecule builing puzzle game')
 		self.clock = pygame.time.Clock()
-		self.universe = Universe()
-		self.last_collision = 0
 
 	def write_on_background(self, text):
 		self.background = pygame.Surface(self.screen.get_size())
@@ -33,7 +49,31 @@ class Game:
 		end = time.time() + seconds
 		while time.time() < end:
 			self.event_loop()
+	
+	def handle_cmd_options(self):
+		try:
+			opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
+		except getopt.GetoptError as err:
+   			print str(err)
+			self.cmd_help()
+			sys.exit(2)
+		for o,a in opts:
+			if o in ("-h", "--help"):
+				self.cmd_help()
+				sys.exit()
+			elif o in ("-l", "--level"):
+				self.config.level = int(a)
+			elif o in ("-d", "--debug"):
+				self.config.DEBUG = True
+			
+				
+	def cmd_help(self):
+		print "Molecule - a Molecule reaction puzzle game by Simon Norberg"
+		print "-h --help print this help"	
+		print "-l LEVEL --level LEVEL choose what level to start on"	
+		print "-d --debug print debug messages"	
 
+	
 	def game_loop(self):
 		for level in self.get_levels():
 			result = self.run_level(level)
@@ -48,7 +88,8 @@ class Game:
 	
 	def get_levels(self):
 		for name, level in inspect.getmembers(levels):
-			if inspect.isclass(level) and issubclass(level,levels.BaseLevel) and name != "BaseLevel":
+			if inspect.isclass(level) and issubclass(level,levels.BaseLevel) \
+			   and name != "BaseLevel" and int(name.split("_")[1]) >= self.config.level:
 				l = level()
 				yield l
 

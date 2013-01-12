@@ -1,6 +1,5 @@
 import random, itertools
 import pygame
-DEBUG = False
 
 class Reaction:
 	def __init__(self, consumed, result):
@@ -19,6 +18,7 @@ class Universe:
 	def __init__(self):
 		self.__dict = self.__entropy
 		self.moelcules = dict()
+		self.config = None
 		self.link_right = pygame.image.load("img/link-right.png")
 		self.link_left = pygame.image.load("img/link-left.png")
 		self.link_top = pygame.image.load("img/link-top.png")
@@ -39,7 +39,7 @@ class Universe:
 
 	def reaction_table(self, elem):
 		for reaction in self.reactions:
-			if DEBUG: print "if", reaction.consumed, "exists in", elem
+			if self.config.DEBUG: print "if", reaction.consumed, "exists in", elem
 			if self.sublist_in_list(reaction.consumed, elem): 
 				#all elements needed for the reaction exists in the reacting elements
 				print reaction.consumed, "->", reaction.result
