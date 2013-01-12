@@ -1,5 +1,17 @@
-import random
+import random, itertools
 import pygame
+DEBUG = False
+
+class Reaction:
+	def __init__(self, consumed, result):
+		self.consumed = consumed
+		self.result = result
+
+	"""Sanity check of symbol name, make sure no zeros have been used by mistake"""
+	def verify(self, elements):
+		for element in elements:
+			if 0 in element:
+				raise Exception("Tried to create reaction with invalid values")
 
 class Universe:
 	__entropy = dict() #Current and shared entropy in the whole universe and all its instances
@@ -11,23 +23,28 @@ class Universe:
 		self.link_left = pygame.image.load("img/link-left.png")
 		self.link_top = pygame.image.load("img/link-top.png")
 		self.link_bottom = pygame.image.load("img/link-bottom.png")
+		self.reactions = list()
+		self.reactions.append(Reaction(["O","H"], ["OH"]))
+		self.reactions.append(Reaction(["O","O"], ["O2"]))
+		self.reactions.append(Reaction(["O","H2"], ["H2O"]))
+		self.reactions.append(Reaction(["H","H"], ["H2"]))
+		self.reactions.append(Reaction(["H","OH"], ["H2O"]))
+		self.reactions.append(Reaction(["CH4","H2O"], ["CO"] + 3*["H2"]))
+			
+	def sublist_in_list(self, sublist, superlist):
+		for e in sublist:
+			if sublist.count(e) > superlist.count(e):
+				return False
+		return True
 
-	def reaction_table(self, a, b):
-		if a == 'O':
-			if b == 'H':
-				return "OH"
-			elif b == 'O':
-				return "O2"
-			elif b == 'H2':
-				return "H2O"
-		elif a == 'H':
-			if b == 'H':
-				return "H2"
-			elif b == 'OH':
-				return "H2O"
-		elif a == "CH4":
-			if b == "H2O":
-				return ["CO"] + 3*["H2"]
+	def reaction_table(self, elem):
+		for reaction in self.reactions:
+			if DEBUG: print "if", reaction.consumed, "exists in", elem
+			if self.sublist_in_list(reaction.consumed, elem): 
+				#all elements needed for the reaction exists in the reacting elements
+				print reaction.consumed, "->", reaction.result
+				return reaction	
+		
 		
 	def molecule_table(self, molecule):
 		layout = dict()
@@ -131,15 +148,14 @@ class Universe:
 			list_of_elements.append(Element(element, pos))
 		return tuple(list_of_elements)
 	
-	def react(self, a, b):
-		reaction = self.reaction_table(a.symbol, b.symbol)
-		if reaction == None:
-			reaction = self.reaction_table(b.symbol, a.symbol)
-		if reaction != None:
-			print "Created:", reaction, "from ", a.symbol,"+", b.symbol
-			return self.create_elements(reaction, pos = a.rect.midtop)
-
-
+	def react(self, elements):
+		if len(elements) < 2:
+			return
+		for perm in itertools.permutations(elements):
+			reaction = self.reaction_table(perm)
+			if reaction != None:
+				print "from:", reaction.consumed, "going to create:", reaction.result
+				return reaction 
 class Element(pygame.sprite.Sprite):
 	"""Element - The universal building block of atoms and molecules"""
 	def __init__(self, symbol, pos=None):

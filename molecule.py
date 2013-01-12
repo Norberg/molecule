@@ -5,6 +5,7 @@ from pygame.locals import *
 
 import levels
 from Universe import Universe, Element
+DEBUG = False
 
 class Game:
 	def __init__(self):
@@ -13,6 +14,7 @@ class Game:
 		pygame.display.set_caption('Molecule - A molecule builing puzzle game')
 		self.clock = pygame.time.Clock()
 		self.universe = Universe()
+		self.last_collision = 0
 
 	def write_on_background(self, text):
 		self.background = pygame.Surface(self.screen.get_size())
@@ -60,6 +62,17 @@ class Game:
 			if level.check_victory() == "victory":
 				return "victory"
 
+	"""Return a generator with all colliding elements"""
+	def get_colliding_elements(self):
+		if self.active != None:
+			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
+				yield collition
+
+	"""Take a element generator and return a symbol list"""
+	def get_element_symbols(self, elements):
+		for element in elements:
+			yield element.symbol
+
 	def event_loop(self):
 		self.clock.tick(60)
 		for event in pygame.event.get():
@@ -76,16 +89,19 @@ class Game:
 				self.active.unclicked()
 				self.active = None
 
-		if self.active != None:
-			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
-				if collition != self.active:
-					new_elements = self.universe.react(self.active, collition)
-					if new_elements != None:
-						collition.kill()
-						self.active.kill()
-						self.active = None
-						self.elements.add(new_elements)
-					break	
+		reacting_elements =  list(self.get_colliding_elements())
+		if self.last_collision != len(reacting_elements):
+			self.last_collision = len(reacting_elements)
+			reaction = self.universe.react(list(self.get_element_symbols(reacting_elements)))
+			if reaction != None:
+				self.active = None
+				for element in reacting_elements:
+					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
+					if element.symbol in reaction.consumed: 
+						element.kill()
+				self.elements.add(self.universe.create_elements(reaction.result, pos = pygame.mouse.get_pos()))
+				
+	
 		self.elements.update()
 		self.screen.blit(self.background, (0, 0))
 		#if active != None:
