@@ -71,20 +71,27 @@ class Game:
 		print "Molecule - a Molecule reaction puzzle game by Simon Norberg"
 		print "-h --help print this help"	
 		print "-l LEVEL --level LEVEL choose what level to start on"	
-		print "-d --debug print debug messages"	
+		print "-d --debug print debug messages"
+		print "During gameplay:"
+		print "ESC - close game"
+		print "r - reset current level"	
 
 	
 	def game_loop(self):
 		for level in self.get_levels():
-			result = self.run_level(level)
-			if result == "victory":
-				self.write_on_background("Congratulation, you finnished the level")
-				self.wait(2)
-				continue
-			elif result == QUIT:
-				return
-			else:
-				print "Unkown return code from level, quiting"
+			while 1:
+				result = self.run_level(level)
+				if result == "victory":
+					self.write_on_background("Congratulation, you finnished the level")
+					self.wait(2)
+					break
+				elif result == "RESET_LEVEL":
+					level.__init__()
+					continue	
+				elif result == QUIT:
+					return
+				else:
+					print "Unkown return code from level, quiting"
 	
 	def get_levels(self):
 		for name, level in inspect.getmembers(levels):
@@ -98,8 +105,9 @@ class Game:
 		self.write_on_background(level.description)
 		self.elements = level.elements
 		while 1:
-			if self.event_loop() == QUIT:
-				return QUIT
+			event = self.event_loop()
+			if event != None:
+				return event
 			if level.check_victory() == "victory":
 				return "victory"
 
@@ -121,6 +129,8 @@ class Game:
 				return QUIT
 			elif event.type == KEYDOWN and event.key == K_ESCAPE:
 				return QUIT
+			elif event.type == KEYDOWN and event.key == K_r:
+				return "RESET_LEVEL"
 			elif event.type == MOUSEBUTTONDOWN:
 				for element in reversed(self.elements.sprites()):
 					if element.clicked():
