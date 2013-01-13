@@ -1,15 +1,18 @@
-import random, itertools
+import glob, random, itertools
 import pygame
 
 class Reaction:
-	def __init__(self, consumed, result):
+	def __init__(self, consumed, result, areas = list()):
+		self.verify(consumed)
+		self.verify(result)
 		self.consumed = consumed
 		self.result = result
+		self.areas = areas
 
 	"""Sanity check of symbol name, make sure no zeros have been used by mistake"""
 	def verify(self, elements):
 		for element in elements:
-			if 0 in element:
+			if "0" in element:
 				raise Exception("Tried to create reaction with invalid values")
 
 class Universe:
@@ -24,12 +27,12 @@ class Universe:
 		self.link_top = pygame.image.load("img/link-top.png")
 		self.link_bottom = pygame.image.load("img/link-bottom.png")
 		self.reactions = list()
-		self.reactions.append(Reaction(["O","H"], ["OH"]))
-		self.reactions.append(Reaction(["O","O"], ["O2"]))
-		self.reactions.append(Reaction(["O","H2"], ["H2O"]))
-		self.reactions.append(Reaction(["H","H"], ["H2"]))
-		self.reactions.append(Reaction(["H","OH"], ["H2O"]))
-		self.reactions.append(Reaction(["CH4","H2O"], ["CO"] + 3*["H2"]))
+		self.reactions.append(Reaction(["O-2","H+"], ["OH-"]))
+		self.reactions.append(Reaction(["O-2","O-2"], ["O2"]))
+		self.reactions.append(Reaction(["O-2","H2"], ["H2O"]))
+		self.reactions.append(Reaction(["H+","H+"], ["H2"]))
+		self.reactions.append(Reaction(["H+","OH-"], ["H2O"]))
+		self.reactions.append(Reaction(["CH4","H2O"], ["CO-"] + 3*["H2"],["Fire"]))
 			
 	def sublist_in_list(self, sublist, superlist):
 		for e in sublist:
@@ -37,20 +40,22 @@ class Universe:
 				return False
 		return True
 
-	def reaction_table(self, elem):
+	def reaction_table(self, elem, areas):
 		for reaction in self.reactions:
 			if self.config.DEBUG: print "if", reaction.consumed, "exists in", elem
 			if self.sublist_in_list(reaction.consumed, elem): 
 				#all elements needed for the reaction exists in the reacting elements
-				print reaction.consumed, "->", reaction.result
-				return reaction	
+				if self.sublist_in_list(reaction.areas, areas):
+					#all areas need for reaction was present
+					print reaction.consumed, "+", areas, "->", reaction.result
+					return reaction	
 		
 		
 	def molecule_table(self, molecule):
 		layout = dict()
-		if molecule == "OH":
+		if molecule == "OH-":
 			layout[(1,1)] = 'O'	
-			layout[(2,1)] = 'H'
+			layout[(2,1)] = 'H-'
 		elif molecule == "H2":
 			layout[(1,1)] = 'H'	
 			layout[(2,1)] = 'H'
@@ -61,9 +66,9 @@ class Universe:
 		elif molecule == "O2":
 			layout[(1,1)] = 'O'	
 			layout[(2,1)] = 'O'	
-		elif molecule == "CO":
+		elif molecule == "CO-":
 			layout[(1,1)] = 'C'	
-			layout[(2,1)] = 'O'
+			layout[(2,1)] = 'O-'
 		elif molecule == "CO2":
 			layout[(1,1)] = 'O'	
 			layout[(2,1)] = 'C'
@@ -79,9 +84,42 @@ class Universe:
 			return None
 		return layout
 
+	def get_electric_charge(self, symbol):
+		value = 0
+		if symbol.count("-") == 1:
+			v = symbol.split("-")[1]
+			if v == "":
+				value = -1
+			else:
+				value = -int(v)
+
+		elif symbol.count("+") == 1:
+			v = symbol.split("+")[1]
+			if v == "":
+				value = 1
+			else:
+				value = int(v)
+		return value	
+
 	def create_atom(self, symbol, copy=True):
 		if not self.moelcules.has_key(symbol):
-			self.moelcules[symbol] =  pygame.image.load("img/atom-" + symbol.lower() + ".png")
+			no_charge = self.get_only_atom_symbol(symbol)
+			a =  pygame.image.load("img/atom-" + no_charge.lower() + ".png")
+			atom = pygame.Surface((160,160), 0, a)
+			atom.blit(a, (0,0))
+			charge = self.get_electric_charge(symbol)
+			print symbol, charge
+			if charge == 0:
+				pass
+			elif charge == -1:
+				atom.blit(pygame.image.load("img/e-1.png"), (0,0))
+			elif charge == -2:
+				atom.blit(pygame.image.load("img/e-2.png"), (0,0))
+			elif charge == 1:
+				atom.blit(pygame.image.load("img/e+1.png"), (0,0))
+			elif charge == 2:
+				atom.blit(pygame.image.load("img/e+2.png"), (0,0))
+			self.moelcules[symbol] = atom		
 		if copy:
 			return self.moelcules[symbol].copy()
 		else:
@@ -124,8 +162,15 @@ class Universe:
 				atom = self.create_atom(symbol, copy=False)
 				molecule.blit(atom, self.pos2cord(pos))
 			return molecule
+		else:
+			raise Exception("Failed to generate: " + symbol)
+
+	#returns the atom symbol without any electric charge
+	def get_only_atom_symbol(self, symbol):
+		return symbol.split("-")[0].split("+")[0]
 
 	def is_atom(self, symbol):
+		symbol = symbol.split("-")[0].split("+")[0] #Remove +/-
 		if len(symbol) == 1 and symbol.isalpha(): # H, O, F etc.
 			return True
 		elif len(symbol) == 2 and symbol.isalpha() and symbol[1].islower(): #Fe, Mg, Na etc.
@@ -148,11 +193,11 @@ class Universe:
 			list_of_elements.append(Element(element, pos))
 		return tuple(list_of_elements)
 	
-	def react(self, elements):
+	def react(self, elements, areas):
 		if len(elements) < 2:
 			return
 		for perm in itertools.permutations(elements):
-			reaction = self.reaction_table(perm)
+			reaction = self.reaction_table(perm, areas)
 			if reaction != None:
 				print "from:", reaction.consumed, "going to create:", reaction.result
 				return reaction 
@@ -190,3 +235,24 @@ class Element(pygame.sprite.Sprite):
 		else:
 			return False
 
+class Fire(pygame.sprite.Sprite):
+	"""Fire"""
+	def __init__(self, pos):
+		pygame.sprite.Sprite.__init__(self)
+		self.name = "Fire"
+		self.current_frame = 0
+		self.frames = 50
+		self.animations = list()
+		for img in sorted(glob.glob("img/fire/50 frames/*")):
+			self.animations.append(pygame.image.load(img))
+		self.image = self.animations[self.current_frame]
+		self.rect = self.image.get_bounding_rect()
+		self.rect.move_ip(pos)
+				
+
+	def update(self):
+		self.current_frame += 1
+		if self.current_frame >= self.frames:
+			self.current_frame = 0
+
+		self.image = self.animations[self.current_frame]

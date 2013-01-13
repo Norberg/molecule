@@ -1,11 +1,12 @@
 import pygame
-from Universe import Universe
+from Universe import Universe, Fire
 
 class BaseLevel:
 	def __init__(self):
 		self.universe = Universe()
 		self.description = None
 		self.elements = None
+		self.areas = pygame.sprite.Group()
 		pass
 	def check_victory(self):
 		pass
@@ -23,7 +24,7 @@ class Level_1(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a water molecule"
-		e =  self.universe.create_elements(["H", "O", "OH", "O", "H", "CO2", "CH4"])
+		e =  self.universe.create_elements(["H+", "O-2", "OH-", "O-2", "H+", "CO2", "CH4"])
 		self.elements = pygame.sprite.RenderUpdates(e)
 	def check_victory(self):
 		#Find out if H2O have been created
@@ -34,11 +35,13 @@ class Level_2(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CO and 3 H2 molecules"
-		e =  self.universe.create_elements(["H", "O", "OH", "O", "H", "CO2", "CH4"])
+		e =  self.universe.create_elements(["H+", "O-2", "OH-", "O-2", "H+", "CO2", "CH4"])
 		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Fire((200,100))
+		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
-		to_create["CO"] = 1
+		to_create["CO-"] = 1
 		to_create["H2"] =  3
 		return self.match_molecule(self.elements, to_create)	
 				

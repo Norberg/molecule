@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import *
 
 import levels
-from Universe import Universe, Element
+from Universe import Universe, Element, Fire
 
 class Config:
 	__config = dict() #Share config by all instance of this class
@@ -104,6 +104,7 @@ class Game:
 		self.active = None
 		self.write_on_background(level.description)
 		self.elements = level.elements
+		self.areas = level.areas
 		while 1:
 			event = self.event_loop()
 			if event != None:
@@ -117,13 +118,19 @@ class Game:
 			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
 				yield collition
 
+	"""Return all areas that collidies with active element"""
+	def get_colliding_areas(self):
+		if self.active != None:
+			for collition in pygame.sprite.spritecollide(self.active, self.areas, False):
+				yield collition.name
+
 	"""Take a element generator and return a symbol list"""
 	def get_element_symbols(self, elements):
 		for element in elements:
 			yield element.symbol
 
 	def event_loop(self):
-		self.clock.tick(60)
+		self.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				return QUIT
@@ -143,7 +150,8 @@ class Game:
 		reacting_elements =  list(self.get_colliding_elements())
 		if self.last_collision != len(reacting_elements):
 			self.last_collision = len(reacting_elements)
-			reaction = self.universe.react(list(self.get_element_symbols(reacting_elements)))
+			reaction = self.universe.react(list(self.get_element_symbols(reacting_elements)),
+			                               list(self.get_colliding_areas()))
 			if reaction != None:
 				self.active = None
 				for element in reacting_elements:
@@ -154,9 +162,11 @@ class Game:
 				
 	
 		self.elements.update()
+		self.areas.update()
 		self.screen.blit(self.background, (0, 0))
 		#if active != None:
 		#	pygame.draw.rect(screen, pygame.color.Color("black"), active.rect)
+		self.areas.draw(self.screen)
 		self.elements.draw(self.screen)
 		pygame.display.flip()
 			
