@@ -112,17 +112,25 @@ class Game:
 			if level.check_victory() == "victory":
 				return "victory"
 
-	"""Return a generator with all colliding elements"""
-	def get_colliding_elements(self):
-		if self.active != None:
+	"""Return a generator with all colliding elements, set to_match to sprite if not mathing against active sprite"""
+	def get_colliding_elements(self, to_match = None):
+		if self.active != None and to_match == None:
 			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
 				yield collition
+		elif to_match != None:
+			for collition in pygame.sprite.spritecollide(to_match, self.elements, False):
+				yield collition
+			
 
 	"""Return all areas that collidies with active element"""
 	def get_colliding_areas(self):
 		if self.active != None:
 			for collition in pygame.sprite.spritecollide(self.active, self.areas, False):
-				yield collition.name
+				yield collition
+
+	def get_colliding_areas_name(self, areas):
+		for area in areas:
+			yield area.name
 
 	"""Take a element generator and return a symbol list"""
 	def get_element_symbols(self, elements):
@@ -146,12 +154,16 @@ class Game:
 			elif event.type is MOUSEBUTTONUP and self.active != None: 
 				self.active.unclicked()
 				self.active = None
-
-		reacting_elements =  list(self.get_colliding_elements())
-		if self.last_collision != len(reacting_elements):
-			self.last_collision = len(reacting_elements)
+		
+		colliding_areas = list(self.get_colliding_areas())
+		if len(colliding_areas) > 0:
+			reacting_elements = list(self.get_colliding_elements(to_match = colliding_areas[0]))
+		else:		
+			reacting_elements = list(self.get_colliding_elements())
+		if self.last_collision != len(reacting_elements) + 10000*len(colliding_areas):
+			self.last_collision = len(reacting_elements) + 10000*len(colliding_areas)
 			reaction = self.universe.react(list(self.get_element_symbols(reacting_elements)),
-			                               list(self.get_colliding_areas()))
+			                               list(self.get_colliding_areas_name(colliding_areas)))
 			if reaction != None:
 				self.active = None
 				for element in reacting_elements:

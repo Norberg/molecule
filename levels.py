@@ -45,3 +45,30 @@ class Level_2(BaseLevel):
 		to_create["H2"] =  3
 		return self.match_molecule(self.elements, to_create)	
 				
+class Level_3(BaseLevel):
+	def __init__(self):
+		BaseLevel.__init__(self)
+		self.description = "Create a CO and 3 H20 molecules"
+		e =  self.universe.create_elements(["H+", "O-2", "OH-", "O-2", "H+", "CO2", "CH4"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Fire((200,100))
+		self.areas = pygame.sprite.RenderUpdates(fire) 
+	def check_victory(self):
+		to_create = dict()
+		to_create["CO-"] = 1
+		to_create["H2O"] = 3 
+		return self.match_molecule(self.elements, to_create)	
+
+class Level_4(BaseLevel):
+	def __init__(self):
+		BaseLevel.__init__(self)
+		self.description = "Create a CO2 and 2 H20 molecules"
+		e =  self.universe.create_elements(["H+", "O-2", "OH-", "O-2", "H+", "CH4", "O2"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Fire((200,100))
+		self.areas = pygame.sprite.RenderUpdates(fire) 
+	def check_victory(self):
+		to_create = dict()
+		to_create["CO2"] = 1
+		to_create["H2O"] = 2 
+		return self.match_molecule(self.elements, to_create)	

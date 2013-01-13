@@ -1,4 +1,4 @@
-import glob, random, itertools
+import glob, random
 import pygame
 
 class Reaction:
@@ -33,6 +33,8 @@ class Universe:
 		self.reactions.append(Reaction(["H+","H+"], ["H2"]))
 		self.reactions.append(Reaction(["H+","OH-"], ["H2O"]))
 		self.reactions.append(Reaction(["CH4","H2O"], ["CO-"] + 3*["H2"],["Fire"]))
+		self.reactions.append(Reaction(["CH4"] + 2*["O2"], ["CO2"] + 2*["H2O"],["Fire"]))
+		self.reactions.append(Reaction(["CH4", "O2"], ["CO-"] + 2*["H2O"],["Fire"]))
 			
 	def sublist_in_list(self, sublist, superlist):
 		for e in sublist:
@@ -43,7 +45,7 @@ class Universe:
 	def reaction_table(self, elem, areas):
 		for reaction in self.reactions:
 			if self.config.DEBUG: print "if", reaction.consumed, "exists in", elem
-			if self.sublist_in_list(reaction.consumed, elem): 
+			if self.sublist_in_list(reaction.consumed, elem):
 				#all elements needed for the reaction exists in the reacting elements
 				if self.sublist_in_list(reaction.areas, areas):
 					#all areas need for reaction was present
@@ -108,7 +110,6 @@ class Universe:
 			atom = pygame.Surface((160,160), 0, a)
 			atom.blit(a, (0,0))
 			charge = self.get_electric_charge(symbol)
-			print symbol, charge
 			if charge == 0:
 				pass
 			elif charge == -1:
@@ -196,11 +197,10 @@ class Universe:
 	def react(self, elements, areas):
 		if len(elements) < 2:
 			return
-		for perm in itertools.permutations(elements):
-			reaction = self.reaction_table(perm, areas)
-			if reaction != None:
-				print "from:", reaction.consumed, "going to create:", reaction.result
-				return reaction 
+		if self.config.DEBUG: print "Trying to see if some of this react:", elements
+		reaction = self.reaction_table(elements, areas)
+		if reaction != None:
+			return reaction 
 class Element(pygame.sprite.Sprite):
 	"""Element - The universal building block of atoms and molecules"""
 	def __init__(self, symbol, pos=None):
