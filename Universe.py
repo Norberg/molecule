@@ -35,6 +35,9 @@ class Universe:
 		self.reactions.append(Reaction(["CH4","H2O"], ["CO-"] + 3*["H2"],["Fire"]))
 		self.reactions.append(Reaction(["CH4"] + 2*["O2"], ["CO2"] + 2*["H2O"],["Fire"]))
 		self.reactions.append(Reaction(["CH4", "O2"], ["CO-"] + 2*["H2O"],["Fire"]))
+		self.reactions.append(Reaction(["NH3", "H2O"], ["NH4+"] + ["OH-"]))
+		self.reactions.append(Reaction(["SO3", "H2O"], ["H2SO4"]))
+		self.reactions.append(Reaction(["H2SO4"] + 2*["NaCl"], 2*["HCl"] + ["Na2SO4"]))
 			
 	def sublist_in_list(self, sublist, superlist):
 		for e in sublist:
@@ -80,7 +83,46 @@ class Universe:
 			layout[(2,1)] = 'H'	
 			layout[(1,2)] = 'H'	
 			layout[(2,3)] = 'H'	
-			layout[(3,2)] = 'H'	
+			layout[(3,2)] = 'H'
+		elif molecule == "NH3":
+			layout[(2,1)] = 'N'	
+			layout[(1,1)] = 'H'	
+			layout[(2,2)] = 'H'	
+			layout[(3,1)] = 'H'	
+		elif molecule == "NH4+":
+			layout[(2,2)] = 'N+'	
+			layout[(2,1)] = 'H'	
+			layout[(1,2)] = 'H'	
+			layout[(2,3)] = 'H'	
+			layout[(3,2)] = 'H'
+		elif molecule == "HCl":
+			layout[(1,1)] = 'H'	
+			layout[(2,1)] = 'Cl'	
+		elif molecule == "NaCl":
+			layout[(1,1)] = 'Na'	
+			layout[(2,1)] = 'Cl'	
+		elif molecule == "SO3":
+			layout[(2,1)] = 'S'	
+			layout[(1,1)] = 'O'	
+			layout[(2,2)] = 'O'	
+			layout[(3,1)] = 'O'	
+		elif molecule == "H2SO4":
+			layout[(2,2)] = 'S'	
+			layout[(2,1)] = 'O'	
+			layout[(1,2)] = 'O'	
+			layout[(2,3)] = 'O'	
+			layout[(3,2)] = 'O'
+			layout[(4,2)] = 'H'
+			layout[(2,4)] = 'H'
+		elif molecule == "Na2SO4":
+			layout[(2,2)] = 'S'	
+			layout[(2,1)] = 'O'	
+			layout[(1,2)] = 'O'	
+			layout[(2,3)] = 'O'	
+			layout[(3,2)] = 'O'
+			layout[(4,2)] = 'Na'
+			layout[(2,4)] = 'Na'
+				
 		else:
 			print "No layout found for:", molecule
 			return None
