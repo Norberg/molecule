@@ -14,18 +14,62 @@ class Reaction:
 		for element in elements:
 			if "0" in element:
 				raise Exception("Tried to create reaction with invalid values")
+class Molecule:
+	def __init__(self,formula):
+		self.formula = formula
+		self.atom_layout = dict()
+		self.bond_layout = list()
+
+	def addAtom(self, pos_x, pos_y, atom):
+		self.atom_layout[(pos_x, pos_y)] = atom
+
+	def addAtoms(self,matrix):
+		row_nr = 1
+		for row in matrix:
+			collum_nr = 1
+			for collum in row:
+				if len(collum.strip()) != 0:
+					self.addAtom(collum_nr, row_nr, collum)
+				collum_nr += 1
+			row_nr += 1 	
+	
+	def addBond(self, from_pos, to_pos):
+		self.bond_layout.append(Bond(from_pos, to_pos))
+		self.bond_layout.append(Bond(to_pos, from_pos))
+	
+	def autoBonds(self):
+		for pos in self.atom_layout.keys():
+			x,y = pos
+			if self.atom_layout.has_key((x, y+1)): #Bottom
+				self.addBond(pos, (x,y+1))
+			if self.atom_layout.has_key((x+1, y)): #Right
+				self.addBond(pos, (x+1,y))
+
+class Bond:
+	def __init__(self, from_pos, to_pos):
+		self.from_pos = from_pos
+		self.to_pos = to_pos
+
+		
 
 class Universe:
+	ATOM_SIZE = 32
+	BOND_LENGHT = 6
+	MOLECULE_MAX_SIZE = (300,300)
 	__entropy = dict() #Current and shared entropy in the whole universe and all its instances
 	"""Universe contains all fundamental particles and laws needed to get the universe to spin"""
 	def __init__(self):
 		self.__dict = self.__entropy
 		self.moelcules = dict()
 		self.config = None
-		self.link_right = pygame.image.load("img/link-right.png")
-		self.link_left = pygame.image.load("img/link-left.png")
-		self.link_top = pygame.image.load("img/link-top.png")
-		self.link_bottom = pygame.image.load("img/link-bottom.png")
+		self.bond_horizontal = pygame.image.load("img/bond-horizontal.png")
+		self.bond_vertical = pygame.image.load("img/bond-vertical.png")
+		self.bond_45_degree = pygame.image.load("img/bond-45-degree.png")
+		self.bond_135_degree = pygame.image.load("img/bond-135-degree.png")
+		self.__init__molecule_table()
+		self.__init__reactions()
+
+	def __init__reactions(self):
 		self.reactions = list()
 		self.reactions.append(Reaction(["O-2","H+"], ["OH-"]))
 		self.reactions.append(Reaction(["O-2","O-2"], ["O2"]))
@@ -38,6 +82,96 @@ class Universe:
 		self.reactions.append(Reaction(["NH3", "H2O"], ["NH4+"] + ["OH-"]))
 		self.reactions.append(Reaction(["SO3", "H2O"], ["H2SO4"]))
 		self.reactions.append(Reaction(["H2SO4"] + 2*["NaCl"], 2*["HCl"] + ["Na2SO4"]))
+
+	def __init__molecule_table(self):
+		self.molecule_layouts = dict()
+		m = Molecule("OH-")
+		m.addAtoms([['O','H-']])
+		self.add_molecule_layout(m)
+
+		m = Molecule("H2")
+		m.addAtoms([['H','H']])
+		self.add_molecule_layout(m)
+
+		m = Molecule("H2O")
+		m.addAtoms([['H','O','H']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("O2")
+		m.addAtoms([['O','O']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("CO-")
+		m.addAtoms([['C','O-']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("CO2")
+		m.addAtoms([['O','C','O']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("CH4")
+		m.addAtoms([[' ','H',' '],
+                            ['H','C','H'],
+                            [' ','H',' ']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("NH3")
+		m.addAtoms([['H',' ','H'],
+                            [' ','N',' '],
+                            [' ','H',' ']])
+		m.autoBonds()
+		m.addBond((1,1),(2,2))
+		m.addBond((3,1),(2,2))
+		self.add_molecule_layout(m)
+
+		m = Molecule("NH4+")
+		m.addAtoms([[' ','H' ,' '],
+                            ['H','N+','H'],
+                            [' ','H' ,' ']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("HCl")
+		m.addAtoms([['H','Cl']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("NaCl")
+		m.addAtoms([['Na','Cl']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("HCl")
+		m.addAtoms([['H','Cl']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("SO3")
+		m.addAtoms([['O',' ','O'],
+                            [' ','S',' '],
+                            [' ','O',' ']])
+		m.autoBonds()
+		m.addBond((1,1),(2,2))
+		m.addBond((3,1),(2,2))
+		self.add_molecule_layout(m)
+
+		m = Molecule("SO4+")
+		m.addAtoms([[' ','O' ,' '],
+                            ['O','S+','O'],
+                            [' ','O' ,' ']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("H2SO4")
+		m.addAtoms([[' ',' ','O' ,' ',' '],
+                            ['H','O','S+','O','H'],
+                            [' ',' ','O' ,' ',' ']])
+		self.add_molecule_layout(m)
+		
+		m = Molecule("Na2SO4")
+		m.addAtoms([[' ', 'O', ' ','Na'],
+                            ['O', 'S+','O',' '],
+                            [' ', 'O', ' ',' '],
+                            ['Na',' ', ' ',' ']])
+		m.autoBonds()
+		m.addBond((1,4),(2,3))
+		m.addBond((4,1),(3,2))
+		self.add_molecule_layout(m)
 			
 	def sublist_in_list(self, sublist, superlist):
 		for e in sublist:
@@ -55,78 +189,17 @@ class Universe:
 					print reaction.consumed, "+", areas, "->", reaction.result
 					return reaction	
 		
-		
-	def molecule_table(self, molecule):
-		layout = dict()
-		if molecule == "OH-":
-			layout[(1,1)] = 'O'	
-			layout[(2,1)] = 'H-'
-		elif molecule == "H2":
-			layout[(1,1)] = 'H'	
-			layout[(2,1)] = 'H'
-		elif molecule == "H2O":
-			layout[(1,1)] = 'H'	
-			layout[(2,1)] = 'O'
-			layout[(3,1)] = 'H'	
-		elif molecule == "O2":
-			layout[(1,1)] = 'O'	
-			layout[(2,1)] = 'O'	
-		elif molecule == "CO-":
-			layout[(1,1)] = 'C'	
-			layout[(2,1)] = 'O-'
-		elif molecule == "CO2":
-			layout[(1,1)] = 'O'	
-			layout[(2,1)] = 'C'
-			layout[(3,1)] = 'O'	
-		elif molecule == "CH4":
-			layout[(2,2)] = 'C'	
-			layout[(2,1)] = 'H'	
-			layout[(1,2)] = 'H'	
-			layout[(2,3)] = 'H'	
-			layout[(3,2)] = 'H'
-		elif molecule == "NH3":
-			layout[(2,1)] = 'N'	
-			layout[(1,1)] = 'H'	
-			layout[(2,2)] = 'H'	
-			layout[(3,1)] = 'H'	
-		elif molecule == "NH4+":
-			layout[(2,2)] = 'N+'	
-			layout[(2,1)] = 'H'	
-			layout[(1,2)] = 'H'	
-			layout[(2,3)] = 'H'	
-			layout[(3,2)] = 'H'
-		elif molecule == "HCl":
-			layout[(1,1)] = 'H'	
-			layout[(2,1)] = 'Cl'	
-		elif molecule == "NaCl":
-			layout[(1,1)] = 'Na'	
-			layout[(2,1)] = 'Cl'	
-		elif molecule == "SO3":
-			layout[(2,1)] = 'S'	
-			layout[(1,1)] = 'O'	
-			layout[(2,2)] = 'O'	
-			layout[(3,1)] = 'O'	
-		elif molecule == "H2SO4":
-			layout[(2,2)] = 'S'	
-			layout[(2,1)] = 'O'	
-			layout[(1,2)] = 'O'	
-			layout[(2,3)] = 'O'	
-			layout[(3,2)] = 'O'
-			layout[(4,2)] = 'H'
-			layout[(2,4)] = 'H'
-		elif molecule == "Na2SO4":
-			layout[(2,2)] = 'S'	
-			layout[(2,1)] = 'O'	
-			layout[(1,2)] = 'O'	
-			layout[(2,3)] = 'O'	
-			layout[(3,2)] = 'O'
-			layout[(4,2)] = 'Na'
-			layout[(2,4)] = 'Na'
+	def add_molecule_layout(self, molecule):
+		if len(molecule.bond_layout) == 0:
+			molecule.autoBonds()
+		self.molecule_layouts[molecule.formula] = molecule
+			
 				
+	def molecule_table(self, molecule):
+		if self.molecule_layouts.has_key(molecule):
+			return self.molecule_layouts[molecule]
 		else:
-			print "No layout found for:", molecule
-			return None
-		return layout
+			raise Exception("No layout found for:" + molecule)
 
 	def get_electric_charge(self, symbol):
 		value = 0
@@ -149,7 +222,7 @@ class Universe:
 		if not self.moelcules.has_key(symbol):
 			no_charge = self.get_only_atom_symbol(symbol)
 			a =  pygame.image.load("img/atom-" + no_charge.lower() + ".png")
-			atom = pygame.Surface((160,160), 0, a)
+			atom = pygame.Surface(self.MOLECULE_MAX_SIZE, 0, a)
 			atom.blit(a, (0,0))
 			charge = self.get_electric_charge(symbol)
 			if charge == 0:
@@ -169,37 +242,39 @@ class Universe:
 			return self.moelcules[symbol]
 	
 	def pos2cord(self, pos):
+		spacing = self.ATOM_SIZE + self.BOND_LENGHT/2	
 		x, y = pos
-		return (32*(x-1), 32*(y-1))
+		return (spacing*(x-1),spacing*(y-1))
 
-	def pos2cord_link(self, pos, direction):
-		x, y = self.pos2cord(pos)
-		if direction == "bottom":
-			return (x+1, y+2)
-		elif direction == "left":
-			return (x-2, y)
-				
-	def create_links(self, layout):
-		links = pygame.Surface((160,160), 0, self.create_atom('O', copy=False))
-		for pos in layout.keys():
-				x,y = pos
-				if layout.has_key((x, y+1)): #Bottom
-					link_pos = self.pos2cord_link(pos, "bottom")
-					links.blit(self.link_bottom, link_pos)
-				if layout.has_key((x-1, y)): #Left
-					link_pos = self.pos2cord_link(pos, "left")
-					links.blit(self.link_left, link_pos)
-		return links
+	def create_bonds(self, molecule):
+		bonds = pygame.Surface((self.MOLECULE_MAX_SIZE), 0, self.create_atom('O', copy=False))
+		for bond in molecule.bond_layout:
+				x,y = bond.from_pos
+				bond_pos = self.pos2cord(bond.from_pos)
+				if bond.to_pos == (x,y+1): #South
+					bonds.blit(self.bond_vertical, bond_pos)
+				elif bond.to_pos == (x+1, y): #West
+					bonds.blit(self.bond_horizontal, bond_pos)
+				elif bond.to_pos == (x+1,y-1): #NorthWest
+					bond_pos = self.pos2cord((x,y-1))
+					print "TO:", bond.to_pos, "from:", bond.from_pos
+					bonds.blit(self.bond_45_degree, bond_pos)
+				elif bond.to_pos == (x+1,y+1): #SouthWest
+					print "TO:", bond.to_pos, "from:", bond.from_pos
+					bonds.blit(self.bond_135_degree, bond_pos)
+					
+		return bonds
 
 	def create_molecule(self, symbol):
 		if self.is_atom(symbol):
 			return self.create_atom(symbol)
 
-		layout = self.molecule_table(symbol)
+		m = self.molecule_table(symbol)
+		layout = m.atom_layout
 		if layout != None:
-			links = self.create_links(layout)
-			molecule = pygame.Surface((160,160), 0, links)
-			molecule.blit(links, (0,0))
+			bonds = self.create_bonds(m)
+			molecule = pygame.Surface(self.MOLECULE_MAX_SIZE, 0, bonds)
+			molecule.blit(bonds, (0,0))
 			for pos in layout.keys():
 				symbol = layout[pos]
 				atom = self.create_atom(symbol, copy=False)

@@ -11,13 +11,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1192.99"
-   height="596.47998"
+   width="1192.96"
+   height="1192.96"
    id="svg2906"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="bond-horizontal.svg"
-   inkscape:export-filename="/home/simon/molecule/img/bond-horizontal.png"
+   sodipodi:docname="bond-135-degree.svg"
+   inkscape:export-filename="/home/simon/molecule/img/bond-45-degree.png"
    inkscape:export-xdpi="4.8283262"
    inkscape:export-ydpi="4.8283262"
    style="enable-background:new">
@@ -313,7 +313,7 @@
        xlink:href="#linearGradient5180"
        id="radialGradient5201"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(6.75,-9.2396881e-6,6.0306891e-7,0.43985737,2662.8233,-17.323813)"
+       gradientTransform="matrix(15.1875,-9.2396881e-6,1.3569051e-6,0.43985737,4979.9819,-718.18626)"
        cx="-303.125"
        cy="679.29449"
        fx="-303.125"
@@ -328,8 +328,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.45254834"
-     inkscape:cx="214.29044"
-     inkscape:cy="561.8154"
+     inkscape:cx="485.26232"
+     inkscape:cy="557.39598"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -340,7 +340,16 @@
      inkscape:window-maximized="0"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="false"
-     showborder="true" />
+     showborder="true"
+     borderlayer="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3686"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
   <metadata
      id="metadata2911">
     <rdf:RDF>
@@ -349,7 +358,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -357,38 +366,39 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-10.331431,-11.266036)"
+     transform="translate(-10.331431,585.21404)"
      style="display:none" />
   <text
      xml:space="preserve"
      style="font-size:160px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
      x="96.974648"
-     y="253.02814"
+     y="849.50818"
      id="text11028"><tspan
        sodipodi:role="line"
        id="tspan11030"
        x="96.974648"
-       y="253.02814" /></text>
+       y="849.50818" /></text>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Lager"
      style="display:inline"
-     transform="translate(0,-0.00199463)">
+     transform="translate(0,596.47808)">
     <rect
        style="fill:url(#radialGradient5201);fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="rect5178"
-       width="325"
+       width="731.25"
        height="71.875"
-       x="454.22986"
-       y="245.53418"
-       inkscape:transform-center-x="-14.363106"
-       inkscape:transform-center-y="77.339804" />
+       x="10.646641"
+       y="-455.32828"
+       inkscape:transform-center-x="44.531221"
+       inkscape:transform-center-y="64.843743"
+       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="bonds"
      style="display:none"
-     transform="translate(0,-0.00199463)" />
+     transform="translate(0,596.47808)" />
 </svg>
