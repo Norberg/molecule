@@ -33,9 +33,9 @@ class Molecule:
 				collum_nr += 1
 			row_nr += 1 	
 	
-	def addBond(self, from_pos, to_pos):
-		self.bond_layout.append(Bond(from_pos, to_pos))
-		self.bond_layout.append(Bond(to_pos, from_pos))
+	def addBond(self, from_pos, to_pos, nr_of_bonds = 1):
+		self.bond_layout.append(Bond(from_pos, to_pos, nr_of_bonds))
+		self.bond_layout.append(Bond(to_pos, from_pos, nr_of_bonds))
 	
 	def autoBonds(self):
 		for pos in self.atom_layout.keys():
@@ -46,10 +46,43 @@ class Molecule:
 				self.addBond(pos, (x+1,y))
 
 class Bond:
-	def __init__(self, from_pos, to_pos):
+	def __init__(self, from_pos, to_pos, nr_of_bonds = 1):
 		self.from_pos = from_pos
 		self.to_pos = to_pos
+		self.nr_of_bonds = nr_of_bonds
 
+class BondImage:
+	def __init__(self, path, is_vertical=False):
+		self.bond = list()
+		self.bond.append(pygame.image.load(path))
+		
+		if is_vertical:
+			b2pos1 = (-3,0)
+			b2pos2 = (3,0)
+			b3pos1 = (-5,0)
+			b3pos2 = (0,0)
+			b3pos3 = (5,0)
+		else:
+			b2pos1 = (0,-3)
+			b2pos2 = (0,3)
+			b3pos1 = (0,-5)
+			b3pos2 = (0,0)
+			b3pos3 = (0,5)
+				
+		b = pygame.Surface((64,64), 0, self.get(1))
+		b.blit(self.get(1), b2pos1)
+		b.blit(self.get(1), b2pos2)
+		self.bond.append(b)
+
+		b = pygame.Surface((64,64), 0, self.get(1))
+		b.blit(self.get(1), b3pos1)
+		b.blit(self.get(1), b3pos2)
+		b.blit(self.get(1), b3pos3)
+		self.bond.append(b)
+
+	def get(self, bond):
+		return self.bond[bond-1]		
+		
 		
 
 class Universe:
@@ -62,13 +95,16 @@ class Universe:
 		self.__dict = self.__entropy
 		self.moelcules = dict()
 		self.config = None
-		self.bond_horizontal = pygame.image.load("img/bond-horizontal.png")
-		self.bond_vertical = pygame.image.load("img/bond-vertical.png")
-		self.bond_45_degree = pygame.image.load("img/bond-45-degree.png")
-		self.bond_135_degree = pygame.image.load("img/bond-135-degree.png")
+		self.__init__bonds()
 		self.__init__molecule_table()
 		self.__init__reactions()
 
+	def __init__bonds(self):
+		self.bond_horizontal = BondImage("img/bond-horizontal.png")
+		self.bond_vertical = BondImage("img/bond-vertical.png", is_vertical = True)
+		self.bond_northwest = BondImage("img/bond-northwest.png")
+		self.bond_southwest = BondImage("img/bond-southwest.png")
+		
 	def __init__reactions(self):
 		self.reactions = list()
 		self.reactions.append(Reaction(["O-2","H+"], ["OH-"]))
@@ -99,14 +135,18 @@ class Universe:
 		
 		m = Molecule("O2")
 		m.addAtoms([['O','O']])
+		m.addBond((1,1),(2,1),2)
 		self.add_molecule_layout(m)
 		
 		m = Molecule("CO-")
 		m.addAtoms([['C','O-']])
+		m.addBond((1,1),(2,1),2)
 		self.add_molecule_layout(m)
 		
 		m = Molecule("CO2")
 		m.addAtoms([['O','C','O']])
+		m.addBond((1,1),(2,1),2)
+		m.addBond((2,1),(3,1),2)
 		self.add_molecule_layout(m)
 		
 		m = Molecule("CH4")
@@ -147,8 +187,9 @@ class Universe:
                             [' ','S',' '],
                             [' ','O',' ']])
 		m.autoBonds()
-		m.addBond((1,1),(2,2))
-		m.addBond((3,1),(2,2))
+		m.addBond((1,1),(2,2),2)
+		m.addBond((3,1),(2,2),2)
+		m.addBond((2,3),(2,2),2)
 		self.add_molecule_layout(m)
 
 		m = Molecule("SO4+")
@@ -161,6 +202,9 @@ class Universe:
 		m.addAtoms([[' ',' ','O' ,' ',' '],
                             ['H','O','S+','O','H'],
                             [' ',' ','O' ,' ',' ']])
+		m.autoBonds()
+		m.addBond((3,1),(3,2),2)
+		m.addBond((3,3),(3,2),2)
 		self.add_molecule_layout(m)
 		
 		m = Molecule("Na2SO4")
@@ -169,6 +213,8 @@ class Universe:
                             [' ', 'O', ' ',' '],
                             ['Na',' ', ' ',' ']])
 		m.autoBonds()
+		m.addBond((2,1),(2,2),2)
+		m.addBond((1,2),(2,2),2)
 		m.addBond((1,4),(2,3))
 		m.addBond((4,1),(3,2))
 		self.add_molecule_layout(m)
@@ -251,17 +297,16 @@ class Universe:
 		for bond in molecule.bond_layout:
 				x,y = bond.from_pos
 				bond_pos = self.pos2cord(bond.from_pos)
+				bond_nr = bond.nr_of_bonds
 				if bond.to_pos == (x,y+1): #South
-					bonds.blit(self.bond_vertical, bond_pos)
+					bonds.blit(self.bond_vertical.get(bond_nr), bond_pos)
 				elif bond.to_pos == (x+1, y): #West
-					bonds.blit(self.bond_horizontal, bond_pos)
+					bonds.blit(self.bond_horizontal.get(bond_nr), bond_pos)
 				elif bond.to_pos == (x+1,y-1): #NorthWest
 					bond_pos = self.pos2cord((x,y-1))
-					print "TO:", bond.to_pos, "from:", bond.from_pos
-					bonds.blit(self.bond_45_degree, bond_pos)
+					bonds.blit(self.bond_northwest.get(bond_nr), bond_pos)
 				elif bond.to_pos == (x+1,y+1): #SouthWest
-					print "TO:", bond.to_pos, "from:", bond.from_pos
-					bonds.blit(self.bond_135_degree, bond_pos)
+					bonds.blit(self.bond_southwest.get(bond_nr), bond_pos)
 					
 		return bonds
 
