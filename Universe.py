@@ -1,3 +1,4 @@
+import PyGameUtil
 import glob, random
 import pygame
 
@@ -68,13 +69,13 @@ class BondImage:
 			b3pos1 = (0,-5)
 			b3pos2 = (0,0)
 			b3pos3 = (0,5)
-				
-		b = pygame.Surface((64,64), 0, self.get(1))
+		
+		b = PyGameUtil.createSurface(64)	
 		b.blit(self.get(1), b2pos1)
 		b.blit(self.get(1), b2pos2)
 		self.bond.append(b)
 
-		b = pygame.Surface((64,64), 0, self.get(1))
+		b = PyGameUtil.createSurface(64)	
 		b.blit(self.get(1), b3pos1)
 		b.blit(self.get(1), b3pos2)
 		b.blit(self.get(1), b3pos3)
@@ -83,12 +84,11 @@ class BondImage:
 	def get(self, bond):
 		return self.bond[bond-1]		
 		
-		
 
 class Universe:
 	ATOM_SIZE = 32
 	BOND_LENGHT = 6
-	MOLECULE_MAX_SIZE = (300,300)
+	MOLECULE_MAX_SIZE = 300
 	__entropy = dict() #Current and shared entropy in the whole universe and all its instances
 	"""Universe contains all fundamental particles and laws needed to get the universe to spin"""
 	def __init__(self):
@@ -186,7 +186,6 @@ class Universe:
 		m.addAtoms([['O',' ','O'],
                             [' ','S',' '],
                             [' ','O',' ']])
-		m.autoBonds()
 		m.addBond((1,1),(2,2),2)
 		m.addBond((3,1),(2,2),2)
 		m.addBond((2,3),(2,2),2)
@@ -268,7 +267,7 @@ class Universe:
 		if not self.moelcules.has_key(symbol):
 			no_charge = self.get_only_atom_symbol(symbol)
 			a =  pygame.image.load("img/atom-" + no_charge.lower() + ".png")
-			atom = pygame.Surface(self.MOLECULE_MAX_SIZE, 0, a)
+			atom = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
 			atom.blit(a, (0,0))
 			charge = self.get_electric_charge(symbol)
 			if charge == 0:
@@ -293,7 +292,7 @@ class Universe:
 		return (spacing*(x-1),spacing*(y-1))
 
 	def create_bonds(self, molecule):
-		bonds = pygame.Surface((self.MOLECULE_MAX_SIZE), 0, self.create_atom('O', copy=False))
+		bonds = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
 		for bond in molecule.bond_layout:
 				x,y = bond.from_pos
 				bond_pos = self.pos2cord(bond.from_pos)
@@ -318,7 +317,7 @@ class Universe:
 		layout = m.atom_layout
 		if layout != None:
 			bonds = self.create_bonds(m)
-			molecule = pygame.Surface(self.MOLECULE_MAX_SIZE, 0, bonds)
+			molecule = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
 			molecule.blit(bonds, (0,0))
 			for pos in layout.keys():
 				symbol = layout[pos]
