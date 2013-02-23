@@ -3,29 +3,18 @@ import getopt, sys, time, os, random, inspect
 import pygame
 from pygame.locals import *
 
-import levels
-from Universe import Universe, Element, Fire
-
-class Config:
-	__config = dict() #Share config by all instance of this class
-	def ___init__(self):
-		self.__dict = self.__config
-
-	def __init__(self, DEBUG = False, level = 1):
-		self.__dict = self.__config
-		self.DEBUG = DEBUG
-		self.level = level
+import molecule.levels
+import molecule.Universe as Universe
+import molecule.Config as Config
 		
 
 class Game:
 	def __init__(self):
 		self.last_collision = 0
-		self.config = Config()
 		self.handle_cmd_options()	
 		self.init_pygame()
-		self.universe = Universe()
-		self.universe.config = self.config
-		
+		Universe.createUniverse()	
+	
 	def init_pygame(self):	
 		pygame.init()
 		self.screen = pygame.display.set_mode((640,480))
@@ -62,9 +51,9 @@ class Game:
 				self.cmd_help()
 				sys.exit()
 			elif o in ("-l", "--level"):
-				self.config.level = int(a)
+				Config.current.level = int(a)
 			elif o in ("-d", "--debug"):
-				self.config.DEBUG = True
+				Config.current.DEBUG = True
 			
 				
 	def cmd_help(self):
@@ -94,9 +83,9 @@ class Game:
 					print "Unkown return code from level, quiting"
 	
 	def get_levels(self):
-		for name, level in inspect.getmembers(levels):
-			if inspect.isclass(level) and issubclass(level,levels.BaseLevel) \
-			   and name != "BaseLevel" and int(name.split("_")[1]) >= self.config.level:
+		for name, level in inspect.getmembers(molecule.levels):
+			if inspect.isclass(level) and issubclass(level,molecule.levels.BaseLevel) \
+			   and name != "BaseLevel" and int(name.split("_")[1]) >= Config.current.level:
 				l = level()
 				yield l
 
@@ -162,7 +151,7 @@ class Game:
 			reacting_elements = list(self.get_colliding_elements())
 		if self.last_collision != len(reacting_elements) + 10000*len(colliding_areas):
 			self.last_collision = len(reacting_elements) + 10000*len(colliding_areas)
-			reaction = self.universe.react(list(self.get_element_symbols(reacting_elements)),
+			reaction = Universe.universe.react(list(self.get_element_symbols(reacting_elements)),
 			                               list(self.get_colliding_areas_name(colliding_areas)))
 			if reaction != None:
 				self.active = None
@@ -170,7 +159,7 @@ class Game:
 					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
 					if element.molecule.formula in reaction.consumed: 
 						element.kill()
-				self.elements.add(self.universe.create_elements(reaction.result, pos = pygame.mouse.get_pos()))
+				self.elements.add(Universe.universe.create_elements(reaction.result, pos = pygame.mouse.get_pos()))
 				
 	
 		self.elements.update()
