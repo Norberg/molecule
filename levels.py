@@ -99,3 +99,17 @@ class Level_6(BaseLevel):
 		to_create["HCl"] = 1
 		to_create["Na2SO4"] = 1 
 		return self.match_molecule(self.elements, to_create)	
+
+class Level_7(BaseLevel):
+	def __init__(self):
+		BaseLevel.__init__(self)
+		self.description = "Create a HCL and a Na2SO4 molecule"
+		e =  self.universe.create_elements(["P4", "O-2", "OH-", "O-2", "H+", "NaCl", "NaCl", "SO3"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Fire((200,100))
+		self.areas = pygame.sprite.RenderUpdates(fire) 
+	def check_victory(self):
+		to_create = dict()
+		to_create["HCl"] = 1
+		to_create["Na2SO4"] = 1 
+		return self.match_molecule(self.elements, to_create)	

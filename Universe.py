@@ -217,6 +217,14 @@ class Universe:
 		m.addBond((1,4),(2,3))
 		m.addBond((4,1),(3,2))
 		self.add_molecule_layout(m)
+		
+		m = Molecule("P4")
+		m.addAtoms([[' ','P',' ','P'],
+                            ['P',' ','P',' ']])
+		m.addBond((1,2),(2,1),3)
+		m.addBond((2,1),(3,2),2)
+		m.addBond((3,2),(4,1),3)
+		self.add_molecule_layout(m)
 			
 	def sublist_in_list(self, sublist, superlist):
 		for e in sublist:
