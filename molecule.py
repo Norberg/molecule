@@ -19,12 +19,12 @@ class Config:
 
 class Game:
 	def __init__(self):
-		self.universe = Universe()
 		self.last_collision = 0
 		self.config = Config()
-		self.universe.config = self.config
 		self.handle_cmd_options()	
 		self.init_pygame()
+		self.universe = Universe()
+		self.universe.config = self.config
 		
 	def init_pygame(self):	
 		pygame.init()
@@ -135,7 +135,7 @@ class Game:
 	"""Take a element generator and return a symbol list"""
 	def get_element_symbols(self, elements):
 		for element in elements:
-			yield element.symbol
+			yield element.molecule.formula
 
 	def event_loop(self):
 		self.clock.tick(30)
@@ -168,7 +168,7 @@ class Game:
 				self.active = None
 				for element in reacting_elements:
 					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
-					if element.symbol in reaction.consumed: 
+					if element.molecule.formula in reaction.consumed: 
 						element.kill()
 				self.elements.add(self.universe.create_elements(reaction.result, pos = pygame.mouse.get_pos()))
 				

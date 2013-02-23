@@ -12,8 +12,8 @@ class BaseLevel:
 		pass
 	def match_molecule(self, elements, to_create):
 		for element in elements:
-			if to_create.has_key(element.symbol):
-				to_create[element.symbol] -= 1
+			if to_create.has_key(element.molecule.formula):
+				to_create[element.molecule.formula] -= 1
 		for element, amount in to_create.iteritems():
 			if amount > 0:
 				return
@@ -29,7 +29,7 @@ class Level_1(BaseLevel):
 	def check_victory(self):
 		#Find out if H2O have been created
 		for element in self.elements:
-			if element.symbol == "H2O":
+			if element.molecule.formula == "H2O":
 				return "victory"
 class Level_2(BaseLevel):
 	def __init__(self):

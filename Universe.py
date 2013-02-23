@@ -1,6 +1,6 @@
-import PyGameUtil
 import glob, random
 import pygame
+import PyGameUtil,util,Bonds
 
 class Reaction:
 	def __init__(self, consumed, result, areas = list()):
@@ -15,12 +15,17 @@ class Reaction:
 		for element in elements:
 			if "0" in element:
 				raise Exception("Tried to create reaction with invalid values")
+
 class Molecule:
+	ATOM_SIZE = 32
+	BOND_LENGHT = 6
+	MOLECULE_MAX_SIZE = 300
 	def __init__(self,formula):
 		self.formula = formula
 		self.atom_layout = dict()
 		self.bond_layout = list()
-
+		self.sprite = None
+		
 	def addAtom(self, pos_x, pos_y, atom):
 		self.atom_layout[(pos_x, pos_y)] = atom
 
@@ -35,8 +40,8 @@ class Molecule:
 			row_nr += 1 	
 	
 	def addBond(self, from_pos, to_pos, nr_of_bonds = 1):
-		self.bond_layout.append(Bond(from_pos, to_pos, nr_of_bonds))
-		self.bond_layout.append(Bond(to_pos, from_pos, nr_of_bonds))
+		self.bond_layout.append(Bonds.Bond(from_pos, to_pos, nr_of_bonds))
+		self.bond_layout.append(Bonds.Bond(to_pos, from_pos, nr_of_bonds))
 	
 	def autoBonds(self):
 		for pos in self.atom_layout.keys():
@@ -46,65 +51,96 @@ class Molecule:
 			if self.atom_layout.has_key((x+1, y)): #Right
 				self.addBond(pos, (x+1,y))
 
-class Bond:
-	def __init__(self, from_pos, to_pos, nr_of_bonds = 1):
-		self.from_pos = from_pos
-		self.to_pos = to_pos
-		self.nr_of_bonds = nr_of_bonds
+	def createMoleculeSprite(self):
+		if util.isAtom(self.formula):
+			return self.createAtomSprite(self.formula)
 
-class BondImage:
-	def __init__(self, path, is_vertical=False):
-		self.bond = list()
-		self.bond.append(pygame.image.load(path))
-		
-		if is_vertical:
-			b2pos1 = (-3,0)
-			b2pos2 = (3,0)
-			b3pos1 = (-5,0)
-			b3pos2 = (0,0)
-			b3pos3 = (5,0)
+		bond = self.createBonds()
+		self.sprite = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
+		self.sprite.blit(bond, (0,0))
+		for pos, symbol in self.atom_layout.iteritems():
+			atom = self.createAtomSprite(symbol)
+			self.sprite.blit(atom, self.pos2cord(pos))
+		return self.sprite
+	
+	def get_electric_charge(self, symbol):
+		value = 0
+		if symbol.count("-") == 1:
+			v = symbol.split("-")[1]
+			if v == "":
+				value = -1
+			else:
+				value = -int(v)
+
+		elif symbol.count("+") == 1:
+			v = symbol.split("+")[1]
+			if v == "":
+				value = 1
+			else:
+				value = int(v)
+		return value	
+
+	def createAtomSprite(self,symbol):
+		if PyGameUtil.hasObject(symbol):
+			atom =  PyGameUtil.getObject(symbol)
 		else:
-			b2pos1 = (0,-3)
-			b2pos2 = (0,3)
-			b3pos1 = (0,-5)
-			b3pos2 = (0,0)
-			b3pos3 = (0,5)
-		
-		b = PyGameUtil.createSurface(64)	
-		b.blit(self.get(1), b2pos1)
-		b.blit(self.get(1), b2pos2)
-		self.bond.append(b)
+			no_charge = self.get_only_atom_symbol(symbol)
+			atom =  PyGameUtil.loadImage("img/atom-" + no_charge.lower() + ".png").copy()
+			charge = self.get_electric_charge(symbol)
+			if charge == 0:
+				pass
+			elif charge == -1:
+				atom.blit(PyGameUtil.loadImage("img/e-1.png"), (0,0))
+			elif charge == -2:
+				atom.blit(PyGameUtil.loadImage("img/e-2.png"), (0,0))
+			elif charge == 1:
+				atom.blit(PyGameUtil.loadImage("img/e+1.png"), (0,0))
+			elif charge == 2:
+				atom.blit(PyGameUtil.loadImage("img/e+2.png"), (0,0))
+			PyGameUtil.storeObject(symbol, atom)
+		return atom
+	
+	def pos2cord(self, pos):
+		spacing = self.ATOM_SIZE + self.BOND_LENGHT/2	
+		x, y = pos
+		return (spacing*(x-1),spacing*(y-1))
 
-		b = PyGameUtil.createSurface(64)	
-		b.blit(self.get(1), b3pos1)
-		b.blit(self.get(1), b3pos2)
-		b.blit(self.get(1), b3pos3)
-		self.bond.append(b)
+	def createBonds(self):
+		bonds = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
+		for bond in self.bond_layout:
+				x,y = bond.from_pos
+				bond_pos = self.pos2cord(bond.from_pos)
+				bond_nr = bond.nr_of_bonds
+				if bond.to_pos == (x,y+1): #South
+					bonds.blit(Bonds.vertical.get(bond_nr), bond_pos)
+				elif bond.to_pos == (x+1, y): #West
+					bonds.blit(Bonds.horizontal.get(bond_nr), bond_pos)
+				elif bond.to_pos == (x+1,y-1): #NorthWest
+					bond_pos = self.pos2cord((x,y-1))
+					bonds.blit(Bonds.northwest.get(bond_nr), bond_pos)
+				elif bond.to_pos == (x+1,y+1): #SouthWest
+					bonds.blit(Bonds.southwest.get(bond_nr), bond_pos)
+					
+		return bonds
 
-	def get(self, bond):
-		return self.bond[bond-1]		
-		
+
+	""" returns the atom symbol without any electric charge """
+	def get_only_atom_symbol(self, symbol):
+		return symbol.split("-")[0].split("+")[0]
+
+
 
 class Universe:
-	ATOM_SIZE = 32
-	BOND_LENGHT = 6
-	MOLECULE_MAX_SIZE = 300
-	__entropy = dict() #Current and shared entropy in the whole universe and all its instances
+	__entropy = dict() #Current and shared entropy of the whole universe and all its instances
 	"""Universe contains all fundamental particles and laws needed to get the universe to spin"""
 	def __init__(self):
 		self.__dict = self.__entropy
 		self.moelcules = dict()
 		self.config = None
-		self.__init__bonds()
 		self.__init__molecule_table()
 		self.__init__reactions()
+		Bonds.init__bonds()
 
-	def __init__bonds(self):
-		self.bond_horizontal = BondImage("img/bond-horizontal.png")
-		self.bond_vertical = BondImage("img/bond-vertical.png", is_vertical = True)
-		self.bond_northwest = BondImage("img/bond-northwest.png")
-		self.bond_southwest = BondImage("img/bond-southwest.png")
-		
 	def __init__reactions(self):
 		self.reactions = list()
 		self.reactions.append(Reaction(["O-2","H+"], ["OH-"]))
@@ -226,18 +262,13 @@ class Universe:
 		m.addBond((3,2),(4,1),3)
 		self.add_molecule_layout(m)
 			
-	def sublist_in_list(self, sublist, superlist):
-		for e in sublist:
-			if sublist.count(e) > superlist.count(e):
-				return False
-		return True
 
 	def reaction_table(self, elem, areas):
 		for reaction in self.reactions:
 			if self.config.DEBUG: print "if", reaction.consumed, "exists in", elem
-			if self.sublist_in_list(reaction.consumed, elem):
+			if util.sublist_in_list(reaction.consumed, elem):
 				#all elements needed for the reaction exists in the reacting elements
-				if self.sublist_in_list(reaction.areas, areas):
+				if util.sublist_in_list(reaction.areas, areas):
 					#all areas need for reaction was present
 					print reaction.consumed, "+", areas, "->", reaction.result
 					return reaction	
@@ -251,105 +282,11 @@ class Universe:
 	def molecule_table(self, molecule):
 		if self.molecule_layouts.has_key(molecule):
 			return self.molecule_layouts[molecule]
+		elif util.isAtom(molecule):
+			return Molecule(molecule)
 		else:
 			raise Exception("No layout found for:" + molecule)
-
-	def get_electric_charge(self, symbol):
-		value = 0
-		if symbol.count("-") == 1:
-			v = symbol.split("-")[1]
-			if v == "":
-				value = -1
-			else:
-				value = -int(v)
-
-		elif symbol.count("+") == 1:
-			v = symbol.split("+")[1]
-			if v == "":
-				value = 1
-			else:
-				value = int(v)
-		return value	
-
-	def create_atom(self, symbol, copy=True):
-		if not self.moelcules.has_key(symbol):
-			no_charge = self.get_only_atom_symbol(symbol)
-			a =  pygame.image.load("img/atom-" + no_charge.lower() + ".png")
-			atom = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
-			atom.blit(a, (0,0))
-			charge = self.get_electric_charge(symbol)
-			if charge == 0:
-				pass
-			elif charge == -1:
-				atom.blit(pygame.image.load("img/e-1.png"), (0,0))
-			elif charge == -2:
-				atom.blit(pygame.image.load("img/e-2.png"), (0,0))
-			elif charge == 1:
-				atom.blit(pygame.image.load("img/e+1.png"), (0,0))
-			elif charge == 2:
-				atom.blit(pygame.image.load("img/e+2.png"), (0,0))
-			self.moelcules[symbol] = atom		
-		if copy:
-			return self.moelcules[symbol].copy()
-		else:
-			return self.moelcules[symbol]
 	
-	def pos2cord(self, pos):
-		spacing = self.ATOM_SIZE + self.BOND_LENGHT/2	
-		x, y = pos
-		return (spacing*(x-1),spacing*(y-1))
-
-	def create_bonds(self, molecule):
-		bonds = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
-		for bond in molecule.bond_layout:
-				x,y = bond.from_pos
-				bond_pos = self.pos2cord(bond.from_pos)
-				bond_nr = bond.nr_of_bonds
-				if bond.to_pos == (x,y+1): #South
-					bonds.blit(self.bond_vertical.get(bond_nr), bond_pos)
-				elif bond.to_pos == (x+1, y): #West
-					bonds.blit(self.bond_horizontal.get(bond_nr), bond_pos)
-				elif bond.to_pos == (x+1,y-1): #NorthWest
-					bond_pos = self.pos2cord((x,y-1))
-					bonds.blit(self.bond_northwest.get(bond_nr), bond_pos)
-				elif bond.to_pos == (x+1,y+1): #SouthWest
-					bonds.blit(self.bond_southwest.get(bond_nr), bond_pos)
-					
-		return bonds
-
-	def create_molecule(self, symbol):
-		if self.is_atom(symbol):
-			return self.create_atom(symbol)
-
-		m = self.molecule_table(symbol)
-		layout = m.atom_layout
-		if layout != None:
-			bonds = self.create_bonds(m)
-			molecule = PyGameUtil.createSurface(self.MOLECULE_MAX_SIZE)
-			molecule.blit(bonds, (0,0))
-			for pos in layout.keys():
-				symbol = layout[pos]
-				atom = self.create_atom(symbol, copy=False)
-				molecule.blit(atom, self.pos2cord(pos))
-			return molecule
-		else:
-			raise Exception("Failed to generate: " + symbol)
-
-	#returns the atom symbol without any electric charge
-	def get_only_atom_symbol(self, symbol):
-		return symbol.split("-")[0].split("+")[0]
-
-	def is_atom(self, symbol):
-		symbol = symbol.split("-")[0].split("+")[0] #Remove +/-
-		if len(symbol) == 1 and symbol.isalpha(): # H, O, F etc.
-			return True
-		elif len(symbol) == 2 and symbol.isalpha() and symbol[1].islower(): #Fe, Mg, Na etc.
-			return True
-		elif len(symbol) == 3 and symbol.isalpha() and symbol[1:3].islower(): #Uut, Uup, Uus etc.
-			return True
-		else:
-			return False
-
 	def create_elements(self, elements, pos=None):
 		list_of_elements = list()
 		if pos != None:
@@ -360,23 +297,25 @@ class Universe:
 		for element in elements:
 			if pos != None and len(elements) > 1:
 				pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-			list_of_elements.append(Element(element, pos))
+			molecule = self.molecule_table(element)
+			list_of_elements.append(Element(molecule, pos))
 		return tuple(list_of_elements)
-	
+
 	def react(self, elements, areas):
 		if len(elements) < 2:
 			return
 		if self.config.DEBUG: print "Trying to see if some of this react:", elements
 		reaction = self.reaction_table(elements, areas)
 		if reaction != None:
-			return reaction 
+			return reaction
+ 
 class Element(pygame.sprite.Sprite):
 	"""Element - The universal building block of atoms and molecules"""
-	def __init__(self, symbol, pos=None):
+	def __init__(self, molecule, pos=None):
 		pygame.sprite.Sprite.__init__(self)
 		self.universe = Universe()
-		self.symbol = symbol
-		self.image = self.universe.create_molecule(symbol)
+		self.molecule = molecule
+		self.image = self.molecule.createMoleculeSprite()
 		self.rect = self.image.get_bounding_rect()
 		self.active = False
 		if pos == None:
@@ -413,7 +352,7 @@ class Fire(pygame.sprite.Sprite):
 		self.frames = 50
 		self.animations = list()
 		for img in sorted(glob.glob("img/fire/50 frames/*")):
-			self.animations.append(pygame.image.load(img))
+			self.animations.append(PyGameUtil.loadImage(img))
 		self.image = self.animations[self.current_frame]
 		self.rect = self.image.get_bounding_rect()
 		self.rect.move_ip(pos)
