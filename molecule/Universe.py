@@ -28,18 +28,28 @@ class Universe:
 		self.reactions.append(Reaction(2*["NH3"] + ["CO2"], ["CH4N2O"] + ["H2O"]))
 		self.reactions.append(Reaction(["SO3", "H2O"], ["H2SO4"]))
 		self.reactions.append(Reaction(["H2SO4"] + 2*["NaCl"], 2*["HCl"] + ["Na2SO4"]))
+		self.reactions.append(Reaction(2*["N"], ["N2"]))
+		self.reactions.append(Reaction(3*["H2"]+ ["N2"], 2*["NH3"]))
+		self.reactions.append(Reaction(["C2H6O"]+ 3* ["O2"], 2*["CO2"] + 3*["H2O"]))
+		self.reactions.append(Reaction(["CaO2H2"]+ ["Na2CO3"], ["CaCO3"] + 2*["NaOH"]))
 
 	def __init__molecule_table(self):
 		print "init molecule table"
 		self.molecule_layouts = dict()
+	
+		self.add_atom("O", 249, 161) #gas	
+		self.add_atom("H", 218, 114) #gas
+		self.add_atom("S", 277, 168) #gas
+		self.add_atom("Na", 0, 51) #solid
+		self.add_atom("Al", 0, 28) #solid
+		self.add_atom("Ca", 0, 42) #solid
+		self.add_atom("C", 0, 45.8) #solid, graphite
+		self.add_atom("Cl", 121, 165) #gas
+		self.add_atom("Cl-", -234, 153) #solid
+		self.add_atom("F", 79, 159) #gas
+		self.add_atom("N", 473, 153) #gas
+		self.add_atom("P", 0, 41) #solid, white
 		
-		m = Molecule("O", 249, 161) #gas
-		m.addAtoms([["O"]])
-		self.add_molecule_layout(m)
-		
-		m = Molecule("H", 218, 114) #gas
-		m.addAtoms([["O"]])
-		self.add_molecule_layout(m)
 
 		m = Molecule("OH-", -230, -11) #aq
 		m.addAtoms([['O','H-']])
@@ -75,6 +85,12 @@ class Universe:
                             [' ','H',' ']])
 		self.add_molecule_layout(m)
 		
+		m = Molecule("N2", 0, 192) #qas
+		m.addAtoms([['N','N']])
+		m.addBond((1,1),(2,1),3)
+		self.add_molecule_layout(m)
+
+		self.add_molecule_layout(m)
 		m = Molecule("NH3", -46, 193) #gas
 		m.addAtoms([['H',' ','H'],
                             [' ','N',' '],
@@ -152,7 +168,55 @@ class Universe:
 		m.addBond((3,2),(2,3))
 		m.addBond((3,2),(4,3))
 		self.add_molecule_layout(m)
+		
+		m = Molecule("C2H6O", -278, 161) #aq
+		m.addAtoms([[' ','H','H',' ','H'],
+                            ['H','C','C','O',' '],
+                            [' ','H','H',' ',' ']])
+		m.addBond((2,1),(2,2))
+		m.addBond((3,1),(3,2))
+		m.addBond((5,1),(4,2))
+		m.addBond((1,2),(2,2))
+		m.addBond((2,2),(3,2))
+		m.addBond((3,2),(4,2))
+		m.addBond((2,2),(2,3))
+		m.addBond((3,2),(3,3))
+		self.add_molecule_layout(m)
+		
+		m = Molecule("CaO2H2", -986, 83) #solid
+		m.addAtoms([[' ',' ','Ca',' ',' '],
+                            ['H','O',' ', 'O','H']])
+		m.autoBonds()
+		m.addBond((2,2), (3,1))
+		m.addBond((4,2), (3,1))
+		self.add_molecule_layout(m)
+		
+		m = Molecule("Na2CO3", -1108, 156) #aq
+		m.addAtoms([[' ', 'O',' ','O',' '],
+                            ['Na',' ','C',' ','Na'],
+                            [' ', ' ','O',' ',' ']])
+		m.autoBonds()
+		m.addBond((1,2), (2,1))
+		m.addBond((2,1), (3,2))
+		m.addBond((3,2), (3,3),2)
+		m.addBond((3,2), (4,1))
+		m.addBond((4,1), (5,2))
+		self.add_molecule_layout(m)
+		
+		m = Molecule("CaCO3", -1207, 93) #solid
+		m.addAtoms([['Ca','O',' '],
+                            ['O', 'C',' '],
+                            [' ', ' ','O']])
+		m.addBond((1,1), (2,1))
+		m.addBond((1,1), (1,2))
+		m.addBond((1,2), (2,2))
+		m.addBond((2,1), (2,2))
+		m.addBond((3,3), (2,2), 2)
+		self.add_molecule_layout(m)
 			
+		m = Molecule("NaOH", -470, 50) #aq
+		m.addAtoms([['Na','O','H']])
+		self.add_molecule_layout(m)
 
 	def reaction_table(self, elem, effects):
 		for reaction in self.reactions:
@@ -175,6 +239,11 @@ class Universe:
 		if len(molecule.bond_layout) == 0:
 			molecule.autoBonds()
 		self.molecule_layouts[molecule.formula] = molecule
+		
+	def add_atom(self, symbol, enthalpy, entropy):
+		m = Molecule(symbol, enthalpy, entropy)
+		m.addAtoms([[symbol]])
+		self.add_molecule_layout(m)
 			
 				
 	def molecule_table(self, molecule):

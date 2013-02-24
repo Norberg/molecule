@@ -112,3 +112,16 @@ class Level_7(BaseLevel):
 		to_create = dict()
 		to_create["CH4N2O"] = 1 
 		return self.match_molecule(self.elements, to_create)	
+
+class Level_8(BaseLevel):
+	def __init__(self):
+		BaseLevel.__init__(self)
+		self.description = "Create a CaCO3 molecule"
+		e = Universe.universe.create_elements(["O2", "O2", "O2", "N", "N", "O", "CaO2H2", "Na2CO3", "SO3", "H2", "H2", "H2"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Effects.Fire((200,100))
+		self.areas = pygame.sprite.RenderUpdates(fire) 
+	def check_victory(self):
+		to_create = dict()
+		to_create["CaCO3"] = 1 
+		return self.match_molecule(self.elements, to_create)	
