@@ -4,9 +4,10 @@ import PyGameUtil
 
 class Fire(pygame.sprite.Sprite):
 	"""Fire"""
-	def __init__(self, pos):
+	def __init__(self, pos, temp=1000):
 		pygame.sprite.Sprite.__init__(self)
 		self.name = "Fire"
+		self.temp = temp
 		self.current_frame = 0
 		self.frames = 50
 		self.animations = list()

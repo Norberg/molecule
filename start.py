@@ -117,10 +117,6 @@ class Game:
 			for collition in pygame.sprite.spritecollide(self.active, self.areas, False):
 				yield collition
 
-	def get_colliding_areas_name(self, areas):
-		for area in areas:
-			yield area.name
-
 	"""Take a element generator and return a symbol list"""
 	def get_element_symbols(self, elements):
 		for element in elements:
@@ -152,14 +148,14 @@ class Game:
 		if self.last_collision != len(reacting_elements) + 10000*len(colliding_areas):
 			self.last_collision = len(reacting_elements) + 10000*len(colliding_areas)
 			reaction = Universe.universe.react(list(self.get_element_symbols(reacting_elements)),
-			                               list(self.get_colliding_areas_name(colliding_areas)))
+			                                   colliding_areas)
 			if reaction != None:
 				self.active = None
 				for element in reacting_elements:
 					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
-					if element.molecule.formula in reaction.consumed: 
+					if element.molecule.formula in reaction.reactants: 
 						element.kill()
-				self.elements.add(Universe.universe.create_elements(reaction.result, pos = pygame.mouse.get_pos()))
+				self.elements.add(Universe.universe.create_elements(reaction.products, pos = pygame.mouse.get_pos()))
 				
 	
 		self.elements.update()
