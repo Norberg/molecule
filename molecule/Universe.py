@@ -1,4 +1,5 @@
 import glob, random
+import pymunk
 import pygame
 import PyGameUtil,util,Bonds
 from Reaction import Reaction
@@ -37,18 +38,18 @@ class Universe:
 		print "init molecule table"
 		self.molecule_layouts = dict()
 	
-		self.add_atom("O", 249, 161) #gas	
-		self.add_atom("H", 218, 114) #gas
-		self.add_atom("S", 277, 168) #gas
-		self.add_atom("Na", 0, 51) #solid
-		self.add_atom("Al", 0, 28) #solid
-		self.add_atom("Ca", 0, 42) #solid
-		self.add_atom("C", 0, 45.8) #solid, graphite
-		self.add_atom("Cl", 121, 165) #gas
-		self.add_atom("Cl-", -234, 153) #solid
-		self.add_atom("F", 79, 159) #gas
-		self.add_atom("N", 473, 153) #gas
-		self.add_atom("P", 0, 41) #solid, white
+		self.add_atom("O", 249, 161, 16) #gas	
+		self.add_atom("H", 218, 114, 1) #gas
+		self.add_atom("S", 277, 168, 32) #gas
+		self.add_atom("Na", 0, 51, 23) #solid
+		self.add_atom("Al", 0, 28, 27) #solid
+		self.add_atom("Ca", 0, 42, 40) #solid
+		self.add_atom("C", 0, 45.8, 12) #solid, graphite
+		self.add_atom("Cl", 121, 165, 35) #gas
+		self.add_atom("Cl-", -234, 153, 35) #solid
+		self.add_atom("F", 79, 159, 19) #gas
+		self.add_atom("N", 473, 153, 14) #gas
+		self.add_atom("P", 0, 41, 31) #solid, white
 		
 
 		m = Molecule("OH-", -230, -11) #aq
@@ -240,8 +241,8 @@ class Universe:
 			molecule.autoBonds()
 		self.molecule_layouts[molecule.formula] = molecule
 		
-	def add_atom(self, symbol, enthalpy, entropy):
-		m = Molecule(symbol, enthalpy, entropy)
+	def add_atom(self, symbol, enthalpy, entropy, mass):
+		m = Molecule(symbol, enthalpy, entropy, mass)
 		m.addAtoms([[symbol]])
 		self.add_molecule_layout(m)
 			
@@ -254,7 +255,12 @@ class Universe:
 		else:
 			raise Exception("No layout found for:" + molecule)
 	
-	def create_elements(self, elements, pos=None):
+	def create_elements(self, space, elements, pos=None):
+		""" Create a set of elements
+		body: shape to attach molecule to
+		element: list of elements to create
+		pos : position of the new element
+		"""	
 		list_of_elements = list()
 		if pos != None:
 			x, y = pos
@@ -265,7 +271,7 @@ class Universe:
 			if pos != None and len(elements) > 1:
 				pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
 			molecule = self.molecule_table(element)
-			list_of_elements.append(MoleculeSprite(molecule, pos))
+			list_of_elements.append(MoleculeSprite(molecule, space,  pos))
 		return tuple(list_of_elements)
 
 	def react(self, elements, areas):
@@ -281,5 +287,4 @@ print "univers = None"
 def createUniverse():
 	global universe
 	universe = Universe()
-	universe.create_elements("H")
 	print "Creaded the Universe"

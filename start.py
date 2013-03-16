@@ -2,6 +2,9 @@ import getopt, sys, time, os, random, inspect
  
 import pygame
 from pygame.locals import *
+import pymunk
+
+from pymunk.pygame_util import draw_space
 
 import molecule.levels
 import molecule.Universe as Universe
@@ -13,11 +16,13 @@ class Game:
 		self.last_collision = 0
 		self.handle_cmd_options()	
 		self.init_pygame()
-		Universe.createUniverse()	
+		self.space = None
+		Universe.createUniverse()
+		self.count = 0	
 	
 	def init_pygame(self):	
 		pygame.init()
-		self.screen = pygame.display.set_mode((640,480))
+		self.screen = pygame.display.set_mode(Config.current.screenSize)
 		pygame.display.set_caption('Molecule - A molecule builing puzzle game')
 		self.clock = pygame.time.Clock()
 
@@ -94,6 +99,7 @@ class Game:
 		self.write_on_background(level.description)
 		self.elements = level.elements
 		self.areas = level.areas
+		self.space = level.space
 		while 1:
 			event = self.event_loop()
 			if event != None:
@@ -122,8 +128,15 @@ class Game:
 		for element in elements:
 			yield element.molecule.formula
 
+	def update_active(self):
+		if self.active != None:
+			self.active.update()
+
 	def event_loop(self):
+		self.space.step(1/60.0)
+		self.space.step(1/60.0)
 		self.clock.tick(30)
+		self.update_active()
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				return QUIT
@@ -153,11 +166,11 @@ class Game:
 				self.active = None
 				for element in reacting_elements:
 					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
-					if element.molecule.formula in reaction.reactants: 
+					if element.molecule.formula in reaction.reactants:
+						self.space.remove(element.shape) 
 						element.kill()
-				self.elements.add(Universe.universe.create_elements(reaction.products, pos = pygame.mouse.get_pos()))
+				self.elements.add(Universe.universe.create_elements(self.space, reaction.products, pos = pygame.mouse.get_pos()))
 				
-	
 		self.elements.update()
 		self.areas.update()
 		self.screen.blit(self.background, (0, 0))
@@ -165,6 +178,7 @@ class Game:
 		#	pygame.draw.rect(screen, pygame.color.Color("black"), active.rect)
 		self.areas.draw(self.screen)
 		self.elements.draw(self.screen)
+		#draw_space(self.screen, self.space)	
 		pygame.display.flip()
 			
 

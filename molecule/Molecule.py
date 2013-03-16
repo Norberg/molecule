@@ -1,18 +1,22 @@
 import random
+import pymunk
 import pygame
 import PyGameUtil,util,Bonds
+import molecule.Config as Config
+from pymunk.vec2d import Vec2d
 
 class Molecule:
 	ATOM_SIZE = 32
 	BOND_LENGHT = 6
 	MOLECULE_MAX_SIZE = 300
-	def __init__(self,formula, enthalpy = 0, entropy = 0):
+	def __init__(self,formula, enthalpy = 0, entropy = 0, mass = 10):
 		self.formula = formula
 		self.atom_layout = dict()
 		self.bond_layout = list()
 		self.sprite = None
 		self.enthalpy = enthalpy # aka H
 		self.entropy = entropy # aka S
+		self.mass = mass
 		
 	def addAtom(self, pos_x, pos_y, atom):
 		self.atom_layout[(pos_x, pos_y)] = atom
@@ -117,22 +121,43 @@ class Molecule:
 		return symbol.split("-")[0].split("+")[0]
 
 class MoleculeSprite(pygame.sprite.Sprite):
-	def __init__(self, molecule, pos=None):
+	def __init__(self, molecule, space, pos=None):
 		pygame.sprite.Sprite.__init__(self)
 		self.molecule = molecule
 		self.image = self.molecule.createMoleculeSprite()
 		self.rect = self.image.get_bounding_rect()
 		self.active = False
+		self.init_chipmunk(space)
 		if pos == None:
-			self.rect.move_ip(random.randint(10, 600), random.randint(10, 400))
+			self.move((random.randint(10, 600), random.randint(10, 400)))
 		else:
-			self.rect.move_ip(pos)
+			self.move(pos)
 				
+	def init_chipmunk(self,space):	
+		body = pymunk.Body(10,pymunk.moment_for_circle(10, 0, 16))
+		shape = pymunk.Circle(body, 16)
+		space.add(shape, body)
+		self.shape = shape
+		self.shape.elasticity = 0.95
+		x = random.randrange(-10, 10)/10.0
+		y = random.randrange(-10, 10)/10.0
+		vec = Vec2d(x,y)
+		force = 3000
+		body.apply_impulse(force * vec)		
 
+	def move(self, pos):
+		self.rect.center = pos
+		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
+		
 	def update(self):
-		if self.active:	
+		if self.active:
+			old_pos = self.rect.center
 			pos = pygame.mouse.get_pos()
-			self.rect.midtop = pos
+			self.move(pos)
+			self.shape.body.velocity = Vec2d(pos) - Vec2d(old_pos)
+			self.shape.body.mass = 1000
+		else:
+			self.rect.center =  pymunk.pygame_util.to_pygame(self.shape.body.position, Config.current.screen)
 
 	def clicked(self):
 		if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -144,6 +169,9 @@ class MoleculeSprite(pygame.sprite.Sprite):
 	def unclicked(self):
 		if self.active:
 			self.active = False
+			self.shape.body.velocity = Vec2d(0,0)
+			self.shape.body.mass = self.molecule.mass
 			return True
 		else:
 			return False
+

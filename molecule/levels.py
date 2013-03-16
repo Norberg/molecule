@@ -1,13 +1,30 @@
 import pygame
+import pymunk
 import Universe
 import Effects
+import molecule.Config as Config
  
 class BaseLevel:
 	def __init__(self):
 		self.description = None
 		self.elements = None
 		self.areas = pygame.sprite.Group()
-		pass
+		self.init_chipmunk()
+		
+	def init_chipmunk(self):
+		self.space = pymunk.Space()
+		#self.space.gravity = (0.0, -500.0)
+		max_x = Config.current.screenSize[0]
+		max_y = Config.current.screenSize[1]
+		walls = [pymunk.Segment(self.space.static_body, (0,0), (max_x, 0), 1),
+		         pymunk.Segment(self.space.static_body, (0, 0), (0, max_y), 1),
+		         pymunk.Segment(self.space.static_body, (0, max_y), (max_x, max_y), 1),
+		         pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, 0), 1)
+                ]
+		for wall in walls:
+			wall.elasticity = 0.95
+		self.space.add(walls)
+
 	def check_victory(self):
 		pass
 	def match_molecule(self, elements, to_create):
@@ -24,7 +41,8 @@ class Level_1(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a water molecule"
-		e =  Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
+		#e =  Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
+		e =  Universe.universe.create_elements(self.space, ["H+", "O", "P", "O", "H+", "F", "Al"])
 		self.elements = pygame.sprite.RenderUpdates(e)
 	def check_victory(self):
 		#Find out if H2O have been created
