@@ -139,6 +139,8 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		space.add(shape, body)
 		self.shape = shape
 		self.shape.elasticity = 0.95
+		self.shape.collision_type = 1
+		self.shape.sprite = self
 		x = random.randrange(-10, 10)/10.0
 		y = random.randrange(-10, 10)/10.0
 		vec = Vec2d(x,y)

@@ -100,6 +100,7 @@ class Game:
 		self.elements = level.elements
 		self.areas = level.areas
 		self.space = level.space
+		self.space.add_collision_handler(1, 1, post_solve=self.element_collision)
 		while 1:
 			event = self.event_loop()
 			if event != None:
@@ -107,26 +108,46 @@ class Game:
 			if level.check_victory() == "victory":
 				return "victory"
 
-	"""Return a generator with all colliding elements, set to_match to sprite if not mathing against active sprite"""
-	def get_colliding_elements(self, to_match = None):
-		if self.active != None and to_match == None:
-			for collition in pygame.sprite.spritecollide(self.active, self.elements, False):
-				yield collition
-		elif to_match != None:
-			for collition in pygame.sprite.spritecollide(to_match, self.elements, False):
-				yield collition
-			
+	def element_collision(self, space, arbiter):
+		a,b = arbiter.shapes
+		reacting_areas = list(self.get_affecting_areas(a.body.position))
+		collisions = space.nearest_point_query(a.body.position, 30)
+		reacting_elements = list(self.get_element_symbols(collisions))
+		reaction = Universe.universe.react(reacting_elements, reacting_areas)
+		if reaction != None:
+			space.add_post_step_callback(self.perform_reaction, reaction, collisions, a.body.position)
 
-	"""Return all areas that collidies with active element"""
-	def get_colliding_areas(self):
-		if self.active != None:
-			for collition in pygame.sprite.spritecollide(self.active, self.areas, False):
-				yield collition
+	def perform_reaction(self, reaction, collisions, position):
+		self.destroy_elements(reaction.reactants, collisions)
+		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
+		self.elements.add(Universe.universe.create_elements(self.space, reaction.products, position))
 
-	"""Take a element generator and return a symbol list"""
-	def get_element_symbols(self, elements):
-		for element in elements:
-			yield element.molecule.formula
+	def destroy_elements(self, elements_to_destroy, collisions):
+		""" Destroy a list of elements from a dict of collisions"""
+		elements = list(elements_to_destroy)
+		for collision in collisions:
+			if collision["shape"].collision_type == 1:
+				shape = collision["shape"]
+				sprite = shape.sprite
+				formula = sprite.molecule.formula
+				if formula in elements:
+					elements.remove(formula)
+					self.space.remove(shape)
+					sprite.kill()
+
+
+	def get_affecting_areas(self, position):
+		"""Return all areas that have a affect on position"""
+		shapes = self.space.point_query(position)
+		for shape in shapes:
+			if shape.collision_type == 2:
+				yield shape.effect
+
+	def get_element_symbols(self, collisions):
+		"""Take a collison dict and return a list of symbols"""
+		for collision in collisions:
+			if collision["shape"].collision_type == 1:
+				yield collision["shape"].sprite.molecule.formula
 
 	def update_active(self):
 		if self.active != None:
@@ -152,7 +173,7 @@ class Game:
 			elif event.type is MOUSEBUTTONUP and self.active != None: 
 				self.active.unclicked()
 				self.active = None
-		
+		"""	
 		colliding_areas = list(self.get_colliding_areas())
 		if len(colliding_areas) > 0:
 			reacting_elements = list(self.get_colliding_elements(to_match = colliding_areas[0]))
@@ -170,7 +191,7 @@ class Game:
 						self.space.remove(element.shape) 
 						element.kill()
 				self.elements.add(Universe.universe.create_elements(self.space, reaction.products, pos = pygame.mouse.get_pos()))
-				
+		"""	
 		self.elements.update()
 		self.areas.update()
 		self.screen.blit(self.background, (0, 0))

@@ -57,8 +57,8 @@ class Reaction:
 		for element in elements:
 			yield Universe.universe.molecule_table(element)
 
-	"""Sanity check of symbol name, make sure no zeros have been used by mistake"""
 	def verify(self, elements):
+		"""Sanity check of symbol name, make sure no zeros have been used by mistake"""
 		for element in elements:
 			if "0" in element:
 				raise Exception("Tried to create reaction with invalid values")

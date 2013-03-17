@@ -23,6 +23,7 @@ class BaseLevel:
                 ]
 		for wall in walls:
 			wall.elasticity = 0.95
+			wall.collision_type = 0
 		self.space.add(walls)
 
 	def check_victory(self):
@@ -41,7 +42,6 @@ class Level_1(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a water molecule"
-		#e =  Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
 		e =  Universe.universe.create_elements(self.space, ["H+", "O", "P", "O", "H+", "F", "Al"])
 		self.elements = pygame.sprite.RenderUpdates(e)
 	def check_victory(self):
@@ -53,9 +53,9 @@ class Level_2(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CO and 3 H2 molecules"
-		e = Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
+		e = Universe.universe.create_elements(self.space,["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -67,9 +67,9 @@ class Level_3(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CO and 3 H20 molecules"
-		e = Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
+		e = Universe.universe.create_elements(self.space,["H+", "O", "OH-", "O", "H+", "CO2", "CH4"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -81,9 +81,9 @@ class Level_4(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CO2 and 2 H20 molecules"
-		e = Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "CH4", "O2"])
+		e = Universe.universe.create_elements(self.space,["H+", "O", "OH-", "O", "H+", "CH4", "O2"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -95,9 +95,9 @@ class Level_5(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a NH4+ molecule"
-		e = Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "NH3", "O2"])
+		e = Universe.universe.create_elements(self.space,["H+", "O", "OH-", "O", "H+", "NH3", "O2"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -108,9 +108,9 @@ class Level_6(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a HCL and a Na2SO4 molecule"
-		e = Universe.universe.create_elements(["H+", "O", "OH-", "O", "H+", "NaCl", "NaCl", "SO3"])
+		e = Universe.universe.create_elements(self.space,["H+", "O", "OH-", "O", "H+", "NaCl", "NaCl", "SO3"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100), 30000)
+		fire = Effects.Fire((200,100),self.space, 30000)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -122,9 +122,9 @@ class Level_7(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CH4NO2 molecule"
-		e = Universe.universe.create_elements(["P4", "NH3", "NH3", "O", "CO2", "NaCl", "SO3"])
+		e = Universe.universe.create_elements(self.space,["P4", "NH3", "NH3", "O", "CO2", "NaCl", "SO3"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
@@ -135,9 +135,9 @@ class Level_8(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CaCO3 molecule"
-		e = Universe.universe.create_elements(["O2", "O2", "O2", "N", "N", "O", "CaO2H2", "Na2CO3", "SO3", "H2", "H2", "H2"])
+		e = Universe.universe.create_elements(self.space,["O2", "O2", "O2", "N", "N", "O", "CaO2H2", "Na2CO3", "SO3", "H2", "H2", "H2"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100))
+		fire = Effects.Fire((200,100),self.space)
 		self.areas = pygame.sprite.RenderUpdates(fire) 
 	def check_victory(self):
 		to_create = dict()
