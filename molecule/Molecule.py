@@ -144,7 +144,7 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		x = random.randrange(-10, 10)/10.0
 		y = random.randrange(-10, 10)/10.0
 		vec = Vec2d(x,y)
-		force = 3000
+		force = 1500
 		body.apply_impulse(force * vec)		
 
 	def move(self, pos):
@@ -152,28 +152,4 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
 		
 	def update(self):
-		if self.active:
-			old_pos = self.rect.center
-			pos = pygame.mouse.get_pos()
-			self.move(pos)
-			self.shape.body.velocity = Vec2d(pos) - Vec2d(old_pos)
-			self.shape.body.mass = 1000
-		else:
-			self.rect.center =  pymunk.pygame_util.to_pygame(self.shape.body.position, Config.current.screen)
-
-	def clicked(self):
-		if self.rect.collidepoint(pygame.mouse.get_pos()):
-			self.active = True
-			return True
-		else:
-			return False
-
-	def unclicked(self):
-		if self.active:
-			self.active = False
-			self.shape.body.velocity = Vec2d(0,0)
-			self.shape.body.mass = self.molecule.mass
-			return True
-		else:
-			return False
-
+		self.rect.center =  pymunk.pygame_util.to_pygame(self.shape.body.position, Config.current.screen)

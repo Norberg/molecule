@@ -1,4 +1,10 @@
-import getopt, sys, time, os, random, inspect
+import getopt
+import sys
+import time
+import os
+import random
+import inspect
+import math
  
 import pygame
 from pygame.locals import *
@@ -18,7 +24,8 @@ class Game:
 		self.init_pygame()
 		self.space = None
 		Universe.createUniverse()
-		self.count = 0	
+		self.mouse_body = pymunk.Body()	
+		self.mouse_spring = None
 	
 	def init_pygame(self):	
 		pygame.init()
@@ -100,6 +107,7 @@ class Game:
 		self.elements = level.elements
 		self.areas = level.areas
 		self.space = level.space
+		self.mouse_spring = None
 		self.space.add_collision_handler(1, 1, post_solve=self.element_collision)
 		while 1:
 			event = self.event_loop()
@@ -149,15 +157,17 @@ class Game:
 			if collision["shape"].collision_type == 1:
 				yield collision["shape"].sprite.molecule.formula
 
-	def update_active(self):
-		if self.active != None:
-			self.active.update()
+	def update_mouse_pos(self):
+		pygame_pos = pygame.mouse.get_pos()		
+		mouse_pos = pymunk.pygame_util.from_pygame(pygame_pos, Config.current.screen)
+		self.mouse_body.position = mouse_pos
+		return mouse_pos
 
 	def event_loop(self):
 		self.space.step(1/60.0)
 		self.space.step(1/60.0)
 		self.clock.tick(30)
-		self.update_active()
+		self.update_mouse_pos()
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				return QUIT
@@ -166,37 +176,28 @@ class Game:
 			elif event.type == KEYDOWN and event.key == K_r:
 				return "RESET_LEVEL"
 			elif event.type == MOUSEBUTTONDOWN:
-				for element in reversed(self.elements.sprites()):
-					if element.clicked():
-						self.active = element
-						break
-			elif event.type is MOUSEBUTTONUP and self.active != None: 
-				self.active.unclicked()
-				self.active = None
-		"""	
-		colliding_areas = list(self.get_colliding_areas())
-		if len(colliding_areas) > 0:
-			reacting_elements = list(self.get_colliding_elements(to_match = colliding_areas[0]))
-		else:		
-			reacting_elements = list(self.get_colliding_elements())
-		if self.last_collision != len(reacting_elements) + 10000*len(colliding_areas):
-			self.last_collision = len(reacting_elements) + 10000*len(colliding_areas)
-			reaction = Universe.universe.react(list(self.get_element_symbols(reacting_elements)),
-			                                   colliding_areas)
-			if reaction != None:
-				self.active = None
-				for element in reacting_elements:
-					#FIXME eg 2 H are in a reaction both will be removed even if only one is consumed
-					if element.molecule.formula in reaction.reactants:
-						self.space.remove(element.shape) 
-						element.kill()
-				self.elements.add(Universe.universe.create_elements(self.space, reaction.products, pos = pygame.mouse.get_pos()))
-		"""	
+				if self.mouse_spring != None:
+					raise Exception("mouse_spring already existing")
+		                #clicked = self.space.point_query_first(self.update_mouse_pos())
+				clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
+				if clicked != None and clicked["shape"].collision_type == 1:
+					clicked = clicked["shape"]
+					rest_length = self.mouse_body.position.get_distance(clicked.body.position)
+					self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
+					self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+					clicked.body.mass /= 50
+					self.space.add(self.mouse_spring) 
+					
+			elif event.type is MOUSEBUTTONUP: 
+				if self.mouse_spring != None:
+					self.mouse_spring.b.mass *= 50
+					self.mouse_spring.b.velocity = (0,0)
+					self.space.remove(self.mouse_spring)
+					self.mouse_spring = None
+		
 		self.elements.update()
 		self.areas.update()
 		self.screen.blit(self.background, (0, 0))
-		#if active != None:
-		#	pygame.draw.rect(screen, pygame.color.Color("black"), active.rect)
 		self.areas.draw(self.screen)
 		self.elements.draw(self.screen)
 		#draw_space(self.screen, self.space)	
