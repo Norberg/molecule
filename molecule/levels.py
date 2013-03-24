@@ -19,12 +19,14 @@ class BaseLevel:
 		#self.space.collision_slop = 0.05
 		#self.space.collision_bias = math.pow(1.0 - 0.3, 60.0)
 		#self.space.gravity = (0.0, -500.0)
-		max_x = Config.current.screenSize[0]
-		max_y = Config.current.screenSize[1]
-		walls = [pymunk.Segment(self.space.static_body, (0,0), (max_x, 0), 1),
-		         pymunk.Segment(self.space.static_body, (0, 0), (0, max_y), 1),
-		         pymunk.Segment(self.space.static_body, (0, max_y), (max_x, max_y), 1),
-		         pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, 0), 1)
+		thicknes = 100
+		offset = thicknes#/2
+		max_x = Config.current.screenSize[0] + offset
+		max_y = Config.current.screenSize[1] + offset
+		walls = [pymunk.Segment(self.space.static_body, (-offset,-offset), (max_x, -offset), thicknes),
+		         pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thicknes),
+		         pymunk.Segment(self.space.static_body, (-offset, max_y), (max_x, max_y), thicknes),
+		         pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, -offset), thicknes)
                 ]
 		for wall in walls:
 			wall.elasticity = 0.95
@@ -143,9 +145,10 @@ class Level_8(BaseLevel):
 		self.description = "Create a CaCO3 molecule"
 		e = Universe.universe.create_elements(self.space,["O2", "O2", "O2", "N", "N", "O", "CaO2H2", "Na2CO3", "SO3", "H2", "H2", "H2"])
 		self.elements = pygame.sprite.RenderUpdates(e)
-		fire = Effects.Fire((200,100),self.space)
-		self.areas = pygame.sprite.RenderUpdates(fire) 
+		fire = Effects.Fire((200,100), self.space)
+		water = Effects.Water_Beaker((650,400), self.space)
+		self.areas = pygame.sprite.RenderUpdates((fire,water)) 
 	def check_victory(self):
 		to_create = dict()
-		to_create["CaCO3"] = 1 
+		to_create["CaCO3"] = 2 
 		return self.match_molecule(self.elements, to_create)	

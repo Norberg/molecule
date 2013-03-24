@@ -162,6 +162,7 @@ class MoleculeSprite(pygame.sprite.Sprite):
 	
 	def init_chipmunk(self,space):	
 		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
+		body.velocity_limit = 1000
 		#shape = pymunk.Circle(body, 16)
 		space.add(body)
 		for pos, symbol in self.molecule.atom_layout.iteritems():

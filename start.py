@@ -145,7 +145,6 @@ class Game:
 					self.space.remove(shape.body)
 					sprite.kill()
 
-
 	def get_affecting_areas(self, position):
 		"""Return all areas that have a affect on position"""
 		shapes = self.space.point_query(position)
