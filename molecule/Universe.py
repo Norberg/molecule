@@ -40,6 +40,7 @@ class Universe:
 	
 		self.add_atom("O", 249, 161, 16) #gas	
 		self.add_atom("H", 218, 114, 1) #gas
+		self.add_atom("H+", 218, 114, 1) #gas
 		self.add_atom("S", 277, 168, 32) #gas
 		self.add_atom("Na", 0, 51, 23) #solid
 		self.add_atom("Al", 0, 28, 27) #solid

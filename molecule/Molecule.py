@@ -1,3 +1,4 @@
+import math
 import random
 import pymunk
 import pygame
@@ -17,7 +18,19 @@ class Molecule:
 		self.enthalpy = enthalpy # aka H
 		self.entropy = entropy # aka S
 		self.mass = mass
-		
+
+	@property
+	def center(self):
+		max_x = 0
+		max_y = 0
+		for layout in self.atom_layout:
+			x, y = layout
+			if x > max_x:
+				max_x = x
+			if y > max_y:
+				max_y = y
+		return (max_x/2.0, max_y/2.0)
+				
 	def addAtom(self, pos_x, pos_y, atom):
 		self.atom_layout[(pos_x, pos_y)] = atom
 
@@ -124,7 +137,8 @@ class MoleculeSprite(pygame.sprite.Sprite):
 	def __init__(self, molecule, space, pos=None):
 		pygame.sprite.Sprite.__init__(self)
 		self.molecule = molecule
-		self.image = self.molecule.createMoleculeSprite()
+		self.image_master = self.molecule.createMoleculeSprite()
+		self.image = self.image_master
 		self.rect = self.image.get_bounding_rect()
 		self.active = False
 		self.init_chipmunk(space)
@@ -132,20 +146,37 @@ class MoleculeSprite(pygame.sprite.Sprite):
 			self.move((random.randint(10, 600), random.randint(10, 400)))
 		else:
 			self.move(pos)
-				
+	
+	def pos_to_pymunk(self, pos):
+		spacing = self.molecule.ATOM_SIZE + self.molecule.BOND_LENGHT/2
+		center_x, center_y = self.molecule.center
+		offset_x = center_x * -spacing + spacing/2
+		#print "offset_x = center_x * -spacing + spacing/2"
+		#print offset_x, "=", center_x, "*", -spacing ,"+", spacing/2
+			
+		offset_y = center_y * -spacing + spacing/2
+		#print "offset_y = center_y * -spacing + spacing/2"
+		#print offset_y, "=", center_y, "*", -spacing ,"+", spacing/2
+		x, y = pos
+		return (offset_x + spacing*(x-1),-(offset_y + spacing*(y-1)))
+	
 	def init_chipmunk(self,space):	
-		body = pymunk.Body(10,pymunk.moment_for_circle(10, 0, 16))
-		shape = pymunk.Circle(body, 16)
-		space.add(shape, body)
-		self.shape = shape
-		self.shape.elasticity = 0.95
-		self.shape.collision_type = 1
-		self.shape.sprite = self
+		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
+		#shape = pymunk.Circle(body, 16)
+		space.add(body)
+		for pos, symbol in self.molecule.atom_layout.iteritems():
+			circle = pymunk.Circle(body, 16, self.pos_to_pymunk(pos))
+			space.add(circle)
+			self.shape = circle
+			self.shape.elasticity = 0.95
+			self.shape.collision_type = 1
+			self.shape.sprite = self
+
 		x = random.randrange(-10, 10)/10.0
 		y = random.randrange(-10, 10)/10.0
 		vec = Vec2d(x,y)
 		force = 1500
-		body.apply_impulse(force * vec)		
+		body.apply_impulse(force * vec)
 
 	def move(self, pos):
 		self.rect.center = pos
@@ -153,3 +184,6 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		
 	def update(self):
 		self.rect.center =  pymunk.pygame_util.to_pygame(self.shape.body.position, Config.current.screen)
+		#self.image = pygame.transform.rotate(self.image_master,math.degrees(self.shape.body.angle))
+	        #self.rect = self.image.get_rect(center=self.rect.center)
+

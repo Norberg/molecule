@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import pymunk
 import Universe
@@ -13,6 +15,9 @@ class BaseLevel:
 		
 	def init_chipmunk(self):
 		self.space = pymunk.Space()
+		self.space.idle_speed_threshold = 0.5
+		#self.space.collision_slop = 0.05
+		#self.space.collision_bias = math.pow(1.0 - 0.3, 60.0)
 		#self.space.gravity = (0.0, -500.0)
 		max_x = Config.current.screenSize[0]
 		max_y = Config.current.screenSize[1]
@@ -42,6 +47,7 @@ class Level_1(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a water molecule"
+		#e =  Universe.universe.create_elements(self.space, ["SO3"] +  13*["H2", "P4"] +22* ["CH4"])
 		e =  Universe.universe.create_elements(self.space, ["H+", "O", "P", "O", "H+", "F", "Al"])
 		self.elements = pygame.sprite.RenderUpdates(e)
 	def check_victory(self):

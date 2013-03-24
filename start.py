@@ -83,7 +83,7 @@ class Game:
 			while 1:
 				result = self.run_level(level)
 				if result == "victory":
-					self.write_on_background("Congratulation, you finnished the level")
+					self.write_on_background("Congratulation, you finished the level")
 					self.wait(2)
 					break
 				elif result == "RESET_LEVEL":
@@ -140,7 +140,9 @@ class Game:
 				formula = sprite.molecule.formula
 				if formula in elements:
 					elements.remove(formula)
-					self.space.remove(shape)
+					for s in shape.body.shapes:
+						self.space.remove(s)
+					self.space.remove(shape.body)
 					sprite.kill()
 
 
@@ -152,10 +154,14 @@ class Game:
 				yield shape.effect
 
 	def get_element_symbols(self, collisions):
-		"""Take a collison dict and return a list of symbols"""
+		"""Take a collison dict and return a list of symbols for every unique molecule"""
+		molecules = list()
 		for collision in collisions:
-			if collision["shape"].collision_type == 1:
-				yield collision["shape"].sprite.molecule.formula
+			shape = collision["shape"]
+			if shape.collision_type == 1:
+				if shape.sprite not in molecules:
+					molecules.append(shape.sprite)
+					yield shape.sprite.molecule.formula
 
 	def update_mouse_pos(self):
 		pygame_pos = pygame.mouse.get_pos()		
