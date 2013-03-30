@@ -10,14 +10,41 @@ class Molecule:
 	ATOM_SIZE = 32
 	BOND_LENGHT = 6
 	MOLECULE_MAX_SIZE = 300
-	def __init__(self,formula, enthalpy = 0, entropy = 0, mass = 10):
+	def __init__(self,formula, states, mass = 10):
 		self.formula = formula
 		self.atom_layout = dict()
 		self.bond_layout = list()
 		self.sprite = None
-		self.enthalpy = enthalpy # aka H
-		self.entropy = entropy # aka S
+		self.states = states
+		self.current_state = 0
 		self.mass = mass
+
+	@property
+	def enthalpy(self):
+		"""Return enthalpy(aka H) for current state"""
+		return self.states[self.current_state].enthalpy
+
+	@property
+	def entropy(self):
+		"""Return entropy(aka S) for current state"""
+		return self.states[self.current_state].entropy
+
+	@property
+	def state(self):
+		"""Return current state"""
+		return self.states[self.current_state]
+
+	def change_state(self, new_state):
+		"""new_state: shortform of wanted state""" 
+		pos = 0
+		new_pos = -1
+		for state in self.states:
+			if state.short == new_state:
+				new_pos = pos
+		if new_pos != -1:
+			self.current_state = new_pos
+		else:
+			raise Exception("Tried to change: " + self.formula + " to non existing state:" + new_state)	
 
 	@property
 	def center(self):
