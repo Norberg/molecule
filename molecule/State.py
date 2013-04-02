@@ -8,13 +8,12 @@ class State:
 	def react(self):
 		"""Return a list on elements if state change result in new componds"""
 		pass
-
-class Aqueues(State):
-	def __init__(self, enthalpy, entropy, ions = list()):
+class Aqueous(State):
+	def __init__(self, enthalpy = None, entropy = None, ions = list()):
 		State.__init__(self, "Aqueous", "aq", enthalpy, entropy) 
 		self.ions = ions	
 	def react(self):
-		return self.ions
+		return map((lambda a: a+"(aq)"), self.ions)
 
 class Solid(State):
 	def __init__(self, enthalpy, entropy):

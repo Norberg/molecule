@@ -10,6 +10,22 @@ class Reaction:
 		self.products = products
 		self.areas = areas
 
+	@property
+	def reactantsNoState(self):
+		return Universe.universe.list_without_state(self.reactants)
+
+	@property
+	def productsNoState(self):
+		return Universe.universe.list_without_state(self.products)
+
+	def addStateToReactants(self, reactants):
+		""" Take a list of reactans with state to populate the reaction with the same info"""
+		for reactant in reactants:
+			reactant_without_state = Universe.universe.remove_state(reactant) 
+			if reactant_without_state in self.reactants:
+				self.reactants.remove(reactant_without_state)
+				self.reactants.append(reactant)	
+		
 	def deltaEnthalpy(self):
 		enthalpyReactans = self.sumEnthalpy(self.reactants)
 		enthalpyProducts = self.sumEnthalpy(self.products)
@@ -38,8 +54,12 @@ class Reaction:
 		if Config.current.DEBUG:
 			print "deltaG = deltaH - T * deltaS"
 			print free_energy, "=", deltaEnthalpy, "-", K, "*", deltaEntropy
-
+	
+		self.clearReactantStates()	
 		return free_energy < 0
+
+	def clearReactantStates(self):
+		self.reactants = self.reactantsNoState
 
 	def sumEntropy(self, elements):
 		sum = 0
@@ -55,7 +75,7 @@ class Reaction:
 	
 	def toMolecules(self,elements):
 		for element in elements:
-			yield Universe.universe.molecule_table(element)
+			yield Universe.universe.molecule_state_table(element)
 
 	def verify(self, elements):
 		"""Sanity check of symbol name, make sure no zeros have been used by mistake"""

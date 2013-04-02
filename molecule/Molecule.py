@@ -4,6 +4,7 @@ import pymunk
 import pygame
 import PyGameUtil,util,Bonds
 import molecule.Config as Config
+from molecule import CollisionTypes
 from pymunk.vec2d import Vec2d
 
 class Molecule:
@@ -33,19 +34,9 @@ class Molecule:
 	def state(self):
 		"""Return current state"""
 		return self.states[self.current_state]
-
-	def change_state(self, new_state):
-		"""new_state: shortform of wanted state""" 
-		pos = 0
-		new_pos = -1
-		for state in self.states:
-			if state.short == new_state:
-				new_pos = pos
-		if new_pos != -1:
-			self.current_state = new_pos
-		else:
-			raise Exception("Tried to change: " + self.formula + " to non existing state:" + new_state)	
-
+	@property
+	def state_formula(self):
+		return self.formula + "(%s)" % self.state.short
 	@property
 	def center(self):
 		max_x = 0
@@ -57,7 +48,32 @@ class Molecule:
 			if y > max_y:
 				max_y = y
 		return (max_x/2.0, max_y/2.0)
-				
+
+	def change_state(self, new_state):
+		"""new_state: shortform of wanted state"""
+		if not self.try_change_state(new_state):
+			raise Exception("Tried to change: " + self.formula + " to non existing state:" + new_state)
+
+	def try_change_state(self, new_state):
+		"""new_state: shortform of wanted state"""
+		pos = 0
+		new_pos = -1
+		for state in self.states:
+			if state.short == new_state:
+				new_pos = pos
+			pos += 1
+		if new_pos != -1:
+			self.current_state = new_pos
+			return True
+		else:
+			return False	
+	
+	def toAqueous(self):
+		if self.try_change_state("aq"):
+			return self.state.react()
+		else:
+			print "No Aq state exists for:", self.formula		
+					
 	def addAtom(self, pos_x, pos_y, atom):
 		self.atom_layout[(pos_x, pos_y)] = atom
 
@@ -197,7 +213,7 @@ class MoleculeSprite(pygame.sprite.Sprite):
 			space.add(circle)
 			self.shape = circle
 			self.shape.elasticity = 0.95
-			self.shape.collision_type = 1
+			self.shape.collision_type = CollisionTypes.ELEMENT
 			self.shape.sprite = self
 
 		x = random.randrange(-10, 10)/10.0

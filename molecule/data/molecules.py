@@ -12,7 +12,8 @@ def add_molecule_layout(molecule):
 #Calcium (Ca)
 s = list()
 s.append(State.Solid(-986,83))	
-m = Molecule("CaO2H2", s) #solid
+s.append(State.Aqueous(ions=["Ca+2"] + 2*["OH-"]))	
+m = Molecule("CaO2H2", s) 
 m.addAtoms([[' ',' ','Ca',' ',' '],
             ['H','O',' ', 'O','H']])
 m.autoBonds()
@@ -22,7 +23,7 @@ add_molecule_layout(m)
 
 s = list()
 s.append(State.Solid(-1207,93))	
-m = Molecule("CaCO3", s) #solid
+m = Molecule("CaCO3", s)
 m.addAtoms([['Ca','O',' '],
             ['O', 'C',' '],
             [' ', ' ','O']])
@@ -50,6 +51,17 @@ m.addBond((2,1),(3,1),2)
 add_molecule_layout(m)
 
 s = list()
+s.append(State.Aqueous(-677, -57))	
+m = Molecule("CO3-2", s)
+m.addAtoms([[' ', 'O', ' '],
+            [' ', 'C', ' '],
+            ['O-',' ','O-']])
+m.addBond((2,1),(2,2),2)
+m.addBond((2,2),(1,3))
+m.addBond((2,2),(3,3))
+add_molecule_layout(m)
+
+s = list()
 s.append(State.Gas(-75, 186))	
 m = Molecule("CH4", s)
 m.addAtoms([[' ','H',' '],
@@ -58,7 +70,7 @@ m.addAtoms([[' ','H',' '],
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-319, 174)) #TODO, aqueues -> solid?
+s.append(State.Aqueous(-319, 174)) #TODO, aqueues -> solid?
 m = Molecule("CH4N2O", s)
 m.addAtoms([[' ',' ','O',' ',' '],
             [' ',' ','C',' ',' '],
@@ -71,7 +83,7 @@ m.addBond((3,2),(4,3))
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-278, 161)) #TODO, aqueues -> solid?
+s.append(State.Aqueous(-278, 161)) #TODO, aqueues -> solid?
 m = Molecule("C2H6O", s)
 m.addAtoms([[' ','H','H',' ','H'],
             ['H','C','C','O',' '],
@@ -88,7 +100,7 @@ add_molecule_layout(m)
 
 #Chlorine (Cl)
 s = list()
-s.append(State.Aqueues(-92, 187))	
+s.append(State.Aqueous(-92, 187))	
 s.append(State.Gas(-92, 187))	
 m = Molecule("HCl", s)
 m.addAtoms([['H','Cl']])
@@ -118,7 +130,7 @@ add_molecule_layout(m)
 
 s = list()
 s.append(State.Gas(-46, 193))	
-s.append(State.Aqueues(-80, 111))	
+s.append(State.Aqueous(-80, 111))	
 m = Molecule("NH3", s)
 m.addAtoms([['H',' ','H'],
             [' ','N',' '],
@@ -129,7 +141,7 @@ m.addBond((2,3),(2,2))
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-132, 113))	
+s.append(State.Aqueous(-132, 113))	
 m = Molecule("NH4+", s)
 m.addAtoms([[' ','H' ,' '],
             ['H','N+','H'],
@@ -145,7 +157,7 @@ m.addBond((1,1),(2,1),2)
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-230, -11))
+s.append(State.Aqueous(-230, -11))
 m = Molecule("OH-", s) 
 m.addAtoms([['O','H-']])
 add_molecule_layout(m)
@@ -185,12 +197,14 @@ add_molecule_layout(m)
 
 s = list()
 s.append(State.Solid(-426, 64))	
+s.append(State.Aqueous(ions=["Na+", "OH-"]))	
 m = Molecule("NaOH", s)
 m.addAtoms([['Na','O','H']])
 add_molecule_layout(m)
 
 s = list()
 s.append(State.Solid(-1131, 139))	
+s.append(State.Aqueous(ions=2*["Na+"] + ["CO3-2"]))	
 m = Molecule("Na2CO3", s)
 m.addAtoms([[' ', 'O',' ','O',' '],
             ['Na',' ','C',' ','Na'],
@@ -216,7 +230,7 @@ m.addBond((2,3),(2,2),2)
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-909, 20))	
+s.append(State.Aqueous(-909, 20))	
 m = Molecule("SO4-2", s)
 m.addAtoms([[' ','O' ,' '],
             ['O','S-2','O'],
@@ -224,7 +238,7 @@ m.addAtoms([[' ','O' ,' '],
 add_molecule_layout(m)
 
 s = list()
-s.append(State.Aqueues(-814, 157))	
+s.append(State.Aqueous(-814, 157))	
 m = Molecule("H2SO4", s)
 m.addAtoms([[' ',' ','O',' ',' '],
             ['H','O','S','O','H'],

@@ -17,8 +17,8 @@ s = State.Gas(218, 114)
 add_atom("H", [s], 1)
 
 s = list()
-s.append(State.Aqueues(0, 0))
 s.append(State.Gas(1536, 1517))
+s.append(State.Aqueous(0, 0))
 add_atom("H+", s, 1)
 
 s = list()
@@ -27,7 +27,7 @@ s.append(State.Gas(277, 168))
 add_atom("S", s, 32)
 
 s = list()
-s.append(State.Aqueues(42, 22))
+s.append(State.Aqueous(42, 22))
 add_atom("S-2", s, 32)
 
 s = list()
@@ -36,7 +36,7 @@ s.append(State.Gas(107, 154))
 add_atom("Na", s, 23)
 
 s = list()
-s.append(State.Aqueues(-240, 59))
+s.append(State.Aqueous(-240, 59))
 s.append(State.Gas(609, 148))
 add_atom("Na+", s, 23)
 
@@ -50,6 +50,11 @@ s.append(State.Gas(178, 155))
 add_atom("Ca", s, 40) 
 
 s = list()
+s.append(State.Aqueous(-543, -53))
+s.append(State.Gas(1926, None))
+add_atom("Ca+2", s, 40) 
+
+s = list()
 s.append(State.Solid(0, 6)) #graphite
 s.append(State.Gas(717, 158))
 add_atom("C", s, 12)
@@ -59,7 +64,7 @@ s.append(State.Gas(121, 165))
 add_atom("Cl", s, 35)
 
 s = list()
-s.append(State.Aqueues(-167, 56))
+s.append(State.Aqueous(-167, 56))
 s.append(State.Gas(-234, 153))
 add_atom("Cl-", s, 35)
 

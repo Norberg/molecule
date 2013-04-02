@@ -15,7 +15,7 @@ from pymunk.pygame_util import draw_space
 import molecule.levels
 import molecule.Universe as Universe
 import molecule.Config as Config
-		
+from molecule import CollisionTypes	
 
 class Game:
 	def __init__(self):
@@ -108,7 +108,8 @@ class Game:
 		self.areas = level.areas
 		self.space = level.space
 		self.mouse_spring = None
-		self.space.add_collision_handler(1, 1, post_solve=self.element_collision)
+		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
+		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
 		while 1:
 			event = self.event_loop()
 			if event != None:
@@ -123,9 +124,21 @@ class Game:
 		reacting_elements = list(self.get_element_symbols(collisions))
 		reaction = Universe.universe.react(reacting_elements, reacting_areas)
 		if reaction != None:
-			space.add_post_step_callback(self.perform_reaction, reaction, collisions, a.body.position)
+			key = reaction #This object is used as a key, there can only be one callback for every key. 
+			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
 
-	def perform_reaction(self, reaction, collisions, position):
+	def effect_reaction(self, space, arbiter):
+		a,b = arbiter.shapes
+		molecule = a.sprite.molecule
+		effect = b.effect
+		reaction = effect.react(molecule)
+		collisions = [{"shape" : a}]
+		if reaction != None:
+			key = a.body #This object is used as a key, there can only be one callback for every key. 
+			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)	
+		return False
+
+	def perform_reaction(self, key, reaction, collisions, position):
 		self.destroy_elements(reaction.reactants, collisions)
 		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
 		self.elements.add(Universe.universe.create_elements(self.space, reaction.products, position))
@@ -160,7 +173,7 @@ class Game:
 			if shape.collision_type == 1:
 				if shape.sprite not in molecules:
 					molecules.append(shape.sprite)
-					yield shape.sprite.molecule.formula
+					yield shape.sprite.molecule.state_formula
 
 	def update_mouse_pos(self):
 		pygame_pos = pygame.mouse.get_pos()		

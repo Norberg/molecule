@@ -3,6 +3,8 @@ import pygame
 import pymunk
 import PyGameUtil
 import molecule.Config as Config
+from molecule import CollisionTypes
+from molecule.Reaction import Reaction
 
 class Fire(pygame.sprite.Sprite):
 	"""Fire"""
@@ -26,11 +28,10 @@ class Fire(pygame.sprite.Sprite):
 	
 	def init_chipmunk(self,space):	
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
-		#shape = pymunk.Segment(body,(0,0), (128,0), 64)
 		shape = pymunk.Poly.create_box(body, (128,128))
 		space.add(shape, body)
 		self.shape = shape
-		self.shape.collision_type = 2
+		self.shape.collision_type = CollisionTypes.EFFECT
 		self.shape.sensor = True
 		self.shape.effect = self
 
@@ -40,6 +41,9 @@ class Fire(pygame.sprite.Sprite):
 			self.current_frame = 0
 
 		self.image = self.animations[self.current_frame]
+
+	def react(self, element):
+		pass
 
 class Water_Beaker(pygame.sprite.Sprite):
 	"""Water_Beaker"""
@@ -55,22 +59,30 @@ class Water_Beaker(pygame.sprite.Sprite):
 	def init_chipmunk(self,space):	
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
 		walls = [pymunk.Segment(body, (-144,-320), (-144, 200), 10), #left
-		         pymunk.Segment(body, (-144,-320), (280, -320), 10), #bootom
+		         pymunk.Segment(body, (-144,-320), (280, -320), 10), #bottom
 		         pymunk.Segment(body, (277,-320), (277, 200), 10), #right
 		         pymunk.Segment(body, (-144,200), (280, 200), 10) #top
                 ]
 		for wall in walls:
 			wall.elasticity = 0.95
-			wall.collision_type = 0
+			wall.collision_type = CollisionTypes.WALL
 		space.add(walls)
-		#shape = pymunk.Segment(body,(-134,-70), (267,-70), 480)
 		shape = pymunk.Poly.create_box(body, (400,520), (66,-60))
 		space.add(shape, body)
 		self.shape = shape
-		self.shape.collision_type = 2
+		self.shape.collision_type = CollisionTypes.EFFECT
 		self.shape.sensor = True
 		self.shape.effect = self
 	
 	def set_pos(self, pos):
 		self.rect.center = pos
 		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
+	
+	def react(self, molecule):
+		result = molecule.toAqueous()
+		if result != None and len(result) > 0:
+			print molecule.formula, "-(Water)>", result
+			return Reaction([molecule.formula], result)
+		elif Config.current.DEBUG:
+			print "Water beaker didnt react with:", molecule.formula
+			
