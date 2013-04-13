@@ -13,7 +13,7 @@ class Fire(pygame.sprite.Sprite):
 		self.name = "Fire"
 		self.temp = temp
 		self.current_frame = 0
-		self.frames = 50
+		self.frames = 100
 		self.animations = list()
 		for img in sorted(glob.glob("img/fire/50 frames/*")):
 			self.animations.append(PyGameUtil.loadImage(img))
@@ -40,7 +40,7 @@ class Fire(pygame.sprite.Sprite):
 		if self.current_frame >= self.frames:
 			self.current_frame = 0
 
-		self.image = self.animations[self.current_frame]
+		self.image = self.animations[self.current_frame/2]
 
 	def react(self, element):
 		pass

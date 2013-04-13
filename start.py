@@ -182,9 +182,9 @@ class Game:
 		return mouse_pos
 
 	def event_loop(self):
+		#self.space.step(1/60.0)
 		self.space.step(1/60.0)
-		self.space.step(1/60.0)
-		self.clock.tick(30)
+		self.clock.tick(60)
 		self.update_mouse_pos()
 		for event in pygame.event.get():
 			if event.type == QUIT:
@@ -212,18 +212,22 @@ class Game:
 					self.mouse_spring.b.velocity = (0,0)
 					self.space.remove(self.mouse_spring)
 					self.mouse_spring = None
-		
-		self.elements.update()
-		self.areas.update()
 		self.screen.blit(self.background, (0, 0))
-		self.areas.draw(self.screen)
-		self.elements.draw(self.screen)
+		self.update_and_draw(self.elements, self.areas)
+
+	def update_and_draw(self, *spriteGroups):
 		#draw_space(self.screen, self.space)	
-		pygame.display.flip()
-			
-
-	
-
+		dirty_rects = list()
+				
+		for spriteGroup in spriteGroups:
+			spriteGroup.update()
+			dirty_rect = spriteGroup.draw(self.screen)
+			try:	
+				dirty_rects += dirty_rect
+			except:
+				pass
+		pygame.display.update(dirty_rects)
+		
 def main():
 	game = Game()
 	game.game_loop()
