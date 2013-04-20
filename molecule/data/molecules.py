@@ -71,6 +71,7 @@ add_molecule_layout(m)
 
 s = list()
 s.append(State.Aqueous(-319, 174)) #TODO, aqueues -> solid?
+s.append(State.Solid(-319, 174)) #TODO, aqueues -> solid?
 m = Molecule("CH4N2O", s)
 m.addAtoms([[' ',' ','O',' ',' '],
             [' ',' ','C',' ',' '],
@@ -104,6 +105,20 @@ s.append(State.Aqueous(-92, 187))
 s.append(State.Gas(-92, 187))	
 m = Molecule("HCl", s)
 m.addAtoms([['H','Cl']])
+add_molecule_layout(m)
+
+#Copper (Cu)
+s = list()
+s.append(State.Solid(None, None)) #unknown	
+s.append(State.Aqueous(ions=["Cu+2"] +["SO4-2"]))	
+m = Molecule("CuSO4", s)
+m.addAtoms([[' ',   'O', ' '],
+            ['O-',  'S', 'O'],
+            ['Cu+2','O-',' ']])
+m.addBond((2,2),(2,1), 2)
+m.addBond((2,2),(3,2), 2)
+m.addBond((2,2),(1,2))
+m.addBond((2,2),(3,2))
 add_molecule_layout(m)
 
 #Hydrogen(H)
@@ -173,6 +188,13 @@ m.addBond((2,1),(3,2),2)
 m.addBond((3,2),(4,1),3)
 add_molecule_layout(m)
 
+s = list()
+s.append(State.Aqueous(-1277, -222))	
+m = Molecule("PO4-3", s)
+m.addAtoms([[' ' ,'O' ,' '],
+            ['O-','P' ,'O-'],
+            [' ' ,'O-',' ']])
+add_molecule_layout(m)
 
 #Sodium (Na)
 s = list()
@@ -215,6 +237,18 @@ m.addBond((2,1), (3,2))
 m.addBond((3,2), (3,3),2)
 m.addBond((3,2), (4,1))
 m.addBond((4,1), (5,2))
+add_molecule_layout(m)
+
+s = list()
+s.append(State.Solid(None, None)) #unknown	
+s.append(State.Aqueous(ions=3*["Na+"] + ["PO4-3"]))	
+m = Molecule("Na3PO4", s)
+m.addAtoms([[' ', ' ','O', ' ',' '],
+            ['Na','O','P', 'O','Na'],
+            [' ', ' ','O', ' ',' '],
+            [' ', ' ','Na',' ',' ']])
+m.autoBonds()
+m.addBond((3,1),(3,2),2)
 add_molecule_layout(m)
 
 #Sulphur (S)

@@ -80,3 +80,16 @@ s = list()
 s.append(State.Solid(0, 41)) #white
 s.append(State.Gas(316, 163))
 add_atom("P", s, 31)
+
+s = list()
+s.append(State.Solid(0, 33))
+s.append(State.Gas(338, 166))
+add_atom("Cu", s, 63)
+
+s = list()
+s.append(State.Aqueous(72, 41))
+add_atom("Cu+", s, 63)
+
+s = list()
+s.append(State.Aqueous(65, -100))
+add_atom("Cu+2", s, 63)

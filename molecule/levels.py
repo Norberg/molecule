@@ -153,3 +153,17 @@ class Level_8(BaseLevel):
 		to_create = dict()
 		to_create["CaCO3"] = 1 
 		return self.match_molecule(self.elements, to_create)
+
+class Level_9(BaseLevel):
+	def __init__(self):
+		BaseLevel.__init__(self)
+		self.description = "Create a CaCO3 molecule"
+		e = Universe.universe.create_elements(self.space,["O2(g)", "O2(g)", "O2(g)", "Na3PO4(s)", "CuSO4(s)"])
+		self.elements = pygame.sprite.RenderUpdates(e)
+		fire = Effects.Fire((200,100), self.space)
+		water = Effects.Water_Beaker((650,400), self.space)
+		self.areas = pygame.sprite.RenderUpdates((fire,water)) 
+	def check_victory(self):
+		to_create = dict()
+		to_create["CaCO3"] = 2 
+		return self.match_molecule(self.elements, to_create)

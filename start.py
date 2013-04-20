@@ -213,10 +213,9 @@ class Game:
 					self.space.remove(self.mouse_spring)
 					self.mouse_spring = None
 		self.screen.blit(self.background, (0, 0))
-		self.update_and_draw(self.elements, self.areas)
+		self.update_and_draw(self.areas, self.elements)
 
 	def update_and_draw(self, *spriteGroups):
-		#draw_space(self.screen, self.space)	
 		dirty_rects = list()
 				
 		for spriteGroup in spriteGroups:
@@ -226,6 +225,7 @@ class Game:
 				dirty_rects += dirty_rect
 			except:
 				pass
+		#draw_space(self.screen, self.space)	
 		pygame.display.update(dirty_rects)
 		
 def main():
