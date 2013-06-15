@@ -225,8 +225,12 @@ class Game:
 				dirty_rects += dirty_rect
 			except:
 				pass
-		#draw_space(self.screen, self.space)	
-		pygame.display.update(dirty_rects)
+		DEBUG_GRAPHICS = False
+		if DEBUG_GRAPHICS:
+			draw_space(self.screen, self.space)
+			pygame.display.update()
+		else:	
+			pygame.display.update(dirty_rects)
 		
 def main():
 	game = Game()
