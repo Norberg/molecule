@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as etree
 import xml.dom.minidom as minidom
+import operator
 
 class Atom:
 	def __init__(self):
@@ -36,6 +37,17 @@ class Molecule:
 	def __init__(self):
 		self.atoms = dict()
 		self.bonds = list()
+
+	def getDigits(self, string):
+		temp = [s for s in string if s.isdigit()]
+		string = ""
+		for t in temp:
+			string += t
+		return int(string)
+
+	@property
+	def atoms_sorted(self):
+		return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
 
 	def printer(self):
 		print "Atoms:"

@@ -52,6 +52,23 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "C")
 		self.assertEqual(m.bonds[0].atomA, "a1")
 		self.assertEqual(m.bonds[0].atomB, "a2")
-
+	
+	def testSortedAtoms(self):
+		m = Cml.Molecule()
+		m.parse("testPropane.cml")
+		self.assertEqual(m.atoms_sorted[0].id, "a1")
+		self.assertEqual(m.atoms_sorted[1].id, "a2")
+		self.assertEqual(m.atoms_sorted[2].id, "a3")
+		self.assertEqual(m.atoms_sorted[3].id, "a4")
+		self.assertEqual(m.atoms_sorted[4].id, "a5")
+		self.assertEqual(m.atoms_sorted[5].id, "a6")
+		self.assertEqual(m.atoms_sorted[6].id, "a7")
+		self.assertEqual(m.atoms_sorted[7].id, "a8")
+		self.assertEqual(m.atoms_sorted[8].id, "a9")
+		self.assertEqual(m.atoms_sorted[9].id, "a10")
+		self.assertEqual(m.atoms_sorted[10].id, "a11")
+		self.assertEqual(m.atoms_sorted[11].id, "a12")
+		self.assertEqual(m.getDigits("asdas23434"), 23434)
+		
 if __name__ == '__main__':
 	unittest.main()	
