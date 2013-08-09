@@ -100,6 +100,29 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "C")
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
+	
+	def testCreateMoleculeWithCharge(self):
+		m = Cml.Molecule()
+		a1 = Cml.Atom("a1", "C",-1, 0, 0)
+		a2 = Cml.Atom("a2", "O", 1, 1, 0)
+		m.atoms["a1"] = a1
+		m.atoms["a2"] = a2
+		b = Cml.Bond(a1, a2, 2)
+		m.bonds.append(b)
+		m.write("testOxygen.cml")
+		m = Cml.Molecule()
+		m.parse("testOxygen.cml")
+		self.assertAlmostEqual(m.atoms["a1"].x, 0.0)
+		self.assertAlmostEqual(m.atoms["a1"].y, 0.0)	
+		self.assertEqual(m.atoms["a1"].elementType, "C")
+		self.assertEqual(m.atoms["a1"].formalCharge,-1)
+		self.assertAlmostEqual(m.atoms["a2"].x, 1.0)
+		self.assertAlmostEqual(m.atoms["a2"].y, 0.0)	
+		self.assertEqual(m.atoms["a2"].elementType, "O")
+		self.assertEqual(m.atoms["a2"].formalCharge,1)
+		self.assertEqual(m.bonds[0].atomA.id, "a1")
+		self.assertEqual(m.bonds[0].atomB.id, "a2")
+		self.assertEqual(m.bonds[0].bonds, 2)
 		
 if __name__ == '__main__':
 	unittest.main()	

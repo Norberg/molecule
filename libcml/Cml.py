@@ -3,12 +3,13 @@ import xml.dom.minidom as minidom
 import operator
 
 class Atom:
-	def __init__(self):
-		self.id = None
-		self.elementType = None
-		self.x = None
-		self.y = None
-		self.z = None
+	def __init__(self, id=None, element=None, charge=None, x=None, y=None, z=None):
+		self.id = id
+		self.elementType = element
+		self.formalCharge = charge
+		self.x = x
+		self.y = y
+		self.z = z
 
 	@property
 	def pos(self):
@@ -25,11 +26,11 @@ class Atom:
 		return str(self.z)	
 
 class Bond:
-	def __init__(self):
+	def __init__(self, atomA = None, atomB = None, bonds = None):
 		""" Bond from atomA to atomB having nr of bonds"""
-		self.atomA = None
-		self.atomB = None
-		self.bonds = None
+		self.atomA = atomA
+		self.atomB = atomB
+		self.bonds = bonds
 	
 	@property
 	def atomRefs2(self):
@@ -41,6 +42,7 @@ class Molecule:
 	def __init__(self):
 		self.atoms = dict()
 		self.bonds = list()
+		self.tree = None
 
 	def getDigits(self, string):
 		temp = [s for s in string if s.isdigit()]
@@ -112,7 +114,10 @@ class Molecule:
 				new.x = float(atom.attrib["x3"])
 				new.y = float(atom.attrib["y3"])
 				new.z = float(atom.attrib["z3"])
-				
+			try:
+				new.formalCharge = int(atom.attrib["formalCharge"])
+			except KeyError:
+				pass	
 			self.atoms[new.id] = new
 			
 	def parseBonds(self,bonds):
@@ -121,10 +126,19 @@ class Molecule:
 			atomRefs = bond.attrib["atomRefs2"].split()
 			new.atomA = self.atoms[atomRefs[0]]
 			new.atomB = self.atoms[atomRefs[1]]
-			new.bonds = bond.attrib["order"]
+			new.bonds = int(bond.attrib["order"])
 			self.bonds.append(new)
-	
+
+	def empty_cml(self):
+		molecule = etree.Element("molecule")
+		atomArray = etree.SubElement(molecule, "atomArray")
+		bondArray= etree.SubElement(molecule, "bondArray")
+		return etree.ElementTree(molecule)
+
 	def write(self, filename):
+		if self.tree is None:
+			self.tree = self.empty_cml()
+		
 		self.writeAtoms()
 		self.writeBonds()
 		self.tree.write(filename)		
@@ -134,7 +148,7 @@ class Molecule:
 		bondArray.clear() # Remove all old entires
 		for bond in self.bonds:
 			attrib = {"atomRefs2" : bond.atomRefs2,
-			          "order" : bond.bonds}
+			          "order" : str(bond.bonds)}
 			etree.SubElement(bondArray,"bond", attrib)
 
 	def writeAtoms(self):
@@ -148,6 +162,9 @@ class Molecule:
 				attrib = {"x3":atom.x_str,
 				          "y3": atom.y_str,
 				          "z3": atom.z_str}
+			if atom.formalCharge is not None:
+				attrib["formalCharge"] = str(atom.formalCharge)
+
 			attrib["id"] = atom.id
 			attrib["elementType"] = atom.elementType
 			etree.SubElement(atomArray,"atom", attrib)
