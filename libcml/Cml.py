@@ -11,6 +11,10 @@ class Atom:
 		self.z = None
 
 	@property
+	def pos(self):
+		return (self.x, self.y)		
+
+	@property
 	def x_str(self):
 		return str(self.x)	
 	@property
@@ -29,7 +33,7 @@ class Bond:
 	
 	@property
 	def atomRefs2(self):
-		return self.atomA + " " + self.atomB	
+		return self.atomA.id + " " + self.atomB.id
 
 class Molecule:
 	ATOM_ARRAY = 'atomArray'
@@ -55,8 +59,33 @@ class Molecule:
 			print atom.id, atom.elementType
 		print "Bonds:"
 		for bond in self.bonds:
-			print bond.atomA, "->", bond.atomB, bond.bonds, "bonds"
+			print bond.atomA.id, "->", bond.atomB.id, bond.bonds, "bonds"
 
+	def min_pos(self):
+		min_x = min(self.atoms.values(), key=lambda a:a.x).x
+		min_y = min(self.atoms.values(), key=lambda a:a.y).y
+		min_z = min(self.atoms.values(), key=lambda a:a.z).z
+		return (min_x, min_y, min_z)
+
+	def max_pos(self):
+		max_x = max(self.atoms.values(), key=lambda a:a.x).x
+		max_y = max(self.atoms.values(), key=lambda a:a.y).y
+		max_z = max(self.atoms.values(), key=lambda a:a.z).z
+		return (max_x, max_y, max_z)
+
+	def normalize_pos(self):
+		""" normalize position to only be positive """
+		min_x, min_y, min_z = self.min_pos()
+		adj_x = min(0, min_x)
+		adj_y = min(0, min_y)
+		adj_z = min(0, min_z)
+		
+		if adj_z != 0 or adj_y != 0 or adj_x != 0:
+			for atom in self.atoms.values():
+				atom.x -= adj_x
+				atom.y -= adj_y
+				if atom.z is not None:
+					atom.z -= adj_z
 
 	def parse(self, filename):
 		etree.register_namespace("","http://www.xml-cml.org/schema")
@@ -90,8 +119,8 @@ class Molecule:
 		for bond in bonds:
 			new = Bond()
 			atomRefs = bond.attrib["atomRefs2"].split()
-			new.atomA = atomRefs[0]
-			new.atomB = atomRefs[1]
+			new.atomA = self.atoms[atomRefs[0]]
+			new.atomB = self.atoms[atomRefs[1]]
 			new.bonds = bond.attrib["order"]
 			self.bonds.append(new)
 	
