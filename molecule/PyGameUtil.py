@@ -1,9 +1,17 @@
 import pygame
 
 def createSurface(x,y):
-	return pygame.Surface((x,y), pygame.SRCALPHA)
-def createSurface(x):
-	return pygame.Surface((x,x), pygame.SRCALPHA)
+	return pygame.Surface((int(x),int(y)), pygame.SRCALPHA)
+def createSurface(pos):
+	print pos
+	if type(pos) == tuple:
+		x = pos[0]
+		y = pos[1]
+	else:
+		x = pos
+		y = pos	
+
+	return pygame.Surface((int(x),int(y)), pygame.SRCALPHA)
 
 __img_cache = dict()
 def loadImage(src):

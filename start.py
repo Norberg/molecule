@@ -26,6 +26,7 @@ class Game:
 		Universe.createUniverse()
 		self.mouse_body = pymunk.Body()	
 		self.mouse_spring = None
+		self.DEBUG_GRAPHICS = False
 	
 	def init_pygame(self):	
 		pygame.init()
@@ -76,6 +77,7 @@ class Game:
 		print "During gameplay:"
 		print "ESC - close game"
 		print "r - reset current level"	
+		print "d - switch Graphic debug on/off"	
 
 	
 	def game_loop(self):
@@ -193,6 +195,8 @@ class Game:
 				return QUIT
 			elif event.type == KEYDOWN and event.key == K_r:
 				return "RESET_LEVEL"
+			elif event.type == KEYDOWN and event.key == K_d:
+				self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
 			elif event.type == MOUSEBUTTONDOWN:
 				if self.mouse_spring != None:
 					raise Exception("mouse_spring already existing")
@@ -225,8 +229,7 @@ class Game:
 				dirty_rects += dirty_rect
 			except:
 				pass
-		DEBUG_GRAPHICS = False
-		if DEBUG_GRAPHICS:
+		if self.DEBUG_GRAPHICS:
 			draw_space(self.screen, self.space)
 			pygame.display.update()
 		else:	

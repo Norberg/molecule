@@ -158,7 +158,7 @@ class Level_9(BaseLevel):
 	def __init__(self):
 		BaseLevel.__init__(self)
 		self.description = "Create a CaCO3 molecule"
-		e = Universe.universe.create_elements(self.space,["O2(g)", "O2(g)", "O2(g)", "Na3PO4(s)", "CuSO4(s)"])
+		e = Universe.universe.create_elements(self.space,["O2(g)", "O2(g)", "H2O(l)", "Na3PO4(s)", "CuSO4(s)"])
 		self.elements = pygame.sprite.RenderUpdates(e)
 		fire = Effects.Fire((200,100), self.space)
 		water = Effects.Water_Beaker((650,400), self.space)
