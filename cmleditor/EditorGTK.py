@@ -15,7 +15,6 @@ class EditorGTK:
 	        self.wTree = gtk.glade.XML(self.gladefile, "winMain") 
 		self.wTree.signal_autoconnect(self)
 		self.widget = self.wTree.get_widget
-		self.openFile("libcml/testPropane.cml")
 	def on_winMain_destroy(self, widget):
 		gtk.main_quit()
 
@@ -44,8 +43,8 @@ class EditorGTK:
 			row += 1
 		
 		for bond in molecule.bonds:
-			self.createAndAttachLabel("from:"+bond.atomA, tableReadOnly, 0, row)
-			self.createAndAttachLabel("to:"+bond.atomB, tableReadOnly, 1, row)
+			self.createAndAttachLabel("from:"+bond.atomA.id, tableReadOnly, 0, row)
+			self.createAndAttachLabel("to:"+bond.atomB.id, tableReadOnly, 1, row)
 			self.createAndAttachLabel("Bonds:"+bond.bonds, tableReadOnly, 2, row)
 			row += 1
 		
