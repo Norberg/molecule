@@ -5,7 +5,6 @@ atom_layouts = dict()
 
 def add_atom(symbol, states, mass):
 	m = Molecule(symbol, states, mass)
-	m.addAtoms([[symbol]])
 	global atom_layouts
 	atom_layouts[symbol] = m
 		
