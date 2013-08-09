@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<molecule xmlns="http://www.xml-cml.org/schema">
+ <atomArray>
+  <atom id="a1" elementType="O" formalCharge="-1" x2="1.500000" y2="-2.500000"/>
+  <atom id="a2" elementType="S" x2="1.500000" y2="-1.500000"/>
+  <atom id="a3" elementType="O" x2="2.500000" y2="-1.500000"/>
+  <atom id="a4" elementType="O" x2="1.500000" y2="-0.500000"/>
+  <atom id="a5" elementType="O" formalCharge="-1" x2="0.500000" y2="-1.500000"/>
+  <atom id="a6" elementType="Cu" formalCharge="2" x2="-1.124096" y2="-0.503616"/>
+ </atomArray>
+ <bondArray>
+  <bond atomRefs2="a1 a2" order="1"/>
+  <bond atomRefs2="a2 a3" order="2"/>
+  <bond atomRefs2="a2 a4" order="2"/>
+  <bond atomRefs2="a2 a5" order="1"/>
+ </bondArray>
+</molecule>

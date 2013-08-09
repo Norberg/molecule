@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<molecule xmlns="http://www.xml-cml.org/schema">
+ <atomArray>
+  <atom id="a1" elementType="O" x2="1.000000" y2="-1.000000"/>
+  <atom id="a2" elementType="S" x2="1.000000" y2="0.000000"/>
+  <atom id="a3" elementType="O" x2="2.000000" y2="0.000000"/>
+  <atom id="a4" elementType="O" x2="1.000000" y2="1.000000"/>
+  <atom id="a5" elementType="O" x2="0.000000" y2="0.000000"/>
+  <atom id="a6" elementType="H" x2="0.159955" y2="-1.485000"/>
+  <atom id="a7" elementType="H" x2="-0.485000" y2="0.840045"/>
+ </atomArray>
+ <bondArray>
+  <bond atomRefs2="a1 a2" order="1"/>
+  <bond atomRefs2="a2 a3" order="2"/>
+  <bond atomRefs2="a2 a4" order="2"/>
+  <bond atomRefs2="a2 a5" order="1"/>
+  <bond atomRefs2="a1 a6" order="1"/>
+  <bond atomRefs2="a5 a7" order="1"/>
+ </bondArray>
+</molecule>
