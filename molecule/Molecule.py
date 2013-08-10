@@ -61,15 +61,10 @@ class Molecule:
 			return self.state.react()
 		else:
 			print "No Aq state exists for:", self.formula		
-					
-	def createMoleculeSprite(self):
-		if util.isAtom(self.formula):
-			self.cml = Cml.Molecule()
-			self.cml.atoms["a1"] = Cml.Atom("a1", self.formula, 0, 0, 0)
-			return self.createAtomSprite(self.formula)
 
+	def cml2Sprite(self, cmlfile):
 		molecule = Cml.Molecule()
-		molecule.parse("data/molecule/%s.cml" % self.formula)
+		molecule.parse(cmlfile)
 		molecule.normalize_pos()
 		self.sprite = PyGameUtil.createSurface(self.molecule_sprite_size(molecule))
 		self.cml = molecule
@@ -78,6 +73,16 @@ class Molecule:
 			atomSprite = self.createAtomSprite(atom.elementType, atom.formalCharge)
 			self.sprite.blit(atomSprite, self.cartesian2pos(atom.pos))
 		return self.sprite
+		
+					
+	def createMoleculeSprite(self):
+		if util.isAtom(self.formula):
+			self.cml = Cml.Molecule()
+			self.cml.atoms["a1"] = Cml.Atom("a1", self.formula, 0, 0, 0)
+			return self.createAtomSprite(self.formula)
+
+		return self.cml2Sprite("data/molecule/%s.cml" % self.formula)
+
 
 	def cartesian2pos(self, pos):
 		FACTOR = 42

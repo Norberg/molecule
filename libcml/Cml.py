@@ -39,6 +39,10 @@ class Bond:
 class Molecule:
 	ATOM_ARRAY = 'atomArray'
 	BOND_ARRAY = 'bondArray'
+	PROPERTY_LIST = "propertyList"
+	STATES = PROPERTY_LIST+"/[@title='states']"
+	NS = "{http://www.xml-cml.org/schema}"
+
 	def __init__(self):
 		self.atoms = dict()
 		self.bonds = list()
@@ -88,19 +92,18 @@ class Molecule:
 				atom.y -= adj_y
 				if atom.z is not None:
 					atom.z -= adj_z
+	def xmlfind(self, xpath):
+		element = self.tree.find(xpath)
+		if element is None:
+			element = self.tree.find(self.NS + xpath)
+		return element
 
 	def parse(self, filename):
-		etree.register_namespace("","http://www.xml-cml.org/schema")
+		etree.register_namespace("", self.NS)
 		self.tree = etree.parse(filename)
-		root = self.tree.getroot()
-		for child in root.getchildren():
-			if child.tag.endswith(self.ATOM_ARRAY):
-				self.parseAtoms(child)
-			elif child.tag.endswith(self.BOND_ARRAY):
-				self.parseBonds(child)
-			else:
-				raise Exception("Unknown tag:" + child.tag)
-
+		self.parseAtoms(self.xmlfind(self.ATOM_ARRAY))
+		self.parseBonds(self.xmlfind(self.BOND_ARRAY))
+		self.parseStates(self.xmlfind(self.STATES))
 	
 	def parseAtoms(self,atoms):
 		for atom in atoms:
@@ -129,6 +132,8 @@ class Molecule:
 			new.bonds = int(bond.attrib["order"])
 			self.bonds.append(new)
 
+	def parseStates(self, states):
+		pass
 	def empty_cml(self):
 		molecule = etree.Element("molecule")
 		atomArray = etree.SubElement(molecule, "atomArray")

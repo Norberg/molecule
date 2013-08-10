@@ -17,8 +17,12 @@ __img_cache = dict()
 def loadImage(src):
 	if __img_cache.has_key(src):
 		return __img_cache[src]
-	global __img_cache	
-	img = pygame.image.load(src).convert_alpha()
+	global __img_cache
+	if pygame.display.get_init():
+		img = pygame.image.load(src).convert_alpha()
+	else: #Running in none gui mode
+		img = pygame.image.load(src)
+		
 	__img_cache[src] = img
 	return __img_cache[src]
 
