@@ -6,7 +6,6 @@ class TestCML(unittest.TestCase):
 	def testParseAmmonia(self):
 		m = Cml.Molecule()
 		m.parse("testAmmonia.cml")
-		m.printer()
 		self.assertEqual(len(m.atoms), 4)
 		self.assertEqual(len(m.bonds), 3)
 		self.assertEqual(m.atoms["a1"].elementType, "N")
@@ -21,7 +20,6 @@ class TestCML(unittest.TestCase):
 	def testParsePropane(self):
 		m = Cml.Molecule()
 		m.parse("testPropane.cml")
-		m.printer()
 		self.assertEqual(len(m.atoms), 12)
 		self.assertEqual(len(m.bonds), 11)
 		self.assertEqual(m.atoms["a1"].elementType, "H")
@@ -49,7 +47,6 @@ class TestCML(unittest.TestCase):
 		m.write("testWrite.cml")
 		m = Cml.Molecule()
 		m.parse("testWrite.cml")
-		m.printer()
 		self.assertEqual(len(m.atoms), 12)
 		self.assertEqual(len(m.bonds), 11)
 		self.assertEqual(m.atoms["a1"].elementType, "H")
@@ -123,6 +120,27 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
 		self.assertEqual(m.bonds[0].bonds, 2)
+	
+	def testParseStatePropertys(self):
+		m = Cml.Molecule()
+		m.parse("testProperty.cml")
+		self.assertEqual(m.states["Gas"].enthalpy, -426)
+		self.assertEqual(m.states["Gas"].entropy, 64)
+		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
+
+	def testWriteAndParseStatePropertys(self):
+		m = Cml.Molecule()
+		gas = Cml.State("Gas", -426, 64)
+		aq = Cml.State("Aqueous", ions=["Na+", "OH-"])
+		m.states["Gas"] = gas
+		m.states["Aqueous"] = aq
+		m.write("testSodiumhydroxide.cml")
+		m = Cml.Molecule()
+		m.parse("testSodiumhydroxide.cml")
+		self.assertEqual(m.states["Gas"].enthalpy, -426)
+		self.assertEqual(m.states["Gas"].entropy, 64)
+		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
+		
 		
 if __name__ == '__main__':
 	unittest.main()	

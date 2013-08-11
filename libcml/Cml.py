@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as etree
-import xml.dom.minidom as minidom
 import operator
 
 class Atom:
@@ -36,16 +35,31 @@ class Bond:
 	def atomRefs2(self):
 		return self.atomA.id + " " + self.atomB.id
 
+class State:
+	def __init__(self, name=None, enthalpy=None, entropy=None, ions=None):
+		self.name = name
+		self.enthalpy = enthalpy
+		self.entropy = entropy
+		self.ions = ions
+
+class Reaction:
+	def __init__(self,reactants = None,products = None):
+		self.reactants = reactants
+		self.products = products
+
+
 class Molecule:
 	ATOM_ARRAY = 'atomArray'
 	BOND_ARRAY = 'bondArray'
 	PROPERTY_LIST = "propertyList"
 	STATES = PROPERTY_LIST+"/[@title='states']"
+	MOLECULE = "molecule"
 	NS = "{http://www.xml-cml.org/schema}"
 
 	def __init__(self):
 		self.atoms = dict()
 		self.bonds = list()
+		self.states = dict()
 		self.tree = None
 
 	def getDigits(self, string):
@@ -92,8 +106,8 @@ class Molecule:
 				atom.y -= adj_y
 				if atom.z is not None:
 					atom.z -= adj_z
-	def xmlfind(self, xpath):
-		element = self.tree.find(xpath)
+	def xmlfind(self, document, xpath):
+		element = document.find(xpath)
 		if element is None:
 			element = self.tree.find(self.NS + xpath)
 		return element
@@ -101,9 +115,9 @@ class Molecule:
 	def parse(self, filename):
 		etree.register_namespace("", self.NS)
 		self.tree = etree.parse(filename)
-		self.parseAtoms(self.xmlfind(self.ATOM_ARRAY))
-		self.parseBonds(self.xmlfind(self.BOND_ARRAY))
-		self.parseStates(self.xmlfind(self.STATES))
+		self.parseAtoms(self.xmlfind(self.tree, self.ATOM_ARRAY))
+		self.parseBonds(self.xmlfind(self.tree, self.BOND_ARRAY))
+		self.parseStates(self.xmlfind(self.tree, self.STATES))
 	
 	def parseAtoms(self,atoms):
 		for atom in atoms:
@@ -133,11 +147,44 @@ class Molecule:
 			self.bonds.append(new)
 
 	def parseStates(self, states):
-		pass
+		if states == None:
+			return
+		for state in states:
+			name = state.attrib["title"]
+			new_state = State(name)
+			self.states[name] = new_state
+			for property in state:
+				title = property.attrib["title"] 
+				if title == "entropy":
+					new_state.entropy = float(property[0].text)
+				elif title == "enthalpy":
+					new_state.enthalpy = float(property[0].text)
+				elif title == "ions":
+					new_state.ions = self.parseIons(property) 
+
+	def parseIons(self, ions):
+		reaction = self.parseReaction(ions[0])
+		return reaction.products
+
+	def parseReaction(self, reactionTag):
+		reaction = Reaction()
+		for part in reactionTag:
+			if part.tag.endswith("productList"):
+				reaction.products = self.parseReactionMolecules(part)
+			elif part.tag.endswith("reactantList"):
+				reaction.reactants = self.parseReactionMolecules(part)
+		return reaction
+		
+	def parseReactionMolecules(self, moleculesTag):
+		molecules = list()
+		for molecule in moleculesTag:
+			molecules.append(molecule.attrib["title"])
+		return molecules
+
 	def empty_cml(self):
 		molecule = etree.Element("molecule")
 		atomArray = etree.SubElement(molecule, "atomArray")
-		bondArray= etree.SubElement(molecule, "bondArray")
+		bondArray = etree.SubElement(molecule, "bondArray")
 		return etree.ElementTree(molecule)
 
 	def write(self, filename):
@@ -146,6 +193,7 @@ class Molecule:
 		
 		self.writeAtoms()
 		self.writeBonds()
+		self.writeStates()
 		self.tree.write(filename)		
 	
 	def writeBonds(self):
@@ -174,3 +222,58 @@ class Molecule:
 			attrib["elementType"] = atom.elementType
 			etree.SubElement(atomArray,"atom", attrib)
 
+	def writeStates(self):
+		states = self.xmlfind(self.tree, self.STATES)
+		if states is None:
+			molecule = self.tree.getroot()
+			states = etree.SubElement(molecule, "propertyList",
+			                          {"title":"states"})
+		else:
+			states.clear() # Remove all old entires
+
+		for state in self.states.values():
+			stateTag = etree.SubElement(states, "propertyList",
+			                            {"title":state.name})
+			self.writeEnthalpy(state, stateTag)
+			self.writeEntropy(state, stateTag)
+			self.writeIons(state.ions, stateTag)
+
+	def writeEnthalpy(self,state, stateTag):
+		if state.enthalpy is None:
+			return
+		tagEnthalpy = etree.SubElement(stateTag, "property",
+		                               {"title": "enthalpy"})
+		scalar = etree.SubElement(tagEnthalpy, "scalar",
+		                          {"units":"units:molar_energy"})
+		scalar.text = str(state.enthalpy)
+	
+	def writeEntropy(self,state, stateTag):
+		if state.entropy is None:
+			return
+		tagEntropy = etree.SubElement(stateTag, "property",
+		                               {"title": "entropy"})
+		scalar = etree.SubElement(tagEntropy, "scalar",
+		                          {"units":"units:molar_energy"})
+		scalar.text = str(state.entropy)
+	
+	def writeIons(self, ions, parrentTag):
+		if ions is None:
+			return
+		r = Reaction(None, ions)
+		tagIons = etree.SubElement(parrentTag, "property",
+		                               {"title": "ions"})
+		
+		self.writeReaction(r, tagIons)
+	
+	def writeReaction(self, reaction, parrentTag):
+		if reaction is None:
+			return		
+		tagReaction = etree.SubElement(parrentTag, "reaction")
+		if reaction.products != None:
+			tagProducts = etree.SubElement(tagReaction, "productList")
+			self.writeReactionMolecules(reaction.products, tagProducts)
+
+	def writeReactionMolecules(self, products, parrentTag):
+		for product in products:
+			etree.SubElement(parrentTag, "molecule", {"title":product})
+		

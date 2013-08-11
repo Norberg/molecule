@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<molecule xmlns="http://www.xml-cml.org/schema">
+ <atomArray>
+  <atom id="a1" elementType="N" x2="1.000000" y2="0.000000"/>
+  <atom id="a2" elementType="H" x2="2.020000" y2="0.000000"/>
+  <atom id="a3" elementType="H" x2="0.490000" y2="0.883346"/>
+  <atom id="a4" elementType="H" x2="0.490000" y2="-0.883346"/>
+ </atomArray>
+ <bondArray>
+  <bond atomRefs2="a1 a2" order="1"/>
+  <bond atomRefs2="a1 a3" order="1"/>
+  <bond atomRefs2="a1 a4" order="1"/>
+ </bondArray>
+<propertyList title="states">
+ <propertyList title="Gas">
+   <property title="enthalpy">
+    <scalar units="units:molar_energy">-426</scalar>
+   </property>
+   <property title="entropy">
+    <scalar units="units:molar_energy">64</scalar>
+   </property>
+ </propertyList>
+ <propertyList title="Aqueous">
+   <property title="ions">
+   <reaction>
+        <productList>
+          <molecule title="Na+"/>
+	  <molecule title="OH-"/>
+        </productList>
+    </reaction>	   
+   </property>
+ </propertyList>
+</propertyList>
+</molecule>
