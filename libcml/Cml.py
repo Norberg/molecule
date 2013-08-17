@@ -42,6 +42,15 @@ class State:
 		self.entropy = entropy
 		self.ions = ions
 
+	@property
+	def ions_str(self):
+		if self.ions is None:
+			return ""
+		str = ""
+		for ion in self.ions:
+			str +=","+ion
+		return str[1:]
+
 class Reaction:
 	def __init__(self,reactants = None,products = None):
 		self.reactants = reactants
@@ -106,6 +115,9 @@ class Molecule:
 				atom.y -= adj_y
 				if atom.z is not None:
 					atom.z -= adj_z
+	def treefind(self, xpath):
+		return self.xmlfind(self.tree, xpath)	
+
 	def xmlfind(self, document, xpath):
 		element = document.find(xpath)
 		if element is None:
@@ -115,9 +127,9 @@ class Molecule:
 	def parse(self, filename):
 		etree.register_namespace("", self.NS)
 		self.tree = etree.parse(filename)
-		self.parseAtoms(self.xmlfind(self.tree, self.ATOM_ARRAY))
-		self.parseBonds(self.xmlfind(self.tree, self.BOND_ARRAY))
-		self.parseStates(self.xmlfind(self.tree, self.STATES))
+		self.parseAtoms(self.treefind(self.ATOM_ARRAY))
+		self.parseBonds(self.treefind(self.BOND_ARRAY))
+		self.parseStates(self.treefind(self.STATES))
 	
 	def parseAtoms(self,atoms):
 		for atom in atoms:
@@ -197,7 +209,7 @@ class Molecule:
 		self.tree.write(filename)		
 	
 	def writeBonds(self):
-		bondArray = self.tree.find(self.BOND_ARRAY)
+		bondArray = self.treefind(self.BOND_ARRAY)
 		bondArray.clear() # Remove all old entires
 		for bond in self.bonds:
 			attrib = {"atomRefs2" : bond.atomRefs2,
@@ -205,7 +217,7 @@ class Molecule:
 			etree.SubElement(bondArray,"bond", attrib)
 
 	def writeAtoms(self):
-		atomArray = self.tree.find(self.ATOM_ARRAY)
+		atomArray = self.treefind(self.ATOM_ARRAY)
 		atomArray.clear() # Remove all old entires
 		for atom in self.atoms.values():
 			if atom.z is None:
@@ -223,13 +235,15 @@ class Molecule:
 			etree.SubElement(atomArray,"atom", attrib)
 
 	def writeStates(self):
-		states = self.xmlfind(self.tree, self.STATES)
+		states = self.treefind(self.STATES)
 		if states is None:
+			print "states is none!!!!!!!!"
 			molecule = self.tree.getroot()
 			states = etree.SubElement(molecule, "propertyList",
 			                          {"title":"states"})
 		else:
 			states.clear() # Remove all old entires
+			states.attrib["title"] = "states"
 
 		for state in self.states.values():
 			stateTag = etree.SubElement(states, "propertyList",
@@ -257,7 +271,7 @@ class Molecule:
 		scalar.text = str(state.entropy)
 	
 	def writeIons(self, ions, parrentTag):
-		if ions is None:
+		if ions is None or len(ions) == 0:
 			return
 		r = Reaction(None, ions)
 		tagIons = etree.SubElement(parrentTag, "property",

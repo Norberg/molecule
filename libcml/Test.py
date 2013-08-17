@@ -140,6 +140,7 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.states["Gas"].enthalpy, -426)
 		self.assertEqual(m.states["Gas"].entropy, 64)
 		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
+		self.assertEqual(m.states["Aqueous"].ions_str, "Na+,OH-")
 		
 		
 if __name__ == '__main__':
