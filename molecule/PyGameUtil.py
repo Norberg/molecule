@@ -3,7 +3,6 @@ import pygame
 def createSurface(x,y):
 	return pygame.Surface((int(x),int(y)), pygame.SRCALPHA)
 def createSurface(pos):
-	print pos
 	if type(pos) == tuple:
 		x = pos[0]
 		y = pos[1]
@@ -15,9 +14,9 @@ def createSurface(pos):
 
 __img_cache = dict()
 def loadImage(src):
+	global __img_cache
 	if __img_cache.has_key(src):
 		return __img_cache[src]
-	global __img_cache
 	if pygame.display.get_init():
 		img = pygame.image.load(src).convert_alpha()
 	else: #Running in none gui mode

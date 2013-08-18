@@ -118,13 +118,11 @@ class Molecule:
 		return value	
 
 	def createAtomSprite(self,symbol, charge = None):
-		print "symbol:", symbol
 		if charge is None:
 			charge = self.get_electric_charge(symbol)
 			symbol = self.get_only_atom_symbol(symbol)
 		if PyGameUtil.hasObject(symbol):
 			return PyGameUtil.getObject(symbol+str(charge))
-		print "2symbol:", symbol, "charge:", charge		
 		atom =  PyGameUtil.loadImage("img/atom-" + symbol.lower() + ".png").copy()
 		if charge == 0:
 			pass
@@ -142,7 +140,7 @@ class Molecule:
 	def createBonds(self):
 		#pygame.draw.rect(self.sprite, pygame.color.THECOLORS["pink"], pygame.Rect(0,0, 1000, 1000))
 		for bond in self.cml.bonds:
-			print bond.atomA.pos, "->", bond.atomB.pos
+			#print bond.atomA.pos, "->", bond.atomB.pos
 			posACenter = self.cartesian2posBonds(bond.atomA.pos)	
 			posBCenter = self.cartesian2posBonds(bond.atomB.pos)
 			posARight = (posACenter[0]+8, posACenter[1])	

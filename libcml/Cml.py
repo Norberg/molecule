@@ -237,7 +237,6 @@ class Molecule:
 	def writeStates(self):
 		states = self.treefind(self.STATES)
 		if states is None:
-			print "states is none!!!!!!!!"
 			molecule = self.tree.getroot()
 			states = etree.SubElement(molecule, "propertyList",
 			                          {"title":"states"})
