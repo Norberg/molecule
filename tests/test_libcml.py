@@ -1,6 +1,6 @@
 import os
 import unittest
-import Cml
+import libcml.Cml as Cml
 
 class TestCML(unittest.TestCase):
 
