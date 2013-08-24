@@ -1,22 +1,40 @@
 <?xml version="1.0"?>
-<molecule xmlns="http://www.xml-cml.org/schema">
- <atomArray>
-  <atom id="a1" elementType="C" x2="-0.000000" y2="1.000000"/>
-  <atom id="a2" elementType="O" x2="0.866025" y2="1.500000"/>
-  <atom id="a3" elementType="N" x2="-0.866025" y2="1.500000"/>
-  <atom id="a4" elementType="N" x2="-0.000000" y2="-0.000000"/>
-  <atom id="a5" elementType="H" x2="-0.866025" y2="2.484500"/>
-  <atom id="a6" elementType="H" x2="-1.718627" y2="1.007750"/>
-  <atom id="a7" elementType="H" x2="-0.852602" y2="-0.492250"/>
-  <atom id="a8" elementType="H" x2="0.852602" y2="-0.492250"/>
- </atomArray>
- <bondArray>
-  <bond atomRefs2="a1 a2" order="2"/>
-  <bond atomRefs2="a1 a3" order="1"/>
-  <bond atomRefs2="a1 a4" order="1"/>
-  <bond atomRefs2="a3 a5" order="1"/>
-  <bond atomRefs2="a3 a6" order="1"/>
-  <bond atomRefs2="a4 a7" order="1"/>
-  <bond atomRefs2="a4 a8" order="1"/>
- </bondArray>
-</molecule>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="C" id="a1" x2="-0.0" y2="1.0"/>
+    <atom elementType="N" id="a3" x2="-0.866025" y2="1.5"/>
+    <atom elementType="O" id="a2" x2="0.866025" y2="1.5"/>
+    <atom elementType="H" id="a5" x2="-0.866025" y2="2.4845"/>
+    <atom elementType="N" id="a4" x2="-0.0" y2="-0.0"/>
+    <atom elementType="H" id="a7" x2="-0.852602" y2="-0.49225"/>
+    <atom elementType="H" id="a6" x2="-1.718627" y2="1.00775"/>
+    <atom elementType="H" id="a8" x2="0.852602" y2="-0.49225"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a4 a7" order="1"/>
+    <bond atomRefs2="a4 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-319.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">174.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-319.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">174.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>

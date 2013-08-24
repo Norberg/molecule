@@ -1,14 +1,32 @@
 <?xml version="1.0"?>
-<molecule xmlns="http://www.xml-cml.org/schema">
- <atomArray>
-  <atom id="a1" elementType="N" x2="1.000000" y2="0.000000"/>
-  <atom id="a2" elementType="H" x2="2.020000" y2="0.000000"/>
-  <atom id="a3" elementType="H" x2="0.490000" y2="0.883346"/>
-  <atom id="a4" elementType="H" x2="0.490000" y2="-0.883346"/>
- </atomArray>
- <bondArray>
-  <bond atomRefs2="a1 a2" order="1"/>
-  <bond atomRefs2="a1 a3" order="1"/>
-  <bond atomRefs2="a1 a4" order="1"/>
- </bondArray>
-</molecule>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="N" id="a1" x2="1.0" y2="0.0"/>
+    <atom elementType="H" id="a3" x2="0.49" y2="0.883346"/>
+    <atom elementType="H" id="a2" x2="2.02" y2="0.0"/>
+    <atom elementType="H" id="a4" x2="0.49" y2="-0.883346"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-80.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">111.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-46.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">193.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>

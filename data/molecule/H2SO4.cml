@@ -1,20 +1,30 @@
 <?xml version="1.0"?>
-<molecule xmlns="http://www.xml-cml.org/schema">
- <atomArray>
-  <atom id="a1" elementType="O" x2="1.000000" y2="-1.000000"/>
-  <atom id="a2" elementType="S" x2="1.000000" y2="0.000000"/>
-  <atom id="a3" elementType="O" x2="2.000000" y2="0.000000"/>
-  <atom id="a4" elementType="O" x2="1.000000" y2="1.000000"/>
-  <atom id="a5" elementType="O" x2="0.000000" y2="0.000000"/>
-  <atom id="a6" elementType="H" x2="0.159955" y2="-1.485000"/>
-  <atom id="a7" elementType="H" x2="-0.485000" y2="0.840045"/>
- </atomArray>
- <bondArray>
-  <bond atomRefs2="a1 a2" order="1"/>
-  <bond atomRefs2="a2 a3" order="2"/>
-  <bond atomRefs2="a2 a4" order="2"/>
-  <bond atomRefs2="a2 a5" order="1"/>
-  <bond atomRefs2="a1 a6" order="1"/>
-  <bond atomRefs2="a5 a7" order="1"/>
- </bondArray>
-</molecule>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
+    <atom elementType="O" id="a3" x2="2.0" y2="0.0"/>
+    <atom elementType="S" id="a2" x2="1.0" y2="0.0"/>
+    <atom elementType="O" id="a5" x2="0.0" y2="0.0"/>
+    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
+    <atom elementType="H" id="a7" x2="-0.485" y2="0.840045"/>
+    <atom elementType="H" id="a6" x2="0.159955" y2="-1.485"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="2"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-814.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">157.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>

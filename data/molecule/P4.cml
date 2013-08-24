@@ -1,17 +1,27 @@
 <?xml version="1.0"?>
-<molecule xmlns="http://www.xml-cml.org/schema">
- <atomArray>
-  <atom id="a1" elementType="P" x2="0.866025" y2="-0.500000"/>
-  <atom id="a2" elementType="P" x2="0.000000" y2="-1.000000"/>
-  <atom id="a3" elementType="P" x2="-0.866025" y2="-0.500000"/>
-  <atom id="a4" elementType="P" x2="0.000000" y2="-0.000000"/>
- </atomArray>
- <bondArray>
-  <bond atomRefs2="a1 a2" order="1"/>
-  <bond atomRefs2="a2 a3" order="1"/>
-  <bond atomRefs2="a1 a3" order="1"/>
-  <bond atomRefs2="a3 a4" order="1"/>
-  <bond atomRefs2="a1 a4" order="1"/>
-  <bond atomRefs2="a2 a4" order="1"/>
- </bondArray>
-</molecule>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="P" id="a1" x2="0.866025" y2="-0.5"/>
+    <atom elementType="P" id="a3" x2="-0.866025" y2="-0.5"/>
+    <atom elementType="P" id="a2" x2="0.0" y2="-1.0"/>
+    <atom elementType="P" id="a4" x2="0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">59.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">280.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>

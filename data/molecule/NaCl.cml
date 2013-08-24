@@ -1,9 +1,20 @@
+<?xml version="1.0"?>
 <molecule>
- <atomArray>
-  <atom id="a1" elementType="Cl" x3="0.000000" y3="0.000000" z3="0.000000"/>
-  <atom id="a2" elementType="Na" x3="1.000000" y3="0.000000" z3="0.000000"/>
- </atomArray>
- <bondArray>
-  <bond atomRefs2="a1 a2" order="1"/>
- </bondArray>
+  <atomArray>
+    <atom elementType="Cl" id="a1" x3="0.0" y3="0.0" z3="0.0"/>
+    <atom elementType="Na" id="a2" x3="1.0" y3="0.0" z3="0.0"/>
+  </atomArray>
+  <bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+  </bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-411.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">72.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
 </molecule>
