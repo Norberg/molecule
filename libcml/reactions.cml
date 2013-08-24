@@ -1,0 +1,20 @@
+<reactions>
+   <reaction>
+        <reactantList>
+          <molecule title="H2"/>
+	  <molecule title="O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(s)"/>
+        </productList>
+    </reaction>	   
+   <reaction>
+        <reactantList>
+          <molecule title="SO3"/>
+	  <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2SO4(aq)"/>
+        </productList>
+    </reaction>	   
+</reactions>

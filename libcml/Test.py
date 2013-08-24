@@ -1,3 +1,4 @@
+import os
 import unittest
 import Cml
 
@@ -59,6 +60,7 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "C")
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
+		os.remove("testWrite.cml")
 	
 	def testSortedAtoms(self):
 		m = Cml.Molecule()
@@ -120,6 +122,7 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
 		self.assertEqual(m.bonds[0].bonds, 2)
+		os.remove("testOxygen.cml")
 	
 	def testParseStatePropertys(self):
 		m = Cml.Molecule()
@@ -141,7 +144,31 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.states["Gas"].entropy, 64)
 		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
 		self.assertEqual(m.states["Aqueous"].ions_str, "Na+,OH-")
-		
-		
+		os.remove("testSodiumhydroxide.cml")
+
+	def testParseReactions(self):
+		r = Cml.Reactions()
+		r.parse("reactions.cml")
+		self.assertEqual(r.reactions[0].reactants, ["H2","O"])
+		self.assertEqual(r.reactions[0].products, ["H2O(s)"])
+		self.assertEqual(r.reactions[1].reactants, ['SO3', 'H2O'])
+		self.assertEqual(r.reactions[1].products, ["H2SO4(aq)"])
+
+	def testWriteAndParseReactions(self):
+		r = Cml.Reactions()
+		r1 = Cml.Reaction(["O", "O"], ["O2"])
+		r.reactions.append(r1)
+		r2 = Cml.Reaction(["H+", "H+"], ["H2"])
+		r.reactions.append(r2)
+		r.write("writtenReactions.cml")
+		r = Cml.Reactions()
+		r.parse("writtenReactions.cml")
+		self.assertEqual(r.reactions[0].reactants, ["O","O"])
+		self.assertEqual(r.reactions[0].products, ["O2"])
+		self.assertEqual(r.reactions[1].reactants, ['H+', 'H+'])
+		self.assertEqual(r.reactions[1].products, ["H2"])
+		os.remove("writtenReactions.cml")
+
+
 if __name__ == '__main__':
 	unittest.main()	

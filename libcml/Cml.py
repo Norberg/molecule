@@ -56,14 +56,101 @@ class Reaction:
 		self.reactants = reactants
 		self.products = products
 
+class Cml:
+	NS = "{http://www.xml-cml.org/schema}"
+		
+	def treefind(self, xpath):
+		return self.xmlfind(self.tree, xpath)	
 
-class Molecule:
+	def xmlfind(self, document, xpath):
+		element = document.find(xpath)
+		if element is None:
+			element = self.tree.find(self.NS + xpath)
+		return element
+	def parseReaction(self, reactionTag):
+		reaction = Reaction()
+		for part in reactionTag:
+			if part.tag.endswith("productList"):
+				reaction.products = self.parseReactionMolecules(part)
+			elif part.tag.endswith("reactantList"):
+				reaction.reactants = self.parseReactionMolecules(part)
+		return reaction
+		
+	def parseReactionMolecules(self, moleculesTag):
+		molecules = list()
+		for molecule in moleculesTag:
+			molecules.append(molecule.attrib["title"])
+		return molecules
+	def writeReaction(self, reaction, parrentTag):
+		if reaction is None:
+			return		
+		tagReaction = etree.SubElement(parrentTag, "reaction")
+		if reaction.products != None:
+			tagProducts = etree.SubElement(tagReaction, "productList")
+			self.writeReactionMolecules(reaction.products, tagProducts)
+		if reaction.reactants != None:
+			tagReactants = etree.SubElement(tagReaction, "reactantList")
+			self.writeReactionMolecules(reaction.reactants, tagReactants)
+
+	def writeReactionMolecules(self, products, parrentTag):
+		for product in products:
+			etree.SubElement(parrentTag, "molecule", {"title":product})
+		
+
+class Reactions(Cml):
+	def __init__(self):
+		self.tree = None
+		self.reactions = list()
+
+	def parse(self, filename):
+		self.tree = etree.parse(filename)
+		self.parseReactions(self.tree.getroot())
+		
+
+	def parseReactions(self, reactions):
+		for reaction in reactions:
+			r = self.parseReaction(reaction)
+			self.reactions.append(r)
+	
+	def empty_cml(self):
+		reactions = etree.Element("reactions")
+		return etree.ElementTree(reactions)
+
+	def write(self, filename):
+		if self.tree is None:
+			self.tree = self.empty_cml()
+		
+		self.writeReactions()
+		self.tree.write(filename)		
+
+	def writeReactions(self):
+		reactionsTag = self.tree.getroot()
+		for reaction in self.reactions:
+			self.writeReaction(reaction, reactionsTag)
+		
+	def writeStates(self):
+		states = self.treefind(self.STATES)
+		if states is None:
+			molecule = self.tree.getroot()
+			states = etree.SubElement(molecule, "propertyList",
+			                          {"title":"states"})
+		else:
+			states.clear() # Remove all old entires
+			states.attrib["title"] = "states"
+
+		for state in self.states.values():
+			stateTag = etree.SubElement(states, "propertyList",
+			                            {"title":state.name})
+			self.writeEnthalpy(state, stateTag)
+			self.writeEntropy(state, stateTag)
+			self.writeIons(state.ions, stateTag)
+
+class Molecule(Cml):
 	ATOM_ARRAY = 'atomArray'
 	BOND_ARRAY = 'bondArray'
 	PROPERTY_LIST = "propertyList"
 	STATES = PROPERTY_LIST+"/[@title='states']"
 	MOLECULE = "molecule"
-	NS = "{http://www.xml-cml.org/schema}"
 
 	def __init__(self):
 		self.atoms = dict()
@@ -115,14 +202,6 @@ class Molecule:
 				atom.y -= adj_y
 				if atom.z is not None:
 					atom.z -= adj_z
-	def treefind(self, xpath):
-		return self.xmlfind(self.tree, xpath)	
-
-	def xmlfind(self, document, xpath):
-		element = document.find(xpath)
-		if element is None:
-			element = self.tree.find(self.NS + xpath)
-		return element
 
 	def parse(self, filename):
 		etree.register_namespace("", self.NS)
@@ -178,20 +257,6 @@ class Molecule:
 		reaction = self.parseReaction(ions[0])
 		return reaction.products
 
-	def parseReaction(self, reactionTag):
-		reaction = Reaction()
-		for part in reactionTag:
-			if part.tag.endswith("productList"):
-				reaction.products = self.parseReactionMolecules(part)
-			elif part.tag.endswith("reactantList"):
-				reaction.reactants = self.parseReactionMolecules(part)
-		return reaction
-		
-	def parseReactionMolecules(self, moleculesTag):
-		molecules = list()
-		for molecule in moleculesTag:
-			molecules.append(molecule.attrib["title"])
-		return molecules
 
 	def empty_cml(self):
 		molecule = etree.Element("molecule")
@@ -278,15 +343,3 @@ class Molecule:
 		
 		self.writeReaction(r, tagIons)
 	
-	def writeReaction(self, reaction, parrentTag):
-		if reaction is None:
-			return		
-		tagReaction = etree.SubElement(parrentTag, "reaction")
-		if reaction.products != None:
-			tagProducts = etree.SubElement(tagReaction, "productList")
-			self.writeReactionMolecules(reaction.products, tagProducts)
-
-	def writeReactionMolecules(self, products, parrentTag):
-		for product in products:
-			etree.SubElement(parrentTag, "molecule", {"title":product})
-		
