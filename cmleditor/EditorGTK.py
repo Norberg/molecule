@@ -72,7 +72,7 @@ class EditorGTK:
 			name = col[0]
 			enthalpy = col[1] if col[1] != "" else None
 			entropy = col[2] if col[2] != "" else None
-			ions = col[3].split(',')	
+			ions = col[3].split(',') if col[3] != "" else None	
 			state = Cml.State(name, enthalpy, entropy, ions)
 			self.molecule.states[name] = state
 		self.molecule.write(self.filename)
