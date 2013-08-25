@@ -151,12 +151,13 @@ class Molecule(Cml):
 	PROPERTY_LIST = "propertyList"
 	STATES = PROPERTY_LIST+"/[@title='states']"
 	MOLECULE = "molecule"
-
+	STATE_MAP = {"aq": "Aqueous", "s" : "Solid", "g" : "Gas", "l" : "Liquid"}
 	def __init__(self):
 		self.atoms = dict()
 		self.bonds = list()
 		self.states = dict()
 		self.tree = None
+
 
 	def getDigits(self, string):
 		temp = [s for s in string if s.isdigit()]
@@ -169,6 +170,14 @@ class Molecule(Cml):
 	def atoms_sorted(self):
 		return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
 
+
+	def get_state(self, shortform):
+		statename = self.STATE_MAP[shortform]
+		if self.states.has_key(statename):
+			return self.states[statename]
+		else:
+			return None
+	
 	def printer(self):
 		print "Atoms:"
 		for atom in self.atoms.values():
@@ -229,6 +238,8 @@ class Molecule(Cml):
 			self.atoms[new.id] = new
 			
 	def parseBonds(self,bonds):
+		if bonds == None:
+			return
 		for bond in bonds:
 			new = Bond()
 			atomRefs = bond.attrib["atomRefs2"].split()
@@ -275,6 +286,8 @@ class Molecule(Cml):
 	
 	def writeBonds(self):
 		bondArray = self.treefind(self.BOND_ARRAY)
+		if bondArray == None:
+			return
 		bondArray.clear() # Remove all old entires
 		for bond in self.bonds:
 			attrib = {"atomRefs2" : bond.atomRefs2,

@@ -1,12 +1,13 @@
 import os
 import unittest
 import libcml.Cml as Cml
+from libcml import CachedCml
 
 class TestCML(unittest.TestCase):
 
 	def testParseAmmonia(self):
 		m = Cml.Molecule()
-		m.parse("testAmmonia.cml")
+		m.parse("tests/testAmmonia.cml")
 		self.assertEqual(len(m.atoms), 4)
 		self.assertEqual(len(m.bonds), 3)
 		self.assertEqual(m.atoms["a1"].elementType, "N")
@@ -20,7 +21,7 @@ class TestCML(unittest.TestCase):
 		
 	def testParsePropane(self):
 		m = Cml.Molecule()
-		m.parse("testPropane.cml")
+		m.parse("tests/testPropane.cml")
 		self.assertEqual(len(m.atoms), 12)
 		self.assertEqual(len(m.bonds), 11)
 		self.assertEqual(m.atoms["a1"].elementType, "H")
@@ -44,10 +45,10 @@ class TestCML(unittest.TestCase):
 	
 	def testWriteAndParseAgain(self):
 		m = Cml.Molecule()
-		m.parse("testPropane.cml")
-		m.write("testWrite.cml")
+		m.parse("tests/testPropane.cml")
+		m.write("tests/testWrite.cml")
 		m = Cml.Molecule()
-		m.parse("testWrite.cml")
+		m.parse("tests/testWrite.cml")
 		self.assertEqual(len(m.atoms), 12)
 		self.assertEqual(len(m.bonds), 11)
 		self.assertEqual(m.atoms["a1"].elementType, "H")
@@ -60,11 +61,11 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "C")
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
-		os.remove("testWrite.cml")
+		os.remove("tests/testWrite.cml")
 	
 	def testSortedAtoms(self):
 		m = Cml.Molecule()
-		m.parse("testPropane.cml")
+		m.parse("tests/testPropane.cml")
 		self.assertEqual(m.atoms_sorted[0].id, "a1")
 		self.assertEqual(m.atoms_sorted[1].id, "a2")
 		self.assertEqual(m.atoms_sorted[2].id, "a3")
@@ -81,7 +82,7 @@ class TestCML(unittest.TestCase):
 	
 	def testNormalizePos(self):
 		m = Cml.Molecule()
-		m.parse("testPropane.cml")
+		m.parse("tests/testPropane.cml")
 		self.assertEqual(m.max_pos(), (-0.605318, 3.557669, -1.096199))
 		self.assertEqual(m.min_pos(), (-4.928943, 1.137126, -4.097433))
 		m.normalize_pos()
@@ -108,9 +109,9 @@ class TestCML(unittest.TestCase):
 		m.atoms["a2"] = a2
 		b = Cml.Bond(a1, a2, 2)
 		m.bonds.append(b)
-		m.write("testOxygen.cml")
+		m.write("tests/testOxygen.cml")
 		m = Cml.Molecule()
-		m.parse("testOxygen.cml")
+		m.parse("tests/testOxygen.cml")
 		self.assertAlmostEqual(m.atoms["a1"].x, 0.0)
 		self.assertAlmostEqual(m.atoms["a1"].y, 0.0)	
 		self.assertEqual(m.atoms["a1"].elementType, "C")
@@ -122,13 +123,15 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
 		self.assertEqual(m.bonds[0].bonds, 2)
-		os.remove("testOxygen.cml")
+		os.remove("tests/testOxygen.cml")
 	
 	def testParseStatePropertys(self):
 		m = Cml.Molecule()
-		m.parse("testProperty.cml")
+		m.parse("tests/testProperty.cml")
 		self.assertEqual(m.states["Gas"].enthalpy, -426)
 		self.assertEqual(m.states["Gas"].entropy, 64)
+		self.assertEqual(m.get_state("g").entropy, 64)
+		self.assertEqual(m.get_state("l"), None)
 		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
 
 	def testWriteAndParseStatePropertys(self):
@@ -137,18 +140,18 @@ class TestCML(unittest.TestCase):
 		aq = Cml.State("Aqueous", ions=["Na+", "OH-"])
 		m.states["Gas"] = gas
 		m.states["Aqueous"] = aq
-		m.write("testSodiumhydroxide.cml")
+		m.write("tests/testSodiumhydroxide.cml")
 		m = Cml.Molecule()
-		m.parse("testSodiumhydroxide.cml")
+		m.parse("tests/testSodiumhydroxide.cml")
 		self.assertEqual(m.states["Gas"].enthalpy, -426)
 		self.assertEqual(m.states["Gas"].entropy, 64)
 		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
 		self.assertEqual(m.states["Aqueous"].ions_str, "Na+,OH-")
-		os.remove("testSodiumhydroxide.cml")
+		os.remove("tests/testSodiumhydroxide.cml")
 
 	def testParseReactions(self):
 		r = Cml.Reactions()
-		r.parse("reactions.cml")
+		r.parse("tests/reactions.cml")
 		self.assertEqual(r.reactions[0].reactants, ["H2","O"])
 		self.assertEqual(r.reactions[0].products, ["H2O(s)"])
 		self.assertEqual(r.reactions[1].reactants, ['SO3', 'H2O'])
@@ -160,15 +163,61 @@ class TestCML(unittest.TestCase):
 		r.reactions.append(r1)
 		r2 = Cml.Reaction(["H+", "H+"], ["H2"])
 		r.reactions.append(r2)
-		r.write("writtenReactions.cml")
+		r.write("tests/writtenReactions.cml")
 		r = Cml.Reactions()
-		r.parse("writtenReactions.cml")
+		r.parse("tests/writtenReactions.cml")
 		self.assertEqual(r.reactions[0].reactants, ["O","O"])
 		self.assertEqual(r.reactions[0].products, ["O2"])
 		self.assertEqual(r.reactions[1].reactants, ['H+', 'H+'])
 		self.assertEqual(r.reactions[1].products, ["H2"])
-		os.remove("writtenReactions.cml")
+		os.remove("tests/writtenReactions.cml")
 
+
+	def testCachedMolecule(self):
+		m = Cml.Molecule()
+		m.parse("tests/testPropane.cml")
+		m.write("tests/testWrite.cml")
+		c = CachedCml.getMoleculeCml("tests/testWrite.cml")
+		self.assertEqual(len(m.atoms), 12)
+		self.assertEqual(len(m.bonds), 11)
+		self.assertEqual(m.atoms["a1"].elementType, "H")
+		self.assertAlmostEqual(m.atoms["a1"].x, -4.719821)
+		self.assertAlmostEqual(m.atoms["a1"].y, 1.866564)
+		self.assertAlmostEqual(m.atoms["a1"].z, -1.096199)
+		self.assertAlmostEqual(m.atoms["a2"].x, -4.299694)
+		self.assertAlmostEqual(m.atoms["a2"].y, 2.06041)
+		self.assertAlmostEqual(m.atoms["a2"].z, -2.091249)
+		self.assertEqual(m.atoms["a2"].elementType, "C")
+		self.assertEqual(m.bonds[0].atomA.id, "a1")
+		self.assertEqual(m.bonds[0].atomB.id, "a2")
+		os.remove("tests/testWrite.cml")
+		c = CachedCml.getMoleculeCml("tests/testWrite.cml")
+		self.assertEqual(len(m.atoms), 12)
+		self.assertEqual(len(m.bonds), 11)
+		self.assertEqual(m.atoms["a1"].elementType, "H")
+		self.assertAlmostEqual(m.atoms["a1"].x, -4.719821)
+		self.assertAlmostEqual(m.atoms["a1"].y, 1.866564)
+		self.assertAlmostEqual(m.atoms["a1"].z, -1.096199)
+		self.assertAlmostEqual(m.atoms["a2"].x, -4.299694)
+		self.assertAlmostEqual(m.atoms["a2"].y, 2.06041)
+		self.assertAlmostEqual(m.atoms["a2"].z, -2.091249)
+		self.assertEqual(m.atoms["a2"].elementType, "C")
+		self.assertEqual(m.bonds[0].atomA.id, "a1")
+		self.assertEqual(m.bonds[0].atomB.id, "a2")
+		
+	def testParseMoleculeWithoutBonds(self):
+		m = Cml.Molecule()
+		m.parse("data/molecule/AgCl.cml")
+		self.assertEqual(len(m.atoms), 2)
+		self.assertEqual(len(m.bonds), 0)
+		self.assertEqual(m.atoms["a1"].elementType, "Cl")
+		self.assertEqual(m.atoms["a1"].formalCharge, -1)
+		self.assertEqual(m.atoms["a1"].x, 1.0)
+		self.assertEqual(m.atoms["a1"].y, 0.0)
+		self.assertEqual(m.atoms["a2"].x, 0.0)
+		self.assertEqual(m.atoms["a2"].y, 0.0)
+		self.assertEqual(m.atoms["a2"].elementType, "Ag")
+		self.assertEqual(m.atoms["a2"].formalCharge, 1)
 
 if __name__ == '__main__':
 	unittest.main()	
