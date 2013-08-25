@@ -109,7 +109,6 @@ class EditorGTK:
 		self.openFile(widget.get_filename())	
 
 	def openFile(self, filename):
-		print "opening..", filename
 		self.filename = filename
 		self.current_pos = self.folder_list.index(self.widget("fcbOpen").get_filename())
 		molecule = Cml.Molecule()

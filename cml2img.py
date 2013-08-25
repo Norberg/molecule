@@ -27,7 +27,8 @@ def main():
 	convert_cml2png(input, output)
 
 def convert_cml2png(input, output): 
-	img = Molecule(None, None).cml2Sprite(input)
+	#TODO: move sprite generation from Molecule
+	img = Molecule("H2O(g)").cml2Sprite(input)
 	pygame.image.save(img, output)
 
 def cmd_help():

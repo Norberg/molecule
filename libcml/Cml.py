@@ -199,18 +199,14 @@ class Molecule(Cml):
 		return (max_x, max_y, max_z)
 
 	def normalize_pos(self):
-		""" normalize position to only be positive """
-		min_x, min_y, min_z = self.min_pos()
-		adj_x = min(0, min_x)
-		adj_y = min(0, min_y)
-		adj_z = min(0, min_z)
+		""" normalize position to be as close to (0,0,[0]) as possible """
+		adj_x, adj_y, adj_z = self.min_pos()
 		
-		if adj_z != 0 or adj_y != 0 or adj_x != 0:
-			for atom in self.atoms.values():
-				atom.x -= adj_x
-				atom.y -= adj_y
-				if atom.z is not None:
-					atom.z -= adj_z
+		for atom in self.atoms.values():
+			atom.x -= adj_x
+			atom.y -= adj_y
+			if atom.z is not None:
+				atom.z -= adj_z
 
 	def parse(self, filename):
 		etree.register_namespace("", self.NS)

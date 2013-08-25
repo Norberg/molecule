@@ -7,35 +7,38 @@ import molecule.Config as Config
 from molecule import CollisionTypes
 from pymunk.vec2d import Vec2d
 from libcml import Cml
+from libcml import CachedCml
+from libreact import Reaction
 
 class Molecule:
 	ATOM_SIZE = 32
 	BOND_LENGHT = 6
 	MOLECULE_MAX_SIZE = 150
-	def __init__(self,formula, states, mass = 10):
+	def __init__(self, formula_with_state):
+		formula, state = Reaction.split_state(formula_with_state)
 		self.formula = formula
+		self.current_state = state
+		self.cml = CachedCml.getMolecule(formula)
+		self.cml.normalize_pos()
 		self.sprite = None
-		self.states = states
-		self.current_state = 0
-		self.mass = mass
 
 	@property
 	def enthalpy(self):
 		"""Return enthalpy(aka H) for current state"""
-		return self.states[self.current_state].enthalpy
+		return self.state.enthalpy
 
 	@property
 	def entropy(self):
 		"""Return entropy(aka S) for current state"""
-		return self.states[self.current_state].entropy
+		return self.state.entropy
 
 	@property
 	def state(self):
 		"""Return current state"""
-		return self.states[self.current_state]
+		return self.cml.get_state(self.current_state)
 	@property
 	def state_formula(self):
-		return self.formula + "(%s)" % self.state.short
+		return self.formula + "(%s)" % self.current_state
 
 	def change_state(self, new_state):
 		"""new_state: shortform of wanted state"""
@@ -76,13 +79,12 @@ class Molecule:
 		
 					
 	def createMoleculeSprite(self):
-		if util.isAtom(self.formula):
-			self.cml = Cml.Molecule()
-			self.cml.atoms["a1"] = Cml.Atom("a1", self.formula, 0, 0, 0)
-			return self.createAtomSprite(self.formula)
-
-		return self.cml2Sprite("data/molecule/%s.cml" % self.formula)
-
+		self.sprite = PyGameUtil.createSurface(self.molecule_sprite_size(self.cml))
+		self.createBonds()
+		for atom in self.cml.atoms.values():
+			atomSprite = self.createAtomSprite(atom.elementType, atom.formalCharge)
+			self.sprite.blit(atomSprite, self.cartesian2pos(atom.pos))
+		return self.sprite
 
 	def cartesian2pos(self, pos):
 		FACTOR = 42

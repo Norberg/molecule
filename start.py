@@ -152,7 +152,7 @@ class Game:
 			if collision["shape"].collision_type == 1:
 				shape = collision["shape"]
 				sprite = shape.sprite
-				formula = sprite.molecule.formula
+				formula = sprite.molecule.state_formula
 				if formula in elements:
 					elements.remove(formula)
 					for s in shape.body.shapes:
