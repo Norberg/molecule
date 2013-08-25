@@ -47,7 +47,12 @@ class Reaction:
 		for element in elements:
 			molecule = self.getMolecule(element)
 			formula, state = split_state(element)
-			yield molecule.get_state(state)			
+			s = molecule.get_state(state)
+			if s is None:
+				raise Exception("Tried to read non existing state:(" 
+				                 + state + ") for: "+ formula)
+			else:
+				yield s	
 	
 
 def split_state(molecule):

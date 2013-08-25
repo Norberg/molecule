@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="OH-(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="O"/>
+    </reactantList>
+    <productList>
+      <molecule title="O2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="H2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H+"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H+"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4+(g)"/>
+      <molecule title="OH-(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH4N2O(s)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="SO3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2SO4(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2SO4"/>
+      <molecule title="NaCl"/>
+      <molecule title="NaCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="HCl(g)"/>
+      <molecule title="HCl(g)"/>
+      <molecule title="Na2SO4(s)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="N"/>
+      <molecule title="N"/>
+    </reactantList>
+    <productList>
+      <molecule title="N2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2"/>
+      <molecule title="H2"/>
+      <molecule title="H2"/>
+      <molecule title="N2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="NH3(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H6O"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CaO2H2"/>
+      <molecule title="Na2CO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaCO3(s)"/>
+      <molecule title="Na+(aq)"/>
+      <molecule title="Na+(aq)"/>
+      <molecule title="OH-(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Ca2+"/>
+      <molecule title="CO3-2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaCO3(s)"/>
+    </productList>
+  </reaction>
+</reactions>

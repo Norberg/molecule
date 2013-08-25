@@ -15,7 +15,7 @@ class Reactor:
 				return reaction
 		return None
 
-	def react(self, reactants, temperature = 298):
+	def react(self, reactants, K = 298):
 		""" check if all elements needed for the reaction exists in
 	 	    in the reacting elements and that the reaction is spontaneous
 		    in the given temperature. 
@@ -25,7 +25,7 @@ class Reactor:
 		if reactionCml is None:
 			return None
 		reaction = Reaction.Reaction(reactionCml, reactants)
-		if reaction.isSpontaneous(temperature):
+		if reaction.isSpontaneous(K):
 			return reaction
 		else:
 			return None

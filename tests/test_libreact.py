@@ -1,4 +1,3 @@
-import os
 import unittest
 import libcml.Cml as Cml
 from libreact.Reaction import Reaction
@@ -11,6 +10,12 @@ class TestReact(unittest.TestCase):
 		r1 = Cml.Reaction(["O","H+"], ["OH-(aq)"])
 		r2 = Cml.Reaction(["O","O"], ["O2(g)"])
 		return Reactor([r1,r2])
+	
+	def setupRealReactor(self):
+		cml = Cml.Reactions()
+		cml.parse("data/reactions.cml")
+		reactor = Reactor(cml.reactions)
+		return reactor
 
 	def testSublistInList(self):
 		self.assertTrue(sublist_in_list("abcd", "abcdefg"))
@@ -44,3 +49,9 @@ class TestReact(unittest.TestCase):
 		reaction = reactor.react(["O(g)"])
 		self.assertEqual(reaction, None)
 
+	def testComplexReactions(self):
+		reactor = self.setupRealReactor()
+		reaction = reactor.react(["CH4(g)", "H2O(g)"], K=1000)
+		self.assertEqual(reaction.products, ["CO(g)", "H2(g)", "H2(g)", "H2(g)"])
+		reaction = reactor.react(["H2SO4(aq)", "NaCl(s)", "NaCl(s)"])
+		self.assertEqual(reaction.products, ["HCl(g)", "HCl(g)", "Na2SO4(s)"])
