@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 import pygtk
 import glob 
 import gtk
@@ -7,7 +8,8 @@ import gtk.glade
 import gobject
 import libcml.Cml as Cml
 import cml2img
-
+from subprocess import call
+import time
 class EditorGTK:
 
 	def __init__(self):	
@@ -18,7 +20,7 @@ class EditorGTK:
 		self.window = self.widget("winMain").show()
 		self.widget("fcbOpen").set_current_folder("data/molecule")
 		self.builder.connect_signals(self)
-		self.folder = None
+		self.folder = "data/molecule/"
 		self.init_twStates()
 
 	def init_twStates(self):
@@ -93,16 +95,21 @@ class EditorGTK:
 		self.widget("fcbOpen").set_filename(newFile)
 		self.openFile(newFile)
 
+	def update_folder_list(self):
+		self.folder_list = glob.glob(self.folder+"/*")
+		self.folder_list.sort()
+
+
 	def on_fcbOpen_file_set(self, widget):
 		new_folder = widget.get_current_folder()
 		if self.folder != new_folder:
 			self.folder = new_folder
-			self.folder_list = glob.glob(self.folder+"/*")
-			self.folder_list.sort()
+			self.update_folder_list()
 
 		self.openFile(widget.get_filename())	
 
 	def openFile(self, filename):
+		print "opening..", filename
 		self.filename = filename
 		self.current_pos = self.folder_list.index(self.widget("fcbOpen").get_filename())
 		molecule = Cml.Molecule()
@@ -181,3 +188,83 @@ class EditorGTK:
 			model, iter = self.widget("twStates").get_selection().get_selected()
 			if iter:
 				model.remove(iter)
+
+	def on_btnNewMolecule_clicked(self, widget):
+		answers = InputBox("Molecule", ["Formula:", "SMILES:"])
+		print answers
+		formula, smiles = answers
+		path = "data/molecule/%s.cml" % formula
+		if os.path.isfile(path):
+			res = YesNo("Molecule already exist, do you want to overwrite?")
+			if res == "No":
+				return
+		ret = call(["obabel", "-:%s" % smiles, "-h", "--gen2d", "-ocml", "-O", path])
+		MsgBox("Creating molecule...")
+		self.update_folder_list()
+		self.widget("fcbOpen").set_filename(path)	
+		self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+
+def MsgBox(message):
+        dialog = gtk.MessageDialog(None,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_INFO, gtk.BUTTONS_OK,
+                message)
+        dialog.run()
+        dialog.destroy()
+
+def YesNo(message):
+        dialog = gtk.MessageDialog(None,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
+                message)
+        response = dialog.run()
+        dialog.destroy()
+        if response == -8:
+                return "Yes"
+        else:
+                return "No"
+
+def responseToDialog(entry, dialog, response):
+    dialog.response(response)
+	
+def InputBox(title, questions):
+        dialog = gtk.Dialog(title, None, 0,
+        (gtk.STOCK_OK, gtk.RESPONSE_OK,
+        "Cancel", gtk.RESPONSE_CANCEL))
+	dialog.set_resizable(False)
+        hbox = gtk.HBox(False, 8)
+        hbox.set_border_width(8)
+        dialog.vbox.pack_start(hbox, False, False, 0)
+
+        stock = gtk.image_new_from_stock(
+                gtk.STOCK_DIALOG_QUESTION,
+                gtk.ICON_SIZE_DIALOG)
+        hbox.pack_start(stock, False, False, 0)
+        table = gtk.Table(2, 2)
+        table.set_row_spacings(4)
+        table.set_col_spacings(4)
+        hbox.pack_start(table, True, True, 0)
+	entryBoxes = list()
+	pos = 0
+	for question in questions:
+		label = gtk.Label(question)
+		label.set_use_underline(True)
+		table.attach(label, 0, 1, pos, pos+1)
+		entry = gtk.Entry()
+		entry.connect("activate", responseToDialog, dialog, gtk.RESPONSE_OK)
+		table.attach(entry, 1, 2, pos, pos+1)
+		label.set_mnemonic_widget(entry)
+		entryBoxes.append(entry)
+		pos += 1
+        
+	dialog.show_all()
+        
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+                answers = list()
+		for entryBox in entryBoxes:
+			answers.append(entryBox.get_text())
+                dialog.destroy()
+                return answers
+        dialog.destroy()
+	
