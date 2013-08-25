@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="F" id="a1" x2="1.149881" y2="-0.244415"/>
+    <atom elementType="F" id="a3" x2="1.737667" y2="0.773659"/>
+    <atom elementType="P" id="a2" x2="0.743145" y2="0.669131"/>
+    <atom elementType="F" id="a5" x2="-0.122881" y2="1.169131"/>
+    <atom elementType="F" id="a4" x2="0.951057" y2="1.647278"/>
+    <atom elementType="F" id="a6" x2="-0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1594.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">301.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>

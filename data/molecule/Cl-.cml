@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Cl" formalCharge="-1" id="a1" x2="1.0" y2="0.0"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-167.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">56.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-234.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">153.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+</ns0:molecule>
