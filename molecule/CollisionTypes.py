@@ -1,0 +1,3 @@
+WALL = 0
+ELEMENT = 1
+EFFECT = 2
