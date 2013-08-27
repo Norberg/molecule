@@ -2,7 +2,7 @@ import math
 import random
 import pymunk
 import pygame
-import PyGameUtil,util,Bonds
+import PyGameUtil,util
 import molecule.Config as Config
 from molecule import CollisionTypes
 from pymunk.vec2d import Vec2d

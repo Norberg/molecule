@@ -3,9 +3,8 @@ import copy
 import re
 import pymunk
 import pygame
-import PyGameUtil,util,Bonds
+import PyGameUtil,util
 from Molecule import Molecule, MoleculeSprite
-import State
 import Config
 from libreact.Reactor import Reactor
 from libcml import Cml

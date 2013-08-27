@@ -4,7 +4,7 @@ import pymunk
 import PyGameUtil
 import molecule.Config as Config
 from molecule import CollisionTypes
-from molecule.Reaction import Reaction
+from libreact import Reaction
 
 class Fire(pygame.sprite.Sprite):
 	"""Fire"""
