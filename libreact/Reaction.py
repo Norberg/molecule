@@ -2,12 +2,22 @@ import re
 from libcml import CachedCml
 
 class Reaction:
-	def __init__(self, cml, reactants):
+	def __init__(self, cml, reacting_elements):
 		self.cml = cml
 		self.products = cml.products
-		self.reactants = reactants
+		self.reactants = list(cml.reactants)
+		self.addStateToReactants(reacting_elements)
 		verify(self.products)	
 		verify(self.reactants)	
+
+	
+	def addStateToReactants(self, reactants):
+		""" Take a list of reactans with state to populate the reaction with the same info"""
+		for reactant in reactants:
+			reactant_without_state = remove_state(reactant) 
+			if reactant_without_state in self.reactants:
+				self.reactants.remove(reactant_without_state)
+				self.reactants.append(reactant)	
 
 	def deltaEnthalpy(self):
 		enthalpyReactans = self.sumEnthalpy(self.reactants)

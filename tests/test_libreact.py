@@ -55,3 +55,9 @@ class TestReact(unittest.TestCase):
 		self.assertEqual(reaction.products, ["CO(g)", "H2(g)", "H2(g)", "H2(g)"])
 		reaction = reactor.react(["H2SO4(aq)", "NaCl(s)", "NaCl(s)"])
 		self.assertEqual(reaction.products, ["HCl(g)", "HCl(g)", "Na2SO4(s)"])
+
+	def testExtraReactants(self):
+		reactor = self.setupRealReactor()
+		reaction = reactor.react(["H+(g)", "H+(g)", "H+(g)"])
+		self.assertEqual(reaction.products, ["H2(g)"])
+		self.assertEqual(reaction.reactants, ["H+(g)", "H+(g)"])
