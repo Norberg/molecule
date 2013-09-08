@@ -78,6 +78,7 @@ class Game:
 		print "ESC - close game"
 		print "r - reset current level"	
 		print "d - switch Graphic debug on/off"	
+		print "s - skip level"	
 
 	
 	def game_loop(self):
@@ -87,6 +88,10 @@ class Game:
 				if result == "victory":
 					self.write_on_background("Congratulation, you finished the level")
 					self.wait(2)
+					break
+				elif result == "SKIP_LEVEL":
+					self.write_on_background("Skipped level, Cheater!")
+					self.wait(1)
 					break
 				elif result == "RESET_LEVEL":
 					level.__init__()
@@ -197,6 +202,8 @@ class Game:
 				return "RESET_LEVEL"
 			elif event.type == KEYDOWN and event.key == K_d:
 				self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
+			elif event.type == KEYDOWN and event.key == K_s:
+				return "SKIP_LEVEL"
 			elif event.type == MOUSEBUTTONDOWN:
 				if self.mouse_spring != None:
 					raise Exception("mouse_spring already existing")
