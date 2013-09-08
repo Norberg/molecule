@@ -85,7 +85,7 @@ class Game:
 			
 				
 	def cmd_help(self):
-		print "Molecule - a Molecule reaction puzzle game by Simon Norberg"
+		print "Molecule - a chemical reaction puzzle game by Simon Norberg"
 		print "-h --help print this help"	
 		print "--level=LEVEL choose what level to start on"	
 		print "-d --debug print debug messages"

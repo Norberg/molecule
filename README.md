@@ -34,7 +34,7 @@ Structure:
 ====
 libcml/
 ==
-Library responsible for parsing cml files containg molecules and reactions.
+Library responsible for parsing cml files containing molecules and reactions.
 libreact/
 ==
 Library responsible for simulating reactions.
@@ -44,12 +44,12 @@ GUI for editing cml files
 molecule/
 ==
 Game code.
-data
+data/
 ==
 All data for the game.
-tests
+tests/
 ==
 All testcases for the game.
-img
+img/
 ==
 All images.
