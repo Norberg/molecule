@@ -18,7 +18,7 @@ Dependencies:
 How to play:
 ---------
     python start.py --help 
-    Molecule - a chemical reaction puzzle game by Simon Norberg
+    Molecule - a chemical reaction puzzle game
     -h --help print this help
     --level=LEVEL choose what level to start on
     -d --debug print debug messages
