@@ -39,7 +39,7 @@ Library responsible for simulating reactions.
 ###cmleditor/###
 GUI for editing cml files
 
-##molecule/###
+###molecule/###
 Game code.
 
 ###data/###
