@@ -19,7 +19,7 @@ import pygame
 import pymunk
 import Universe
 import Effects
-import molecule.Config as Config
+from molecule import Config
 from molecule import CollisionTypes
  
 class BaseLevel:

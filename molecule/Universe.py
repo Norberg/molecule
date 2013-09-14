@@ -20,7 +20,7 @@ import pymunk
 import pygame
 import PyGameUtil,util
 from Molecule import Molecule, MoleculeSprite
-import Config
+from molecule import Config
 from libreact.Reactor import Reactor
 from libcml import Cml
 

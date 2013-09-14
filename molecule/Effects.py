@@ -17,7 +17,7 @@ import glob
 import pygame
 import pymunk
 import PyGameUtil
-import molecule.Config as Config
+from molecule import Config
 from molecule import CollisionTypes
 from libreact import Reaction
 

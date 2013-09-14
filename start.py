@@ -13,10 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import molecule.Game as molecule
+from molecule.Game import Game
 
 def main():
-	game = molecule.Game()
+	game = Game()
 	game.game_loop()
 
 if __name__ == '__main__':

@@ -28,8 +28,8 @@ import pymunk
 from pymunk.pygame_util import draw_space
 
 import molecule.levels
-import molecule.Universe as Universe
-import molecule.Config as Config
+from molecule import Universe
+from molecule import Config
 from molecule import CollisionTypes	
 
 class Game:
