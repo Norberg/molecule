@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="H+(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="H+(g)"/>
+    <molecule title="OH-(aq)"/>
+    <molecule title="CH4(g)"/>
+  </moleculeList>
+  <effectList>
+    <effect title="Fire" x2="200" y2="100"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="CO2"/>
+    <molecule title="H2O"/>
+    <molecule title="H2O"/>
+  </victoryCondition>
+  <objective text="Create a CO2 and 2 H20 molecules"/>
+  <hint text="CH4 + 2 O2 + Heat => CO2 + 2 H2O"/>
+</level>

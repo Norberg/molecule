@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="H+(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="OH-(aq)"/>
+    <molecule title="H+(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="NH3(g)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="NH4+"/>
+  </victoryCondition>
+  <objective text="Create a NH4+ molecule"/>
+  <hint text="TODO: Not possible until cold is introduced"/>
+</level>

@@ -27,16 +27,17 @@ import pymunk
 
 from pymunk.pygame_util import draw_space
 
-import molecule.levels
 from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes	
+from molecule.Levels import Levels
 
 class Game:
-	def __init__(self):
+	def __init__(self, gui = True):
 		self.last_collision = 0
-		self.handle_cmd_options()	
-		self.init_pygame()
+		self.handle_cmd_options()
+		if gui:
+			self.init_pygame()
 		self.space = None
 		Universe.createUniverse()
 		self.mouse_body = pymunk.Body()	
@@ -97,7 +98,9 @@ class Game:
 
 	
 	def game_loop(self):
-		for level in self.get_levels():
+		levels = Levels("data/levels")
+		levels.current_level = Config.current.level -2 
+		for level in levels.level_iter():
 			while 1:
 				result = self.run_level(level)
 				if result == "victory":
@@ -109,23 +112,16 @@ class Game:
 					self.wait(1)
 					break
 				elif result == "RESET_LEVEL":
-					level.__init__()
+					level.reset()
 					continue	
 				elif result == QUIT:
 					return
 				else:
 					print "Unkown return code from level, quiting"
 	
-	def get_levels(self):
-		for name, level in inspect.getmembers(molecule.levels):
-			if inspect.isclass(level) and issubclass(level,molecule.levels.BaseLevel) \
-			   and name != "BaseLevel" and int(name.split("_")[1]) >= Config.current.level:
-				l = level()
-				yield l
-
 	def run_level(self, level):
 		self.active = None
-		self.write_on_background(level.description)
+		self.write_on_background(level.cml.objective)
 		self.elements = level.elements
 		self.areas = level.areas
 		self.space = level.space
@@ -136,17 +132,17 @@ class Game:
 			event = self.event_loop()
 			if event != None:
 				return event
-			if level.check_victory() == "victory":
+			if level.check_victory():
 				return "victory"
 
 	def element_collision(self, space, arbiter):
 		a,b = arbiter.shapes
 		reacting_areas = list(self.get_affecting_areas(a.body.position))
-		collisions = space.nearest_point_query(a.body.position, 30)
+		collisions = space.nearest_point_query(a.body.position, 40)
 		reacting_elements = list(self.get_element_symbols(collisions))
 		reaction = Universe.universe.react(reacting_elements, reacting_areas)
 		if reaction != None:
-			key = reaction #This object is used as a key, there can only be one callback for every key. 
+			key = 1 # use 1 as key so only one callback per iteration can trigger 
 			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
 
 	def effect_reaction(self, space, arbiter):
@@ -156,14 +152,14 @@ class Game:
 		reaction = effect.react(molecule)
 		collisions = [{"shape" : a}]
 		if reaction != None:
-			key = a.body #This object is used as a key, there can only be one callback for every key. 
+			key = 1 # use 1 as key so only one callback per iteration can trigger 
 			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)	
 		return False
 
 	def perform_reaction(self, key, reaction, collisions, position):
 		self.destroy_elements(reaction.reactants, collisions)
 		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
-		self.elements.add(Universe.universe.create_elements(self.space, reaction.products, position))
+		self.elements.add(Universe.create_elements(self.space, reaction.products, position))
 
 	def destroy_elements(self, elements_to_destroy, collisions):
 		""" Destroy a list of elements from a dict of collisions"""
@@ -179,6 +175,10 @@ class Game:
 						self.space.remove(s)
 					self.space.remove(shape.body)
 					sprite.kill()
+		if len(elements) != 0:
+			print "not all elements was removed.."
+			print "elements_to_destroy:", elements_to_destroy
+			print "collisions:", collisions
 
 	def get_affecting_areas(self, position):
 		"""Return all areas that have a affect on position"""
@@ -209,37 +209,42 @@ class Game:
 		self.clock.tick(60)
 		self.update_mouse_pos()
 		for event in pygame.event.get():
-			if event.type == QUIT:
-				return QUIT
-			elif event.type == KEYDOWN and event.key == K_ESCAPE:
-				return QUIT
-			elif event.type == KEYDOWN and event.key == K_r:
-				return "RESET_LEVEL"
-			elif event.type == KEYDOWN and event.key == K_d:
-				self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
-			elif event.type == KEYDOWN and event.key == K_s:
-				return "SKIP_LEVEL"
-			elif event.type == MOUSEBUTTONDOWN:
-				if self.mouse_spring != None:
-					raise Exception("mouse_spring already existing")
-		                #clicked = self.space.point_query_first(self.update_mouse_pos())
-				clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
-				if clicked != None and clicked["shape"].collision_type == 1:
-					clicked = clicked["shape"]
-					rest_length = self.mouse_body.position.get_distance(clicked.body.position)
-					self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
-					self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
-					clicked.body.mass /= 50
-					self.space.add(self.mouse_spring) 
-					
-			elif event.type is MOUSEBUTTONUP: 
-				if self.mouse_spring != None:
-					self.mouse_spring.b.mass *= 50
-					self.mouse_spring.b.velocity = (0,0)
-					self.space.remove(self.mouse_spring)
-					self.mouse_spring = None
+			res = self.handle_event(event)
+			if res is not None:
+				return res
 		self.screen.blit(self.background, (0, 0))
 		self.update_and_draw(self.areas, self.elements)
+
+
+	def handle_event(self, event):
+		if event.type == QUIT:
+			return QUIT
+		elif event.type == KEYDOWN and event.key == K_ESCAPE:
+			return QUIT
+		elif event.type == KEYDOWN and event.key == K_r:
+			return "RESET_LEVEL"
+		elif event.type == KEYDOWN and event.key == K_d:
+			self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
+		elif event.type == KEYDOWN and event.key == K_s:
+			return "SKIP_LEVEL"
+		elif event.type == MOUSEBUTTONDOWN:
+			if self.mouse_spring != None:
+				raise Exception("mouse_spring already existing")
+			clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
+			if clicked != None and clicked["shape"].collision_type == 1:
+				clicked = clicked["shape"]
+				rest_length = self.mouse_body.position.get_distance(clicked.body.position)
+				self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
+				self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+				clicked.body.mass /= 50
+				self.space.add(self.mouse_spring) 
+				
+		elif event.type is MOUSEBUTTONUP: 
+			if self.mouse_spring != None:
+				self.mouse_spring.b.mass *= 50
+				self.mouse_spring.b.velocity = (0,0)
+				self.space.remove(self.mouse_spring)
+				self.mouse_spring = None
 
 	def update_and_draw(self, *spriteGroups):
 		dirty_rects = list()

@@ -27,7 +27,6 @@ from libcml import Cml
 class Universe:
 	"""Universe contains all fundamental particles and laws needed to get the universe to spin"""
 	def __init__(self):
-		print "Universe is initilazing" 
 		self.moelcules = dict()
 		cml = Cml.Reactions()
 		cml.parse("data/reactions.cml")
@@ -51,29 +50,27 @@ class Universe:
 			print reaction.reactants, "+", effect_names, "->", reaction.products
 			return reaction
 		
-	def create_elements(self, space, elements, pos=None):
-		""" Create a set of elements
-		body: shape to attach molecule to
-		element: list of elements to create
-		pos : position of the new element
-		"""	
-		list_of_elements = list()
-		if pos != None:
-			x, y = pos
+def create_elements(space, elements, pos=None):
+	""" Create a set of elements
+	body: shape to attach molecule to
+	element: list of elements to create
+	pos : position of the new element
+	"""	
+	list_of_elements = list()
+	if pos != None:
+		x, y = pos
 
-		if isinstance(elements, basestring):
-			elements = [elements] #elements is a string, wrap it in a list not to confuse for
-		for element in elements:
-			if pos != None and len(elements) > 1:
-				pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-			molecule = Molecule(element)
-			list_of_elements.append(MoleculeSprite(molecule, space,  pos))
-		return tuple(list_of_elements)
+	if isinstance(elements, basestring):
+		elements = [elements] #elements is a string, wrap it in a list not to confuse for
+	for element in elements:
+		if pos != None and len(elements) > 1:
+			pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
+		molecule = Molecule(element)
+		list_of_elements.append(MoleculeSprite(molecule, space,  pos))
+	return tuple(list_of_elements)
 
 
 universe = None
-print "univers = None"
 def createUniverse():
 	global universe
 	universe = Universe()
-	print "Creaded the Universe"

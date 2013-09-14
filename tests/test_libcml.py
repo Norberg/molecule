@@ -234,5 +234,27 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "Ag")
 		self.assertEqual(m.atoms["a2"].formalCharge, 1)
 
+	def testParseLevel(self):
+		m = Cml.Level()
+		m.parse("tests/testlevel.cml")
+		expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'P(g)', 'F(g)', 'Al(s)']
+		self.assertEqual(m.molecules, expected)
+		self.assertEqual(m.victory_condition, ["H2O(aq)"])
+		self.assertEqual(m.objective, "Create a water molecule")
+		self.assertEqual(m.hint, "H + H + O => H2O")
+		self.assertEqual(m.effects[0].title, "Fire")
+		self.assertEqual(m.effects[0].value, 800)
+		self.assertEqual(m.effects[0].x2, 12)
+		self.assertEqual(m.effects[0].y2, 10)
+
+	def testParseLevel01(self):
+		m = Cml.Level()
+		m.parse("data/levels/01-Water.cml")
+		expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'P(g)', 'F(g)', 'Al(s)']
+		self.assertEqual(m.molecules, expected)
+		self.assertEqual(m.victory_condition, ["H2O"])
+		self.assertEqual(m.objective, "Create a water molecule")
+		self.assertEqual(m.hint, "H + H + O => H2O")
+
 if __name__ == '__main__':
 	unittest.main()	

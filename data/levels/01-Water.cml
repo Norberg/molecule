@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="H+(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="H+(g)"/>
+    <molecule title="P(g)"/>
+    <molecule title="F(g)"/>
+    <molecule title="Al(s)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="H2O"/>
+  </victoryCondition>
+  <objective text="Create a water molecule"/>
+  <hint text="H + H + O => H2O"/>
+</level>

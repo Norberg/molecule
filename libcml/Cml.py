@@ -71,6 +71,13 @@ class Reaction:
 		self.reactants = reactants
 		self.products = products
 
+class Effect:
+	def __init__(self, title = None, value = None, x2 = None, y2 = None):
+		self.title = title
+		self.value = value
+		self.x2 = x2
+		self.y2 = y2
+
 class Cml:
 	NS = "{http://www.xml-cml.org/schema}"
 		
@@ -86,12 +93,12 @@ class Cml:
 		reaction = Reaction()
 		for part in reactionTag:
 			if part.tag.endswith("productList"):
-				reaction.products = self.parseReactionMolecules(part)
+				reaction.products = self.parseMoleculeList(part)
 			elif part.tag.endswith("reactantList"):
-				reaction.reactants = self.parseReactionMolecules(part)
+				reaction.reactants = self.parseMoleculeList(part)
 		return reaction
 		
-	def parseReactionMolecules(self, moleculesTag):
+	def parseMoleculeList(self, moleculesTag):
 		molecules = list()
 		for molecule in moleculesTag:
 			molecules.append(molecule.attrib["title"])
@@ -110,8 +117,58 @@ class Cml:
 	def writeReactionMolecules(self, products, parrentTag):
 		for product in products:
 			etree.SubElement(parrentTag, "molecule", {"title":product})
+	
+	def parseText(self, tagname):
+		tag = self.treefind(tagname)
+		return tag.attrib["text"]
 		
 
+class Level(Cml):
+	MOLECULE_LIST = "moleculeList"
+	EFFECT_LIST = "effectList"
+	VICTORY_CONDITION = "victoryCondition"
+	OBJECTIVE = "objective"
+	HINT = "hint"
+
+	def __init__(self):
+		self.tree = None
+		self.molecules = list()
+		self.effects = list()
+		self.objective = None
+		self.victory_condition = list()
+		self.hint = None
+
+	def parse(self, filename):
+		self.tree = etree.parse(filename)
+		molecule_list_tag = self.treefind(self.MOLECULE_LIST)
+		self.molecules = self.parseMoleculeList(molecule_list_tag)
+
+		victory_tag = self.treefind(self.VICTORY_CONDITION)
+		self.victory_condition = self.parseMoleculeList(victory_tag)
+
+		effect_tag = self.treefind(self.EFFECT_LIST)
+		self.parseEffectList(effect_tag)
+
+		self.objective = self.parseText(self.OBJECTIVE)
+		self.hint = self.parseText(self.HINT)
+	
+	def parseEffectList(self, effect_list_tag):
+		for effect_tag in effect_list_tag:
+			effect = self.parseEffect(effect_tag)
+			self.effects.append(effect)
+		
+	def parseEffect(self, effect_tag):
+		effect = Effect()
+		effect.title = effect_tag.attrib["title"]
+		if effect_tag.attrib.has_key("value"):
+			effect.value = float(effect_tag.attrib["value"])
+		effect.x2 = float(effect_tag.attrib["x2"])
+		effect.y2 = float(effect_tag.attrib["y2"])
+		return effect
+
+	def write(self, filename):
+		raise NotImplementedError
+	
 class Reactions(Cml):
 	def __init__(self):
 		self.tree = None

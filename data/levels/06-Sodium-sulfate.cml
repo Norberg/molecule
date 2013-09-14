@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="H+(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="H+(g)"/>
+    <molecule title="OH-(aq)"/>
+    <molecule title="NaCl(s)"/>
+    <molecule title="NaCl(s)"/>
+    <molecule title="SO3(g)"/>
+  </moleculeList>
+  <effectList>
+    <effect title="Fire" x2="200" y2="100"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Na2SO4"/>
+    <molecule title="HCl"/>
+  </victoryCondition>
+  <objective text="Create a HCL and a Na2SO4 molecule"/>
+  <hint text="2 NaCl + H2SO4 => 2 HCL + Na2SO4"/>
+</level>

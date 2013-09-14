@@ -86,7 +86,7 @@
       <molecule title="H2O"/>
     </reactantList>
     <productList>
-      <molecule title="NH4+(g)"/>
+      <molecule title="NH4+(aq)"/>
       <molecule title="OH-(g)"/>
     </productList>
   </reaction>
@@ -167,6 +167,7 @@
       <molecule title="CaCO3(s)"/>
       <molecule title="Na+(aq)"/>
       <molecule title="Na+(aq)"/>
+      <molecule title="OH-(aq)"/>
       <molecule title="OH-(aq)"/>
     </productList>
   </reaction>
