@@ -3,8 +3,7 @@ python:
   - "2.7"
 # command to install dependencies
 install:
-	"pip install pymunk --use-mirrors"
-	"pip install Pygame --use-mirrors"
+  - "pip install pymunk --use-mirrors"
+  - "pip install Pygame --use-mirrors"
 # command to run tests
-script: 
-	python -m unittest discover
+script: python -m unittest discover
