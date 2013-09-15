@@ -57,6 +57,10 @@ class Molecule:
 	def state_formula(self):
 		return self.formula + "(%s)" % self.current_state.short
 
+	@property
+	def draggable(self):
+		return self.current_state.short != "aq"
+
 	def change_state(self, new_state):
 		"""new_state: shortform of wanted state"""
 		if not self.try_change_state(new_state):

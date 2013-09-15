@@ -234,23 +234,30 @@ class Game:
 		elif event.type == KEYDOWN and event.key == K_s:
 			return "SKIP_LEVEL"
 		elif event.type == MOUSEBUTTONDOWN:
-			if self.mouse_spring != None:
-				raise Exception("mouse_spring already existing")
-			clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
-			if clicked != None and clicked["shape"].collision_type == 1:
-				clicked = clicked["shape"]
-				rest_length = self.mouse_body.position.get_distance(clicked.body.position)
-				self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
-				self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
-				clicked.body.mass /= 50
-				self.space.add(self.mouse_spring) 
-				
+			self.handle_mouse_button_down()	
 		elif event.type is MOUSEBUTTONUP: 
-			if self.mouse_spring != None:
-				self.mouse_spring.b.mass *= 50
-				self.mouse_spring.b.velocity = (0,0)
-				self.space.remove(self.mouse_spring)
-				self.mouse_spring = None
+			self.handle_mouse_button_up()
+
+	def handle_mouse_button_down(self):
+		if self.mouse_spring != None:
+			raise Exception("mouse_spring already existing")
+		clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
+		if clicked != None and \
+		   clicked["shape"].collision_type == CollisionTypes.ELEMENT and \
+		   clicked["shape"].sprite.molecule.draggable:
+			clicked = clicked["shape"]
+			rest_length = self.mouse_body.position.get_distance(clicked.body.position)
+			self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
+			self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+			clicked.body.mass /= 50
+			self.space.add(self.mouse_spring) 
+
+	def handle_mouse_button_up(self):
+		if self.mouse_spring != None:
+			self.mouse_spring.b.mass *= 50
+			self.mouse_spring.b.velocity = (0,0)
+			self.space.remove(self.mouse_spring)
+			self.mouse_spring = None
 
 	def update_and_draw(self, *spriteGroups):
 		dirty_rects = list()

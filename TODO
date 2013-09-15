@@ -1,10 +1,10 @@
 ### Small TODOs ###
 - Solid molecules should be affected by gravity
 - Cold effect needed for some reactions eg. level 5
-- Aqueous molecules should not be possible to grab
 - Show hint when h is pressed
 - use a logger library and allow fine tuning wanted debug messages
 - Draw correct number of bonds, current only 1 bond will be drawn
+- Give aqueous molecules a blueish background
 
 ### Medium TODOs ###
 - GUI to edit reactions
