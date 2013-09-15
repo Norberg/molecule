@@ -13,7 +13,7 @@ Dependencies:
 ###Cmleditor:###
 * python 2.7
 * pygtk2
-
+* openbabel (optional, needed to create new molecules)
 
 How to play:
 ---------
