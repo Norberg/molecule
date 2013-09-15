@@ -185,7 +185,10 @@ class MoleculeSprite(pygame.sprite.Sprite):
 			self.move((random.randint(10, 600), random.randint(10, 400)))
 		else:
 			self.move(pos)
-	
+	@property
+	def affecty_by_gravity(self):
+		return self.molecule.current_state.short == "s"
+
 	def cartesian2pymunk(self, pos):
 		FACTOR = 42
 		center_x, center_y = self.rect.center
@@ -213,13 +216,19 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		vec = Vec2d(x,y)
 		force = 1500
 		body.apply_impulse(force * vec)
-	
+		self.body = body
+
 	def move(self, pos):
 		self.rect.center = pos
 		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
 		
 	def update(self):
 		self.rect.center =  pymunk.pygame_util.to_pygame(self.shape.body.position, Config.current.screen)
-		#self.image = pygame.transform.rotate(self.image_master,math.degrees(self.shape.body.angle))
-	        #self.rect = self.image.get_rect(center=self.rect.center)
+		if self.affecty_by_gravity:
+			self.body.velocity_func = self.gravity_func
+		else:
+			self.body.velocity_func = pymunk.Body.update_velocity
 
+	def gravity_func(self, body, gravity, damping, dt):
+		gravity = (0.0,-500.0)
+		return pymunk.Body.update_velocity(body, gravity, damping, dt)

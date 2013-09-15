@@ -1,5 +1,4 @@
 ### Small TODOs ###
-- Solid molecules should be affected by gravity
 - Cold effect needed for some reactions eg. level 5
 - Show hint when h is pressed
 - use a logger library and allow fine tuning wanted debug messages
