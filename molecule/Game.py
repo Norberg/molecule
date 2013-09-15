@@ -25,7 +25,7 @@ import pygame
 from pygame.locals import *
 import pymunk
 
-from pymunk.pygame_util import draw_space
+from pymunk import pygame_util
 
 from molecule import Universe
 from molecule import Config
@@ -260,7 +260,7 @@ class Game:
 			except:
 				pass
 		if self.DEBUG_GRAPHICS:
-			draw_space(self.screen, self.space)
+			pygame_util.draw(self.screen, self.space)
 			pygame.display.update()
 		else:	
 			pygame.display.update(dirty_rects)

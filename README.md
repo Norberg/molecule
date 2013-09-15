@@ -6,12 +6,12 @@ Molecule - a chemical reaction puzzle game
 Dependencies:
 -------
 ### Game:###
-* python2
+* python 2.7
 * pygame
-* pymunk
+* pymunk 4.0
 
 ###Cmleditor:###
-* python2
+* python 2.7
 * pygtk2
 
 
