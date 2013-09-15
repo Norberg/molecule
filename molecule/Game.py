@@ -139,7 +139,7 @@ class Game:
 		""" Called if two elements collides"""
 		a,b = arbiter.shapes
 		reacting_areas = list(self.get_affecting_areas(a.body.position))
-		collisions = space.nearest_point_query(a.body.position, 40)
+		collisions = space.nearest_point_query(a.body.position, 100)
 		reacting_elements = list(self.get_element_symbols(collisions))
 		reaction = Universe.universe.react(reacting_elements, reacting_areas)
 		if reaction != None:
@@ -167,12 +167,15 @@ class Game:
 	def destroy_elements(self, elements_to_destroy, collisions):
 		""" Destroy a list of elements from a dict of collisions"""
 		elements = list(elements_to_destroy)
+		removed_bodies = list()
 		for collision in collisions:
 			if collision["shape"].collision_type == CollisionTypes.ELEMENT:
 				shape = collision["shape"]
 				sprite = shape.sprite
 				formula = sprite.molecule.state_formula
-				if formula in elements:
+				if formula in elements and \
+				   id(shape.body) not in removed_bodies:
+					removed_bodies.append(id(shape.body))
 					elements.remove(formula)
 					for s in shape.body.shapes:
 						self.space.remove(s)
