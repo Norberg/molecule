@@ -62,8 +62,8 @@ class Game:
 		self.screen.blit(self.background, (0, 0))
 		pygame.display.flip()
 
-	"""pause game for a few seconds"""	
 	def wait(self, seconds):
+		"""pause game for a few seconds"""	
 		end = time.time() + seconds
 		while time.time() < end:
 			self.event_loop()
@@ -136,6 +136,7 @@ class Game:
 				return "victory"
 
 	def element_collision(self, space, arbiter):
+		""" Called if two elements collides"""
 		a,b = arbiter.shapes
 		reacting_areas = list(self.get_affecting_areas(a.body.position))
 		collisions = space.nearest_point_query(a.body.position, 40)
@@ -146,6 +147,7 @@ class Game:
 			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
 
 	def effect_reaction(self, space, arbiter):
+		""" Called if an element touches a effect """
 		a,b = arbiter.shapes
 		molecule = a.sprite.molecule
 		effect = b.effect
@@ -157,6 +159,7 @@ class Game:
 		return False
 
 	def perform_reaction(self, key, reaction, collisions, position):
+		""" Perform a reaction"""
 		self.destroy_elements(reaction.reactants, collisions)
 		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
 		self.elements.add(Universe.create_elements(self.space, reaction.products, position))
@@ -165,7 +168,7 @@ class Game:
 		""" Destroy a list of elements from a dict of collisions"""
 		elements = list(elements_to_destroy)
 		for collision in collisions:
-			if collision["shape"].collision_type == 1:
+			if collision["shape"].collision_type == CollisionTypes.ELEMENT:
 				shape = collision["shape"]
 				sprite = shape.sprite
 				formula = sprite.molecule.state_formula
@@ -184,7 +187,7 @@ class Game:
 		"""Return all areas that have a affect on position"""
 		shapes = self.space.point_query(position)
 		for shape in shapes:
-			if shape.collision_type == 2:
+			if shape.collision_type == CollisionTypes.EFFECT:
 				yield shape.effect
 
 	def get_element_symbols(self, collisions):
@@ -192,7 +195,7 @@ class Game:
 		molecules = list()
 		for collision in collisions:
 			shape = collision["shape"]
-			if shape.collision_type == 1:
+			if shape.collision_type == CollisionTypes.ELEMENT:
 				if shape.sprite not in molecules:
 					molecules.append(shape.sprite)
 					yield shape.sprite.molecule.state_formula

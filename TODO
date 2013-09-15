@@ -1,3 +1,6 @@
 - Solid molecules should be affected by gravity
 - Cold effect needed for some reactions eg. level 5
 - Aqueous molecules should not be possible to grab
+- Show hint when h is pressed
+- use a logger library and allow fine tuning wanted debug messages
+- smarter reaction area, should be enought if one shape is inside area, and not the body
