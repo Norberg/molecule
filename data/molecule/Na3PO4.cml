@@ -22,10 +22,10 @@
       <property title="ions">
         <reaction>
           <productList>
-            <molecule title="Na+"/>
-            <molecule title="Na+"/>
-            <molecule title="Na+"/>
-            <molecule title="PO4-3"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="PO4-3(aq)"/>
           </productList>
         </reaction>
       </property>

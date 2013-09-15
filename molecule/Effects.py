@@ -20,6 +20,7 @@ import PyGameUtil
 from molecule import Config
 from molecule import CollisionTypes
 from libreact import Reaction
+from libcml import Cml
 
 class Fire(pygame.sprite.Sprite):
 	"""Fire"""
@@ -94,10 +95,12 @@ class Water_Beaker(pygame.sprite.Sprite):
 		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
 	
 	def react(self, molecule):
-		result = molecule.toAqueous()
-		if result != None and len(result) > 0:
-			print molecule.formula, "-(Water)>", result
-			return Reaction([molecule.formula], result)
+		ions = molecule.toAqueous()
+		if ions != None and len(ions) > 0:
+			print molecule.formula, "-(Water)>", ions
+			cml = Cml.Reaction([molecule.formula],ions)
+			reaction = Reaction.Reaction(cml,[molecule.state_formula])
+			return reaction
 		elif Config.current.DEBUG:
 			print "Water beaker didnt react with:", molecule.formula
 			

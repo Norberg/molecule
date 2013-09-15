@@ -41,7 +41,7 @@ class Universe:
 			effect_names.append(effect.name)
 			if effect.name == "Fire":
 				temp = effect.temp
-		reaction = self.reactor.react(reactants)
+		reaction = self.reactor.react(reactants, temp)
 		
 		if reaction == None:
 			if Config.current.DEBUG: print "Did not react:", reactants

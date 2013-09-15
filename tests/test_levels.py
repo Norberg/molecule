@@ -30,7 +30,7 @@ class TestLevels(unittest.TestCase):
 		self.assertEqual(l.cml.objective, "Create a water molecule")
 		self.assertEqual(l.cml.hint, "H + H + O => H2O")
 		self.assertEqual(l.check_victory(), False)
-		l.elements.add(Universe.create_elements(l.space, "H2O(aq)"))
+		l.elements.add(Universe.create_elements(l.space, "H2O(g)"))
 		self.assertEqual(l.check_victory(), True)
 
 		l = levels.next_level()
@@ -49,7 +49,7 @@ class TestLevels(unittest.TestCase):
 			self.assertIsNotNone(level.cml.objective)
 			self.assertEqual(level.check_victory(), False)
 
-	def testDestroyElemetns(self):
+	def testDestroyElements(self):
 		levels = Levels("data/levels")
 		l = levels.next_level()
 		l.elements.add(Universe.create_elements(l.space, ["O2(g)", "O2(g)", "CH4(g)"]))

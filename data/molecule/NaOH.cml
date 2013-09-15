@@ -13,8 +13,8 @@
       <property title="ions">
         <reaction>
           <productList>
-            <molecule title="Na+"/>
-            <molecule title="OH-"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="OH-(aq)"/>
           </productList>
         </reaction>
       </property>

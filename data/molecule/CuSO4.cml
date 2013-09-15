@@ -20,8 +20,8 @@
       <property title="ions">
         <reaction>
           <productList>
-            <molecule title="Cu+2"/>
-            <molecule title="SO4-2"/>
+            <molecule title="Cu+2(aq)"/>
+            <molecule title="SO4-2(aq)"/>
           </productList>
         </reaction>
       </property>

@@ -160,20 +160,7 @@
   </reaction>
   <reaction>
     <reactantList>
-      <molecule title="CaO2H2"/>
-      <molecule title="Na2CO3"/>
-    </reactantList>
-    <productList>
-      <molecule title="CaCO3(s)"/>
-      <molecule title="Na+(aq)"/>
-      <molecule title="Na+(aq)"/>
-      <molecule title="OH-(aq)"/>
-      <molecule title="OH-(aq)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="Ca2+"/>
+      <molecule title="Ca+2"/>
       <molecule title="CO3-2"/>
     </reactantList>
     <productList>

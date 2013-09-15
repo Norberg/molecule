@@ -26,9 +26,9 @@
       <property title="ions">
         <reaction>
           <productList>
-            <molecule title="Na+"/>
-            <molecule title="Na+"/>
-            <molecule title="CO3-2"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="CO3-2(aq)"/>
           </productList>
         </reaction>
       </property>

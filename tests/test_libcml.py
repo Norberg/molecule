@@ -145,6 +145,7 @@ class TestCML(unittest.TestCase):
 		m.parse("tests/testProperty.cml")
 		self.assertEqual(m.states["Gas"].enthalpy, -426)
 		self.assertEqual(m.states["Gas"].entropy, 64)
+		self.assertEqual(m.states["Gas"].short, "g")
 		self.assertEqual(m.get_state("g").entropy, 64)
 		self.assertEqual(m.get_state("l"), None)
 		self.assertEqual(m.states["Aqueous"].ions, ["Na+", "OH-"])
@@ -239,7 +240,7 @@ class TestCML(unittest.TestCase):
 		m.parse("tests/testlevel.cml")
 		expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'P(g)', 'F(g)', 'Al(s)']
 		self.assertEqual(m.molecules, expected)
-		self.assertEqual(m.victory_condition, ["H2O(aq)"])
+		self.assertEqual(m.victory_condition, ["H2O"])
 		self.assertEqual(m.objective, "Create a water molecule")
 		self.assertEqual(m.hint, "H + H + O => H2O")
 		self.assertEqual(m.effects[0].title, "Fire")

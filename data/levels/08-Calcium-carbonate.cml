@@ -8,7 +8,7 @@
     <molecule title="N(g)"/>
     <molecule title="O(g)"/>
     <molecule title="CaO2H2(s)"/>
-    <molecule title="Na2CO3(g)"/>
+    <molecule title="Na2CO3(s)"/>
     <molecule title="SO3(g)"/>
   </moleculeList>
   <effectList>

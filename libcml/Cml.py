@@ -51,11 +51,16 @@ class Bond:
 		return self.atomA.id + " " + self.atomB.id
 
 class State:
+	STATE_MAP = {"Aqueous":"aq", "Solid":"s", "Gas":"g", "Liquid":"l"}
 	def __init__(self, name=None, enthalpy=None, entropy=None, ions=None):
 		self.name = name
 		self.enthalpy = enthalpy
 		self.entropy = entropy
 		self.ions = ions
+
+	@property
+	def short(self):
+		return self.STATE_MAP[self.name]
 
 	@property
 	def ions_str(self):
@@ -65,6 +70,7 @@ class State:
 		for ion in self.ions:
 			str +=","+ion
 		return str[1:]
+
 
 class Reaction:
 	def __init__(self,reactants = None,products = None):

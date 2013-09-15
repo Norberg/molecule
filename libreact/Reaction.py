@@ -84,6 +84,8 @@ def split_state(molecule):
 	"""return formula, state"""
 	#regexp extract molecule and state from H20(aq)
 	groups = re.search("(\S+)\((.*)\)", molecule)
+	if groups is None:
+		raise Exception("Not possible to extract state from:" + molecule)
 	formula = groups.group(1)
 	state = groups.group(2)
 	return formula, state

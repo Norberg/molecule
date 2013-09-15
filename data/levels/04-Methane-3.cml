@@ -10,7 +10,7 @@
     <molecule title="CH4(g)"/>
   </moleculeList>
   <effectList>
-    <effect title="Fire" x2="200" y2="100"/>
+    <effect title="Fire" value="700" x2="200" y2="100"/>
   </effectList>
   <victoryCondition>
     <molecule title="CO2"/>

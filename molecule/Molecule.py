@@ -32,9 +32,11 @@ class Molecule:
 	def __init__(self, formula_with_state):
 		formula, state = Reaction.split_state(formula_with_state)
 		self.formula = formula
-		self.current_state = state
 		self.cml = CachedCml.getMolecule(formula)
 		self.cml.normalize_pos()
+		self.current_state = self.cml.get_state(state)
+		if self.current_state is None:
+			raise Exception("did not find state for:" + formula_with_state)
 		self.sprite = None
 
 	@property
@@ -50,10 +52,10 @@ class Molecule:
 	@property
 	def state(self):
 		"""Return current state"""
-		return self.cml.get_state(self.current_state)
+		return self.current_state
 	@property
 	def state_formula(self):
-		return self.formula + "(%s)" % self.current_state
+		return self.formula + "(%s)" % self.current_state.short
 
 	def change_state(self, new_state):
 		"""new_state: shortform of wanted state"""
@@ -62,21 +64,16 @@ class Molecule:
 
 	def try_change_state(self, new_state):
 		"""new_state: shortform of wanted state"""
-		pos = 0
-		new_pos = -1
-		for state in self.states:
-			if state.short == new_state:
-				new_pos = pos
-			pos += 1
-		if new_pos != -1:
-			self.current_state = new_pos
-			return True
+		state = self.cml.get_state(new_state)
+		if state is None:
+			return False
 		else:
-			return False	
+			self.current_state = state
+			return True	
 	
 	def toAqueous(self):
 		if self.try_change_state("aq"):
-			return self.state.react()
+			return self.state.ions
 		else:
 			print "No Aq state exists for:", self.formula		
 
