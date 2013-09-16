@@ -1,9 +1,16 @@
 language: python
 python:
   - "2.7"
+virtualenv:
+  system_site_packages: true
 # command to install dependencies
 install:
   - "pip install pymunk --use-mirrors"
-  - "sudo apt-get install python-pygame"
+  - "sudo apt-get install python-pygame -qq"
 # command to run tests
-script: python -m unittest discover
+script: 
+  - "python -m unittest discover"
+notifications:
+  email:
+    on_success: change
+    on_failure: change
