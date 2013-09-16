@@ -4,6 +4,6 @@ python:
 # command to install dependencies
 install:
   - "pip install pymunk --use-mirrors"
-  - "pip install Pygame --use-mirrors"
+  - "sudo apt-get install python-pygame"
 # command to run tests
 script: python -m unittest discover
