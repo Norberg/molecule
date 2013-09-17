@@ -16,7 +16,7 @@
 import glob
 import pygame
 import pymunk
-import PyGameUtil
+from . import PyGameUtil
 from molecule import Config
 from molecule import CollisionTypes
 from libreact import Reaction
@@ -97,10 +97,10 @@ class Water_Beaker(pygame.sprite.Sprite):
 	def react(self, molecule):
 		ions = molecule.toAqueous()
 		if ions != None and len(ions) > 0:
-			print molecule.formula, "-(Water)>", ions
+			print(molecule.formula, "-(Water)>", ions)
 			cml = Cml.Reaction([molecule.formula],ions)
 			reaction = Reaction.Reaction(cml,[molecule.state_formula])
 			return reaction
 		elif Config.current.DEBUG:
-			print "Water beaker didnt react with:", molecule.formula
+			print("Water beaker didnt react with:", molecule.formula)
 			

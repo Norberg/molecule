@@ -18,8 +18,8 @@ import copy
 import re
 import pymunk
 import pygame
-import PyGameUtil,util
-from Molecule import Molecule, MoleculeSprite
+from . import PyGameUtil,util
+from .Molecule import Molecule, MoleculeSprite
 from molecule import Config
 from libreact.Reactor import Reactor
 from libcml import Cml
@@ -44,10 +44,10 @@ class Universe:
 		reaction = self.reactor.react(reactants, temp)
 		
 		if reaction == None:
-			if Config.current.DEBUG: print "Did not react:", reactants
+			if Config.current.DEBUG: print("Did not react:", reactants)
 			return None
 		else:		
-			print reaction.reactants, "+", effect_names, "->", reaction.products
+			print(reaction.reactants, "+", effect_names, "->", reaction.products)
 			return reaction
 		
 def create_elements(space, elements, pos=None):
@@ -60,7 +60,7 @@ def create_elements(space, elements, pos=None):
 	if pos != None:
 		x, y = pos
 
-	if isinstance(elements, basestring):
+	if isinstance(elements, str):
 		elements = [elements] #elements is a string, wrap it in a list not to confuse for
 	for element in elements:
 		if pos != None and len(elements) > 1:

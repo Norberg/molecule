@@ -22,13 +22,13 @@ def main():
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "hi:o:", ["help", "input=", "output=",])
 	except getopt.GetoptError as err:
-		print str(err)
+		print(str(err))
 		self.cmd_help()
 		sys.exit(2)
 	input = None
 	output = None
 	for o,a in opts:
-		print "getops, debug", o, a
+		print("getops, debug", o, a)
 		if o in ("-h", "--help"):
 			cmd_help()
 			sys.exit()
@@ -47,7 +47,7 @@ def convert_cml2png(input, output):
 	pygame.image.save(img, output)
 
 def cmd_help():
-	print "cml2img.py -i <cmlfile> -o <pngfile>"
+	print("cml2img.py -i <cmlfile> -o <pngfile>")
 
 if __name__ == "__main__":
 	main()

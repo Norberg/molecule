@@ -17,7 +17,7 @@ import math
 import random
 import pymunk
 import pygame
-import PyGameUtil,util
+from . import PyGameUtil,util
 from molecule import Config
 from molecule import CollisionTypes
 from pymunk.vec2d import Vec2d
@@ -79,7 +79,7 @@ class Molecule:
 		if self.try_change_state("aq"):
 			return self.state.ions
 		else:
-			print "No Aq state exists for:", self.formula		
+			print("No Aq state exists for:", self.formula)		
 
 	def cml2Sprite(self, cmlfile):
 		molecule = Cml.Molecule()
@@ -88,7 +88,7 @@ class Molecule:
 		self.sprite = PyGameUtil.createSurface(self.molecule_sprite_size(molecule))
 		self.cml = molecule
 		self.createBonds()
-		for atom in molecule.atoms.values():
+		for atom in list(molecule.atoms.values()):
 			atomSprite = self.createAtomSprite(atom.elementType, atom.formalCharge)
 			self.sprite.blit(atomSprite, self.cartesian2pos(atom.pos))
 		return self.sprite
@@ -97,7 +97,7 @@ class Molecule:
 	def createMoleculeSprite(self):
 		self.sprite = PyGameUtil.createSurface(self.molecule_sprite_size(self.cml))
 		self.createBonds()
-		for atom in self.cml.atoms.values():
+		for atom in list(self.cml.atoms.values()):
 			atomSprite = self.createAtomSprite(atom.elementType, atom.formalCharge)
 			self.sprite.blit(atomSprite, self.cartesian2pos(atom.pos))
 		return self.sprite
@@ -203,7 +203,7 @@ class MoleculeSprite(pygame.sprite.Sprite):
 		body.velocity_limit = 1000
 		#shape = pymunk.Circle(body, 16)
 		space.add(body)
-		for atom in self.molecule.cml.atoms.values():
+		for atom in list(self.molecule.cml.atoms.values()):
 			circle = pymunk.Circle(body, 16, self.cartesian2pymunk(atom.pos))
 			space.add(circle)
 			self.shape = circle

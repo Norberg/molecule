@@ -18,7 +18,7 @@ from molecule.Game import Game
 def main():
 	game = Game()
 	game.game_loop()
-	print "game finished"
+	print("game finished")
 
 if __name__ == '__main__':
 	try:
@@ -27,4 +27,4 @@ if __name__ == '__main__':
 		pass
 	from guppy import hpy
 	h = hpy()
-	print h.heap()
+	print((h.heap()))

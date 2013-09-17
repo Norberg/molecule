@@ -72,7 +72,7 @@ class Game:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
 		except getopt.GetoptError as err:
-   			print str(err)
+			print(str(err))
 			self.cmd_help()
 			sys.exit(2)
 		for o,a in opts:
@@ -86,15 +86,15 @@ class Game:
 			
 				
 	def cmd_help(self):
-		print "Molecule - a chemical reaction puzzle game"
-		print "-h --help print this help"	
-		print "--level=LEVEL choose what level to start on"	
-		print "-d --debug print debug messages"
-		print "During gameplay:"
-		print "ESC - close game"
-		print "r - reset current level"	
-		print "d - switch Graphic debug on/off"	
-		print "s - skip level"	
+		print("Molecule - a chemical reaction puzzle game")
+		print("-h --help print this help")	
+		print("--level=LEVEL choose what level to start on")	
+		print("-d --debug print debug messages")
+		print("During gameplay:")
+		print("ESC - close game")
+		print("r - reset current level")	
+		print("d - switch Graphic debug on/off")	
+		print("s - skip level")	
 
 	
 	def game_loop(self):
@@ -117,7 +117,7 @@ class Game:
 				elif result == QUIT:
 					return
 				else:
-					print "Unkown return code from level, quiting"
+					print("Unkown return code from level, quiting")
 	
 	def run_level(self, level):
 		self.active = None
@@ -182,9 +182,9 @@ class Game:
 					self.space.remove(shape.body)
 					sprite.kill()
 		if len(elements) != 0:
-			print "not all elements was removed.."
-			print "elements_to_destroy:", elements_to_destroy
-			print "collisions:", collisions
+			print("not all elements was removed..")
+			print("elements_to_destroy:", elements_to_destroy)
+			print("collisions:", collisions)
 
 	def get_affecting_areas(self, position):
 		"""Return all areas that have a affect on position"""

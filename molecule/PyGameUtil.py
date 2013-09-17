@@ -30,7 +30,7 @@ def createSurface(pos):
 __img_cache = dict()
 def loadImage(src):
 	global __img_cache
-	if __img_cache.has_key(src):
+	if src in __img_cache:
 		return __img_cache[src]
 	if pygame.display.get_init():
 		img = pygame.image.load(src).convert_alpha()
@@ -50,4 +50,4 @@ def getObject(key):
 	return __object_cache[key]
 
 def hasObject(key):
-	return __object_cache.has_key(key)
+	return key in __object_cache

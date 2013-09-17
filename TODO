@@ -11,6 +11,5 @@
 
 ### Big TODOs ###
 - move to pyglet
-- move to python3
 - move to pygtk3
 - atoms should be seperately simulated and connected with joints to build molecules

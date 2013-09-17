@@ -166,7 +166,7 @@ class Level(Cml):
 	def parseEffect(self, effect_tag):
 		effect = Effect()
 		effect.title = effect_tag.attrib["title"]
-		if effect_tag.attrib.has_key("value"):
+		if "value" in effect_tag.attrib:
 			effect.value = float(effect_tag.attrib["value"])
 		effect.x2 = float(effect_tag.attrib["x2"])
 		effect.y2 = float(effect_tag.attrib["y2"])
@@ -216,7 +216,7 @@ class Reactions(Cml):
 			states.clear() # Remove all old entires
 			states.attrib["title"] = "states"
 
-		for state in self.states.values():
+		for state in list(self.states.values()):
 			stateTag = etree.SubElement(states, "propertyList",
 			                            {"title":state.name})
 			self.writeEnthalpy(state, stateTag)
@@ -246,41 +246,47 @@ class Molecule(Cml):
 
 	@property
 	def atoms_sorted(self):
-		return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
+		return sorted(list(self.atoms.values()), key=lambda x:self.getDigits(x.id)) 
 
 
 	def get_state(self, shortform):
 		statename = self.STATE_MAP[shortform]
-		if self.states.has_key(statename):
+		if statename in self.states:
 			return self.states[statename]
 		else:
 			return None
 	
 	def printer(self):
-		print "Atoms:"
-		for atom in self.atoms.values():
-			print atom.id, atom.elementType
-		print "Bonds:"
+		print("Atoms:")
+		for atom in list(self.atoms.values()):
+			print(atom.id, atom.elementType)
+		print("Bonds:")
 		for bond in self.bonds:
-			print bond.atomA.id, "->", bond.atomB.id, bond.bonds, "bonds"
+			print(bond.atomA.id, "->", bond.atomB.id, bond.bonds, "bonds")
 
 	def min_pos(self):
 		min_x = min(self.atoms.values(), key=lambda a:a.x).x
 		min_y = min(self.atoms.values(), key=lambda a:a.y).y
-		min_z = min(self.atoms.values(), key=lambda a:a.z).z
+		try:
+			min_z = min(self.atoms.values(), key=lambda a:a.z).z
+		except TypeError:
+			min_z = 0
 		return (min_x, min_y, min_z)
 
 	def max_pos(self):
 		max_x = max(self.atoms.values(), key=lambda a:a.x).x
 		max_y = max(self.atoms.values(), key=lambda a:a.y).y
-		max_z = max(self.atoms.values(), key=lambda a:a.z).z
+		try:
+			max_z = max(self.atoms.values(), key=lambda a:a.z).z
+		except TypeError:
+			max_z = 0
 		return (max_x, max_y, max_z)
 
 	def normalize_pos(self):
 		""" normalize position to be as close to (0,0,[0]) as possible """
 		adj_x, adj_y, adj_z = self.min_pos()
 		
-		for atom in self.atoms.values():
+		for atom in list(self.atoms.values()):
 			atom.x -= adj_x
 			atom.y -= adj_y
 			if atom.z is not None:
@@ -371,7 +377,7 @@ class Molecule(Cml):
 	def writeAtoms(self):
 		atomArray = self.treefind(self.ATOM_ARRAY)
 		atomArray.clear() # Remove all old entires
-		for atom in self.atoms.values():
+		for atom in list(self.atoms.values()):
 			if atom.z is None:
 				attrib = {"x2":atom.x_str,
 				          "y2": atom.y_str}
@@ -396,7 +402,7 @@ class Molecule(Cml):
 			states.clear() # Remove all old entires
 			states.attrib["title"] = "states"
 
-		for state in self.states.values():
+		for state in list(self.states.values()):
 			stateTag = etree.SubElement(states, "propertyList",
 			                            {"title":state.name})
 			self.writeEnthalpy(state, stateTag)

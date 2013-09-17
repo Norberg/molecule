@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import Cml
+from . import Cml
 __cml_cache = dict()
 
 def getMolecule(element):
@@ -22,7 +22,7 @@ def getMolecule(element):
 
 def getMoleculeCml(filename):
 	global __cml_cache
-	if __cml_cache.has_key(filename):
+	if filename in __cml_cache:
 		return __cml_cache[filename]
 	
 	m = Cml.Molecule()

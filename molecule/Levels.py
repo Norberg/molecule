@@ -19,8 +19,8 @@ import math
 import pygame
 import pymunk
 import pymunk.pygame_util
-import Universe
-import Effects
+from . import Universe
+from . import Effects
 from molecule import Config
 from molecule import CollisionTypes
 from libcml import Cml
