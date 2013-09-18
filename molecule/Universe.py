@@ -18,8 +18,8 @@ import copy
 import re
 import pymunk
 import pygame
-from . import PyGameUtil,util
-from .Molecule import Molecule, MoleculeSprite
+from molecule import PyGameUtil,util
+from molecule.Molecule import Molecule, MoleculeSprite
 from molecule import Config
 from libreact.Reactor import Reactor
 from libcml import Cml

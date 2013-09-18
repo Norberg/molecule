@@ -216,7 +216,7 @@ class Reactions(Cml):
 			states.clear() # Remove all old entires
 			states.attrib["title"] = "states"
 
-		for state in list(self.states.values()):
+		for state in self.states.values():
 			stateTag = etree.SubElement(states, "propertyList",
 			                            {"title":state.name})
 			self.writeEnthalpy(state, stateTag)
@@ -246,7 +246,7 @@ class Molecule(Cml):
 
 	@property
 	def atoms_sorted(self):
-		return sorted(list(self.atoms.values()), key=lambda x:self.getDigits(x.id)) 
+		return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
 
 
 	def get_state(self, shortform):
@@ -258,7 +258,7 @@ class Molecule(Cml):
 	
 	def printer(self):
 		print("Atoms:")
-		for atom in list(self.atoms.values()):
+		for atom in self.atoms.values():
 			print(atom.id, atom.elementType)
 		print("Bonds:")
 		for bond in self.bonds:
@@ -286,7 +286,7 @@ class Molecule(Cml):
 		""" normalize position to be as close to (0,0,[0]) as possible """
 		adj_x, adj_y, adj_z = self.min_pos()
 		
-		for atom in list(self.atoms.values()):
+		for atom in self.atoms.values():
 			atom.x -= adj_x
 			atom.y -= adj_y
 			if atom.z is not None:
@@ -377,7 +377,7 @@ class Molecule(Cml):
 	def writeAtoms(self):
 		atomArray = self.treefind(self.ATOM_ARRAY)
 		atomArray.clear() # Remove all old entires
-		for atom in list(self.atoms.values()):
+		for atom in self.atoms.values():
 			if atom.z is None:
 				attrib = {"x2":atom.x_str,
 				          "y2": atom.y_str}
@@ -402,7 +402,7 @@ class Molecule(Cml):
 			states.clear() # Remove all old entires
 			states.attrib["title"] = "states"
 
-		for state in list(self.states.values()):
+		for state in self.states.values():
 			stateTag = etree.SubElement(states, "propertyList",
 			                            {"title":state.name})
 			self.writeEnthalpy(state, stateTag)

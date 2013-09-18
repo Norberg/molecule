@@ -16,7 +16,7 @@
 import glob
 import pygame
 import pymunk
-from . import PyGameUtil
+from molecule import PyGameUtil
 from molecule import Config
 from molecule import CollisionTypes
 from libreact import Reaction
@@ -56,7 +56,7 @@ class Fire(pygame.sprite.Sprite):
 		if self.current_frame >= self.frames:
 			self.current_frame = 0
 
-		self.image = self.animations[self.current_frame/2]
+		self.image = self.animations[int(self.current_frame/2)]
 
 	def react(self, element):
 		pass
