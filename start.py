@@ -13,11 +13,47 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from molecule.Game import Game
+import sys
+import getopt
 
+import pyglet
+
+from molecule.Game import Game
+from molecule import Config
+
+class CliInterface:
+	@staticmethod
+	def handle_cmd_options():
+		try:
+			opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
+		except getopt.GetoptError as err:
+			print(str(err))
+			CliInterface.cmd_help()
+			sys.exit(2)
+		for o,a in opts:
+			if o in ("-h", "--help"):
+				CliInterface.cmd_help()
+				sys.exit()
+			elif o in ("-l", "--level"):
+				Config.current.level = int(a)
+			elif o in ("-d", "--debug"):
+				Config.current.DEBUG = True
+			
+	@staticmethod			
+	def cmd_help():
+		print("Molecule - a chemical reaction puzzle game")
+		print("-h --help print this help")	
+		print("--level=LEVEL choose what level to start on")	
+		print("-d --debug print debug messages")
+		print("During gameplay:")
+		print("ESC - close game")
+		print("r - reset current level")	
+		print("d - switch Graphic debug on/off")	
+		print("s - skip level")	
 def main():
+	CliInterface.handle_cmd_options()
 	game = Game()
-	game.game_loop()
+	pyglet.app.run()
 	print("game finished")
 
 if __name__ == '__main__':

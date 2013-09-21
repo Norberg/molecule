@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import getopt
 import sys
 import time
 import os
@@ -21,80 +20,50 @@ import random
 import inspect
 import math
  
-import pygame
-from pygame.locals import *
 import pymunk
+from pymunk import pyglet_util
+import pyglet
 
-from pymunk import pygame_util
-
-from molecule import Universe
+#from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes	
-from molecule.Levels import Levels
+#from molecule.Levels import Levels
 
-class Game:
+class Game(pyglet.window.Window):
 	def __init__(self, gui = True):
+		super(Game, self).__init__(caption="Molecule", width=1000, height=800)
+		self.init_pymunk()
+		#Universe.createUniverse()
+		self.DEBUG_GRAPHICS = False
+		self.start()
+
+	def start(self):
+		self.write_on_background("Welcome to Molecule")
+	
+	def init_pymunk(self):
 		self.last_collision = 0
-		self.handle_cmd_options()
-		if gui:
-			self.init_pygame()
 		self.space = None
-		Universe.createUniverse()
 		self.mouse_body = pymunk.Body()	
 		self.mouse_spring = None
-		self.DEBUG_GRAPHICS = False
 	
-	def init_pygame(self):	
-		pygame.init()
-		self.screen = pygame.display.set_mode(Config.current.screenSize)
-		pygame.display.set_caption('Molecule - A molecule builing puzzle game')
-		self.clock = pygame.time.Clock()
-
 	def write_on_background(self, text):
-		self.background = pygame.Surface(self.screen.get_size())
-		self.background = self.background.convert()
-		self.background.fill((250, 250, 250))
-		font = pygame.font.Font(None, 36)
-		text = font.render(text, 1, (10, 10, 10))
-		textpos = text.get_rect(centerx=self.background.get_width()/2)
-		self.background.blit(text, textpos)
-
-		self.screen.blit(self.background, (0, 0))
-		pygame.display.flip()
-
+		self.label = pyglet.text.Label(text,
+		                               font_name='Times New Roman',
+		                               font_size=36,
+		                               x=self.width//2, y=self.height-100,
+		                               anchor_x='center', anchor_y='center')
+		
+	def on_draw(self):
+		print("on_draw")
+		self.clear()
+		self.label.draw()
+	
 	def wait(self, seconds):
 		"""pause game for a few seconds"""	
 		end = time.time() + seconds
 		while time.time() < end:
 			self.event_loop()
 	
-	def handle_cmd_options(self):
-		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
-		except getopt.GetoptError as err:
-			print(str(err))
-			self.cmd_help()
-			sys.exit(2)
-		for o,a in opts:
-			if o in ("-h", "--help"):
-				self.cmd_help()
-				sys.exit()
-			elif o in ("-l", "--level"):
-				Config.current.level = int(a)
-			elif o in ("-d", "--debug"):
-				Config.current.DEBUG = True
-			
-				
-	def cmd_help(self):
-		print("Molecule - a chemical reaction puzzle game")
-		print("-h --help print this help")	
-		print("--level=LEVEL choose what level to start on")	
-		print("-d --debug print debug messages")
-		print("During gameplay:")
-		print("ESC - close game")
-		print("r - reset current level")	
-		print("d - switch Graphic debug on/off")	
-		print("s - skip level")	
 
 	
 	def game_loop(self):
