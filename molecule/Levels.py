@@ -16,7 +16,7 @@
 import glob
 import math
 
-import pygame
+import pyglet
 import pymunk
 import pymunk.pygame_util
 from molecule import Universe
@@ -56,7 +56,7 @@ class Level:
 	def __init__(self, cml):
 		self.cml = cml
 		self.elements = None
-		self.areas = pygame.sprite.Group()
+		self.areas = None
 		self.init_chipmunk()
 		self.init_elements()
 		self.init_effects()
@@ -82,8 +82,7 @@ class Level:
 		self.space.add(walls)
 	
 	def init_elements(self):	
-		e = Universe.create_elements(self.space,self.cml.molecules)
-		self.elements = pygame.sprite.RenderUpdates(e)
+		self.elements = Universe.create_elements(self.space,self.cml.molecules)
 
 	def init_effects(self):
 		new_effects = list()
@@ -99,7 +98,7 @@ class Level:
 				y = effect.y2
 				water = Effects.Water_Beaker((x, y), self.space)
 				new_effects.append(water)
-		self.areas = pygame.sprite.RenderUpdates(new_effects) 
+		self.areas = new_effects
 
 	def reset(self):
 		self.__init__(self.cml)

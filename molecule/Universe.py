@@ -19,9 +19,10 @@ import re
 import pymunk
 import pygame
 from molecule import PyGameUtil,util
-from molecule.Molecule import Molecule, MoleculeSprite
+from molecule.Elements import Atom
 from molecule import Config
 from libreact.Reactor import Reactor
+from libreact import Reaction
 from libcml import Cml
 
 class Universe:
@@ -65,9 +66,9 @@ def create_elements(space, elements, pos=None):
 	for element in elements:
 		if pos != None and len(elements) > 1:
 			pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-		molecule = Molecule(element)
-		list_of_elements.append(MoleculeSprite(molecule, space,  pos))
-	return tuple(list_of_elements)
+		formula, state = Reaction.split_state(element)
+		list_of_elements.append(Atom(formula,space, pos))
+	return list_of_elements
 
 
 universe = None

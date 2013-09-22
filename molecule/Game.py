@@ -23,15 +23,17 @@ import math
 import pymunk
 from pymunk import pyglet_util
 import pyglet
+from pyglet.window import mouse
 
 #from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes	
-#from molecule.Levels import Levels
+from molecule.Levels import Levels
+
 
 class Game(pyglet.window.Window):
 	def __init__(self, gui = True):
-		super(Game, self).__init__(caption="Molecule", width=1000, height=800)
+		super(Game, self).__init__(caption="Molecule", vsync=False, width=1024, height=768)
 		self.init_pymunk()
 		#Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
@@ -39,6 +41,12 @@ class Game(pyglet.window.Window):
 
 	def start(self):
 		self.write_on_background("Welcome to Molecule")
+		pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
+		self.fps_display = pyglet.clock.ClockDisplay()
+		levels = Levels("data/levels")
+		level = levels.next_level()
+		self.run_level(level)	
+		pyglet.clock.schedule_interval(self.update, 1/60.0)
 	
 	def init_pymunk(self):
 		self.last_collision = 0
@@ -48,22 +56,23 @@ class Game(pyglet.window.Window):
 	
 	def write_on_background(self, text):
 		self.label = pyglet.text.Label(text,
-		                               font_name='Times New Roman',
-		                               font_size=36,
-		                               x=self.width//2, y=self.height-100,
-		                               anchor_x='center', anchor_y='center')
+		                               font_name = 'Times New Roman',
+		                               font_size = 36,
+		                               color = (0,0,0,255),
+		                               x = self.width//2, y = self.height-100,
+		                               anchor_x = 'center', anchor_y = 'center')
 		
 	def on_draw(self):
-		print("on_draw")
 		self.clear()
 		self.label.draw()
-	
+		for e in self.elements:
+			e.update()
+			e.draw()
+		#pymunk.pyglet_util.draw(self.space)
+		self.fps_display.draw()
+		
 	def wait(self, seconds):
-		"""pause game for a few seconds"""	
-		end = time.time() + seconds
-		while time.time() < end:
-			self.event_loop()
-	
+		pass	
 
 	
 	def game_loop(self):
@@ -95,14 +104,8 @@ class Game(pyglet.window.Window):
 		self.areas = level.areas
 		self.space = level.space
 		self.mouse_spring = None
-		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
-		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
-		while 1:
-			event = self.event_loop()
-			if event != None:
-				return event
-			if level.check_victory():
-				return "victory"
+		#self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
+		#self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
 
 	def element_collision(self, space, arbiter):
 		""" Called if two elements collides"""
@@ -172,23 +175,29 @@ class Game(pyglet.window.Window):
 					molecules.append(shape.sprite)
 					yield shape.sprite.molecule.state_formula
 
-	def update_mouse_pos(self):
-		pygame_pos = pygame.mouse.get_pos()		
-		mouse_pos = pymunk.pygame_util.from_pygame(pygame_pos, Config.current.screen)
-		self.mouse_body.position = mouse_pos
-		return mouse_pos
+	def on_mouse_press(self, x, y, button, modifiers):
+		self.handle_mouse_button_down(x, y)
 
-	def event_loop(self):
-		#self.space.step(1/60.0)
-		self.space.step(1/60.0)
-		self.clock.tick(60)
-		self.update_mouse_pos()
-		for event in pygame.event.get():
-			res = self.handle_event(event)
-			if res is not None:
-				return res
-		self.screen.blit(self.background, (0, 0))
-		self.update_and_draw(self.areas, self.elements)
+	def on_mouse_release(self, x, y, button, modifiers):
+		if self.mouse_spring != None:
+			self.mouse_spring.b.mass *= 50
+			self.mouse_spring.b.velocity = (0,0)
+			self.space.remove(self.mouse_spring)
+			self.mouse_spring = None
+	
+	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+		self.mouse_body.position = (x, y)
+	
+	def update(self, dt):
+		print(dt)
+		self.space.step(dt)
+		#self.on_draw()
+		#for event in pygame.event.get():
+		#	res = self.handle_event(event)
+		#	if res is not None:
+		#		return res
+		#self.screen.blit(self.background, (0, 0))
+		#self.update_and_draw(self.areas, self.elements)
 
 
 	def handle_event(self, event):
@@ -207,13 +216,13 @@ class Game(pyglet.window.Window):
 		elif event.type is MOUSEBUTTONUP: 
 			self.handle_mouse_button_up()
 
-	def handle_mouse_button_down(self):
+	def handle_mouse_button_down(self, x, y):
 		if self.mouse_spring != None:
 			raise Exception("mouse_spring already existing")
-		clicked = self.space.nearest_point_query_nearest(self.update_mouse_pos(), 16)
+		self.mouse_body.position = (x, y)
+		clicked = self.space.nearest_point_query_nearest((x,y), 16)
 		if clicked != None and \
-		   clicked["shape"].collision_type == CollisionTypes.ELEMENT and \
-		   clicked["shape"].sprite.molecule.draggable:
+		   clicked["shape"].collision_type == CollisionTypes.ELEMENT: # and clicked["shape"].sprite.molecule.draggable:
 			clicked = clicked["shape"]
 			rest_length = self.mouse_body.position.get_distance(clicked.body.position)
 			self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
@@ -221,12 +230,6 @@ class Game(pyglet.window.Window):
 			clicked.body.mass /= 50
 			self.space.add(self.mouse_spring) 
 
-	def handle_mouse_button_up(self):
-		if self.mouse_spring != None:
-			self.mouse_spring.b.mass *= 50
-			self.mouse_spring.b.velocity = (0,0)
-			self.space.remove(self.mouse_spring)
-			self.mouse_spring = None
 
 	def update_and_draw(self, *spriteGroups):
 		dirty_rects = list()
