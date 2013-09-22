@@ -55,8 +55,9 @@ class Levels:
 class Level:
 	def __init__(self, cml):
 		self.cml = cml
-		self.elements = None
-		self.areas = None
+		self.batch = pyglet.graphics.Batch()
+		self.background_group = pyglet.graphics.OrderedGroup(0)
+		self.elements_group = pyglet.graphics.OrderedGroup(1)
 		self.init_chipmunk()
 		self.init_elements()
 		self.init_effects()
@@ -82,7 +83,8 @@ class Level:
 		self.space.add(walls)
 	
 	def init_elements(self):	
-		self.elements = Universe.create_elements(self.space,self.cml.molecules)
+		self.elements = Universe.create_elements(self.space, self.cml.molecules,
+		                                  self.batch, self.elements_group)
 
 	def init_effects(self):
 		new_effects = list()
@@ -99,6 +101,11 @@ class Level:
 				water = Effects.Water_Beaker((x, y), self.space)
 				new_effects.append(water)
 		self.areas = new_effects
+	
+	def update(self):
+		"""Update pos of all included elements"""
+		for element in self.elements:
+			element.update()
 
 	def reset(self):
 		self.__init__(self.cml)

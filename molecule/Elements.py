@@ -23,12 +23,12 @@ from molecule import pyglet_util
 from molecule import CollisionTypes
 
 class Atom(pyglet.sprite.Sprite):
-	def __init__(self, symbol, space, pos=None):
+	def __init__(self, symbol, space, batch, group, pos=None):
 		charge = self.get_electric_charge(symbol)
 		symbol = self.get_only_atom_symbol(symbol)
 		#TODO create a copy..
-		img =  pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
-		pyglet.sprite.Sprite.__init__(self, img)
+		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
+		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
 		self.active = False
 		self.init_chipmunk(space)
 

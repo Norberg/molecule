@@ -65,9 +65,8 @@ class Game(pyglet.window.Window):
 	def on_draw(self):
 		self.clear()
 		self.label.draw()
-		for e in self.elements:
-			e.update()
-			e.draw()
+		self.level.update()
+		self.batch.draw()
 		#pymunk.pyglet_util.draw(self.space)
 		self.fps_display.draw()
 		
@@ -100,8 +99,8 @@ class Game(pyglet.window.Window):
 	def run_level(self, level):
 		self.active = None
 		self.write_on_background(level.cml.objective)
-		self.elements = level.elements
-		self.areas = level.areas
+		self.batch = level.batch
+		self.level = level
 		self.space = level.space
 		self.mouse_spring = None
 		#self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
@@ -189,8 +188,7 @@ class Game(pyglet.window.Window):
 		self.mouse_body.position = (x, y)
 	
 	def update(self, dt):
-		print(dt)
-		self.space.step(dt)
+		self.space.step(1/60.0)
 		#self.on_draw()
 		#for event in pygame.event.get():
 		#	res = self.handle_event(event)
