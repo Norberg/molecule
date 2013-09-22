@@ -50,7 +50,25 @@ class CliInterface:
 		print("r - reset current level")	
 		print("d - switch Graphic debug on/off")	
 		print("s - skip level")	
+import code, traceback, signal
+
+def debug(sig, frame):
+    """Interrupt running process, and provide a python prompt for
+    interactive debugging."""
+    d={'_frame':frame}         # Allow access to frame object.
+    d.update(frame.f_globals)  # Unless shadowed by global
+    d.update(frame.f_locals)
+
+    i = code.InteractiveConsole(d)
+    message  = "Signal recieved : entering python shell.\nTraceback:\n"
+    message += ''.join(traceback.format_stack(frame))
+    i.interact(message)
+
+def listen():
+    signal.signal(signal.SIGUSR1, debug)  # Register handler
+
 def main():
+	listen()
 	CliInterface.handle_cmd_options()
 	game = Game()
 	pyglet.app.run()

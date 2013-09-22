@@ -32,8 +32,8 @@ from molecule.Levels import Levels
 
 
 class Game(pyglet.window.Window):
-	def __init__(self, gui = True):
-		super(Game, self).__init__(caption="Molecule", vsync=False, width=1024, height=768)
+	def __init__(self):
+		super(Game, self).__init__(caption="Molecule", vsync=True, width=1024, height=768)
 		self.init_pymunk()
 		#Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
@@ -46,7 +46,7 @@ class Game(pyglet.window.Window):
 		levels = Levels("data/levels")
 		level = levels.next_level()
 		self.run_level(level)	
-		pyglet.clock.schedule_interval(self.update, 1/60.0)
+		pyglet.clock.schedule_interval(self.update, 1/100.0)
 	
 	def init_pymunk(self):
 		self.last_collision = 0
