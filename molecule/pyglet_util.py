@@ -21,7 +21,6 @@ def loadImage(src):
 	if src in __img_cache:
 		return __img_cache[src]
 	img = pyglet.image.load(src)
-		
 	__img_cache[src] = img
 	return __img_cache[src]
 

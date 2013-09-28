@@ -26,10 +26,10 @@ from molecule import CollisionTypes
 from libcml import Cml
 
 class Levels:
-	def __init__(self, path):
+	def __init__(self, path, start_level = 1):
 		self.path = path
 		self.init_levels()
-		self.current_level = -1
+		self.current_level = start_level - 2
 
 	def init_levels(self):
 		filenames = glob.glob(self.path+"/*")
@@ -113,8 +113,8 @@ class Level:
 	def check_victory(self):
 		to_check = list(self.cml.victory_condition)
 		for element in self.elements:
-			if element.molecule.formula in to_check:
-				to_check.remove(element.molecule.formula)
+			if element.formula in to_check:
+				to_check.remove(element.formula)
 		
 		if len(to_check) == 0:
 			return True

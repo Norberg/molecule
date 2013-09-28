@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import random
+import math
 
 import pyglet
 from pymunk.vec2d import Vec2d
@@ -21,11 +22,71 @@ import pymunk
 
 from molecule import pyglet_util
 from molecule import CollisionTypes
+from libcml import Cml
+from libcml import CachedCml
+from libreact import Reaction
+
+
+class Molecule:
+	def __init__(self, formula_with_state, space, batch, group, pos=None):
+		self.space = space
+		self.batch = batch
+		self.group = group
+		formula, state = Reaction.split_state(formula_with_state)
+		self.formula = formula
+		self.cml = CachedCml.getMolecule(formula)
+		self.cml.normalize_pos()
+		self.current_state = self.cml.get_state(state)
+		if self.current_state is None:
+			raise Exception("did not find state for:" + formula_with_state)
+		self.create_atoms()
+		self.vertexes = list()
+
+	
+	def create_atoms(self):
+		self.atoms = dict()
+		for atom in self.cml.atoms.values():
+			new = Atom(atom.elementType, atom.formalCharge,
+			           self.space, self.batch, self.group)
+			self.atoms[atom.id] = new
+		self.create_bonds()
+
+	def create_bonds(self):
+		self.joints = list()
+		for bond in self.cml.bonds:
+			#bond.atomA.pos
+			#bond.atomB.pos
+			atomA = self.atoms[bond.atomA.id]
+			atomB = self.atoms[bond.atomB.id]
+			
+			joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
+			                          10, 50)
+			#joint.error_bias = math.pow(1.0-0.2, 30.0)
+			self.joints.append(joint)
+			self.space.add(joint) 
+
+
+	def update(self):
+		for atom in self.atoms.values():
+			atom.update()
+		
+		for vertex in self.vertexes:
+			vertex.delete()
+		self.vertexes = list()
+
+		for joint in self.joints:
+			pv1 = joint.a.position #+ constraint.anchr1.rotated(constraint.a.angle)
+			pv2 = joint.b.position #+ constraint.anchr2.rotated(constraint.b.angle)
+
+			line = (pv1.x, pv1.y, pv2.x, pv2.y)
+			color = (167,167,167)
+			v = self.batch.add(2, pyglet.gl.GL_LINES, None,
+			                   ('v2f', line),
+			                   ('c3B', color * 2))
+			self.vertexes.append(v)
 
 class Atom(pyglet.sprite.Sprite):
-	def __init__(self, symbol, space, batch, group, pos=None):
-		charge = self.get_electric_charge(symbol)
-		symbol = self.get_only_atom_symbol(symbol)
+	def __init__(self, symbol, charge, space, batch, group, pos=None):
 		#TODO create a copy..
 		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)

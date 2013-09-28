@@ -19,7 +19,7 @@ import re
 import pymunk
 import pygame
 from molecule import PyGameUtil,util
-from molecule.Elements import Atom
+from molecule.Elements import Molecule
 from molecule import Config
 from libreact.Reactor import Reactor
 from libreact import Reaction
@@ -66,8 +66,7 @@ def create_elements(space, elements, batch, group, pos=None):
 	for element in elements:
 		if pos != None and len(elements) > 1:
 			pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-		formula, state = Reaction.split_state(element)
-		list_of_elements.append(Atom(formula, space, batch, group, pos))
+		list_of_elements.append(Molecule(element, space, batch, group, pos))
 	return list_of_elements
 
 

@@ -43,7 +43,7 @@ class Game(pyglet.window.Window):
 		self.write_on_background("Welcome to Molecule")
 		pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
 		self.fps_display = pyglet.clock.ClockDisplay()
-		levels = Levels("data/levels")
+		levels = Levels("data/levels", Config.current.level)
 		level = levels.next_level()
 		self.run_level(level)	
 		pyglet.clock.schedule_interval(self.update, 1/100.0)

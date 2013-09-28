@@ -20,7 +20,6 @@ from molecule.Levels import Levels
 from molecule import Universe
 
 class TestLevels(unittest.TestCase):
-
 	def testLevels(self):
 		levels = Levels("data/levels")
 		l = levels.next_level()
@@ -30,7 +29,7 @@ class TestLevels(unittest.TestCase):
 		self.assertEqual(l.cml.objective, "Create a water molecule")
 		self.assertEqual(l.cml.hint, "H + H + O => H2O")
 		self.assertEqual(l.check_victory(), False)
-		l.elements.add(Universe.create_elements(l.space, "H2O(g)"))
+		l.elements.extend(Universe.create_elements(l.space, "H2O(g)", None, None))
 		self.assertEqual(l.check_victory(), True)
 
 		l = levels.next_level()
@@ -52,6 +51,8 @@ class TestLevels(unittest.TestCase):
 	def testDestroyElements(self):
 		levels = Levels("data/levels")
 		l = levels.next_level()
-		l.elements.add(Universe.create_elements(l.space, ["O2(g)", "O2(g)", "CH4(g)"]))
+		l.elements.extend(Universe.create_elements(l.space,
+		                                           ["O2(g)", "O2(g)", "CH4(g)"],
+		                                           None, None))
 		#self.assertEqual(l.elements, [])
 		
