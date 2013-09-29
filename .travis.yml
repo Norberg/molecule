@@ -4,11 +4,12 @@ python:
   - "3.2"
   - "3.3"
   - "pypy"
-# command to install dependencies
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 install:
   - "pip install pymunk --use-mirrors"
   - "pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip"
-# command to run tests
 script: 
   - "python -m unittest discover"
 notifications:
