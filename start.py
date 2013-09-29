@@ -79,6 +79,3 @@ if __name__ == '__main__':
 		main()
 	except KeyboardInterrupt:
 		pass
-	from guppy import hpy
-	h = hpy()
-	print((h.heap()))

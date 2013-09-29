@@ -43,9 +43,9 @@ class Game(pyglet.window.Window):
 		self.write_on_background("Welcome to Molecule")
 		pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
 		self.fps_display = pyglet.clock.ClockDisplay()
-		levels = Levels("data/levels", Config.current.level)
-		level = levels.next_level()
-		self.run_level(level)	
+		self.levels = Levels("data/levels", Config.current.level)
+		level = self.levels.next_level()
+		self.run_level(0, level)	
 		pyglet.clock.schedule_interval(self.update, 1/100.0)
 	
 	def init_pymunk(self):
@@ -67,41 +67,20 @@ class Game(pyglet.window.Window):
 		self.label.draw()
 		self.level.update()
 		self.batch.draw()
-		#pymunk.pyglet_util.draw(self.space)
+		if self.DEBUG_GRAPHICS:
+			pymunk.pyglet_util.draw(self.space)
 		self.fps_display.draw()
 		
 	def wait(self, seconds):
 		pass	
 
-	
-	def game_loop(self):
-		levels = Levels("data/levels")
-		levels.current_level = Config.current.level -2 
-		for level in levels.level_iter():
-			while 1:
-				result = self.run_level(level)
-				if result == "victory":
-					self.write_on_background("Congratulation, you finished the level")
-					self.wait(2)
-					break
-				elif result == "SKIP_LEVEL":
-					self.write_on_background("Skipped level, Cheater!")
-					self.wait(1)
-					break
-				elif result == "RESET_LEVEL":
-					level.reset()
-					continue	
-				elif result == QUIT:
-					return
-				else:
-					print("Unkown return code from level, quiting")
-	
-	def run_level(self, level):
+	def run_level(self, dt, level):
 		self.active = None
 		self.write_on_background(level.cml.objective)
 		self.batch = level.batch
 		self.level = level
 		self.space = level.space
+		self.victory = False
 		self.mouse_spring = None
 		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
 		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
@@ -134,6 +113,7 @@ class Game(pyglet.window.Window):
 		self.destroy_elements(reaction.reactants, collisions)
 		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
 		self.level.create_elements(reaction.products, position)
+		self.victory = self.level.check_victory()
 
 	def destroy_elements(self, elements_to_destroy, collisions):
 		""" Destroy a list of elements from a dict of collisions"""
@@ -183,33 +163,33 @@ class Game(pyglet.window.Window):
 	
 	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
 		self.mouse_body.position = (x, y)
-	
+
+	def on_key_press(self, symbol, modifiers):
+		if symbol == pyglet.window.key.M:
+			print("dumping memory..")
+			from meliae import scanner
+			scanner.dump_all_objects("memory.dump")
+		elif symbol == pyglet.window.key.ESCAPE:
+			self.close()
+		elif symbol == pyglet.window.key.S:	
+			self.write_on_background("Skipping level, Cheater!")
+			level = self.levels.next_level()
+			pyglet.clock.schedule_once(self.run_level, 3, level)
+			self.victory = False
+		elif symbol == pyglet.window.key.R:
+			print("reseting..")	
+			self.level.reset()
+			self.run_level(0, self.level)
+		elif symbol == pyglet.window.key.D:	
+			self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
+
 	def update(self, dt):
 		self.space.step(1/60.0)
-		#self.on_draw()
-		#for event in pygame.event.get():
-		#	res = self.handle_event(event)
-		#	if res is not None:
-		#		return res
-		#self.screen.blit(self.background, (0, 0))
-		#self.update_and_draw(self.areas, self.elements)
-
-
-	def handle_event(self, event):
-		if event.type == QUIT:
-			return QUIT
-		elif event.type == KEYDOWN and event.key == K_ESCAPE:
-			return QUIT
-		elif event.type == KEYDOWN and event.key == K_r:
-			return "RESET_LEVEL"
-		elif event.type == KEYDOWN and event.key == K_d:
-			self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
-		elif event.type == KEYDOWN and event.key == K_s:
-			return "SKIP_LEVEL"
-		elif event.type == MOUSEBUTTONDOWN:
-			self.handle_mouse_button_down()	
-		elif event.type is MOUSEBUTTONUP: 
-			self.handle_mouse_button_up()
+		if self.victory:
+			self.write_on_background("Congratulation, you finished the level")
+			level = self.levels.next_level()
+			pyglet.clock.schedule_once(self.run_level, 3, level)
+			self.victory = False
 
 	def handle_mouse_button_down(self, x, y):
 		if self.mouse_spring != None:
@@ -224,20 +204,3 @@ class Game(pyglet.window.Window):
 			self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
 			clicked.body.mass /= 50
 			self.space.add(self.mouse_spring) 
-
-
-	def update_and_draw(self, *spriteGroups):
-		dirty_rects = list()
-				
-		for spriteGroup in spriteGroups:
-			spriteGroup.update()
-			dirty_rect = spriteGroup.draw(self.screen)
-			try:	
-				dirty_rects += dirty_rect
-			except:
-				pass
-		if self.DEBUG_GRAPHICS:
-			pygame_util.draw(self.screen, self.space)
-			pygame.display.update()
-		else:	
-			pygame.display.update(dirty_rects)

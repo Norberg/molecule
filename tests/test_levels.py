@@ -18,6 +18,7 @@ from libcml.Cml import Cml
 from libcml import CachedCml
 from molecule.Levels import Levels
 from molecule import Universe
+import pyglet
 
 class TestLevels(unittest.TestCase):
 	def testLevels(self):
@@ -29,7 +30,8 @@ class TestLevels(unittest.TestCase):
 		self.assertEqual(l.cml.objective, "Create a water molecule")
 		self.assertEqual(l.cml.hint, "H + H + O => H2O")
 		self.assertEqual(l.check_victory(), False)
-		l.elements.extend(Universe.create_elements(l.space, "H2O(g)", None, None))
+		batch = pyglet.graphics.Batch()
+		l.elements.extend(Universe.create_elements(l.space, "H2O(g)", batch, None))
 		self.assertEqual(l.check_victory(), True)
 
 		l = levels.next_level()
@@ -51,8 +53,9 @@ class TestLevels(unittest.TestCase):
 	def testDestroyElements(self):
 		levels = Levels("data/levels")
 		l = levels.next_level()
+		batch = pyglet.graphics.Batch()
 		l.elements.extend(Universe.create_elements(l.space,
 		                                           ["O2(g)", "O2(g)", "CH4(g)"],
-		                                           None, None))
+		                                           batch, None))
 		#self.assertEqual(l.elements, [])
 		

@@ -40,7 +40,6 @@ class Molecule:
 		if self.current_state is None:
 			raise Exception("did not find state for:" + formula_with_state)
 		self.create_atoms()
-		self.vertexes = list()
 
 	@property
 	def enthalpy(self):
@@ -94,6 +93,7 @@ class Molecule:
 
 	def create_bonds(self):
 		self.joints = list()
+		self.vertexes = list()
 		for bond in self.cml.bonds:
 			#bond.atomA.pos
 			#bond.atomB.pos
@@ -105,26 +105,30 @@ class Molecule:
 			#joint.error_bias = math.pow(1.0-0.2, 30.0)
 			self.joints.append(joint)
 			self.space.add(joint) 
-
-
-	def update(self):
-		for atom in self.atoms.values():
-			atom.update()
 		
-		for vertex in self.vertexes:
-			vertex.delete()
-		self.vertexes = list()
-
 		for joint in self.joints:
-			pv1 = joint.a.position #+ constraint.anchr1.rotated(constraint.a.angle)
-			pv2 = joint.b.position #+ constraint.anchr2.rotated(constraint.b.angle)
-
+			pv1 = joint.a.position
+			pv2 = joint.b.position 
 			line = (pv1.x, pv1.y, pv2.x, pv2.y)
 			color = (167,167,167)
 			v = self.batch.add(2, pyglet.gl.GL_LINES, None,
 			                   ('v2f', line),
 			                   ('c3B', color * 2))
 			self.vertexes.append(v)
+
+
+	def update(self):
+		for atom in self.atoms.values():
+			atom.update()
+	
+		i = 0	
+		for joint in self.joints:
+			pv1 = joint.a.position
+			pv2 = joint.b.position 
+			line = (pv1.x, pv1.y, pv2.x, pv2.y)
+			self.vertexes[i].vertices = line
+			i += 1
+
 
 	def delete(self):
 		for vertex in self.vertexes:
