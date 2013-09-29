@@ -18,7 +18,6 @@ import math
 
 import pyglet
 import pymunk
-import pymunk.pygame_util
 from molecule import Universe
 from molecule import Effects
 from molecule import Config
