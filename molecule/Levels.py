@@ -87,6 +87,8 @@ class Level:
 		                                  self.batch, self.elements_group)
 
 	def init_effects(self):
+		return
+		#FIXME implement effect with pyglet
 		new_effects = list()
 		for effect in self.cml.effects:
 			if effect.title == "Fire":

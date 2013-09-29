@@ -111,7 +111,6 @@ class Game(pyglet.window.Window):
 	def perform_reaction(self, key, reaction, collisions, position):
 		""" Perform a reaction"""
 		self.destroy_elements(reaction.reactants, collisions)
-		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
 		self.level.create_elements(reaction.products, position)
 		self.victory = self.level.check_victory()
 

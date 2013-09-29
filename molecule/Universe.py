@@ -17,7 +17,6 @@ import glob, random
 import copy
 import re
 import pymunk
-import pygame
 from molecule import PyGameUtil,util
 from molecule.Elements import Molecule
 from molecule import Config
