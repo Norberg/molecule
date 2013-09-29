@@ -17,7 +17,7 @@ import glob, random
 import copy
 import re
 import pymunk
-from molecule import PyGameUtil,util
+from molecule import util
 from molecule.Elements import Molecule
 from molecule import Config
 from libreact.Reactor import Reactor

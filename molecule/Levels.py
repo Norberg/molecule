@@ -19,7 +19,6 @@ import math
 import pyglet
 import pymunk
 from molecule import Universe
-from molecule import Effects
 from molecule import Config
 from molecule import CollisionTypes
 from libcml import Cml
