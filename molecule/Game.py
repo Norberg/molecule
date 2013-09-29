@@ -25,7 +25,7 @@ from pymunk import pyglet_util
 import pyglet
 from pyglet.window import mouse
 
-#from molecule import Universe
+from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes	
 from molecule.Levels import Levels
@@ -35,7 +35,7 @@ class Game(pyglet.window.Window):
 	def __init__(self):
 		super(Game, self).__init__(caption="Molecule", vsync=True, width=1024, height=768)
 		self.init_pymunk()
-		#Universe.createUniverse()
+		Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
 		self.start()
 
@@ -103,8 +103,8 @@ class Game(pyglet.window.Window):
 		self.level = level
 		self.space = level.space
 		self.mouse_spring = None
-		#self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
-		#self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
+		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
+		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
 
 	def element_collision(self, space, arbiter):
 		""" Called if two elements collides"""
@@ -120,7 +120,7 @@ class Game(pyglet.window.Window):
 	def effect_reaction(self, space, arbiter):
 		""" Called if an element touches a effect """
 		a,b = arbiter.shapes
-		molecule = a.sprite.molecule
+		molecule = a.molecule
 		effect = b.effect
 		reaction = effect.react(molecule)
 		collisions = [{"shape" : a}]
@@ -133,7 +133,7 @@ class Game(pyglet.window.Window):
 		""" Perform a reaction"""
 		self.destroy_elements(reaction.reactants, collisions)
 		position = pymunk.pygame_util.to_pygame(position, Config.current.screen)
-		self.elements.add(Universe.create_elements(self.space, reaction.products, position))
+		self.level.create_elements(reaction.products, position)
 
 	def destroy_elements(self, elements_to_destroy, collisions):
 		""" Destroy a list of elements from a dict of collisions"""
@@ -142,16 +142,13 @@ class Game(pyglet.window.Window):
 		for collision in collisions:
 			if collision["shape"].collision_type == CollisionTypes.ELEMENT:
 				shape = collision["shape"]
-				sprite = shape.sprite
-				formula = sprite.molecule.state_formula
+				molecule = shape.molecule
+				formula = molecule.state_formula
 				if formula in elements and \
 				   id(shape.body) not in removed_bodies:
 					removed_bodies.append(id(shape.body))
 					elements.remove(formula)
-					for s in shape.body.shapes:
-						self.space.remove(s)
-					self.space.remove(shape.body)
-					sprite.kill()
+					molecule.delete()
 		if len(elements) != 0:
 			print("not all elements was removed..")
 			print("elements_to_destroy:", elements_to_destroy)
@@ -170,9 +167,9 @@ class Game(pyglet.window.Window):
 		for collision in collisions:
 			shape = collision["shape"]
 			if shape.collision_type == CollisionTypes.ELEMENT:
-				if shape.sprite not in molecules:
-					molecules.append(shape.sprite)
-					yield shape.sprite.molecule.state_formula
+				if shape.molecule not in molecules:
+					molecules.append(shape.molecule)
+					yield shape.molecule.state_formula
 
 	def on_mouse_press(self, x, y, button, modifiers):
 		self.handle_mouse_button_down(x, y)

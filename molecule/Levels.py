@@ -101,6 +101,10 @@ class Level:
 				water = Effects.Water_Beaker((x, y), self.space)
 				new_effects.append(water)
 		self.areas = new_effects
+
+	def create_elements(self, elements, pos = None):
+		self.elements.extend(Universe.create_elements(self.space, elements,
+		                                  self.batch, self.elements_group, pos))
 	
 	def update(self):
 		"""Update pos of all included elements"""

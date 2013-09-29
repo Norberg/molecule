@@ -42,12 +42,53 @@ class Molecule:
 		self.create_atoms()
 		self.vertexes = list()
 
+	@property
+	def enthalpy(self):
+		"""Return enthalpy(aka H) for current state"""
+		return self.state.enthalpy
+
+	@property
+	def entropy(self):
+		"""Return entropy(aka S) for current state"""
+		return self.state.entropy
+
+	@property
+	def state(self):
+		"""Return current state"""
+		return self.current_state
+	@property
+	def state_formula(self):
+		return self.formula + "(%s)" % self.current_state.short
+
+	@property
+	def draggable(self):
+		return self.current_state.short != "aq"
+
+	def change_state(self, new_state):
+		"""new_state: shortform of wanted state"""
+		if not self.try_change_state(new_state):
+			raise Exception("Tried to change: " + self.formula + " to non existing state:" + new_state)
+
+	def try_change_state(self, new_state):
+		"""new_state: shortform of wanted state"""
+		state = self.cml.get_state(new_state)
+		if state is None:
+			return False
+		else:
+			self.current_state = state
+			return True	
+	
+	def toAqueous(self):
+		if self.try_change_state("aq"):
+			return self.state.ions
+		else:
+			print("No Aq state exists for:", self.formula)		
 	
 	def create_atoms(self):
 		self.atoms = dict()
 		for atom in self.cml.atoms.values():
 			new = Atom(atom.elementType, atom.formalCharge,
-			           self.space, self.batch, self.group)
+			           self.space, self.batch, self.group, self)
 			self.atoms[atom.id] = new
 		self.create_bonds()
 
@@ -85,26 +126,43 @@ class Molecule:
 			                   ('c3B', color * 2))
 			self.vertexes.append(v)
 
+	def delete(self):
+		for vertex in self.vertexes:
+			vertex.delete()
+		self.vertexes = list()
+		
+		for atom in self.atoms.values():
+			atom.delete()
+		self.atoms = dict()
+
+		for joint in self.joints:
+			self.space.remove(joint)
+		self.joints = list()
+		
+
 class Atom(pyglet.sprite.Sprite):
-	def __init__(self, symbol, charge, space, batch, group, pos=None):
+	def __init__(self, symbol, charge, space, batch, group, molecule, pos=None):
 		#TODO create a copy..
 		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+		self.molecule = molecule
+		self.space = space
 		self.active = False
-		self.init_chipmunk(space)
+		self.init_chipmunk()
 
 		if pos == None:
 			self.move((random.randint(10, 600), random.randint(10, 400)))
 		else:
 			self.move(pos)
 	
-	def init_chipmunk(self,space):	
+	def init_chipmunk(self):	
 		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
 		body.velocity_limit = 1000
 		shape = pymunk.Circle(body, 16)
 		shape.elasticity = 0.95
 		shape.collision_type = CollisionTypes.ELEMENT
-		space.add(body, shape)
+		shape.molecule = self.molecule
+		self.space.add(body, shape)
 
 		x = random.randrange(-10, 10)/10.0
 		y = random.randrange(-10, 10)/10.0
@@ -112,6 +170,7 @@ class Atom(pyglet.sprite.Sprite):
 		force = 1500
 		body.apply_impulse(force * vec)
 		self.body = body
+		self.shape = shape
 
 	@property
 	def affecty_by_gravity(self):
@@ -163,3 +222,8 @@ class Atom(pyglet.sprite.Sprite):
 	def gravity_func(self, body, gravity, damping, dt):
 		gravity = (0.0,-500.0)
 		return pymunk.Body.update_velocity(body, gravity, damping, dt)
+
+	def delete(self):
+		self.space.remove(self.shape)
+		self.space.remove(self.body)
+		super(Atom, self).delete()
