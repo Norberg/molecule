@@ -34,12 +34,16 @@ class Molecule:
 		self.group = group
 		formula, state = Reaction.split_state(formula_with_state)
 		self.formula = formula
+		if pos is None:
+			pos = (random.randint(10, 600), random.randint(10, 400))
+		self.pos = pos
 		self.cml = CachedCml.getMolecule(formula)
 		self.cml.normalize_pos()
 		self.current_state = self.cml.get_state(state)
 		if self.current_state is None:
 			raise Exception("did not find state for:" + formula_with_state)
 		self.create_atoms()
+		
 
 	@property
 	def enthalpy(self):
@@ -87,7 +91,7 @@ class Molecule:
 		self.atoms = dict()
 		for atom in self.cml.atoms.values():
 			new = Atom(atom.elementType, atom.formalCharge,
-			           self.space, self.batch, self.group, self)
+			           self.space, self.batch, self.group, self, self.pos)
 			self.atoms[atom.id] = new
 		self.create_bonds()
 
@@ -145,7 +149,7 @@ class Molecule:
 		
 
 class Atom(pyglet.sprite.Sprite):
-	def __init__(self, symbol, charge, space, batch, group, molecule, pos=None):
+	def __init__(self, symbol, charge, space, batch, group, molecule, pos):
 		#TODO create a copy..
 		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
@@ -153,11 +157,7 @@ class Atom(pyglet.sprite.Sprite):
 		self.space = space
 		self.active = False
 		self.init_chipmunk()
-
-		if pos == None:
-			self.move((random.randint(10, 600), random.randint(10, 400)))
-		else:
-			self.move(pos)
+		self.move(pos)
 	
 	def init_chipmunk(self):	
 		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
@@ -167,14 +167,17 @@ class Atom(pyglet.sprite.Sprite):
 		shape.collision_type = CollisionTypes.ELEMENT
 		shape.molecule = self.molecule
 		self.space.add(body, shape)
+		
+		body.apply_impulse(self.create_force_vector())
+		self.body = body
+		self.shape = shape
 
+	def create_force_vector(self):
 		x = random.randrange(-10, 10)/10.0
 		y = random.randrange(-10, 10)/10.0
 		vec = Vec2d(x,y)
 		force = 1500
-		body.apply_impulse(force * vec)
-		self.body = body
-		self.shape = shape
+		return force * vec
 
 	@property
 	def affecty_by_gravity(self):
