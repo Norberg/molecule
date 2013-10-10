@@ -21,6 +21,7 @@ import pymunk
 from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes
+from molecule import Effects
 from libcml import Cml
 
 class Levels:
@@ -85,20 +86,20 @@ class Level:
 		                                  self.batch, self.elements_group)
 
 	def init_effects(self):
-		return
-		#FIXME implement effect with pyglet
 		new_effects = list()
 		for effect in self.cml.effects:
 			if effect.title == "Fire":
 				x = effect.x2
 				y = effect.y2
 				value = effect.value
-				fire = Effects.Fire((x,y), self.space, value)
+				fire = Effects.Fire(self.space, self.batch,
+				                    self.background_group, (x,y), value)
 				new_effects.append(fire)
 			elif effect.title == "WaterBeaker":
 				x = effect.x2
 				y = effect.y2
-				water = Effects.Water_Beaker((x, y), self.space)
+				water = Effects.Water_Beaker(self.space, self.batch,
+				                             self.background_group, (x, y))
 				new_effects.append(water)
 		self.areas = new_effects
 
@@ -110,6 +111,8 @@ class Level:
 		"""Update pos of all included elements"""
 		for element in self.elements:
 			element.update()
+		for area in self.areas:
+			area.update()
 
 	def reset(self):
 		self.__init__(self.cml)

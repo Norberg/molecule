@@ -14,33 +14,35 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import glob
-import pygame
+import pyglet
 import pymunk
-from molecule import PyGameUtil
 from molecule import Config
 from molecule import CollisionTypes
+from molecule import pyglet_util
 from libreact import Reaction
 from libcml import Cml
 
-class Fire(pygame.sprite.Sprite):
+class Fire(pyglet.sprite.Sprite):
 	"""Fire"""
-	def __init__(self, pos, space, temp=1000):
-		pygame.sprite.Sprite.__init__(self)
+	def __init__(self, space, batch, group, pos, temp=1000):
+		img = pyglet_util.loadImage("img/fire/50 frames/fire1_ 50.png")
+		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
 		self.name = "Fire"
 		self.temp = temp
 		self.current_frame = 0
 		self.frames = 100
 		self.animations = list()
 		for img in sorted(glob.glob("img/fire/50 frames/*")):
-			self.animations.append(PyGameUtil.loadImage(img))
+			self.animations.append(pyglet_util.loadImage(img))
 		self.image = self.animations[self.current_frame]
-		self.rect = self.image.get_bounding_rect()
 		self.init_chipmunk(space)
 		self.set_pos(pos)
 	
 	def set_pos(self, pos):
-		self.rect.center = pos
-		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
+		self.shape.body.position = pos
+		x, y = self.shape.body.position
+		self.x = x - self.width/2
+		self.y = y - self.height/2
 	
 	def init_chipmunk(self,space):	
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
@@ -61,14 +63,12 @@ class Fire(pygame.sprite.Sprite):
 	def react(self, element):
 		pass
 
-class Water_Beaker(pygame.sprite.Sprite):
+class Water_Beaker(pyglet.sprite.Sprite):
 	"""Water_Beaker"""
-	def __init__(self, pos, space):
-		pygame.sprite.Sprite.__init__(self)
+	def __init__(self, space, batch, group, pos):
+		img = pyglet_util.loadImage("img/water-beaker.png")
+		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
 		self.name = "Water Beaker"
-		self.image = PyGameUtil.loadImage("img/water-beaker.png")
-		self.rect = self.image.get_bounding_rect()
-		self.rect.move_ip(pos)
 		self.init_chipmunk(space)
 		self.set_pos(pos)
 
@@ -91,8 +91,14 @@ class Water_Beaker(pygame.sprite.Sprite):
 		self.shape.effect = self
 	
 	def set_pos(self, pos):
-		self.rect.center = pos
-		self.shape.body.position = pymunk.pygame_util.from_pygame(pos, Config.current.screen)
+		OFFSET_X, OFFSET_Y = 60,-30
+		self.shape.body.position = pos
+		x, y = self.shape.body.position
+		self.x = x - self.width/2 + OFFSET_X
+		self.y = y - self.height/2 + OFFSET_Y
+
+	def update(self):
+		pass
 	
 	def react(self, molecule):
 		ions = molecule.toAqueous()
