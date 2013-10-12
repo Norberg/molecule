@@ -50,7 +50,7 @@ class Universe:
 			print(reaction.reactants, "+", effect_names, "->", reaction.products)
 			return reaction
 		
-def create_elements(space, elements, batch, group, pos=None):
+def create_elements(space, elements, batch, pos=None):
 	""" Create a set of elements
 	body: shape to attach molecule to
 	element: list of elements to create
@@ -65,7 +65,7 @@ def create_elements(space, elements, batch, group, pos=None):
 	for element in elements:
 		if pos != None and len(elements) > 1:
 			pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-		list_of_elements.append(Molecule(element, space, batch, group, pos))
+		list_of_elements.append(Molecule(element, space, batch, pos))
 	return list_of_elements
 
 

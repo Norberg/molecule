@@ -22,6 +22,7 @@ from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes
 from molecule import Effects
+from molecule import RenderingOrder
 from libcml import Cml
 
 class Levels:
@@ -55,8 +56,6 @@ class Level:
 	def __init__(self, cml):
 		self.cml = cml
 		self.batch = pyglet.graphics.Batch()
-		self.background_group = pyglet.graphics.OrderedGroup(0)
-		self.elements_group = pyglet.graphics.OrderedGroup(1)
 		self.init_chipmunk()
 		self.init_elements()
 		self.init_effects()
@@ -83,7 +82,7 @@ class Level:
 	
 	def init_elements(self):	
 		self.elements = Universe.create_elements(self.space, self.cml.molecules,
-		                                  self.batch, self.elements_group)
+		                                  self.batch)
 
 	def init_effects(self):
 		new_effects = list()
@@ -93,19 +92,19 @@ class Level:
 				y = effect.y2
 				value = effect.value
 				fire = Effects.Fire(self.space, self.batch,
-				                    self.background_group, (x,y), value)
+				                    (x,y), value)
 				new_effects.append(fire)
 			elif effect.title == "WaterBeaker":
 				x = effect.x2
 				y = effect.y2
 				water = Effects.Water_Beaker(self.space, self.batch,
-				                             self.background_group, (x, y))
+				                             (x, y))
 				new_effects.append(water)
 		self.areas = new_effects
 
 	def create_elements(self, elements, pos = None):
 		self.elements.extend(Universe.create_elements(self.space, elements,
-		                                  self.batch, self.elements_group, pos))
+		                                  self.batch, pos))
 	
 	def update(self):
 		"""Update pos of all included elements"""

@@ -5,6 +5,7 @@
 - Draw correct number of bonds, current only 1 bond will be drawn
 - Give aqueous molecules a blueish background
 - Extract all level logic from Game to Level
+- Give atoms correct mass
 
 ### Medium TODOs ###
 - GUI to edit reactions

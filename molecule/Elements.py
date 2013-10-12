@@ -22,16 +22,16 @@ import pymunk
 
 from molecule import pyglet_util
 from molecule import CollisionTypes
+from molecule import RenderingOrder
 from libcml import Cml
 from libcml import CachedCml
 from libreact import Reaction
 
 
 class Molecule:
-	def __init__(self, formula_with_state, space, batch, group, pos=None):
+	def __init__(self, formula_with_state, space, batch, pos=None):
 		self.space = space
 		self.batch = batch
-		self.group = group
 		formula, state = Reaction.split_state(formula_with_state)
 		self.formula = formula
 		if pos is None:
@@ -91,7 +91,7 @@ class Molecule:
 		self.atoms = dict()
 		for atom in self.cml.atoms.values():
 			new = Atom(atom.elementType, atom.formalCharge,
-			           self.space, self.batch, self.group, self, self.pos)
+			           self.space, self.batch, self, self.pos)
 			self.atoms[atom.id] = new
 		self.create_bonds()
 
@@ -149,11 +149,14 @@ class Molecule:
 		
 
 class Atom(pyglet.sprite.Sprite):
-	def __init__(self, symbol, charge, space, batch, group, molecule, pos):
-		#TODO create a copy..
+	def __init__(self, symbol, charge, space, batch, molecule, pos):
 		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
+		group = RenderingOrder.elements
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+		self.create_electric_charge_sprite(charge, batch)
 		self.molecule = molecule
+		self.symbol = symbol
+		self.charge = charge
 		self.space = space
 		self.active = False
 		self.init_chipmunk()
@@ -184,23 +187,19 @@ class Atom(pyglet.sprite.Sprite):
 		return False
 		return self.molecule.current_state.short == "s"
 
-	def get_electric_charge(self, symbol):
-		value = 0
-		if symbol.count("-") == 1:
-			v = symbol.split("-")[1]
-			if v == "":
-				value = -1
-			else:
-				value = -int(v)
+	def create_electric_charge_sprite(self, charge, batch):
+		self.electric_charge_sprite = None
+		if charge == 0:
+			return
+		elif charge > 0:
+			charge_str = "+" + str(charge)
+		else:
+			charge_str = str(charge)
+			
+		e = pyglet_util.loadImage("img/e" + charge_str + ".png")
+		group = RenderingOrder.charge
+		self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
 
-		elif symbol.count("+") == 1:
-			v = symbol.split("+")[1]
-			if v == "":
-				value = 1
-			else:
-				value = int(v)
-		return value	
-	
 	def get_only_atom_symbol(self, symbol):
 		""" returns the atom symbol without any electric charge """
 		return symbol.split("-")[0].split("+")[0]
@@ -221,6 +220,9 @@ class Atom(pyglet.sprite.Sprite):
 		x, y = self.body.position
 		self.x = x - self.width/2
 		self.y = y - self.height/2
+		if self.electric_charge_sprite is not None:
+			self.electric_charge_sprite.x = self.x
+			self.electric_charge_sprite.y = self.y
 		if self.affecty_by_gravity:
 			self.body.velocity_func = self.gravity_func
 		else:
@@ -233,4 +235,6 @@ class Atom(pyglet.sprite.Sprite):
 	def delete(self):
 		self.space.remove(self.shape)
 		self.space.remove(self.body)
+		if self.electric_charge_sprite is not None:
+			self.electric_charge_sprite.delete()
 		super(Atom, self).delete()

@@ -19,12 +19,14 @@ import pymunk
 from molecule import Config
 from molecule import CollisionTypes
 from molecule import pyglet_util
+from molecule import RenderingOrder
 from libreact import Reaction
 from libcml import Cml
 
 class Fire(pyglet.sprite.Sprite):
 	"""Fire"""
-	def __init__(self, space, batch, group, pos, temp=1000):
+	def __init__(self, space, batch, pos, temp=1000):
+		group = RenderingOrder.background
 		img = pyglet_util.loadImage("img/fire/50 frames/fire1_ 50.png")
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
 		self.name = "Fire"
@@ -65,8 +67,9 @@ class Fire(pyglet.sprite.Sprite):
 
 class Water_Beaker(pyglet.sprite.Sprite):
 	"""Water_Beaker"""
-	def __init__(self, space, batch, group, pos):
+	def __init__(self, space, batch, pos):
 		img = pyglet_util.loadImage("img/water-beaker.png")
+		group = RenderingOrder.background
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
 		self.name = "Water Beaker"
 		self.init_chipmunk(space)

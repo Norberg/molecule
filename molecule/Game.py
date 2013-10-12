@@ -162,7 +162,6 @@ class Game(pyglet.window.Window):
 		x = min(w,x)
 		y = min(h,y)
 		return x,y 
-		
 
 	def on_mouse_press(self, x, y, button, modifiers):
 		self.handle_mouse_button_down(x, y)
