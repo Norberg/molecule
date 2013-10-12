@@ -33,7 +33,8 @@ from molecule.Levels import Levels
 
 class Game(pyglet.window.Window):
 	def __init__(self):
-		super(Game, self).__init__(caption="Molecule", vsync=True, width=1024, height=768)
+		w, h = Config.current.screenSize
+		super(Game, self).__init__(caption="Molecule", vsync=True, width=w, height=h)
 		self.init_pymunk()
 		Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
@@ -154,6 +155,15 @@ class Game(pyglet.window.Window):
 					molecules.append(shape.molecule)
 					yield shape.molecule.state_formula
 
+	def limit_pos_to_screen(self, x, y):
+		x = max(0,x)
+		y = max(0,y)
+		w, h = Config.current.screenSize
+		x = min(w,x)
+		y = min(h,y)
+		return x,y 
+		
+
 	def on_mouse_press(self, x, y, button, modifiers):
 		self.handle_mouse_button_down(x, y)
 
@@ -165,6 +175,7 @@ class Game(pyglet.window.Window):
 			self.mouse_spring = None
 	
 	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+		x,y = self.limit_pos_to_screen(x,y)
 		self.mouse_body.position = (x, y)
 
 	def on_key_press(self, symbol, modifiers):
