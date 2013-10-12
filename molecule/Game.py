@@ -195,8 +195,9 @@ class Game(pyglet.window.Window):
 			raise Exception("mouse_spring already existing")
 		self.mouse_body.position = (x, y)
 		clicked = self.space.nearest_point_query_nearest((x,y), 16)
-		if clicked != None and \
-		   clicked["shape"].collision_type == CollisionTypes.ELEMENT: # and clicked["shape"].sprite.molecule.draggable:
+		if (clicked != None and 
+		    clicked["shape"].collision_type == CollisionTypes.ELEMENT and
+		    clicked["shape"].molecule.draggable):
 			clicked = clicked["shape"]
 			rest_length = self.mouse_body.position.get_distance(clicked.body.position)
 			self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
