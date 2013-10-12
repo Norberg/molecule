@@ -59,6 +59,7 @@ class Molecule:
 	def state(self):
 		"""Return current state"""
 		return self.current_state
+
 	@property
 	def state_formula(self):
 		return self.formula + "(%s)" % self.current_state.short
@@ -181,8 +182,7 @@ class Atom(pyglet.sprite.Sprite):
 		return force * vec
 
 	@property
-	def affecty_by_gravity(self):
-		return False
+	def affected_by_gravity(self):
 		return self.molecule.current_state.short == "s"
 
 	def create_electric_charge_sprite(self, charge, batch):
@@ -221,7 +221,7 @@ class Atom(pyglet.sprite.Sprite):
 		if self.electric_charge_sprite is not None:
 			self.electric_charge_sprite.x = self.x
 			self.electric_charge_sprite.y = self.y
-		if self.affecty_by_gravity:
+		if self.affected_by_gravity:
 			self.body.velocity_func = self.gravity_func
 		else:
 			self.body.velocity_func = pymunk.Body.update_velocity
