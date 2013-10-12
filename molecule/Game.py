@@ -70,11 +70,15 @@ class Game(pyglet.window.Window):
 		if self.DEBUG_GRAPHICS:
 			pymunk.pyglet_util.draw(self.space)
 		self.fps_display.draw()
-		
-	def wait(self, seconds):
-		pass	
-
+	
+	def close(self, dt=None):
+		super(Game, self).close()
+	
 	def run_level(self, dt, level):
+		if level is None:
+			self.write_on_background("Victory!, You have finished the game!")
+			pyglet.clock.schedule_once(self.close, 3)
+			return
 		self.active = None
 		self.write_on_background(level.cml.objective)
 		self.batch = level.batch
@@ -173,7 +177,7 @@ class Game(pyglet.window.Window):
 		elif symbol == pyglet.window.key.S:	
 			self.write_on_background("Skipping level, Cheater!")
 			level = self.levels.next_level()
-			pyglet.clock.schedule_once(self.run_level, 3, level)
+			pyglet.clock.schedule_once(self.run_level, 1, level)
 			self.victory = False
 		elif symbol == pyglet.window.key.R:
 			print("reseting..")	
