@@ -17,7 +17,7 @@ import xml.etree.ElementTree as etree
 import operator
 
 class Atom:
-	def __init__(self, id=None, element=None, charge=None, x=None, y=None, z=None):
+	def __init__(self, id=None, element=None, charge=0, x=None, y=None, z=None):
 		self.id = id
 		self.elementType = element
 		self.formalCharge = charge
@@ -314,6 +314,7 @@ class Molecule(Cml):
 			try:
 				new.formalCharge = int(atom.attrib["formalCharge"])
 			except KeyError:
+				new.formalCharge = 0
 				pass	
 			self.atoms[new.id] = new
 			
@@ -385,7 +386,7 @@ class Molecule(Cml):
 				attrib = {"x3":atom.x_str,
 				          "y3": atom.y_str,
 				          "z3": atom.z_str}
-			if atom.formalCharge is not None:
+			if atom.formalCharge != 0:
 				attrib["formalCharge"] = str(atom.formalCharge)
 
 			attrib["id"] = atom.id
