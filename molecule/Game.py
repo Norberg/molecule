@@ -170,6 +170,7 @@ class Game(pyglet.window.Window):
 		if self.mouse_spring != None:
 			self.mouse_spring.b.mass *= 50
 			self.mouse_spring.b.velocity = (0,0)
+			self.mouse_spring.b.molecule.set_dragging(False)
 			self.space.remove(self.mouse_spring)
 			self.mouse_spring = None
 	
@@ -213,6 +214,7 @@ class Game(pyglet.window.Window):
 		    clicked["shape"].collision_type == CollisionTypes.ELEMENT and
 		    clicked["shape"].molecule.draggable):
 			clicked = clicked["shape"]
+			clicked.molecule.set_dragging(True)
 			rest_length = self.mouse_body.position.get_distance(clicked.body.position)
 			self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
 			self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)

@@ -33,7 +33,7 @@ class Levels:
 
 	def init_levels(self):
 		filenames = glob.glob(self.path+"/*")
-		#files that contatins # is disabled
+		#files that contains # is disabled
 		self.levels = [name for name in filenames if not '#' in name]
 		self.levels.sort()
 	
@@ -66,19 +66,20 @@ class Level:
 		#self.space.collision_slop = 0.05
 		#self.space.collision_bias = math.pow(1.0 - 0.3, 60.0)
 		#self.space.gravity = (0.0, -500.0)
-		thicknes = 100
-		offset = thicknes#/2
+		thickness = 100
+		offset = thickness
 		max_x = Config.current.screenSize[0] + offset
 		max_y = Config.current.screenSize[1] + offset
-		walls = [pymunk.Segment(self.space.static_body, (-offset,-offset), (max_x, -offset), thicknes),
-		         pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thicknes),
-		         pymunk.Segment(self.space.static_body, (-offset, max_y), (max_x, max_y), thicknes),
-		         pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, -offset), thicknes)
+		screen_boundaries = [
+		  pymunk.Segment(self.space.static_body, (-offset,-offset), (max_x, -offset), thickness),
+		  pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thickness),
+		  pymunk.Segment(self.space.static_body, (-offset, max_y), (max_x, max_y), thickness),
+		  pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, -offset), thickness)
                 ]
-		for wall in walls:
-			wall.elasticity = 0.95
-			wall.collision_type = CollisionTypes.WALL
-		self.space.add(walls)
+		for boundary in screen_boundaries:
+			boundary.elasticity = 0.95
+			boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
+		self.space.add(screen_boundaries)
 	
 	def init_elements(self):	
 		self.elements = Universe.create_elements(self.space, self.cml.molecules,

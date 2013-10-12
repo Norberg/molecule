@@ -85,6 +85,7 @@ class Water_Beaker(pyglet.sprite.Sprite):
 		for wall in walls:
 			wall.elasticity = 0.95
 			wall.collision_type = CollisionTypes.WALL
+			wall.layers = CollisionTypes.LAYER_WALL
 		space.add(walls)
 		shape = pymunk.Poly.create_box(body, (400,520), (66,-60))
 		space.add(shape, body)

@@ -121,6 +121,12 @@ class Molecule:
 			                   ('c3B', color * 2))
 			self.vertexes.append(v)
 
+	def set_dragging(self, value):
+		for atom in self.atoms.values():
+			if value:
+				atom.shape.layers = CollisionTypes.LAYER_DRAGGING
+			else:
+				atom.shape.layers = CollisionTypes.LAYER_ALL
 
 	def update(self):
 		for atom in self.atoms.values():
@@ -164,9 +170,11 @@ class Atom(pyglet.sprite.Sprite):
 	def init_chipmunk(self):	
 		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
 		body.velocity_limit = 1000
+		body.molecule = self.molecule
 		shape = pymunk.Circle(body, 16)
 		shape.elasticity = 0.95
 		shape.collision_type = CollisionTypes.ELEMENT
+		shape.layer = CollisionTypes.LAYER_ALL
 		shape.molecule = self.molecule
 		self.space.add(body, shape)
 		
