@@ -125,13 +125,11 @@ class Molecule:
 		for atom in self.atoms.values():
 			atom.update()
 	
-		i = 0	
-		for joint in self.joints:
+		for joint,vertex in zip(self.joints, self.vertexes):
 			pv1 = joint.a.position
 			pv2 = joint.b.position 
 			line = (pv1.x, pv1.y, pv2.x, pv2.y)
-			self.vertexes[i].vertices = line
-			i += 1
+			vertex.vertices = line
 
 
 	def delete(self):
