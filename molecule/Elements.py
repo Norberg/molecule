@@ -17,6 +17,7 @@ import random
 import math
 
 import pyglet
+from pyglet import gl
 from pymunk.vec2d import Vec2d
 import pymunk
 
@@ -109,8 +110,7 @@ class Molecule:
 			                          10, 50)
 			#joint.error_bias = math.pow(1.0-0.2, 30.0)
 			self.joints.append(joint)
-			self.space.add(joint) 
-		
+			self.space.add(joint)
 		for joint in self.joints:
 			pv1 = joint.a.position
 			pv2 = joint.b.position 

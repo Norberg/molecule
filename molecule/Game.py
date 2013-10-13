@@ -24,6 +24,7 @@ import pymunk
 from pymunk import pyglet_util
 import pyglet
 from pyglet.window import mouse
+from pyglet import gl
 
 from molecule import Universe
 from molecule import Config
@@ -34,7 +35,10 @@ from molecule.Levels import Levels
 class Game(pyglet.window.Window):
 	def __init__(self):
 		w, h = Config.current.screenSize
-		super(Game, self).__init__(caption="Molecule", vsync=True, width=w, height=h)
+		config = pyglet.gl.Config(sample_buffers=1, samples=4, double_buffer=True)
+		super(Game, self).__init__(caption="Molecule", config=config,
+		                           vsync=True, width=w, height=h)
+		self.init_pyglet()
 		self.init_pymunk()
 		Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
@@ -54,6 +58,10 @@ class Game(pyglet.window.Window):
 		self.space = None
 		self.mouse_body = pymunk.Body()	
 		self.mouse_spring = None
+
+	def init_pyglet(self):
+		gl.glLineWidth(4)
+		gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)	
 	
 	def write_on_background(self, text):
 		self.label = pyglet.text.Label(text,
