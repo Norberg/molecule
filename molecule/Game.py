@@ -215,7 +215,7 @@ class Game(pyglet.window.Window):
 
 	def handle_mouse_button_down(self, x, y):
 		if self.mouse_spring != None:
-			raise Exception("mouse_spring already existing")
+			self.on_mouse_release(None, None, None, None)
 		self.mouse_body.position = (x, y)
 		clicked = self.space.nearest_point_query_nearest((x,y), 16)
 		if (clicked != None and 
