@@ -234,6 +234,12 @@ class Molecule(Cml):
 	def atoms_sorted(self):
 		return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
 
+	@property
+	def is_atom(self):
+		if len(self.atoms) == 1:
+			return True
+		else:
+			return False
 
 	def get_state(self, shortform):
 		statename = self.STATE_MAP[shortform]

@@ -27,7 +27,8 @@ from subprocess import call
 import time
 class EditorGTK:
 
-	def __init__(self):	
+	def __init__(self):
+		sys.excepthook = self.excepthook	
 		self.gladefile = "cmleditor/gui.gtkbuilder"
 		self.builder = gtk.Builder()
 		self.builder.add_from_file(self.gladefile)
@@ -92,6 +93,10 @@ class EditorGTK:
 			ions = col[3].split(',') if col[3] != "" else None	
 			state = Cml.State(name, enthalpy, entropy, ions)
 			self.molecule.states[name] = state
+		self.molecule.property["Name"] = self.txtMoleculeName.get_text()
+		if self.molecule.is_atom:
+			self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
+			self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
 		self.molecule.write(self.filename)
 
 	def on_btnNext_clicked(self, widget):
@@ -133,19 +138,17 @@ class EditorGTK:
 		pixBuffPreview = gtk.gdk.pixbuf_new_from_file("preview.png")
 		imgPreview = self.widget("imgPreview")
 		imgPreview.set_from_pixbuf(pixBuffPreview)
-		tableReadOnly = self.widget("tableReadOnly")
-		self.emptyContainer(tableReadOnly)
-		row = 0
-		for bond in molecule.bonds:
-			self.createAndAttachLabel("from:"+bond.atomA.id, tableReadOnly, 0, row)
-			self.createAndAttachLabel("to:"+bond.atomB.id, tableReadOnly, 1, row)
-			self.createAndAttachLabel("Bonds:"+str(bond.bonds), tableReadOnly, 2, row)
-			row += 1
 		
 		tableWriteable = self.widget("tableWriteable")
 		self.emptyContainer(tableWriteable)
-		self.txtMoleculeName = self.createAndAttachTextBox("Molecule:",
-								   tableWriteable,0)		
+		self.txtMoleculeName = self.createAndAttachTextBox("Name:",
+								   tableWriteable,0)
+		self.txtMoleculeName.set_text(str(molecule.property.get("Name", "")))
+
+		if self.molecule.is_atom:
+			self.readAtomSettings()
+		else:
+			pass
 		
 		self.modelStates.clear()
 		for state in molecule.states.values():
@@ -153,6 +156,16 @@ class EditorGTK:
 			stateList = [x if x is not None else "" for x in stateList]
 			self.modelStates.append(stateList)
 	
+	def readAtomSettings(self):
+		tableWriteable = self.widget("tableWriteable")
+		molecule = self.molecule
+		self.txtAtomWeight = self.createAndAttachTextBox("Weight:",
+								   tableWriteable,1)		
+		self.txtAtomWeight.set_text(str(molecule.property.get("Weight","")))
+		self.txtAtomRadius = self.createAndAttachTextBox("Radius:",
+								   tableWriteable,2)		
+		self.txtAtomRadius.set_text(str(molecule.property.get("Radius","")))
+
 	def emptyContainer(self, container):
 		for child in container.get_children():
 			child.destroy()
@@ -217,6 +230,13 @@ class EditorGTK:
 		self.update_folder_list()
 		self.widget("fcbOpen").set_filename(path)	
 		self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+
+	def excepthook(self, type, value, traceback):
+		MsgBox("Error:"+ str(type) +"\n"+ str(value))
+		sys.__excepthook__(type, value, traceback)
+
+		
+
 
 def MsgBox(message):
         dialog = gtk.MessageDialog(None,

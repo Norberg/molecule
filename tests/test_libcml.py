@@ -33,6 +33,7 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.atoms["a2"].elementType, "H")
 		self.assertEqual(m.bonds[0].atomA.id, "a1")
 		self.assertEqual(m.bonds[0].atomB.id, "a2")
+		self.assertEqual(m.is_atom, False)
 		
 	def testParsePropane(self):
 		m = Cml.Molecule()
@@ -169,6 +170,7 @@ class TestCML(unittest.TestCase):
 
 	def testWriteAndParsePropertys(self):
 		m = Cml.Molecule()
+		m.atoms["a1"] = Cml.Atom("a1", "H", 0, 0, 0)
 		m.property["Name"] = "Hydrogen"
 		m.property["Weight"] = 1.0
 		m.property["Radius"] = 25
@@ -178,6 +180,7 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.property["Name"], "Hydrogen")
 		self.assertEqual(m.property["Weight"], 1.0)
 		self.assertEqual(m.property["Radius"], 25)
+		self.assertEqual(m.is_atom, True)
 		os.remove("tests/testHydrogen.cml")
 	
 	def testParseReactions(self):
