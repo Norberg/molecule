@@ -167,6 +167,19 @@ class TestCML(unittest.TestCase):
 		self.assertEqual(m.states["Aqueous"].ions_str, "Na+,OH-")
 		os.remove("tests/testSodiumhydroxide.cml")
 
+	def testWriteAndParsePropertys(self):
+		m = Cml.Molecule()
+		m.property["Name"] = "Hydrogen"
+		m.property["Weight"] = 1.0
+		m.property["Radius"] = 25
+		m.write("tests/testHydrogen.cml")
+		m = Cml.Molecule()
+		m.parse("tests/testHydrogen.cml")
+		self.assertEqual(m.property["Name"], "Hydrogen")
+		self.assertEqual(m.property["Weight"], 1.0)
+		self.assertEqual(m.property["Radius"], 25)
+		os.remove("tests/testHydrogen.cml")
+	
 	def testParseReactions(self):
 		r = Cml.Reactions()
 		r.parse("tests/reactions.cml")
