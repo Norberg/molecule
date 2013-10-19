@@ -13,4 +13,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">125.0</property>
+    <property title="Name">Aluminium</property>
+    <property title="Weight">30.0</property>
+  </propertyList>
 </ns0:molecule>

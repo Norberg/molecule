@@ -13,4 +13,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">65.0</property>
+    <property title="Name">Nitrogen</property>
+    <property title="Weight">14.0</property>
+  </propertyList>
 </ns0:molecule>

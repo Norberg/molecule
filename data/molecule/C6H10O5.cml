@@ -46,4 +46,7 @@
     <bond atomRefs2="a11 a21" order="1"/>
   </ns0:bondArray>
   <propertyList title="states"/>
+  <propertyList title="property">
+    <property title="Name">Cellulose</property>
+  </propertyList>
 </ns0:molecule>

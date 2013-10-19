@@ -21,4 +21,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">100.0</property>
+    <property title="Name">Phosphorus</property>
+    <property title="Weight">31.0</property>
+  </propertyList>
 </ns0:molecule>

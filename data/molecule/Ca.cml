@@ -21,4 +21,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">180.0</property>
+    <property title="Name">Calcium</property>
+    <property title="Weight">40.0</property>
+  </propertyList>
 </ns0:molecule>

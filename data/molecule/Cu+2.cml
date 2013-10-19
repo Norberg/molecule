@@ -13,4 +13,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">87.0</property>
+    <property title="Name">Copper(II) ion</property>
+    <property title="Weight">63.0</property>
+  </propertyList>
 </ns0:molecule>

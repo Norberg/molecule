@@ -21,4 +21,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">167.0</property>
+    <property title="Name">Chloride ion</property>
+    <property title="Weight">35.0</property>
+  </propertyList>
 </ns0:molecule>

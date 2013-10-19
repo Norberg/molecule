@@ -13,4 +13,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">60.0</property>
+    <property title="Name">Oxygen</property>
+    <property title="Weight">16.0</property>
+  </propertyList>
 </ns0:molecule>

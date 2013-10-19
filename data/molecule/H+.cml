@@ -21,4 +21,9 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Radius">25.0</property>
+    <property title="Name">Hydrogen ion</property>
+    <property title="Weight">1.0</property>
+  </propertyList>
 </ns0:molecule>

@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
-<molecule xmlns="http://www.xml-cml.org/schema">
-  <atomArray>
-    <atom id="a1" elementType="Cl" formalCharge="-1" x2="1.000000" y2="0.000000"/>
-    <atom id="a2" elementType="Ag" formalCharge="1" x2="0.000000" y2="-0.000000"/>
-  </atomArray>
-</molecule>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Cl" formalCharge="-1" id="a1" x2="1.0" y2="0.0"/>
+    <atom elementType="Ag" formalCharge="1" id="a2" x2="0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <propertyList title="states"/>
+  <propertyList title="property">
+    <property title="Name">Silver chloride</property>
+  </propertyList>
+</ns0:molecule>

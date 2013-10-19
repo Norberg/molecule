@@ -24,4 +24,7 @@
     <bond atomRefs2="a5 a10" order="1"/>
   </ns0:bondArray>
   <propertyList title="states"/>
+  <propertyList title="property">
+    <property title="Name">Acrylamide</property>
+  </propertyList>
 </ns0:molecule>

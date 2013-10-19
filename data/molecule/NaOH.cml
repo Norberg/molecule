@@ -28,4 +28,7 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium hydroxide</property>
+  </propertyList>
 </molecule>

@@ -31,4 +31,7 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Name">Ethanol</property>
+  </propertyList>
 </ns0:molecule>

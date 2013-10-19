@@ -23,4 +23,7 @@
       </property>
     </propertyList>
   </propertyList>
+  <propertyList title="property">
+    <property title="Name">Phosphate</property>
+  </propertyList>
 </ns0:molecule>
