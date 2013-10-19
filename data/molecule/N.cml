@@ -14,7 +14,7 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">65.0</property>
+    <property title="Radius">1.55</property>
     <property title="Name">Nitrogen</property>
     <property title="Weight">14.0</property>
   </propertyList>

@@ -14,7 +14,7 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">50.0</property>
+    <property title="Radius">1.47</property>
     <property title="Name">Fluoride</property>
     <property title="Weight">19.0</property>
   </propertyList>

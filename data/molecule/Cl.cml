@@ -14,7 +14,7 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">100.0</property>
+    <property title="Radius">1.75</property>
     <property title="Name">Chloride</property>
     <property title="Weight">35.0</property>
   </propertyList>

@@ -14,7 +14,7 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">60.0</property>
+    <property title="Radius">1.52</property>
     <property title="Name">Oxygen</property>
     <property title="Weight">16.0</property>
   </propertyList>
