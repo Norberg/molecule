@@ -115,8 +115,9 @@ class Molecule:
 			pv1 = joint.a.position
 			pv2 = joint.b.position 
 			line = (pv1.x, pv1.y, pv2.x, pv2.y)
-			color = (167,167,167)
-			v = self.batch.add(2, pyglet.gl.GL_LINES, None,
+			color = (90,90,90)
+			group = RenderingOrder.elements
+			v = self.batch.add(2, pyglet.gl.GL_LINES, group,
 			                   ('v2f', line),
 			                   ('c3B', color * 2))
 			self.vertexes.append(v)
