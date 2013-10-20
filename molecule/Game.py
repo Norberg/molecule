@@ -61,7 +61,9 @@ class Game(pyglet.window.Window):
 
 	def init_pyglet(self):
 		gl.glLineWidth(4)
-		gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)	
+		gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
+		#gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER,
+		#                   gl.GL_NEAREST_MIPMAP_NEAREST)
 	
 	def write_on_background(self, text):
 		self.label = pyglet.text.Label(text,

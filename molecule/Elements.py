@@ -28,7 +28,12 @@ from libcml import Cml
 from libcml import CachedCml
 from libreact import Reaction
 
-
+SPRITE_SIZE = 96.0
+DEFAULT_SIZE = 32.0
+SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE
+SPRITE_RADIUS = SPRITE_SIZE/2
+BOND_LENGTH_FACTOR = 1.4
+	
 class Molecule:
 	def __init__(self, formula_with_state, space, batch, pos=None):
 		self.space = space
@@ -86,8 +91,6 @@ class Molecule:
 	def toAqueous(self):
 		if self.try_change_state("aq"):
 			return self.state.ions
-		else:
-			print("No Aq state exists for:", self.formula)		
 	
 	def create_atoms(self):
 		self.atoms = dict()
@@ -97,6 +100,12 @@ class Molecule:
 			self.atoms[atom.id] = new
 		self.create_bonds()
 
+	def get_bond_lenght(self, bond):
+		rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
+		rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
+		return (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR * BOND_LENGTH_FACTOR
+
+
 	def create_bonds(self):
 		self.joints = list()
 		self.vertexes = list()
@@ -105,10 +114,10 @@ class Molecule:
 			#bond.atomB.pos
 			atomA = self.atoms[bond.atomA.id]
 			atomB = self.atoms[bond.atomB.id]
-			
+			bond_length = self.get_bond_lenght(bond)	
 			joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
-			                          10, 50)
-			#joint.error_bias = math.pow(1.0-0.2, 30.0)
+			                          10, bond_length)
+			joint.error_bias = math.pow(1.0-0.1, 30.0)
 			self.joints.append(joint)
 			self.space.add(joint)
 		for joint in self.joints:
@@ -159,6 +168,8 @@ class Atom(pyglet.sprite.Sprite):
 		img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
 		group = RenderingOrder.elements
 		pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+		self.cml = CachedCml.getMolecule(symbol)
+		self.scale = self.cml.property["Radius"] * SCALE_FACTOR
 		self.create_electric_charge_sprite(charge, batch)
 		self.molecule = molecule
 		self.symbol = symbol
@@ -167,13 +178,14 @@ class Atom(pyglet.sprite.Sprite):
 		self.active = False
 		self.init_chipmunk()
 		self.move(pos)
-		#self.scale = 2
 	
-	def init_chipmunk(self):	
-		body = pymunk.Body(10,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
+	def init_chipmunk(self):
+		weight = self.cml.property["Weight"]	
+		radius = self.scale * SPRITE_RADIUS
+		body = pymunk.Body(weight,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
 		body.velocity_limit = 1000
 		body.molecule = self.molecule
-		shape = pymunk.Circle(body, 16)
+		shape = pymunk.Circle(body, radius)
 		shape.elasticity = 0.95
 		shape.collision_type = CollisionTypes.ELEMENT
 		shape.layer = CollisionTypes.LAYER_ALL
@@ -207,7 +219,7 @@ class Atom(pyglet.sprite.Sprite):
 		e = pyglet_util.loadImage("img/e" + charge_str + ".png")
 		group = RenderingOrder.charge
 		self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
-		#self.electric_charge_sprite.scale=2
+		self.electric_charge_sprite.scale = self.scale
 
 	def get_only_atom_symbol(self, symbol):
 		""" returns the atom symbol without any electric charge """
