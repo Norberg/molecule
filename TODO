@@ -5,9 +5,7 @@
 - Draw correct number of bonds, currently only 1 bond will be drawn
 - Give aqueous molecules a blueish background
 - Extract all level logic from Game to Level
-- Give atoms correct mass
 - Don't destroy atoms during reaction, re-use them instead
-- Make atoms the correct size
 - Make bonds stiffer to better match the molecule layout
 
 ### Medium TODOs ###
