@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
-import libcml.Cml as Cml
+from libcml import Cml
+from libcml import CachedCml
 from libreact.Reaction import Reaction
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
@@ -32,6 +33,16 @@ class TestReact(unittest.TestCase):
 		reactor = Reactor(cml.reactions)
 		return reactor
 
+	def addState(self, stateless):
+		statefull = list()
+		for s in stateless:
+			m = CachedCml.getMolecule(s)
+			for k in  m.states.values():
+				state = k.short
+				break
+			statefull.append(s+"(%s)"%state)
+		return statefull
+	
 	def testSublistInList(self):
 		self.assertTrue(sublist_in_list("abcd", "abcdefg"))
 		self.assertTrue(sublist_in_list("abcd", "bdeafbcg"))
@@ -76,3 +87,14 @@ class TestReact(unittest.TestCase):
 		reaction = reactor.react(["H+(g)", "H+(g)", "H+(g)"])
 		self.assertEqual(reaction.products, ["H2(g)"])
 		self.assertEqual(reaction.reactants, ["H+(g)", "H+(g)"])
+
+	def testPerformAllReactions(self):
+		reactor = self.setupRealReactor()
+		for reaction in reactor.reactions:
+			reactants = self.addState(reaction.reactants)
+			expected_products = reaction.products
+			result = reactor.react(reactants)
+			#some reactions depends of temperature and therfore returns None
+			if result is not None:
+				self.assertEqual(result.products, expected_products)
+				self.assertEqual(result.reactants, reactants)

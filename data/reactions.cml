@@ -87,7 +87,7 @@
     </reactantList>
     <productList>
       <molecule title="NH4+(aq)"/>
-      <molecule title="OH-(g)"/>
+      <molecule title="OH-(aq)"/>
     </productList>
   </reaction>
   <reaction>
