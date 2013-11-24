@@ -19,7 +19,7 @@ from libcml import CachedCml
 from libreact.Reactor import Reactor
 from molecule.Levels import Levels
 from molecule import Universe
-from molecule.Molecule import Molecule #FIXME: this class i Deprecated, use molecule.Elements
+from molecule.Elements import Molecule
 from molecule import CollisionTypes
 import pyglet
 import pymunk
@@ -66,18 +66,20 @@ class TestLevels(unittest.TestCase):
 
 	def testGetCollidingMolecules(self):
 		level1 = getLevel1()
-		OH = Molecule("OH-(aq)")
-		H = Molecule("H+(g)")
+		space, batch = createSpaceAndBatchMock()
+		OH = Molecule("OH-(aq)", space, batch)
+		H = Molecule("H+(g)", space, batch)
 		collisions = createCollisionsMock(OH, H)
 		collidingMolecules = level1.get_colliding_molecules(collisions)
 		self.assertEqual([OH, H], collidingMolecules)
 
 	def testGetReactingMolecules(self):
 		level1 = getLevel1()
-		OH = Molecule("OH-(aq)")
-		Al = Molecule("Al(s)")
-		H = Molecule("H+(g)")
-		H_ = Molecule("H+(g)")
+		space, batch = createSpaceAndBatchMock()
+		OH = Molecule("OH-(aq)", space, batch)
+		Al = Molecule("Al(s)", space, batch)
+		H = Molecule("H+(g)", space, batch)
+		H_ = Molecule("H+(g)", space, batch)
 		collisions = createCollisionsMock(OH, Al, H, H_)
 		reaction = setupSimpleReactor().react([H.state_formula,OH.state_formula])
 		reactingMolecules = level1.get_molecules_in_reaction(collisions, reaction)
@@ -85,10 +87,11 @@ class TestLevels(unittest.TestCase):
 
 	def testCollisionReaction(self):
 		level1 = getLevel1()
-		OH = Molecule("OH-(aq)")
-		Al = Molecule("Al(s)")
-		H = Molecule("H+(g)")
-		H_ = Molecule("H+(g)")
+		space, batch = createSpaceAndBatchMock()
+		OH = Molecule("OH-(aq)", space, batch)
+		Al = Molecule("Al(s)", space, batch)
+		H = Molecule("H+(g)", space, batch)
+		H_ = Molecule("H+(g)", space, batch)
 		collisions = createCollisionsMock(OH, Al, H, H_)
 		reaction = level1.react(collisions,[])	
 		self.assertEqual(reaction.reactants, ['H+(g)', 'H+(g)'])	
@@ -96,9 +99,10 @@ class TestLevels(unittest.TestCase):
 
 	def testSulfuricAcidReaction(self):
 		level1 = getLevel1()
-		H2SO4 = Molecule("H2SO4(aq)")
-		NaCl = Molecule("NaCl(s)")
-		NaCl_ = Molecule("NaCl(s)")
+		space, batch = createSpaceAndBatchMock()
+		H2SO4 = Molecule("H2SO4(aq)", space, batch)
+		NaCl = Molecule("NaCl(s)", space, batch)
+		NaCl_ = Molecule("NaCl(s)", space, batch)
 		collisions = createCollisionsMock(H2SO4, NaCl, NaCl_)
 		reaction = level1.react(collisions,[])	
 		self.assertEqual(reaction.reactants, ['H2SO4(aq)', 'NaCl(s)', 'NaCl(s)'])	
@@ -106,8 +110,9 @@ class TestLevels(unittest.TestCase):
 		 
 	def testSulfuricAcidNoReaction(self):
 		level1 = getLevel1()
-		H2SO4 = Molecule("H2SO4(aq)")
-		NaCl = Molecule("NaCl(s)")
+		space, batch = createSpaceAndBatchMock()
+		H2SO4 = Molecule("H2SO4(aq)", space, batch)
+		NaCl = Molecule("NaCl(s)", space, batch)
 		collisions = createCollisionsMock(H2SO4, NaCl)
 		reaction = level1.react(collisions,[])	
 		self.assertEqual(reaction, None)
@@ -137,4 +142,18 @@ def createCollisionsMock(*molecules):
 		collision.append(createShapeDict(molecule))
 	return collision
 
+def createSpaceAndBatchMock():
+	return(SpaceMock(), BatchMock())
 
+class SpaceMock():
+	def add(*args):
+		pass
+
+class BatchMock():
+	def add(*args):
+		return VerticeMock()
+
+class VerticeMock():
+	def __init__(self):
+		self.vertices = list()
+		self.colors = list()
