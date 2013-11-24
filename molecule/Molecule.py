@@ -26,6 +26,10 @@ from libcml import CachedCml
 from libreact import Reaction
 
 class Molecule:
+	"""
+		DEPRECATED! Do NOT use!
+		Only kept for rendering molecules for cmleditor
+	"""
 	ATOM_SIZE = 32
 	BOND_LENGHT = 6
 	MOLECULE_MAX_SIZE = 150

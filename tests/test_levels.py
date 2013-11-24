@@ -14,11 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
-from libcml.Cml import Cml
+from libcml import Cml
 from libcml import CachedCml
+from libreact.Reactor import Reactor
 from molecule.Levels import Levels
 from molecule import Universe
+from molecule.Molecule import Molecule #FIXME: this class i Deprecated, use molecule.Elements
+from molecule import CollisionTypes
 import pyglet
+import pymunk
 
 class TestLevels(unittest.TestCase):
 	def testLevels(self):
@@ -58,4 +62,79 @@ class TestLevels(unittest.TestCase):
 		                                           ["O2(g)", "O2(g)", "CH4(g)"],
 		                                           batch, None))
 		#self.assertEqual(l.elements, [])
-		
+	
+
+	def testGetCollidingMolecules(self):
+		level1 = getLevel1()
+		OH = Molecule("OH-(aq)")
+		H = Molecule("H+(g)")
+		collisions = createCollisionsMock(OH, H)
+		collidingMolecules = level1.get_colliding_molecules(collisions)
+		self.assertEqual([OH, H], collidingMolecules)
+
+	def testGetReactingMolecules(self):
+		level1 = getLevel1()
+		OH = Molecule("OH-(aq)")
+		Al = Molecule("Al(s)")
+		H = Molecule("H+(g)")
+		H_ = Molecule("H+(g)")
+		collisions = createCollisionsMock(OH, Al, H, H_)
+		reaction = setupSimpleReactor().react([H.state_formula,OH.state_formula])
+		reactingMolecules = level1.get_molecules_in_reaction(collisions, reaction)
+		self.assertEqual([OH, H], reactingMolecules,)
+
+	def testCollisionReaction(self):
+		level1 = getLevel1()
+		OH = Molecule("OH-(aq)")
+		Al = Molecule("Al(s)")
+		H = Molecule("H+(g)")
+		H_ = Molecule("H+(g)")
+		collisions = createCollisionsMock(OH, Al, H, H_)
+		reaction = level1.react(collisions,[])	
+		self.assertEqual(reaction.reactants, ['H+(g)', 'H+(g)'])	
+		self.assertEqual(reaction.products, ['H2(g)'])
+
+	def testSulfuricAcidReaction(self):
+		level1 = getLevel1()
+		H2SO4 = Molecule("H2SO4(aq)")
+		NaCl = Molecule("NaCl(s)")
+		NaCl_ = Molecule("NaCl(s)")
+		collisions = createCollisionsMock(H2SO4, NaCl, NaCl_)
+		reaction = level1.react(collisions,[])	
+		self.assertEqual(reaction.reactants, ['H2SO4(aq)', 'NaCl(s)', 'NaCl(s)'])	
+		self.assertEqual(reaction.products, ['HCl(g)', 'HCl(g)', 'Na2SO4(s)'])
+		 
+	def testSulfuricAcidNoReaction(self):
+		level1 = getLevel1()
+		H2SO4 = Molecule("H2SO4(aq)")
+		NaCl = Molecule("NaCl(s)")
+		collisions = createCollisionsMock(H2SO4, NaCl)
+		reaction = level1.react(collisions,[])	
+		self.assertEqual(reaction, None)
+
+def setupSimpleReactor():
+	r1 = Cml.Reaction(["H2SO4(aq)","NaCl(s)", "NaCl(s)"], 
+	                  ["HCl(g)", "HCl(g)", "Na2SO4(s)"])
+	r2 = Cml.Reaction(["OH-","H+"], ["H2O(l)"])
+	return Reactor([r1,r2])
+
+def getLevel1():
+	levels = Levels("data/levels")
+	level1 = levels.next_level()
+	return level1	
+
+def createShapeDict(molecule):
+	shape = pymunk.Circle(None, 16)
+	shape.molecule = molecule
+	shape.collision_type = CollisionTypes.ELEMENT
+	d = dict()
+	d["shape"] = shape
+	return d
+
+def createCollisionsMock(*molecules):
+	collision = list()
+	for molecule in molecules:
+		collision.append(createShapeDict(molecule))
+	return collision
+
+

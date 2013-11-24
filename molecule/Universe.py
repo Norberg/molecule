@@ -46,8 +46,9 @@ class Universe:
 		if reaction == None:
 			if Config.current.DEBUG: print("Did not react:", reactants)
 			return None
-		else:		
-			print(reaction.reactants, "+", effect_names, "->", reaction.products)
+		else:
+			if Config.current.DEBUG:
+				print(reaction.reactants, "+", effect_names, "->", reaction.products)
 			return reaction
 		
 def create_elements(space, elements, batch, pos=None):
@@ -68,8 +69,4 @@ def create_elements(space, elements, batch, pos=None):
 		list_of_elements.append(Molecule(element, space, batch, pos))
 	return list_of_elements
 
-
-universe = None
-def createUniverse():
-	global universe
-	universe = Universe()
+universe = Universe()

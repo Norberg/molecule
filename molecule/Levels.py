@@ -55,6 +55,7 @@ class Levels:
 class Level:
 	def __init__(self, cml):
 		self.cml = cml
+		self.victory = False
 		self.batch = pyglet.graphics.Batch()
 		self.init_chipmunk()
 		self.init_elements()
@@ -106,7 +107,80 @@ class Level:
 	def create_elements(self, elements, pos = None):
 		self.elements.extend(Universe.create_elements(self.space, elements,
 		                                  self.batch, pos))
+
+	def get_colliding_molecules(self, collisions):
+		molecules = list()
+		for collision in collisions:
+			if collision["shape"].collision_type == CollisionTypes.ELEMENT:
+				#each atom in the molecule can have 1 entry in the collision
+				#map, make sure that the molecule is only added once.
+				molecule = collision["shape"].molecule
+				if not molecule in molecules:
+					molecules.append(molecule)
+		return molecules	
 	
+	def is_molecule_part_of_reactants(self, molecule, reactants):
+		"""
+		check if the molecule is part of the reactants,
+		and if it is remove itself from the list of reactants
+		"""
+		if molecule.state_formula in reactants:
+			reactants.remove(molecule.state_formula)
+			return True
+
+	def get_molecules_in_reaction(self, collisions, reaction):
+		""" return all molecules included in the reaction """
+		reactants = list(reaction.reactants)
+		molecules = list()
+		collidingMolecules = self.get_colliding_molecules(collisions)
+		for molecule in collidingMolecules:
+			if self.is_molecule_part_of_reactants(molecule, reactants):
+				molecules.append(molecule)
+		return molecules
+		
+
+
+	def react(self, collisions, reacting_areas):
+		collidingMolecules = self.get_colliding_molecules(collisions)
+		reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
+		return Universe.universe.react(reactingForumlas, reacting_areas)
+
+	def perform_reaction(self, key, reaction, collisions, position):
+		reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
+		for molecule in reactingMolecules:
+			molecule.delete()
+		self.create_elements(reaction.products, position)
+		self.check_victory()	
+	
+	def element_collision(self, space, arbiter):
+		""" Called if two elements collides"""
+		a,b = arbiter.shapes
+		reacting_areas = list(self.get_affecting_areas(a.body.position))
+		collisions = space.nearest_point_query(a.body.position, 100)
+		reaction = self.react(collisions, reacting_areas)
+		if reaction != None:
+			key = 1 # use 1 as key so only one callback per iteration can trigger 
+			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
+
+	def effect_reaction(self, space, arbiter):
+		""" Called if an element touches a effect """
+		a,b = arbiter.shapes
+		molecule = a.molecule
+		effect = b.effect
+		reaction = effect.react(molecule)
+		collisions = [{"shape" : a}]
+		if reaction != None:
+			key = 1 # use 1 as key so only one callback per iteration can trigger 
+			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)	
+		return False
+
+	def get_affecting_areas(self, position):
+		"""Return all areas that have a affect on position"""
+		shapes = self.space.point_query(position)
+		for shape in shapes:
+			if shape.collision_type == CollisionTypes.EFFECT:
+				yield shape.effect
+
 	def update(self):
 		"""Update pos of all included elements"""
 		for element in self.elements:
@@ -124,6 +198,7 @@ class Level:
 				to_check.remove(element.formula)
 		
 		if len(to_check) == 0:
+			self.victory = True
 			return True
 		else:
 			return False

@@ -40,7 +40,6 @@ class Game(pyglet.window.Window):
 		                           vsync=True, width=w, height=h)
 		self.init_pyglet()
 		self.init_pymunk()
-		Universe.createUniverse()
 		self.DEBUG_GRAPHICS = False
 		self.start()
 
@@ -95,75 +94,13 @@ class Game(pyglet.window.Window):
 		self.batch = level.batch
 		self.level = level
 		self.space = level.space
-		self.victory = False
 		self.mouse_spring = None
-		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.ELEMENT, post_solve=self.element_collision)
-		self.space.add_collision_handler(CollisionTypes.ELEMENT, CollisionTypes.EFFECT, begin=self.effect_reaction)
-
-	def element_collision(self, space, arbiter):
-		""" Called if two elements collides"""
-		a,b = arbiter.shapes
-		reacting_areas = list(self.get_affecting_areas(a.body.position))
-		collisions = space.nearest_point_query(a.body.position, 100)
-		reacting_elements = list(self.get_element_symbols(collisions))
-		reaction = Universe.universe.react(reacting_elements, reacting_areas)
-		if reaction != None:
-			key = 1 # use 1 as key so only one callback per iteration can trigger 
-			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
-
-	def effect_reaction(self, space, arbiter):
-		""" Called if an element touches a effect """
-		a,b = arbiter.shapes
-		molecule = a.molecule
-		effect = b.effect
-		reaction = effect.react(molecule)
-		collisions = [{"shape" : a}]
-		if reaction != None:
-			key = 1 # use 1 as key so only one callback per iteration can trigger 
-			space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)	
-		return False
-
-	def perform_reaction(self, key, reaction, collisions, position):
-		""" Perform a reaction"""
-		self.destroy_elements(reaction.reactants, collisions)
-		self.level.create_elements(reaction.products, position)
-		self.victory = self.level.check_victory()
-
-	def destroy_elements(self, elements_to_destroy, collisions):
-		""" Destroy a list of elements from a dict of collisions"""
-		elements = list(elements_to_destroy)
-		removed_bodies = list()
-		for collision in collisions:
-			if collision["shape"].collision_type == CollisionTypes.ELEMENT:
-				shape = collision["shape"]
-				molecule = shape.molecule
-				formula = molecule.state_formula
-				if formula in elements and \
-				   id(shape.body) not in removed_bodies:
-					removed_bodies.append(id(shape.body))
-					elements.remove(formula)
-					molecule.delete()
-		if len(elements) != 0:
-			print("not all elements was removed..")
-			print("elements_to_destroy:", elements_to_destroy)
-			print("collisions:", collisions)
-
-	def get_affecting_areas(self, position):
-		"""Return all areas that have a affect on position"""
-		shapes = self.space.point_query(position)
-		for shape in shapes:
-			if shape.collision_type == CollisionTypes.EFFECT:
-				yield shape.effect
-
-	def get_element_symbols(self, collisions):
-		"""Take a collison dict and return a list of symbols for every unique molecule"""
-		molecules = list()
-		for collision in collisions:
-			shape = collision["shape"]
-			if shape.collision_type == CollisionTypes.ELEMENT:
-				if shape.molecule not in molecules:
-					molecules.append(shape.molecule)
-					yield shape.molecule.state_formula
+		self.space.add_collision_handler(CollisionTypes.ELEMENT,
+		                                 CollisionTypes.ELEMENT,
+		                                 post_solve=self.level.element_collision)
+		self.space.add_collision_handler(CollisionTypes.ELEMENT,
+		                                 CollisionTypes.EFFECT,
+		                                 begin=self.level.effect_reaction)
 
 	def limit_pos_to_screen(self, x, y):
 		x = max(0,x)
@@ -199,7 +136,7 @@ class Game(pyglet.window.Window):
 			self.write_on_background("Skipping level, Cheater!")
 			level = self.levels.next_level()
 			pyglet.clock.schedule_once(self.run_level, 1, level)
-			self.victory = False
+			self.level.victory = False
 		elif symbol == pyglet.window.key.R:
 			print("reseting..")	
 			self.level.reset()
@@ -208,12 +145,12 @@ class Game(pyglet.window.Window):
 			self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
 
 	def update(self, dt):
-		self.space.step(1/60.0)
-		if self.victory:
+		self.space.step(1/120.0)
+		if self.level.victory:
 			self.write_on_background("Congratulation, you finished the level")
 			level = self.levels.next_level()
 			pyglet.clock.schedule_once(self.run_level, 3, level)
-			self.victory = False
+			self.level.victory = False
 
 	def handle_mouse_button_down(self, x, y):
 		if self.mouse_spring != None:

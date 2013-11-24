@@ -25,6 +25,8 @@ class Reaction:
 		verify(self.products)	
 		verify(self.reactants)	
 
+	def __str__(self):
+		return "Reaction(%s -> %s)" % (str(self.reactants), str(self.products))
 	
 	def addStateToReactants(self, reactants):
 		""" Take a list of reactans with state to populate the reaction with the same info"""

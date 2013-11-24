@@ -49,8 +49,10 @@ class Molecule:
 		if self.current_state is None:
 			raise Exception("did not find state for:" + formula_with_state)
 		self.create_atoms()
-		
 
+	def __repr__(self):
+		return "Molecule<%s>" % (self.state_formula)
+			
 	@property
 	def enthalpy(self):
 		"""Return enthalpy(aka H) for current state"""
