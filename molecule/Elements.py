@@ -120,6 +120,7 @@ class Molecule:
 			joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
 			                          10, bond_length)
 			joint.error_bias = math.pow(1.0-0.1, 30.0)
+			joint.bonds = bond.bonds 
 			self.joints.append(joint)
 			self.space.add(joint)
 		for joint in self.joints:
@@ -128,9 +129,12 @@ class Molecule:
 			line = (pv1.x, pv1.y, pv2.x, pv2.y)
 			color = (90,90,90)
 			group = RenderingOrder.elements
-			v = self.batch.add(2, pyglet.gl.GL_LINES, group,
-			                   ('v2f', line),
-			                   ('c3B', color * 2))
+			bonds = joint.bonds
+			size = 2 * bonds
+			v = self.batch.add(size, pyglet.gl.GL_LINES, group,
+			                   ('v2f', line * bonds),
+			                   ('c3B', color * size))
+			
 			self.vertexes.append(v)
 
 	def set_dragging(self, value):
@@ -146,9 +150,36 @@ class Molecule:
 	
 		for joint,vertex in zip(self.joints, self.vertexes):
 			pv1 = joint.a.position
-			pv2 = joint.b.position 
-			line = (pv1.x, pv1.y, pv2.x, pv2.y)
+			pv2 = joint.b.position
+			line = self.create_parallell_lines(pv1,pv2,joint.bonds) 
 			vertex.vertices = line
+
+
+	def create_parallell_lines(self, pv1, pv2, nr):
+		line = (pv1.x, pv1.y, pv2.x, pv2.y)
+		if nr == 1:
+			return line
+		elif nr == 2:
+			k_x, k_y = self.create_parallell_factor(pv1, pv2, 4)
+			line1 = (pv1.x-k_x, pv1.y-k_y, pv2.x-k_x, pv2.y-k_y)
+			line2 = (pv1.x+k_x, pv1.y+k_y, pv2.x+k_x, pv2.y+k_y)
+			return line1 + line2
+		elif nr == 3:
+			k_x, k_y = self.create_parallell_factor(pv1, pv2, 6)
+			line1 = (pv1.x-k_x, pv1.y-k_y, pv2.x-k_x, pv2.y-k_y)
+			line3 = (pv1.x+k_x, pv1.y+k_y, pv2.x+k_x, pv2.y+k_y)
+			return line1 + line + line3
+		raise Exception("Unsupported nr of lines",nr)
+
+	
+	def create_parallell_factor(self, pv1, pv2, k):	
+		if pv2.x - pv1.x != 0.0:
+			v = math.atan((pv2.y-pv1.y)/(pv2.x-pv1.x))
+		else:
+			v = 0
+		k_x = k * math.sin(v) 
+		k_y = k * -math.cos(v)
+		return k_x, k_y
 
 
 	def delete(self):
