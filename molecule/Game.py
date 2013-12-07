@@ -30,7 +30,7 @@ from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes    
 from molecule.Levels import Levels
-
+from molecule import Gui
 
 class Game(pyglet.window.Window):
     def __init__(self):
@@ -44,12 +44,10 @@ class Game(pyglet.window.Window):
         self.start()
 
     def start(self):
-        self.write_on_background("Welcome to Molecule")
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.fps_display = pyglet.clock.ClockDisplay()
-        self.levels = Levels("data/levels", Config.current.level)
-        level = self.levels.next_level()
-        self.run_level(0, level)    
+        self.levels = Levels("data/levels", Config.current.level, window=self)
+        self.switch_level() 
         pyglet.clock.schedule_interval(self.update, 1/100.0)
     
     def init_pymunk(self):
@@ -64,36 +62,32 @@ class Game(pyglet.window.Window):
         #gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER,
         #                   gl.GL_NEAREST_MIPMAP_NEAREST)
     
-    def write_on_background(self, text):
-        self.label = pyglet.text.Label(text,
-                                       font_name = 'Times New Roman',
-                                       font_size = 36,
-                                       color = (0,0,0,255),
-                                       x = self.width//2, y = self.height-100,
-                                       anchor_x = 'center', anchor_y = 'center')
-        
     def on_draw(self):
         self.clear()
-        self.label.draw()
         self.level.update()
         self.batch.draw()
         if self.DEBUG_GRAPHICS:
             pymunk.pyglet_util.draw(self.space)
         self.fps_display.draw()
     
-    def close(self, dt=None):
-        super(Game, self).close()
-    
-    def run_level(self, dt, level):
+    def switch_level(self, level=None):
+        """ Switch to level, if level=None switch to next level"""
         if level is None:
-            self.write_on_background("Victory!, You have finished the game!")
-            pyglet.clock.schedule_once(self.close, 3)
+            level = self.levels.next_level()
+            self.run_level(level)
+        else:
+            raise NotImplementedError("not yet possible to swith to a specific level")
+
+    def run_level(self, level):
+        if level is None:
+            Gui.create_popup(self, self.batch, "Congratulation you have won the game!",
+                             on_escape=self.close)
             return
         self.active = None
-        self.write_on_background(level.cml.objective)
         self.batch = level.batch
         self.level = level
         self.space = level.space
+        self.level.window = self
         self.mouse_spring = None
         self.space.add_collision_handler(CollisionTypes.ELEMENT,
                                          CollisionTypes.ELEMENT,
@@ -133,23 +127,20 @@ class Game(pyglet.window.Window):
         elif symbol == pyglet.window.key.ESCAPE:
             self.close()
         elif symbol == pyglet.window.key.S:    
-            self.write_on_background("Skipping level, Cheater!")
-            level = self.levels.next_level()
-            pyglet.clock.schedule_once(self.run_level, 1, level)
-            self.level.victory = False
+            Gui.create_popup(self, self.batch, "Skipping level, Cheater!",
+                             on_escape=self.switch_level)
         elif symbol == pyglet.window.key.R:
             print("reseting..")    
             self.level.reset()
-            self.run_level(0, self.level)
+            self.run_level(self.level)
         elif symbol == pyglet.window.key.D:    
             self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
 
     def update(self, dt):
         self.space.step(1/120.0)
         if self.level.victory:
-            self.write_on_background("Congratulation, you finished the level")
-            level = self.levels.next_level()
-            pyglet.clock.schedule_once(self.run_level, 3, level)
+            Gui.create_popup(self, self.batch, "Congratulation, you finished the level",
+                             on_escape=self.switch_level)
             self.level.victory = False
 
     def handle_mouse_button_down(self, x, y):

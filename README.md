@@ -6,9 +6,10 @@ Molecule - a chemical reaction puzzle game
 Dependencies:
 -------
 ### Game:###
-* python 2.7, 3.2, 3.3
+* python 3.2, 3.3
 * pyglet 1.2
 * pymunk 4.0
+* pyglet-gui 0.1
 
 ###Cmleditor:###
 * python 2.7

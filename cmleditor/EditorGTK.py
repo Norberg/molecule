@@ -53,8 +53,8 @@ class EditorGTK:
         cell = gtk.CellRendererText()
         cmbStates = self.widget("cmbStates")
         cmbStates.set_model(self.modelStateNames)
-                cmbStates.pack_start(cell, True)
-                cmbStates.add_attribute(cell, "text", 0)
+        cmbStates.pack_start(cell, True)
+        cmbStates.add_attribute(cell, "text", 0)
         #create columns
         edit0 = gtk.CellRendererText()
         #edit0.set_property('editable', True)
@@ -262,22 +262,22 @@ def responseToDialog(entry, dialog, response):
     dialog.response(response)
     
 def InputBox(title, questions):
-        dialog = gtk.Dialog(title, None, 0,
-        (gtk.STOCK_OK, gtk.RESPONSE_OK,
-        "Cancel", gtk.RESPONSE_CANCEL))
+    dialog = gtk.Dialog(title, None, 0,
+    (gtk.STOCK_OK, gtk.RESPONSE_OK,
+    "Cancel", gtk.RESPONSE_CANCEL))
     dialog.set_resizable(False)
-        hbox = gtk.HBox(False, 8)
-        hbox.set_border_width(8)
-        dialog.vbox.pack_start(hbox, False, False, 0)
+    hbox = gtk.HBox(False, 8)
+    hbox.set_border_width(8)
+    dialog.vbox.pack_start(hbox, False, False, 0)
 
-        stock = gtk.image_new_from_stock(
-                gtk.STOCK_DIALOG_QUESTION,
-                gtk.ICON_SIZE_DIALOG)
-        hbox.pack_start(stock, False, False, 0)
-        table = gtk.Table(2, 2)
-        table.set_row_spacings(4)
-        table.set_col_spacings(4)
-        hbox.pack_start(table, True, True, 0)
+    stock = gtk.image_new_from_stock(
+            gtk.STOCK_DIALOG_QUESTION,
+            gtk.ICON_SIZE_DIALOG)
+    hbox.pack_start(stock, False, False, 0)
+    table = gtk.Table(2, 2)
+    table.set_row_spacings(4)
+    table.set_col_spacings(4)
+    hbox.pack_start(table, True, True, 0)
     entryBoxes = list()
     pos = 0
     for question in questions:
@@ -292,13 +292,11 @@ def InputBox(title, questions):
         pos += 1
         
     dialog.show_all()
-        
-        response = dialog.run()
-        if response == gtk.RESPONSE_OK:
-                answers = list()
-        for entryBox in entryBoxes:
-            answers.append(entryBox.get_text())
-                dialog.destroy()
-                return answers
+    response = dialog.run()
+    if response == gtk.RESPONSE_OK:
+            answers = list()
+    for entryBox in entryBoxes:
+        answers.append(entryBox.get_text())
         dialog.destroy()
-    
+        return answers
+    dialog.destroy()

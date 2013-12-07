@@ -18,3 +18,4 @@ import pyglet
 background = pyglet.graphics.OrderedGroup(0)
 elements = pyglet.graphics.OrderedGroup(1)
 charge = pyglet.graphics.OrderedGroup(2)
+gui = pyglet.graphics.OrderedGroup(3)

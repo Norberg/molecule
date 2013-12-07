@@ -12,3 +12,10 @@
 		- Modifed by Simon Norberg
 	- Other
 		- Simon Norberg (GPLv3)
+
+- molecule/themes
+	- Part of pyglet-gui and derived from Kytten
+	- New BSD
+	- Copyright (c) 2009, Conrad "Lynx" Wong 
+	- Copyright (c) 2013, Jorge C. Leitão
+

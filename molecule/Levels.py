@@ -18,16 +18,21 @@ import math
 
 import pyglet
 import pymunk
+
 from molecule import Universe
 from molecule import Config
 from molecule import CollisionTypes
 from molecule import Effects
-from molecule import RenderingOrder
+from molecule import Gui
 from libcml import Cml
 
+
+
+
 class Levels:
-    def __init__(self, path, start_level = 1):
+    def __init__(self, path, start_level = 1, window = None):
         self.path = path
+        self.window = window
         self.init_levels()
         self.current_level = start_level - 2
 
@@ -44,7 +49,7 @@ class Levels:
         path = self.levels[self.current_level]
         cml = Cml.Level()
         cml.parse(path)
-        return Level(cml)
+        return Level(cml, self.window)
 
     def level_iter(self):
         level = self.next_level()
@@ -53,13 +58,15 @@ class Levels:
             level = self.next_level()
 
 class Level:
-    def __init__(self, cml):
+    def __init__(self, cml, window):
         self.cml = cml
         self.victory = False
+        self.window = window
         self.batch = pyglet.graphics.Batch()
         self.init_chipmunk()
         self.init_elements()
         self.init_effects()
+        self.init_gui()
     
     def init_chipmunk(self):
         self.space = pymunk.Space()
@@ -103,6 +110,12 @@ class Level:
                                              (x, y))
                 new_effects.append(water)
         self.areas = new_effects
+
+    def init_gui(self):
+        chapters = [("Hint", self.cml.hint)]
+        Gui.create_folding_description(self.window,self.batch, "Objective",
+                                      self.cml.objective, chapters)
+
 
     def create_elements(self, elements, pos = None):
         self.elements.extend(Universe.create_elements(self.space, elements,
@@ -189,7 +202,7 @@ class Level:
             area.update()
 
     def reset(self):
-        self.__init__(self.cml)
+        self.__init__(self.cml, self.window)
 
     def check_victory(self):
         to_check = list(self.cml.victory_condition)
