@@ -76,8 +76,7 @@ class Level:
         #self.space.gravity = (0.0, -500.0)
         thickness = 100
         offset = thickness
-        max_x = Config.current.screenSize[0] + offset
-        max_y = Config.current.screenSize[1] + offset
+        max_x, max_y = map(sum, zip(self.window.get_size(),(offset,offset)))
         screen_boundaries = [
           pymunk.Segment(self.space.static_body, (-offset,-offset), (max_x, -offset), thickness),
           pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thickness),

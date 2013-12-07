@@ -34,10 +34,9 @@ from molecule import Gui
 
 class Game(pyglet.window.Window):
     def __init__(self):
-        w, h = Config.current.screenSize
         config = pyglet.gl.Config(sample_buffers=1, samples=4, double_buffer=True)
         super(Game, self).__init__(caption="Molecule", config=config,
-                                   vsync=True, width=w, height=h)
+                                   vsync=True, resizable=True)
         self.init_pyglet()
         self.init_pymunk()
         self.DEBUG_GRAPHICS = False
@@ -99,7 +98,7 @@ class Game(pyglet.window.Window):
     def limit_pos_to_screen(self, x, y):
         x = max(0,x)
         y = max(0,y)
-        w, h = Config.current.screenSize
+        w, h = self.get_size()
         x = min(w,x)
         y = min(h,y)
         return x,y 

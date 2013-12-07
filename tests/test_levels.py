@@ -26,7 +26,7 @@ import pymunk
 
 class TestLevels(unittest.TestCase):
     def testLevels(self):
-        levels = Levels("data/levels")
+        levels = Levels("data/levels", window=WindowMock())
         l = levels.next_level()
         expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'P(g)', 'F(g)', 'Al(s)']
         self.assertEqual(l.cml.molecules, expected)
@@ -49,13 +49,13 @@ class TestLevels(unittest.TestCase):
         self.assertEqual(l, None)
 
     def testAllLevels(self):    
-        levels = Levels("data/levels")
+        levels = Levels("data/levels", window=WindowMock())
         for level in levels.level_iter():
             self.assertIsNotNone(level.cml.objective)
             self.assertEqual(level.check_victory(), False)
 
     def testDestroyElements(self):
-        levels = Levels("data/levels")
+        levels = Levels("data/levels", window=WindowMock())
         l = levels.next_level()
         batch = pyglet.graphics.Batch()
         l.elements.extend(Universe.create_elements(l.space,
@@ -124,7 +124,7 @@ def setupSimpleReactor():
     return Reactor([r1,r2])
 
 def getLevel1():
-    levels = Levels("data/levels")
+    levels = Levels("data/levels", window=WindowMock())
     level1 = levels.next_level()
     return level1    
 
@@ -157,3 +157,10 @@ class VerticeMock():
     def __init__(self):
         self.vertices = list()
         self.colors = list()
+
+class WindowMock():
+    def get_size(self):
+        return (1024,768)
+
+    def push_handlers(self, arg):
+        pass
