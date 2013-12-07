@@ -1,6 +1,5 @@
 language: python
 python:
-  - "2.7"
   - "3.2"
   - "3.3"
   - "pypy"
@@ -10,6 +9,7 @@ before_install:
 install:
   - "pip install pymunk --use-mirrors"
   - "pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip"
+  - "pip install --upgrade https://github.com/Norberg/pyglet-gui/archive/master.zip"
 script: 
   - "python -m unittest discover"
 notifications:
