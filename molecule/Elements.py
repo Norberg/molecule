@@ -200,7 +200,7 @@ class Atom(pyglet.sprite.Sprite):
     def __init__(self, symbol, charge, space, batch, molecule, pos):
         img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
         group = RenderingOrder.elements
-        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
         self.cml = CachedCml.getMolecule(symbol)
         self.scale = self.cml.property["Radius"] * SCALE_FACTOR
         self.create_electric_charge_sprite(charge, batch)
