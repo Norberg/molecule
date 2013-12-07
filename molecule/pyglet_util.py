@@ -17,22 +17,22 @@ import pyglet
 
 __img_cache = dict()
 def loadImage(src):
-	global __img_cache
-	if src in __img_cache:
-		return __img_cache[src]
-	img = pyglet.image.load(src)
-	__img_cache[src] = img
-	return __img_cache[src]
+    global __img_cache
+    if src in __img_cache:
+        return __img_cache[src]
+    img = pyglet.image.load(src)
+    __img_cache[src] = img
+    return __img_cache[src]
 
 __object_cache = dict()
 
 def storeObject(key, obj):
-	global __object_cache
-	__object_cache[key] = obj
+    global __object_cache
+    __object_cache[key] = obj
 
 def getObject(key):
-	return __object_cache[key]
+    return __object_cache[key]
 
 def hasObject(key):
-	return key in __object_cache
+    return key in __object_cache
 

@@ -25,48 +25,48 @@ from libreact import Reaction
 from libcml import Cml
 
 class Universe:
-	"""Universe contains all fundamental particles and laws needed to get the universe to spin"""
-	def __init__(self):
-		self.moelcules = dict()
-		cml = Cml.Reactions()
-		cml.parse("data/reactions.cml")
-		self.reactor = Reactor(cml.reactions)
+    """Universe contains all fundamental particles and laws needed to get the universe to spin"""
+    def __init__(self):
+        self.moelcules = dict()
+        cml = Cml.Reactions()
+        cml.parse("data/reactions.cml")
+        self.reactor = Reactor(cml.reactions)
 
-	def react(self, reactants, effects):
-		if len(reactants) < 2:
-			return
-		temp = 298
-		effect_names = list()
-		for effect in effects:
-			effect_names.append(effect.name)
-			if effect.name == "Fire":
-				temp = effect.temp
-		reaction = self.reactor.react(reactants, temp)
-		
-		if reaction == None:
-			if Config.current.DEBUG: print("Did not react:", reactants)
-			return None
-		else:
-			if Config.current.DEBUG:
-				print(reaction.reactants, "+", effect_names, "->", reaction.products)
-			return reaction
-		
+    def react(self, reactants, effects):
+        if len(reactants) < 2:
+            return
+        temp = 298
+        effect_names = list()
+        for effect in effects:
+            effect_names.append(effect.name)
+            if effect.name == "Fire":
+                temp = effect.temp
+        reaction = self.reactor.react(reactants, temp)
+        
+        if reaction == None:
+            if Config.current.DEBUG: print("Did not react:", reactants)
+            return None
+        else:
+            if Config.current.DEBUG:
+                print(reaction.reactants, "+", effect_names, "->", reaction.products)
+            return reaction
+        
 def create_elements(space, elements, batch, pos=None):
-	""" Create a set of elements
-	body: shape to attach molecule to
-	element: list of elements to create
-	pos : position of the new element
-	"""	
-	list_of_elements = list()
-	if pos != None:
-		x, y = pos
+    """ Create a set of elements
+    body: shape to attach molecule to
+    element: list of elements to create
+    pos : position of the new element
+    """    
+    list_of_elements = list()
+    if pos != None:
+        x, y = pos
 
-	if isinstance(elements, str):
-		elements = [elements] #elements is a string, wrap it in a list not to confuse for
-	for element in elements:
-		if pos != None and len(elements) > 1:
-			pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
-		list_of_elements.append(Molecule(element, space, batch, pos))
-	return list_of_elements
+    if isinstance(elements, str):
+        elements = [elements] #elements is a string, wrap it in a list not to confuse for
+    for element in elements:
+        if pos != None and len(elements) > 1:
+            pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
+        list_of_elements.append(Molecule(element, space, batch, pos))
+    return list_of_elements
 
 universe = Universe()

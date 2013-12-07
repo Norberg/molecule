@@ -28,142 +28,142 @@ from pyglet import gl
 
 from molecule import Universe
 from molecule import Config
-from molecule import CollisionTypes	
+from molecule import CollisionTypes    
 from molecule.Levels import Levels
 
 
 class Game(pyglet.window.Window):
-	def __init__(self):
-		w, h = Config.current.screenSize
-		config = pyglet.gl.Config(sample_buffers=1, samples=4, double_buffer=True)
-		super(Game, self).__init__(caption="Molecule", config=config,
-		                           vsync=True, width=w, height=h)
-		self.init_pyglet()
-		self.init_pymunk()
-		self.DEBUG_GRAPHICS = False
-		self.start()
+    def __init__(self):
+        w, h = Config.current.screenSize
+        config = pyglet.gl.Config(sample_buffers=1, samples=4, double_buffer=True)
+        super(Game, self).__init__(caption="Molecule", config=config,
+                                   vsync=True, width=w, height=h)
+        self.init_pyglet()
+        self.init_pymunk()
+        self.DEBUG_GRAPHICS = False
+        self.start()
 
-	def start(self):
-		self.write_on_background("Welcome to Molecule")
-		pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
-		self.fps_display = pyglet.clock.ClockDisplay()
-		self.levels = Levels("data/levels", Config.current.level)
-		level = self.levels.next_level()
-		self.run_level(0, level)	
-		pyglet.clock.schedule_interval(self.update, 1/100.0)
-	
-	def init_pymunk(self):
-		self.last_collision = 0
-		self.space = None
-		self.mouse_body = pymunk.Body()	
-		self.mouse_spring = None
+    def start(self):
+        self.write_on_background("Welcome to Molecule")
+        pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
+        self.fps_display = pyglet.clock.ClockDisplay()
+        self.levels = Levels("data/levels", Config.current.level)
+        level = self.levels.next_level()
+        self.run_level(0, level)    
+        pyglet.clock.schedule_interval(self.update, 1/100.0)
+    
+    def init_pymunk(self):
+        self.last_collision = 0
+        self.space = None
+        self.mouse_body = pymunk.Body()    
+        self.mouse_spring = None
 
-	def init_pyglet(self):
-		gl.glLineWidth(4)
-		gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
-		#gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER,
-		#                   gl.GL_NEAREST_MIPMAP_NEAREST)
-	
-	def write_on_background(self, text):
-		self.label = pyglet.text.Label(text,
-		                               font_name = 'Times New Roman',
-		                               font_size = 36,
-		                               color = (0,0,0,255),
-		                               x = self.width//2, y = self.height-100,
-		                               anchor_x = 'center', anchor_y = 'center')
-		
-	def on_draw(self):
-		self.clear()
-		self.label.draw()
-		self.level.update()
-		self.batch.draw()
-		if self.DEBUG_GRAPHICS:
-			pymunk.pyglet_util.draw(self.space)
-		self.fps_display.draw()
-	
-	def close(self, dt=None):
-		super(Game, self).close()
-	
-	def run_level(self, dt, level):
-		if level is None:
-			self.write_on_background("Victory!, You have finished the game!")
-			pyglet.clock.schedule_once(self.close, 3)
-			return
-		self.active = None
-		self.write_on_background(level.cml.objective)
-		self.batch = level.batch
-		self.level = level
-		self.space = level.space
-		self.mouse_spring = None
-		self.space.add_collision_handler(CollisionTypes.ELEMENT,
-		                                 CollisionTypes.ELEMENT,
-		                                 post_solve=self.level.element_collision)
-		self.space.add_collision_handler(CollisionTypes.ELEMENT,
-		                                 CollisionTypes.EFFECT,
-		                                 begin=self.level.effect_reaction)
+    def init_pyglet(self):
+        gl.glLineWidth(4)
+        gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
+        #gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER,
+        #                   gl.GL_NEAREST_MIPMAP_NEAREST)
+    
+    def write_on_background(self, text):
+        self.label = pyglet.text.Label(text,
+                                       font_name = 'Times New Roman',
+                                       font_size = 36,
+                                       color = (0,0,0,255),
+                                       x = self.width//2, y = self.height-100,
+                                       anchor_x = 'center', anchor_y = 'center')
+        
+    def on_draw(self):
+        self.clear()
+        self.label.draw()
+        self.level.update()
+        self.batch.draw()
+        if self.DEBUG_GRAPHICS:
+            pymunk.pyglet_util.draw(self.space)
+        self.fps_display.draw()
+    
+    def close(self, dt=None):
+        super(Game, self).close()
+    
+    def run_level(self, dt, level):
+        if level is None:
+            self.write_on_background("Victory!, You have finished the game!")
+            pyglet.clock.schedule_once(self.close, 3)
+            return
+        self.active = None
+        self.write_on_background(level.cml.objective)
+        self.batch = level.batch
+        self.level = level
+        self.space = level.space
+        self.mouse_spring = None
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,
+                                         CollisionTypes.ELEMENT,
+                                         post_solve=self.level.element_collision)
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,
+                                         CollisionTypes.EFFECT,
+                                         begin=self.level.effect_reaction)
 
-	def limit_pos_to_screen(self, x, y):
-		x = max(0,x)
-		y = max(0,y)
-		w, h = Config.current.screenSize
-		x = min(w,x)
-		y = min(h,y)
-		return x,y 
+    def limit_pos_to_screen(self, x, y):
+        x = max(0,x)
+        y = max(0,y)
+        w, h = Config.current.screenSize
+        x = min(w,x)
+        y = min(h,y)
+        return x,y 
 
-	def on_mouse_press(self, x, y, button, modifiers):
-		self.handle_mouse_button_down(x, y)
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.handle_mouse_button_down(x, y)
 
-	def on_mouse_release(self, x, y, button, modifiers):
-		if self.mouse_spring != None:
-			self.mouse_spring.b.mass *= 50
-			self.mouse_spring.b.velocity = (0,0)
-			self.mouse_spring.b.molecule.set_dragging(False)
-			self.space.remove(self.mouse_spring)
-			self.mouse_spring = None
-	
-	def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-		x,y = self.limit_pos_to_screen(x,y)
-		self.mouse_body.position = (x, y)
+    def on_mouse_release(self, x, y, button, modifiers):
+        if self.mouse_spring != None:
+            self.mouse_spring.b.mass *= 50
+            self.mouse_spring.b.velocity = (0,0)
+            self.mouse_spring.b.molecule.set_dragging(False)
+            self.space.remove(self.mouse_spring)
+            self.mouse_spring = None
+    
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        x,y = self.limit_pos_to_screen(x,y)
+        self.mouse_body.position = (x, y)
 
-	def on_key_press(self, symbol, modifiers):
-		if symbol == pyglet.window.key.M:
-			print("dumping memory..")
-			from meliae import scanner
-			scanner.dump_all_objects("memory.dump")
-		elif symbol == pyglet.window.key.ESCAPE:
-			self.close()
-		elif symbol == pyglet.window.key.S:	
-			self.write_on_background("Skipping level, Cheater!")
-			level = self.levels.next_level()
-			pyglet.clock.schedule_once(self.run_level, 1, level)
-			self.level.victory = False
-		elif symbol == pyglet.window.key.R:
-			print("reseting..")	
-			self.level.reset()
-			self.run_level(0, self.level)
-		elif symbol == pyglet.window.key.D:	
-			self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
+    def on_key_press(self, symbol, modifiers):
+        if symbol == pyglet.window.key.M:
+            print("dumping memory..")
+            from meliae import scanner
+            scanner.dump_all_objects("memory.dump")
+        elif symbol == pyglet.window.key.ESCAPE:
+            self.close()
+        elif symbol == pyglet.window.key.S:    
+            self.write_on_background("Skipping level, Cheater!")
+            level = self.levels.next_level()
+            pyglet.clock.schedule_once(self.run_level, 1, level)
+            self.level.victory = False
+        elif symbol == pyglet.window.key.R:
+            print("reseting..")    
+            self.level.reset()
+            self.run_level(0, self.level)
+        elif symbol == pyglet.window.key.D:    
+            self.DEBUG_GRAPHICS = not self.DEBUG_GRAPHICS
 
-	def update(self, dt):
-		self.space.step(1/120.0)
-		if self.level.victory:
-			self.write_on_background("Congratulation, you finished the level")
-			level = self.levels.next_level()
-			pyglet.clock.schedule_once(self.run_level, 3, level)
-			self.level.victory = False
+    def update(self, dt):
+        self.space.step(1/120.0)
+        if self.level.victory:
+            self.write_on_background("Congratulation, you finished the level")
+            level = self.levels.next_level()
+            pyglet.clock.schedule_once(self.run_level, 3, level)
+            self.level.victory = False
 
-	def handle_mouse_button_down(self, x, y):
-		if self.mouse_spring != None:
-			self.on_mouse_release(None, None, None, None)
-		self.mouse_body.position = (x, y)
-		clicked = self.space.nearest_point_query_nearest((x,y), 16)
-		if (clicked != None and 
-		    clicked["shape"].collision_type == CollisionTypes.ELEMENT and
-		    clicked["shape"].molecule.draggable):
-			clicked = clicked["shape"]
-			clicked.molecule.set_dragging(True)
-			rest_length = self.mouse_body.position.get_distance(clicked.body.position)
-			self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
-			self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
-			clicked.body.mass /= 50
-			self.space.add(self.mouse_spring) 
+    def handle_mouse_button_down(self, x, y):
+        if self.mouse_spring != None:
+            self.on_mouse_release(None, None, None, None)
+        self.mouse_body.position = (x, y)
+        clicked = self.space.nearest_point_query_nearest((x,y), 16)
+        if (clicked != None and 
+            clicked["shape"].collision_type == CollisionTypes.ELEMENT and
+            clicked["shape"].molecule.draggable):
+            clicked = clicked["shape"]
+            clicked.molecule.set_dragging(True)
+            rest_length = self.mouse_body.position.get_distance(clicked.body.position)
+            self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
+            self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+            clicked.body.mass /= 50
+            self.space.add(self.mouse_spring) 

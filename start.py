@@ -22,34 +22,34 @@ from molecule.Game import Game
 from molecule import Config
 
 class CliInterface:
-	@staticmethod
-	def handle_cmd_options():
-		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
-		except getopt.GetoptError as err:
-			print(str(err))
-			CliInterface.cmd_help()
-			sys.exit(2)
-		for o,a in opts:
-			if o in ("-h", "--help"):
-				CliInterface.cmd_help()
-				sys.exit()
-			elif o in ("-l", "--level"):
-				Config.current.level = int(a)
-			elif o in ("-d", "--debug"):
-				Config.current.DEBUG = True
-			
-	@staticmethod			
-	def cmd_help():
-		print("Molecule - a chemical reaction puzzle game")
-		print("-h --help print this help")	
-		print("--level=LEVEL choose what level to start on")	
-		print("-d --debug print debug messages")
-		print("During gameplay:")
-		print("ESC - close game")
-		print("r - reset current level")	
-		print("d - switch Graphic debug on/off")	
-		print("s - skip level")	
+    @staticmethod
+    def handle_cmd_options():
+        try:
+            opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
+        except getopt.GetoptError as err:
+            print(str(err))
+            CliInterface.cmd_help()
+            sys.exit(2)
+        for o,a in opts:
+            if o in ("-h", "--help"):
+                CliInterface.cmd_help()
+                sys.exit()
+            elif o in ("-l", "--level"):
+                Config.current.level = int(a)
+            elif o in ("-d", "--debug"):
+                Config.current.DEBUG = True
+            
+    @staticmethod            
+    def cmd_help():
+        print("Molecule - a chemical reaction puzzle game")
+        print("-h --help print this help")    
+        print("--level=LEVEL choose what level to start on")    
+        print("-d --debug print debug messages")
+        print("During gameplay:")
+        print("ESC - close game")
+        print("r - reset current level")    
+        print("d - switch Graphic debug on/off")    
+        print("s - skip level")    
 import code, traceback, signal
 
 def debug(sig, frame):
@@ -68,14 +68,14 @@ def listen():
     signal.signal(signal.SIGUSR1, debug)  # Register handler
 
 def main():
-	listen()
-	CliInterface.handle_cmd_options()
-	game = Game()
-	pyglet.app.run()
-	print("game finished")
+    listen()
+    CliInterface.handle_cmd_options()
+    game = Game()
+    pyglet.app.run()
+    print("game finished")
 
 if __name__ == '__main__':
-	try:
-		main()
-	except KeyboardInterrupt:
-		pass
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
