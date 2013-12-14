@@ -8,7 +8,7 @@ before_install:
 install:
   - "pip install pymunk --use-mirrors"
   - "pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip"
-  - "pip install --upgrade https://github.com/Norberg/pyglet-gui/archive/master.zip"
+  - "pip install --upgrade https://github.com/jorgecarleitao/pyglet-gui/archive/master.zip"
 script: 
   - "python -m unittest discover"
 notifications:
