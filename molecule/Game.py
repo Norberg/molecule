@@ -19,7 +19,6 @@ import os
 import random
 import inspect
 import math
- 
 import pymunk
 from pymunk import pyglet_util
 import pyglet
@@ -34,13 +33,29 @@ from molecule import Gui
 
 class Game(pyglet.window.Window):
     def __init__(self):
-        config = pyglet.gl.Config(sample_buffers=1, samples=4, double_buffer=True)
+        config = self.create_config()
         super(Game, self).__init__(caption="Molecule", config=config,
                                    vsync=True, resizable=True)
         self.init_pyglet()
         self.init_pymunk()
         self.DEBUG_GRAPHICS = False
         self.start()
+
+
+    def create_config(self):
+        platform = pyglet.window.get_platform()
+        display = platform.get_default_display()
+        screen = display.get_default_screen()
+        try:
+            template = pyglet.gl.Config(sample_buffers=1,
+                                        samples=4,
+                                        double_buffer=True)
+            config = screen.get_best_config(template)
+        except pyglet.window.NoSuchConfigException:
+            print("Hardware does not support all features,",
+                  "fallback to just the basic features")
+            config = pyglet.gl.Config(double_buffer=True)
+        return config
 
     def start(self):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
