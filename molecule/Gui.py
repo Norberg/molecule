@@ -17,11 +17,11 @@ import os
 
 import pyglet
 import pyglet_gui.theme
-from pyglet_gui.dialog import Dialog
-from pyglet_gui.containers import Frame, VerticalLayout
+from pyglet_gui.manager import Manager
+from pyglet_gui.containers import VerticalContainer
 from pyglet_gui.document import Document
 from pyglet_gui.constants import ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
-from pyglet_gui.gui import SectionHeader, FoldingSection, PopupMessage
+from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
 from pyglet_gui.scrollable import Scrollable
 
 from molecule import RenderingOrder
@@ -49,10 +49,10 @@ def create_folding_description(window, batch, heading, description, chapters=lis
                       Document(text_doc, width=300), 
                       is_open=False))
 
-    content = Frame(Scrollable(VerticalLayout(layout, align=HALIGN_LEFT),height=400))
+    content = Frame(Scrollable(VerticalContainer(layout, align=HALIGN_LEFT),height=400))
 
-    Dialog(content, window=window, batch=batch, group=RenderingOrder.gui,
-           anchor=ANCHOR_BOTTOM_RIGHT, theme=theme, movable=False)
+    Manager(content, window=window, batch=batch, group=RenderingOrder.gui,
+           anchor=ANCHOR_BOTTOM_RIGHT, theme=theme, is_movable=False)
 
 def create_popup(window, batch, text, on_escape=None):
     """
