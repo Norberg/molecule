@@ -243,7 +243,7 @@ class TestCML(unittest.TestCase):
         m = Cml.Molecule()
         m.parse("data/molecule/AgCl.cml")
         self.assertEqual(len(m.atoms), 2)
-        self.assertEqual(len(m.bonds), 0)
+        self.assertEqual(len(m.bonds), 1)
         self.assertEqual(m.atoms["a1"].elementType, "Cl")
         self.assertEqual(m.atoms["a1"].formalCharge, -1)
         self.assertEqual(m.atoms["a1"].x, 1.0)

@@ -105,15 +105,15 @@ class Molecule:
     def get_bond_lenght(self, bond):
         rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
         rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
-        return (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR * BOND_LENGTH_FACTOR
-
+        bond_lenght = (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR
+        if bond.bonds != 0:
+            bond_lenght *= BOND_LENGTH_FACTOR
+        return bond_lenght
 
     def create_bonds(self):
         self.joints = list()
         self.vertexes = list()
         for bond in self.cml.bonds:
-            #bond.atomA.pos
-            #bond.atomB.pos
             atomA = self.atoms[bond.atomA.id]
             atomB = self.atoms[bond.atomB.id]
             bond_length = self.get_bond_lenght(bond)    
@@ -124,6 +124,9 @@ class Molecule:
             self.joints.append(joint)
             self.space.add(joint)
         for joint in self.joints:
+            if joint.bonds == 0:
+                self.vertexes.append(None)
+                continue
             pv1 = joint.a.position
             pv2 = joint.b.position 
             line = (pv1.x, pv1.y, pv2.x, pv2.y)
@@ -149,6 +152,8 @@ class Molecule:
             atom.update()
     
         for joint,vertex in zip(self.joints, self.vertexes):
+            if vertex is None:
+                    continue
             pv1 = joint.a.position
             pv2 = joint.b.position
             line = self.create_parallell_lines(pv1,pv2,joint.bonds) 
@@ -184,7 +189,8 @@ class Molecule:
 
     def delete(self):
         for vertex in self.vertexes:
-            vertex.delete()
+            if vertex is not None:
+                vertex.delete()
         self.vertexes = list()
         
         for atom in self.atoms.values():
