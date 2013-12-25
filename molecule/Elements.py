@@ -283,7 +283,7 @@ class Atom(pyglet.sprite.Sprite):
             self.body.velocity_func = pymunk.Body.update_velocity
 
     def gravity_func(self, body, gravity, damping, dt):
-        gravity = (0.0,-500.0)
+        gravity = (0.0,-920.0)
         return pymunk.Body.update_velocity(body, gravity, damping, dt)
 
     def delete(self):
