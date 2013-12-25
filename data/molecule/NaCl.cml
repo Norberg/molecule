@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <molecule>
   <atomArray>
-    <atom elementType="Cl" id="a1" x3="0.0" y3="0.0" z3="0.0"/>
-    <atom elementType="Na" id="a2" x3="1.0" y3="0.0" z3="0.0"/>
+    <atom elementType="Na" formalCharge="1" id="a1" x2="1.0" y2="0.0"/>
+    <atom elementType="Cl" formalCharge="-1" id="a2" x2="0.0" y2="-0.0"/>
   </atomArray>
   <bondArray>
-    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a2" order="0"/>
   </bondArray>
   <propertyList title="states">
     <propertyList title="Solid">
