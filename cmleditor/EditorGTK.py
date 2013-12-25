@@ -297,6 +297,5 @@ def InputBox(title, questions):
             answers = list()
     for entryBox in entryBoxes:
         answers.append(entryBox.get_text())
-        dialog.destroy()
-        return answers
     dialog.destroy()
+    return answers
