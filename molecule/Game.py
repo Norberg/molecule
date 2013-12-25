@@ -35,7 +35,7 @@ class Game(pyglet.window.Window):
     def __init__(self):
         config = self.create_config()
         super(Game, self).__init__(caption="Molecule", config=config,
-                                   vsync=True, resizable=True)
+                                   vsync=True, resizable=True, fullscreen=True)
         self.init_pyglet()
         self.init_pymunk()
         self.DEBUG_GRAPHICS = False
