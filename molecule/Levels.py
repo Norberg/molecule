@@ -26,9 +26,6 @@ from molecule import Effects
 from molecule import Gui
 from libcml import Cml
 
-
-
-
 class Levels:
     def __init__(self, path, start_level = 1, window = None):
         self.path = path
@@ -71,9 +68,6 @@ class Level:
     def init_chipmunk(self):
         self.space = pymunk.Space()
         self.space.idle_speed_threshold = 0.5
-        #self.space.collision_slop = 0.05
-        #self.space.collision_bias = math.pow(1.0 - 0.3, 60.0)
-        #self.space.gravity = (0.0, -500.0)
         thickness = 100
         offset = thickness
         max_x, max_y = map(sum, zip(self.window.get_size(),(offset,offset)))
@@ -99,14 +93,12 @@ class Level:
                 x = effect.x2
                 y = effect.y2
                 value = effect.value
-                fire = Effects.Fire(self.space, self.batch,
-                                    (x,y), value)
+                fire = Effects.Fire(self.space, self.batch, (x,y), value)
                 new_effects.append(fire)
             elif effect.title == "WaterBeaker":
                 x = effect.x2
                 y = effect.y2
-                water = Effects.Water_Beaker(self.space, self.batch,
-                                             (x, y))
+                water = Effects.Water_Beaker(self.space, self.batch, (x, y))
                 new_effects.append(water)
         self.areas = new_effects
 
@@ -150,8 +142,6 @@ class Level:
                 molecules.append(molecule)
         return molecules
         
-
-
     def react(self, collisions, reacting_areas):
         collidingMolecules = self.get_colliding_molecules(collisions)
         reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
