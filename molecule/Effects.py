@@ -105,7 +105,7 @@ class Water_Beaker(pyglet.sprite.Sprite):
         pass
     
     def react(self, molecule):
-        ions = molecule.toAqueous()
+        ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
             print(molecule.formula, "-(Water)>", ions)
             cml = Cml.Reaction([molecule.formula],ions)

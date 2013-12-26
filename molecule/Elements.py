@@ -40,14 +40,14 @@ class Molecule:
         self.batch = batch
         formula, state = Reaction.split_state(formula_with_state)
         self.formula = formula
-        if pos is None:
-            pos = (random.randint(10, 600), random.randint(10, 400))
-        self.pos = pos
         self.cml = CachedCml.getMolecule(formula)
         self.cml.normalize_pos()
         self.current_state = self.cml.get_state(state)
         if self.current_state is None:
             raise Exception("did not find state for:" + formula_with_state)
+        if pos is None:
+            pos = (random.randint(10, 600), random.randint(10, 400))
+        self.pos = pos
         self.create_atoms()
 
     def __repr__(self):
@@ -90,7 +90,7 @@ class Molecule:
             self.current_state = state
             return True    
     
-    def toAqueous(self):
+    def to_aqueous(self):
         if self.try_change_state("aq"):
             return self.state.ions
     
@@ -123,10 +123,12 @@ class Molecule:
             joint.bonds = bond.bonds 
             self.joints.append(joint)
             self.space.add(joint)
+
         for joint in self.joints:
             if joint.bonds == 0:
                 self.vertexes.append(None)
                 continue
+
             pv1 = joint.a.position
             pv2 = joint.b.position 
             line = (pv1.x, pv1.y, pv2.x, pv2.y)
@@ -264,15 +266,6 @@ class Atom(pyglet.sprite.Sprite):
         """ returns the atom symbol without any electric charge """
         return symbol.split("-")[0].split("+")[0]
     
-    def cartesian2pymunk(self, pos):
-        FACTOR = 42
-        center_x, center_y = self.rect.center
-        offset_x = -center_x + self.molecule.ATOM_SIZE/2
-        offset_y = -center_y + self.molecule.ATOM_SIZE/2
-        x, y = pos
-        pymunk_pos = (offset_x + FACTOR*x,-(offset_y + FACTOR*y))
-        return pymunk_pos
-
     def move(self, pos):
         self.body.position = pos
         
