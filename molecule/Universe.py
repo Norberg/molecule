@@ -13,11 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import glob, random
-import copy
-import re
-import pymunk
-from molecule import util
+import random
 from molecule.Elements import Molecule
 from molecule import Config
 from libreact.Reactor import Reactor
@@ -62,7 +58,9 @@ def create_elements(space, elements, batch, pos=None):
         x, y = pos
 
     if isinstance(elements, str):
-        elements = [elements] #elements is a string, wrap it in a list not to confuse for
+        #elements is a string, wrap it in a list not to confuse for
+        elements = [elements] 
+
     for element in elements:
         if pos != None and len(elements) > 1:
             pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
