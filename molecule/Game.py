@@ -13,11 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
-import time
-import os
-import random
-import inspect
 import math
 import pymunk
 from pymunk import pyglet_util
@@ -65,18 +60,13 @@ class Game(pyglet.window.Window):
         pyglet.clock.schedule_interval(self.update, 1/100.0)
     
     def init_pymunk(self):
-        self.last_collision = 0
-        self.space = None
         self.mouse_body = pymunk.Body()    
-        self.mouse_spring = None
 
     def init_pyglet(self):
         gl.glLineWidth(4)
         gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
-        #gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER,
-        #                   gl.GL_NEAREST_MIPMAP_NEAREST)
     
     def on_draw(self):
         self.clear()
