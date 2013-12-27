@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Mg" id="a1" x2="1.0" y2="0.0"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">32.5</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">150.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">148.5</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.6</property>
+    <property title="Name">Magnesium</property>
+    <property title="Weight">24.0</property>
+  </propertyList>
+</ns0:molecule>
