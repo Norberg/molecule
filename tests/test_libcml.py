@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import glob
 import os
 import unittest
 import libcml.Cml as Cml
@@ -241,17 +242,17 @@ class TestCML(unittest.TestCase):
         
     def testParseMoleculeWithoutBonds(self):
         m = Cml.Molecule()
-        m.parse("data/molecule/AgCl.cml")
+        m.parse("data/molecule/NaCl.cml")
         self.assertEqual(len(m.atoms), 2)
         self.assertEqual(len(m.bonds), 1)
-        self.assertEqual(m.atoms["a1"].elementType, "Cl")
-        self.assertEqual(m.atoms["a1"].formalCharge, -1)
+        self.assertEqual(m.atoms["a1"].elementType, "Na")
+        self.assertEqual(m.atoms["a1"].formalCharge, 1)
         self.assertEqual(m.atoms["a1"].x, 1.0)
         self.assertEqual(m.atoms["a1"].y, 0.0)
         self.assertEqual(m.atoms["a2"].x, 0.0)
         self.assertEqual(m.atoms["a2"].y, 0.0)
-        self.assertEqual(m.atoms["a2"].elementType, "Ag")
-        self.assertEqual(m.atoms["a2"].formalCharge, 1)
+        self.assertEqual(m.atoms["a2"].elementType, "Cl")
+        self.assertEqual(m.atoms["a2"].formalCharge, -1)
 
     def testParseLevel(self):
         m = Cml.Level()
@@ -274,6 +275,12 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.victory_condition, ["H2O"])
         self.assertEqual(m.objective, "Create a water molecule")
         self.assertEqual(m.hint, "H + H + O => H2O")
+ 
+    def testAllMolecules(self):
+        for filename in glob.glob("data/molecule/*"):
+            m = Cml.Molecule()
+            m.parse(filename)
+            self.assertNotEqual(len(m.states), 0, msg="%s dont have any state info!" % filename)
 
 if __name__ == '__main__':
-    unittest.main()    
+    unittest.main()
