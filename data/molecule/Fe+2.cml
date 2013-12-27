@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Fe" formalCharge="2" id="a1" x2="1.0" y2="0.0"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-87.9</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">-113.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.39</property>
+    <property title="Name">Ferrous - Iron(II)</property>
+    <property title="Weight">56.0</property>
+  </propertyList>
+</ns0:molecule>
