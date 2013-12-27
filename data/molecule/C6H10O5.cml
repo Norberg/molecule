@@ -45,7 +45,16 @@
     <bond atomRefs2="a10 a20" order="1"/>
     <bond atomRefs2="a11 a21" order="1"/>
   </ns0:bondArray>
-  <propertyList title="states"/>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
   <propertyList title="property">
     <property title="Name">Cellulose</property>
   </propertyList>

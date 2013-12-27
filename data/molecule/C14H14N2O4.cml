@@ -72,7 +72,16 @@
     <bond atomRefs2="a20 a33" order="1"/>
     <bond atomRefs2="a20 a34" order="1"/>
   </ns0:bondArray>
-  <propertyList title="states"/>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
   <propertyList title="property">
     <property title="Name">1,4-Bis-(2-furoyl)piperazine</property>
   </propertyList>
