@@ -33,7 +33,8 @@ DEFAULT_SIZE = 32.0
 SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE
 SPRITE_RADIUS = SPRITE_SIZE/2
 BOND_LENGTH_FACTOR = 1.4
-    
+ATOM_SPACE = SPRITE_SIZE / 1.5 
+
 class Molecule:
     def __init__(self, formula_with_state, space, batch, pos=None):
         self.space = space
@@ -97,8 +98,10 @@ class Molecule:
     def create_atoms(self):
         self.atoms = dict()
         for atom in self.cml.atoms.values():
+            x, y = self.pos
+            pos = (x + atom.x * ATOM_SPACE, y + atom.y *ATOM_SPACE)
             new = Atom(atom.elementType, atom.formalCharge,
-                       self.space, self.batch, self, self.pos)
+                       self.space, self.batch, self, pos)
             self.atoms[atom.id] = new
         self.create_bonds()
 
