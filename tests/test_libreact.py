@@ -98,3 +98,10 @@ class TestReact(unittest.TestCase):
             if result is not None:
                 self.assertEqual(result.products, expected_products)
                 self.assertEqual(result.reactants, reactants)
+
+    def testPidgenonProcess(self):
+        reactor = self.setupRealReactor()
+        reaction = reactor.react(["Si(s)", "MgO(s)", "MgO(s)"], K=2300)
+        self.assertEqual(reaction.products, ["SiO2(s)", "Mg(g)", "Mg(g)"])
+        self.assertEqual(reaction.reactants, ["Si(s)", "MgO(s)", "MgO(s)"])
+            

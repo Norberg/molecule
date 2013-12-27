@@ -167,4 +167,16 @@
       <molecule title="CaCO3(s)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="MgO"/>
+      <molecule title="MgO"/>
+      <molecule title="Si"/>
+    </reactantList>
+    <productList>
+      <molecule title="SiO2(s)"/>
+      <molecule title="Mg(g)"/>
+      <molecule title="Mg(g)"/>
+    </productList>
+  </reaction>
 </reactions>

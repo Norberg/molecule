@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="Si(s)"/>
+    <molecule title="MgO(s)"/>
+    <molecule title="MgO(s)"/>
+  </moleculeList>
+  <effectList>
+    <effect title="Fire" value="2300" x2="200" y2="50"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Mg"/>
+    <molecule title="Mg"/>
+  </victoryCondition>
+  <objective text="Create 2 Mg"/>
+  <hint text="Si(s) + 2 MgO  => SiO2 + 2 Mg"/>
+</level>
