@@ -218,7 +218,9 @@ class EditorGTK:
 
     def on_btnNewMolecule_clicked(self, widget):
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
-        print answers
+        print(answers)
+        if answers is None:
+            return
         formula, smiles = answers
         path = "data/molecule/%s.cml" % formula
         if os.path.isfile(path):
@@ -295,6 +297,10 @@ def InputBox(title, questions):
     response = dialog.run()
     if response == gtk.RESPONSE_OK:
             answers = list()
+    else:
+        dialog.destroy()
+        return None
+    
     for entryBox in entryBoxes:
         answers.append(entryBox.get_text())
     dialog.destroy()
