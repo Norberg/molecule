@@ -134,7 +134,10 @@ class EditorGTK:
         molecule = Cml.Molecule()
         self.molecule = molecule
         molecule.parse(filename)
-        cml2img.convert_cml2png(filename, "preview.png")
+        formula = filename.split("/")[-1].split(".cml")[0] 
+        state = molecule.states.values()[0].short
+        state_formula = formula+"(%s)" % state
+        cml2img.convert_cml2png(state_formula, "preview.png")
         pixBuffPreview = gtk.gdk.pixbuf_new_from_file("preview.png")
         imgPreview = self.widget("imgPreview")
         imgPreview.set_from_pixbuf(pixBuffPreview)
