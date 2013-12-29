@@ -27,7 +27,7 @@ class Fire(pyglet.sprite.Sprite):
     """Fire"""
     def __init__(self, space, batch, pos, temp=1000):
         group = RenderingOrder.background
-        img = pyglet_util.loadImage("img/fire/50 frames/fire1_ 50.png")
+        img = pyglet_util.load_image("fire/50 frames/fire1_ 50.png")
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
         self.name = "Fire"
         self.temp = temp
@@ -35,7 +35,7 @@ class Fire(pyglet.sprite.Sprite):
         self.frames = 100
         self.animations = list()
         for img in sorted(glob.glob("img/fire/50 frames/*")):
-            self.animations.append(pyglet_util.loadImage(img))
+            self.animations.append(pyglet_util.load_image(img.lstrip("img/")))
         self.image = self.animations[self.current_frame]
         self.init_chipmunk(space)
         self.set_pos(pos)
@@ -68,7 +68,7 @@ class Fire(pyglet.sprite.Sprite):
 class Water_Beaker(pyglet.sprite.Sprite):
     """Water_Beaker"""
     def __init__(self, space, batch, pos):
-        img = pyglet_util.loadImage("img/water-beaker.png")
+        img = pyglet_util.load_image("water-beaker.png")
         group = RenderingOrder.background
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
         self.name = "Water Beaker"

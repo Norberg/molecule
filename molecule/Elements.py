@@ -209,7 +209,7 @@ class Molecule:
 
 class Atom(pyglet.sprite.Sprite):
     def __init__(self, symbol, charge, space, batch, molecule, pos):
-        img = pyglet_util.loadImage("img/atom-" + symbol.lower() + ".png")
+        img = pyglet_util.load_image("atom-" + symbol.lower() + ".png")
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
         self.cml = CachedCml.getMolecule(symbol)
@@ -260,7 +260,7 @@ class Atom(pyglet.sprite.Sprite):
         else:
             charge_str = str(charge)
             
-        e = pyglet_util.loadImage("img/e" + charge_str + ".png")
+        e = pyglet_util.load_image("e" + charge_str + ".png")
         group = RenderingOrder.charge
         self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
         self.electric_charge_sprite.scale = self.scale
