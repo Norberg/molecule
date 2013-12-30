@@ -12,6 +12,7 @@
 - GUI to edit levels
 - Write adequate unittests for the game logic
 - Allow zooming to enable levels with many/big molecules
+- Add pressure effect
 
 ### Big TODOs ###
 - move to pygtk3
