@@ -68,7 +68,7 @@ class Level:
     def init_chipmunk(self):
         self.space = pymunk.Space()
         self.space.idle_speed_threshold = 0.5
-        thickness = 100
+        thickness = 1000
         offset = thickness
         max_x, max_y = map(sum, zip(self.window.get_size(),(offset,offset)))
         screen_boundaries = [

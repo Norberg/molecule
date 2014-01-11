@@ -23,6 +23,9 @@ How to play:
     -h --help print this help
     --level=LEVEL choose what level to start on
     -d --debug print debug messages
+    --fullscreen play in fullscreen mode
+    --width size of window, default=1650
+    --height size of window, defaults=1080
     During gameplay:
     ESC - close game
     r - reset current level

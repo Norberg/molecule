@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class Config:
-    def __init__(self, DEBUG = False, level = 1):
-        self.DEBUG = DEBUG
-        self.level = level
-
+    def __init__(self):
+        self.DEBUG = False
+        self.level = 1
+        self.fullscreen = False
+        self.resizable = False
+        self.width = 1650
+        self.height = 1080
 current = Config()

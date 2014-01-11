@@ -25,7 +25,8 @@ class CliInterface:
     @staticmethod
     def handle_cmd_options():
         try:
-            opts, args = getopt.getopt(sys.argv[1:], "hld", ["help", "level=", "debug",])
+            opts, args = getopt.getopt(sys.argv[1:], "hldf",
+                ["help", "level=", "debug","fullscreen", "height=", "width="])
         except getopt.GetoptError as err:
             print(str(err))
             CliInterface.cmd_help()
@@ -38,13 +39,24 @@ class CliInterface:
                 Config.current.level = int(a)
             elif o in ("-d", "--debug"):
                 Config.current.DEBUG = True
+            elif o in ("--fullscreen"):
+                Config.current.fullscreen = True
+                Config.current.resizable = True
+            elif o in ("--width"):
+                Config.current.width = int(a)
+            elif o in ("--height"):
+                Config.current.height = int(a)
             
     @staticmethod            
     def cmd_help():
+        default = Config.Config()
         print("Molecule - a chemical reaction puzzle game")
         print("-h --help print this help")    
         print("--level=LEVEL choose what level to start on")    
         print("-d --debug print debug messages")
+        print("--fullscreen play in fullscreen mode")
+        print("--width size of window, default=%s" % default.width)
+        print("--height size of window, defaults=%s" % default.height)
         print("During gameplay:")
         print("ESC - close game")
         print("r - reset current level")    

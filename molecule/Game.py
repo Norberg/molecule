@@ -29,8 +29,13 @@ from molecule import Gui
 class Game(pyglet.window.Window):
     def __init__(self):
         config = self.create_config()
+        fullscreen = Config.current.fullscreen
+        resizable = Config.current.resizable
+        width = Config.current.width
+        height = Config.current.height
         super(Game, self).__init__(caption="Molecule", config=config,
-                                   vsync=True, resizable=True, fullscreen=True)
+            vsync=True, resizable=resizable, fullscreen=fullscreen,
+            width=width, height=height)
         self.init_pyglet()
         self.init_pymunk()
         self.DEBUG_GRAPHICS = False
