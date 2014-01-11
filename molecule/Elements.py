@@ -105,45 +105,13 @@ class Molecule:
             self.atoms[atom.id] = new
         self.create_bonds()
 
-    def get_bond_lenght(self, bond):
-        rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
-        rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
-        bond_lenght = (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR
-        if bond.bonds != 0:
-            bond_lenght *= BOND_LENGTH_FACTOR
-        return bond_lenght
-
     def create_bonds(self):
-        self.joints = list()
-        self.vertexes = list()
-        for bond in self.cml.bonds:
-            atomA = self.atoms[bond.atomA.id]
-            atomB = self.atoms[bond.atomB.id]
-            bond_length = self.get_bond_lenght(bond)    
-            joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
-                                      10, bond_length)
-            joint.error_bias = math.pow(1.0-0.1, 30.0)
-            joint.bonds = bond.bonds 
-            self.joints.append(joint)
-            self.space.add(joint)
-
-        for joint in self.joints:
-            if joint.bonds == 0:
-                self.vertexes.append(None)
-                continue
-
-            pv1 = joint.a.position
-            pv2 = joint.b.position 
-            line = (pv1.x, pv1.y, pv2.x, pv2.y)
-            color = (90,90,90)
-            group = RenderingOrder.elements
-            bonds = joint.bonds
-            size = 2 * bonds
-            v = self.batch.add(size, pyglet.gl.GL_LINES, group,
-                               ('v2f', line * bonds),
-                               ('c3B', color * size))
-            
-            self.vertexes.append(v)
+        self.bonds = list()
+        for cml_bond in self.cml.bonds:
+            atomA = self.atoms[cml_bond.atomA.id]
+            atomB = self.atoms[cml_bond.atomB.id]
+            bond = Bond(cml_bond, atomA, atomB, self.space, self.batch) 
+            self.bonds.append(bond)
 
     def set_dragging(self, value):
         for atom in self.atoms.values():
@@ -155,16 +123,62 @@ class Molecule:
     def update(self):
         for atom in self.atoms.values():
             atom.update()
+        
+        for bond in self.bonds:
+            bond.update()
+
+    def delete(self):
+        for bond in self.bonds:
+            bond.delete()
+        self.bonds = list()
+
+        for atom in self.atoms.values():
+            atom.delete()
+        self.atoms = dict()
+
+        
+class Bond:
+    def __init__(self, cml_bond, atomA, atomB, space, batch):
+        self.joints = list()
+        self.vertex = None
+        self.cml_bond = cml_bond
+        self.batch = batch
+        self.space = space
+        self.atomA = atomA
+        self.atomB = atomB
+
+        bond_length = self.get_bond_lenght(cml_bond)
+        slide_joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
+                                        10, bond_length)
+        slide_joint.error_bias = math.pow(1.0-0.1, 30.0)
+        self.joints.append(slide_joint)
+        self.space.add(slide_joint)
+
+        if self.cml_bond.bonds > 0:
+            self.vertex = self.create_vertex() 
+            
+            groove_joint_a = self.create_groove_joint(atomA, atomB)
+            groove_joint_b = self.create_groove_joint(atomB, atomA)
+            
+            self.joints.append(groove_joint_a)
+            self.joints.append(groove_joint_b)
+            
+            self.space.add(groove_joint_a)
+            self.space.add(groove_joint_b)
+
+    def create_groove_joint(self, bodyA, bodyB):
+        relative_pos = bodyB.body.position - bodyA.body.position
+        joint = pymunk.GrooveJoint(bodyA.body, bodyB.body, (0,0), relative_pos*2, (0,0))
+        return joint
+
+    def get_bond_lenght(self, bond):
+        rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
+        rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
+        bond_lenght = (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR
+        if bond.bonds != 0:
+            bond_lenght *= BOND_LENGTH_FACTOR
+        return bond_lenght
     
-        for joint,vertex in zip(self.joints, self.vertexes):
-            if vertex is None:
-                    continue
-            pv1 = joint.a.position
-            pv2 = joint.b.position
-            line = self.create_parallell_lines(pv1,pv2,joint.bonds) 
-            vertex.vertices = line
-
-
     def create_parallell_lines(self, pv1, pv2, nr):
         line = (pv1.x, pv1.y, pv2.x, pv2.y)
         if nr == 1:
@@ -191,21 +205,34 @@ class Molecule:
         k_y = k * -math.cos(v)
         return k_x, k_y
 
+    def create_vertex(self):
+        pv1 = self.joints[0].a.position
+        pv2 = self.joints[0].b.position
+        bonds = self.cml_bond.bonds
+        line = self.create_parallell_lines(pv1, pv2, bonds)
+        color = (90,90,90)
+        group = RenderingOrder.elements
+        size = 2 * bonds
+        vertex = self.batch.add(size, pyglet.gl.GL_LINES, group,
+                               ('v2f', line),
+                               ('c3B', color * size))
+        return vertex
+
+    def update(self):
+        if self.vertex is not None:
+            pv1 = self.joints[0].a.position
+            pv2 = self.joints[0].b.position
+            line = self.create_parallell_lines(pv1,pv2,self.cml_bond.bonds) 
+            self.vertex.vertices = line
 
     def delete(self):
-        for vertex in self.vertexes:
-            if vertex is not None:
-                vertex.delete()
-        self.vertexes = list()
-        
-        for atom in self.atoms.values():
-            atom.delete()
-        self.atoms = dict()
-
         for joint in self.joints:
             self.space.remove(joint)
         self.joints = list()
-        
+
+        if self.vertex is not None:
+            self.vertex.delete()
+        self.vertex = None
 
 class Atom(pyglet.sprite.Sprite):
     def __init__(self, symbol, charge, space, batch, molecule, pos):
@@ -226,7 +253,7 @@ class Atom(pyglet.sprite.Sprite):
     def init_chipmunk(self):
         weight = self.cml.property["Weight"]    
         radius = self.scale * SPRITE_RADIUS
-        body = pymunk.Body(weight,moment = pymunk.inf)#pymunk.moment_for_circle(10, 0, 32))
+        body = pymunk.Body(weight,moment = pymunk.moment_for_circle(weight, 0, radius))
         body.velocity_limit = 1000
         body.molecule = self.molecule
         shape = pymunk.Circle(body, radius)

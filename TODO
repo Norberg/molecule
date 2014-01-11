@@ -4,7 +4,6 @@
 - Give aqueous molecules a blueish background
 - Extract all level logic from Game to Level
 - Don't destroy atoms during reaction, re-use them instead
-- Make bonds stiffer to better match the molecule layout
 - Make + and - charge atoms stick together in a easily breakable joint.
 
 ### Medium TODOs ###
