@@ -30,18 +30,25 @@ class Reactor:
                 return reaction
         return None
 
-    def react(self, reactants, K = 298):
+    def react(self, reactants, K = 298, trace = False):
         """ check if all elements needed for the reaction exists in
              in the reacting elements and that the reaction is spontaneous
             in the given temperature. 
             Return the reaction if it will occur otherwise None
         """
         reactionCml = self.find_reactions(reactants)        
-        if reactionCml is None:
+        if reactionCml is None and trace:
+            print("No reaction found for this reactants")
+        elif reactionCml is None:
             return None
         reaction = Reaction.Reaction(reactionCml, reactants)
         if reaction.isSpontaneous(K):
             return reaction
+        elif trace:
+            print("free_energy wasnt enough for reaction!")
+            reaction.trace = True
+            reaction.isSpontaneous()
+            return None
         else:
             return None
 

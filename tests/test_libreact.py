@@ -104,4 +104,15 @@ class TestReact(unittest.TestCase):
         reaction = reactor.react(["Si(s)", "MgO(s)", "MgO(s)"], K=2300)
         self.assertEqual(reaction.products, ["SiO2(s)", "Mg(g)", "Mg(g)"])
         self.assertEqual(reaction.reactants, ["Si(s)", "MgO(s)", "MgO(s)"])
-            
+    
+    def testSulfurDichloride(self):
+        reactor = self.setupRealReactor()
+        reaction = reactor.react(["S2Cl2(g)", "Cl2(g)"], trace=True)
+        self.assertEqual(reaction.products, ["SCl2(g)", "SCl2(g)"])
+        self.assertEqual(reaction.reactants, ["S2Cl2(g)", "Cl2(g)"])
+        
+    def testSulfurMustard(self):
+        reactor = self.setupRealReactor()
+        reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], K=300, trace=True)
+        self.assertEqual(reaction.products, ["C4H8Cl2S(g)"])
+        self.assertEqual(reaction.reactants, ["SCl2(g)", "C2H4(g)", "C2H4(g)"])

@@ -21,6 +21,7 @@ class Reaction:
         self.cml = cml
         self.products = cml.products
         self.reactants = list(cml.reactants)
+        self.trace = False
         self.addStateToReactants(reacting_elements)
         verify(self.products)    
         verify(self.reactants)    
@@ -40,18 +41,31 @@ class Reaction:
         enthalpyReactans = self.sumEnthalpy(self.reactants)
         enthalpyProducts = self.sumEnthalpy(self.products)
         deltaEnthalpy = enthalpyProducts - enthalpyReactans
+        if self.trace:
+            print("deltaEnthalpy = enthalpyProducts - enthalpyReactans")
+            print(deltaEnthalpy, "=",  enthalpyProducts, "-", enthalpyReactans)
         return deltaEnthalpy
 
     def deltaEntropy(self):
         entropyReactans = self.sumEntropy(self.reactants) / 1000.0 #j -> kj
         entropyProducts = self.sumEntropy(self.products) / 1000.0 #j -> kj
-        deltaEntropy = entropyProducts - entropyReactans 
+        deltaEntropy = entropyProducts - entropyReactans
+        if self.trace:
+            print("deltaEntropy = entropyProducts - entropyReactans")
+            print(deltaEntropy, "=", entropyProducts, "-",entropyReactans)
         return deltaEntropy
 
-    def isSpontaneous(self, K = 298):
+    def energyChange(self, K):
         deltaEnthalpy = self.deltaEnthalpy()
         deltaEntropy = self.deltaEntropy()    
         free_energy = deltaEnthalpy - K * deltaEntropy
+        if self.trace:
+            print("free_energy = deltaEnthalpy - K * deltaEntropy")
+            print(free_energy, "=", deltaEnthalpy, "-", K, "*", deltaEntropy)
+        return free_energy
+
+    def isSpontaneous(self, K = 298):
+        free_energy = self.energyChange(K)
         return free_energy < 0
 
     def sumEntropy(self, elements):
