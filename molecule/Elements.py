@@ -150,7 +150,7 @@ class Bond:
         bond_length = self.get_bond_lenght(cml_bond)
         slide_joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
                                         10, bond_length)
-        slide_joint.error_bias = math.pow(1.0-0.1, 30.0)
+        slide_joint.max_force = 15000000
         self.joints.append(slide_joint)
         self.space.add(slide_joint)
 
@@ -169,6 +169,7 @@ class Bond:
     def create_groove_joint(self, bodyA, bodyB):
         relative_pos = bodyB.body.position - bodyA.body.position
         joint = pymunk.GrooveJoint(bodyA.body, bodyB.body, (0,0), relative_pos*2, (0,0))
+        joint.max_force = 1500000
         return joint
 
     def get_bond_lenght(self, bond):
