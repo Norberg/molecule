@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="SCl2(g)"/>
+    <molecule title="C2H4(g)"/>
+    <molecule title="C2H4(g)"/>
+    <molecule title="S8(g)"/>
+    <molecule title="Cl2(g)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="C4H8Cl2S"/>
+  </victoryCondition>
+  <objective text="Create Sulfur mustard"/>
+  <hint text="SCl2 + 4 C2H4  => C4H8Cl2S"/>
+</level>

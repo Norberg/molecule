@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="S" id="a1" x2="0.707107" y2="-0.707107"/>
+    <atom elementType="S" id="a3" x2="0.0" y2="-2.414214"/>
+    <atom elementType="S" id="a2" x2="0.707107" y2="-1.707107"/>
+    <atom elementType="S" id="a5" x2="-1.707107" y2="-1.707107"/>
+    <atom elementType="S" id="a4" x2="-1.0" y2="-2.414214"/>
+    <atom elementType="S" id="a7" x2="-1.0" y2="-0.0"/>
+    <atom elementType="S" id="a6" x2="-1.707107" y2="-0.707107"/>
+    <atom elementType="S" id="a8" x2="0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">100.4</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">430.2</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Octasulfur</property>
+  </propertyList>
+</ns0:molecule>

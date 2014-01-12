@@ -36,10 +36,10 @@
   <propertyList title="states">
     <propertyList title="Gas">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <scalar units="units:molar_energy">-124.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <scalar units="units:molar_energy">420.0</scalar>
       </property>
     </propertyList>
   </propertyList>

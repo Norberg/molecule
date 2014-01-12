@@ -179,4 +179,39 @@
       <molecule title="Mg(g)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="S8"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="S2Cl2"/>
+      <molecule title="Cl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="SCl2(g)"/>
+      <molecule title="SCl2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="SCl2"/>
+      <molecule title="C2H4"/>
+      <molecule title="C2H4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H8Cl2S(g)"/>
+    </productList>
+  </reaction>
 </reactions>

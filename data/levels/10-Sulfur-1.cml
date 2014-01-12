@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="S8(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="SCl2"/>
+    <molecule title="SCl2"/>
+  </victoryCondition>
+  <objective text="Create 2 SCl2"/>
+  <hint text="S8 + 4 Cl2  => 4 S2Cl2 \n S2Cl2 + Cl2 => 2SCl2"/>
+</level>
