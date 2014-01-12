@@ -36,7 +36,7 @@ BOND_LENGTH_FACTOR = 1.4
 ATOM_SPACE = SPRITE_SIZE / 1.5 
 
 class Molecule:
-    def __init__(self, formula_with_state, space, batch, pos=None):
+    def __init__(self, formula_with_state, space, batch, pos=None, render_only=False):
         self.space = space
         self.batch = batch
         formula, state = Reaction.split_state(formula_with_state)
@@ -44,7 +44,9 @@ class Molecule:
         self.cml = CachedCml.getMolecule(formula)
         self.cml.normalize_pos()
         self.current_state = self.cml.get_state(state)
-        if self.current_state is None:
+        if self.current_state is None and render_only:
+            self.current_state = Cml.State("Gas")
+        elif self.current_state is None:
             raise Exception("did not find state for:" + formula_with_state)
         if pos is None:
             pos = (random.randint(10, 600), random.randint(10, 400))

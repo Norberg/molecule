@@ -45,7 +45,7 @@ def main():
 def convert_cml2png(formula, output): 
     space = SpaceMock()
     batch = pyglet.graphics.Batch()
-    img = Molecule(formula, space, batch, pos=(32,32))
+    img = Molecule(formula, space, batch, pos=(32,32), render_only=True)
     w, h, _ = img.cml.max_pos()
     width = int(w*64) + 64
     height = int(h*64) + 64

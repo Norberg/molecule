@@ -130,13 +130,12 @@ class EditorGTK:
 
     def openFile(self, filename):
         self.filename = filename
-        self.current_pos = self.folder_list.index(self.widget("fcbOpen").get_filename())
+        self.current_pos = self.folder_list.index(filename)
         molecule = Cml.Molecule()
         self.molecule = molecule
         molecule.parse(filename)
         formula = filename.split("/")[-1].split(".cml")[0] 
-        state = molecule.states.values()[0].short
-        state_formula = formula+"(%s)" % state
+        state_formula = formula+"(g)"
         cml2img.convert_cml2png(state_formula, "preview.png")
         pixBuffPreview = gtk.gdk.pixbuf_new_from_file("preview.png")
         imgPreview = self.widget("imgPreview")
