@@ -47,7 +47,7 @@ class Reactor:
         elif trace:
             print("free_energy wasnt enough for reaction!")
             reaction.trace = True
-            reaction.isSpontaneous()
+            reaction.isSpontaneous(K)
             return None
         else:
             return None

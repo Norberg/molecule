@@ -113,6 +113,6 @@ class TestReact(unittest.TestCase):
         
     def testSulfurMustard(self):
         reactor = self.setupRealReactor()
-        reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], K=300, trace=True)
+        reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], trace=True)
         self.assertEqual(reaction.products, ["C4H8Cl2S(g)"])
         self.assertEqual(reaction.reactants, ["SCl2(g)", "C2H4(g)", "C2H4(g)"])
