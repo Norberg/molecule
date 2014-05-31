@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="O" id="a1" x2="2.0" y2="0.0"/>
+    <atom elementType="C" id="a3" x2="0.5" y2="0.866025"/>
+    <atom elementType="C" id="a2" x2="1.5" y2="0.866025"/>
+    <atom elementType="H" id="a5" x2="1.515" y2="-0.840045"/>
+    <atom elementType="Cl" id="a4" x2="-0.0" y2="-0.0"/>
+    <atom elementType="H" id="a7" x2="0.965" y2="1.792673"/>
+    <atom elementType="H" id="a6" x2="2.035" y2="1.792673"/>
+    <atom elementType="H" id="a9" x2="-0.57" y2="0.866025"/>
+    <atom elementType="H" id="a8" x2="-0.035" y2="1.792673"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a2 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-295.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">336.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">2-Chloroethanol</property>
+  </propertyList>
+</ns0:molecule>

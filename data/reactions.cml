@@ -214,4 +214,23 @@
       <molecule title="C4H8Cl2S(g)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="HOCl"/>
+      <molecule title="C2H4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5ClO(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H4O"/>
+      <molecule title="Na+"/>
+      <molecule title="HSO4-"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H7NO3S(l)"/>
+    </productList>
+  </reaction>
 </reactions>

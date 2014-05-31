@@ -47,7 +47,8 @@ class Molecule:
         if self.current_state is None and render_only:
             self.current_state = Cml.State("Gas")
         elif self.current_state is None:
-            raise Exception("did not find state for:" + formula_with_state)
+            raise Exception("Did not find state for:" + formula_with_state 
+                    + " existing states are:" + str(self.cml.states.keys()))
         if pos is None:
             pos = (random.randint(10, 600), random.randint(10, 400))
         self.pos = pos

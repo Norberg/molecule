@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Cl" id="a1" x2="1.0" y2="-0.0"/>
+    <atom elementType="H" id="a3" x2="-0.485" y2="0.840045"/>
+    <atom elementType="O" id="a2" x2="-0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-76.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">187.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hypochlorous acid</property>
+  </propertyList>
+</ns0:molecule>

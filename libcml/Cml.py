@@ -347,6 +347,8 @@ class Molecule(Cml):
                 self.property[name] = float(property.text)
             except ValueError:
                 self.property[name] = property.text
+            except TypeError as e:
+                print(e)
 
     def parseIons(self, ions):
         reaction = self.parseReaction(ions[0])

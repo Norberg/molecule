@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="Na" formalCharge="1" id="a1" x2="-0.410096" y2="-0.536656"/>
+    <atom elementType="S" id="a3" x2="1.366025" y2="-1.5"/>
+    <atom elementType="O" formalCharge="-1" id="a2" x2="2.232051" y2="-2.0"/>
+    <atom elementType="O" id="a5" x2="0.5" y2="-2.0"/>
+    <atom elementType="O" id="a4" x2="1.366025" y2="-0.5"/>
+    <atom elementType="H" id="a6" x2="-0.340045" y2="-1.515"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="entropy">
+        <scalar units="units:molar_energy">45.0</scalar>
+      </property>
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="Na+(aq)"/>
+            <molecule title="HSO4-(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium bisulfite</property>
+  </propertyList>
+</ns0:molecule>

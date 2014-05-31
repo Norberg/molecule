@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="C" id="a1" x2="1.0" y2="0.0"/>
+    <atom elementType="O" id="a3" x2="0.0" y2="-0.0"/>
+    <atom elementType="C" id="a2" x2="0.5" y2="-0.866025"/>
+    <atom elementType="H" id="a5" x2="1.756604" y2="-0.756604"/>
+    <atom elementType="H" id="a4" x2="1.926647" y2="0.535"/>
+    <atom elementType="H" id="a7" x2="-0.533541" y2="-1.142962"/>
+    <atom elementType="H" id="a6" x2="0.5" y2="-1.936025"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a2 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-53.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">243.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-78.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">154.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Ethylene oxide</property>
+  </propertyList>
+</ns0:molecule>

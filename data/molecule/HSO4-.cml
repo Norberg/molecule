@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
+    <atom elementType="O" id="a3" x2="2.0" y2="0.0"/>
+    <atom elementType="S" id="a2" x2="1.0" y2="0.0"/>
+    <atom elementType="O" formalCharge="-1" id="a5" x2="0.0" y2="0.0"/>
+    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
+    <atom elementType="H" id="a6" x2="0.159955" y2="-1.485"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="2"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-887.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">132.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydrogen Sulfate</property>
+  </propertyList>
+</ns0:molecule>
