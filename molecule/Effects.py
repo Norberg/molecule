@@ -23,23 +23,18 @@ from molecule import RenderingOrder
 from libreact import Reaction
 from libcml import Cml
 
-class Fire(pyglet.sprite.Sprite):
-    """Fire"""
-    def __init__(self, space, batch, pos, temp=1000):
+
+class Effect(pyglet.sprite.Sprite):
+    """Effect base class, draw sprite and act as sensor"""
+    def __init__(self, space, batch, pos, img_path, name):
         group = RenderingOrder.background
-        img = pyglet_util.load_image("fire/50 frames/fire1_ 50.png")
+        img = pyglet_util.load_image(img_path)
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
-        self.name = "Fire"
-        self.temp = temp
-        self.current_frame = 0
-        self.frames = 100
-        self.animations = list()
-        for img in sorted(glob.glob("img/fire/50 frames/*")):
-            self.animations.append(pyglet_util.load_image(img.lstrip("img/")))
-        self.image = self.animations[self.current_frame]
+        self.name = name
         self.init_chipmunk(space)
         self.set_pos(pos)
-    
+        self.supported_attributes = list()
+
     def set_pos(self, pos):
         self.shape.body.position = pos
         x, y = self.shape.body.position
@@ -48,22 +43,38 @@ class Fire(pyglet.sprite.Sprite):
     
     def init_chipmunk(self,space):    
         body = pymunk.Body(pymunk.inf, pymunk.inf)
-        shape = pymunk.Poly.create_box(body, (128,128))
+        shape = pymunk.Poly.create_box(body, (self.width,self.height))
         space.add(shape, body)
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
 
+    def supports(self, attribute):
+        return attribute in self.supported_attributes
+    
     def update(self):
-        self.current_frame += 1
-        if self.current_frame >= self.frames:
-            self.current_frame = 0
-
-        self.image = self.animations[int(self.current_frame/2)]
+        pass
 
     def react(self, element):
         pass
+        
+class Temperature(Effect):
+    def __init__(self, space, batch, pos, img_path, name, temp):
+        Effect.__init__(self, space, batch, pos, img_path, name)
+        self.temp = temp
+        self.supported_attributes.append("temp")
+
+
+class Fire(Effect):
+    """Fire effect"""
+    def __init__(self, space, batch, pos, temp=1000):
+        Temperature.__init__(self, space, batch, pos, "fire.png", "Fire", temp)
+
+class Cold(Effect):
+    """Cold effect"""
+    def __init__(self, space, batch, pos, temp=250):
+        Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
 class Water_Beaker(pyglet.sprite.Sprite):
     """Water_Beaker"""
