@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="500"
+   height="500"
+   viewBox="0 0 1 1"
+   id="svg23264"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="cold.svg"
+   inkscape:export-filename="/home/simon/molecule/img/fire.png"
+   inkscape:export-xdpi="46.108093"
+   inkscape:export-ydpi="46.108093">
+  <metadata
+     id="metadata3527">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>SVG drawing</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1918"
+     inkscape:window-height="1198"
+     id="namedview3525"
+     showgrid="false"
+     inkscape:zoom="2.0259999"
+     inkscape:cx="333.66468"
+     inkscape:cy="409.52695"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg23264" />
+  <defs
+     id="defs23331" />
+  <title
+     id="title23266">SVG drawing</title>
+  <desc
+     id="desc23268">This was produced by version 4.1 of GNU libplot, a free library for exporting 2-D vector graphics.</desc>
+  <polygon
+     points="182.85,546.5 182.85,519.35 182.85,519.35 210.04,519.35 210.04,546.5 "
+     transform="matrix(0.0362027,0,0,-0.03618018,-6.6123318,19.781813)"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:#2229ff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.46051392;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+     id="polygon23274" />
+  <path
+     d="M 0.49483431,0.09611472 V 0.91004239 M 0.09646913,0.30127831 0.89319947,0.70487877 m 0,-0.40360046 -0.79673034,0.40360046 m 0.1264043,-0.48095722 v 0.13453353 m 0,0.28924704 V 0.78223567 M 0.76679521,0.22392163 v 0.13453352 m 0,0.28924705 V 0.78223575 M 0.08880827,0.425722 0.22287346,0.35845523 m 0.27196085,-0.1412602 0.13406522,-0.0672667 m -0.26813044,0 0.13406522,0.0672667 m 0.2719609,0.1412602 0.1340652,0.0672667 m -0.8120521,0.1547136 0.13406518,0.0672668 m 0.27196082,0.14126021 0.13406522,0.0672667 m -0.26813034,0 0.13406512,-0.0672667 M 0.76679521,0.6477025 0.90086041,0.5804357"
+     id="path3731"
+     inkscape:connector-curvature="0"
+     inkscape:transform-center-x="8.8397822e-05"
+     inkscape:transform-center-y="-0.000858836"
+     style="stroke:#ffffff;stroke-width:0.09248146;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     inkscape:export-filename="/home/simon/molecule/img/cold.png"
+     inkscape:export-xdpi="49.021076"
+     inkscape:export-ydpi="49.021076" />
+</svg>

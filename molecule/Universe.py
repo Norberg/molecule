@@ -35,7 +35,7 @@ class Universe:
         effect_names = list()
         for effect in effects:
             effect_names.append(effect.name)
-            if effect.name == "Fire":
+            if effect.supports("temp"):
                 temp = effect.temp
         reaction = self.reactor.react(reactants, temp)
         

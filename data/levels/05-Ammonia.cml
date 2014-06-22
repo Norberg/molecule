@@ -3,15 +3,15 @@
   <moleculeList>
     <molecule title="H+(g)"/>
     <molecule title="O(g)"/>
-    <molecule title="OH-(aq)"/>
-    <molecule title="H+(g)"/>
-    <molecule title="O2(g)"/>
+    <molecule title="H2O(g)"/>
     <molecule title="NH3(g)"/>
   </moleculeList>
-  <effectList/>
+  <effectList>
+    <effect title="Cold" value="250" x2="200" y2="350"/>
+  </effectList>
   <victoryCondition>
     <molecule title="NH4+"/>
   </victoryCondition>
   <objective text="Create a NH4+ molecule"/>
-  <hint text="TODO: Not possible until cold is introduced"/>
+  <hint text="NH3(g) + H2O(g) + Cold => NH3(g) + H2O(g)"/>
 </level>

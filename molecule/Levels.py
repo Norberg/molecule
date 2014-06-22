@@ -89,17 +89,22 @@ class Level:
     def init_effects(self):
         new_effects = list()
         for effect in self.cml.effects:
+            x = effect.x2
+            y = effect.y2
+            value = effect.value
+            
             if effect.title == "Fire":
-                x = effect.x2
-                y = effect.y2
-                value = effect.value
                 fire = Effects.Fire(self.space, self.batch, (x,y), value)
                 new_effects.append(fire)
+            elif effect.title == "Cold":
+                cold = Effects.Cold(self.space, self.batch, (x,y), value)
+                new_effects.append(cold)
             elif effect.title == "WaterBeaker":
-                x = effect.x2
-                y = effect.y2
                 water = Effects.Water_Beaker(self.space, self.batch, (x, y))
                 new_effects.append(water)
+            else:
+                raise Exception("Effect not implemented:"+effect.title)
+
         self.areas = new_effects
 
     def init_gui(self):
