@@ -122,3 +122,7 @@ def list_without_state(molecules):
     for molecule in molecules:
         without_state.append(remove_state(molecule))
     return without_state
+    
+def isSpontaneous(free_energy):
+        return free_energy < 0
+

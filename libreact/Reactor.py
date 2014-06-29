@@ -65,7 +65,7 @@ class Reactor:
             r = Reaction.Reaction(reactionCml, reactants)
             reactions.append((r.energyChange(K), r))
         
-        reaction = min(reactions)[1]
+        free_energy, reaction = min(reactions)
  
         if len(reactions) > 1 and trace:
             print("Multiple possible reactions:")
@@ -76,7 +76,7 @@ class Reactor:
                       "Products:", r.products,
                       "Energy:", energy)
         
-        if reaction.isSpontaneous(K):
+        if Reaction.isSpontaneous(free_energy):
             return reaction
         elif trace:
             print("free_energy wasnt enough for reaction!")
