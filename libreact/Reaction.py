@@ -80,14 +80,13 @@ class Reaction:
             sum += molecule.enthalpy
         return sum
     
-    def getMolecule(self,element):
-        no_state = remove_state(element)
-        return CachedCml.getMolecule(no_state)
+    def getMolecule(self,formula):
+        return CachedCml.getMolecule(formula)
 
     def getStates(self, elements):
         for element in elements:
-            molecule = self.getMolecule(element)
             formula, state = split_state(element)
+            molecule = self.getMolecule(formula)
             s = molecule.get_state(state)
             if s is None:
                 raise Exception("Tried to read non existing state:(" 
