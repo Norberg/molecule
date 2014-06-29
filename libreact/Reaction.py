@@ -95,11 +95,12 @@ class Reaction:
             else:
                 yield s    
     
+SPLIT_STATE_RE = re.compile("(\S+)\((.*)\)")
 
 def split_state(molecule):
     """return formula, state"""
     #regexp extract molecule and state from H20(aq)
-    groups = re.search("(\S+)\((.*)\)", molecule)
+    groups = SPLIT_STATE_RE.search(molecule)
     if groups is None:
         raise Exception("Not possible to extract state from:" + molecule)
     formula = groups.group(1)
