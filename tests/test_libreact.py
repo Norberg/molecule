@@ -52,7 +52,7 @@ class TestReact(unittest.TestCase):
     def testReactorInternals(self):
         reactor = self.setupSimpleReactor()
         reactants = ["O(g)", "O(g)"]
-        find = reactor.find_reactions(reactants)
+        find = list(reactor.find_reactions(reactants))[0]
         self.assertEqual(find.reactants, ["O", "O"])    
         self.assertEqual(find.products, ["O2(g)"])    
         reaction = Reaction(find, reactants)

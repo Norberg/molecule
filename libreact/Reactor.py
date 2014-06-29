@@ -14,21 +14,38 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from libreact import Reaction
+from libreact.MultiMap import MultiMap, MultiMapEntry
+
+
+class ReactionEntryMapper:
+    def __init__(self, cml_reaction):
+        self.keys = cml_reaction.reactants
+        self.value = cml_reaction
 
 class Reactor:
-    def __init__(self, reactions):
-        self.reactions = reactions
+    def __init__(self, cml_reactions):
+        self.reactions = cml_reactions
+        self.reaction_map = MultiMap(cml_reactions, ReactionEntryMapper)
+ 
+    def find_all_reactions(self, reactants):
+        reactants = Reaction.list_without_state(reactants)
+        for reactant in reactants[:-1]:
+            try:
+                rs = self.reaction_map[reactant]
+            except KeyError:
+                continue
+
+            for r in rs:
+                if sublist_in_list(r.reactants, reactants):
+                    yield r
+
 
     def find_reactions(self, reactants):
         """ check if all elements needed for a reaction exists in
              in the reacting elements. 
-            Return the reaction if it exist otherwise None
+            Return the reactions, or empty set if none exists
         """
-        reactants = Reaction.list_without_state(reactants)
-        for reaction in self.reactions:
-            if sublist_in_list(reaction.reactants, reactants):
-                return reaction
-        return None
+        return set(self.find_all_reactions(reactants))
 
     def react(self, reactants, K = 298, trace = False):
         """ check if all elements needed for the reaction exists in
@@ -36,12 +53,29 @@ class Reactor:
             in the given temperature. 
             Return the reaction if it will occur otherwise None
         """
-        reactionCml = self.find_reactions(reactants)        
-        if reactionCml is None and trace:
+        reactionCmls = self.find_reactions(reactants)
+
+        if len(reactionCmls) == 0 and trace:
             print("No reaction found for this reactants")
-        elif reactionCml is None:
+        elif len(reactionCmls) == 0:
             return None
-        reaction = Reaction.Reaction(reactionCml, reactants)
+
+        reactions = list()
+        for reactionCml in reactionCmls:
+            r = Reaction.Reaction(reactionCml, reactants)
+            reactions.append((r.energyChange(K), r))
+        
+        reaction = min(reactions)[1]
+ 
+        if len(reactions) > 1 and trace:
+            print("Multiple possible reactions:")
+            for t in reactions:
+                r = t[1]
+                energy = t[0]
+                print("Reactants:", r.reactants,
+                      "Products:", r.products,
+                      "Energy:", energy)
+        
         if reaction.isSpontaneous(K):
             return reaction
         elif trace:
@@ -59,3 +93,4 @@ def sublist_in_list(sublist, superlist):
         if sublist.count(e) > superlist.count(e):
             return False
     return True
+

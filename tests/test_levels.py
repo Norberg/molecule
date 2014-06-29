@@ -93,7 +93,7 @@ class TestLevels(unittest.TestCase):
         H = Molecule("H+(g)", space, batch)
         H_ = Molecule("H+(g)", space, batch)
         collisions = createCollisionsMock(OH, Al, H, H_)
-        reaction = level1.react(collisions,[])    
+        reaction = level1.react(collisions,[])
         self.assertEqual(reaction.reactants, ['H+(g)', 'H+(g)'])    
         self.assertEqual(reaction.products, ['H2(g)'])
 
