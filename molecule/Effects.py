@@ -66,25 +66,20 @@ class Temperature(Effect):
         self.supported_attributes.append("temp")
 
 
-class Fire(Effect):
+class Fire(Temperature):
     """Fire effect"""
     def __init__(self, space, batch, pos, temp=1000):
         Temperature.__init__(self, space, batch, pos, "fire.png", "Fire", temp)
 
-class Cold(Effect):
+class Cold(Temperature):
     """Cold effect"""
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
-class Water_Beaker(pyglet.sprite.Sprite):
-    """Water_Beaker"""
+class Water_Beaker(Effect):
+    """Water Beaker"""
     def __init__(self, space, batch, pos):
-        img = pyglet_util.load_image("water-beaker.png")
-        group = RenderingOrder.background
-        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
-        self.name = "Water Beaker"
-        self.init_chipmunk(space)
-        self.set_pos(pos)
+        Effect.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
 
     def init_chipmunk(self,space):    
         body = pymunk.Body(pymunk.inf, pymunk.inf)
