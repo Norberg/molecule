@@ -76,11 +76,6 @@
      inkscape:connector-curvature="0"
      style="fill:#ffffff;fill-rule:evenodd;"
      transform="matrix(0.03737716,0,0,0.03737716,-12.703294,-44.980746)">
-    <animate
-       fill="freeze"
-       dur="5s"
-       to="#000000"
-       from="#FFFFFF" />
   </svg:path>
   <svg:path
      id="path3221"

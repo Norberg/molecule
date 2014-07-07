@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import glob
+import random
+import time
 import pyglet
 import pymunk
 from molecule import Config
@@ -58,13 +60,25 @@ class Effect(pyglet.sprite.Sprite):
 
     def react(self, element):
         pass
-        
+
+    def on_click(self, callback = None):
+        pass
+
+    def on_release(self, callback = None):
+        pass
+
+class Action(Effect):
+    def __init__(self, space, batch, pos, img_path, name):
+        Effect.__init__(self, space, batch, pos, img_path, name)
+        self.supported_attributes.append("action")
+        self.clicked = False
+        self.callback = None
+
 class Temperature(Effect):
     def __init__(self, space, batch, pos, img_path, name, temp):
         Effect.__init__(self, space, batch, pos, img_path, name)
         self.temp = temp
         self.supported_attributes.append("temp")
-
 
 class Fire(Temperature):
     """Fire effect"""
@@ -107,9 +121,6 @@ class Water_Beaker(Effect):
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def update(self):
-        pass
-    
     def react(self, molecule):
         ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
@@ -119,4 +130,47 @@ class Water_Beaker(Effect):
             return reaction
         elif Config.current.DEBUG:
             print("Water beaker didnt react with:", molecule.formula)
-            
+
+class Mining(Action):
+    ACTION_TIME = 3
+    FRAME_DURATION = 5
+    def __init__(self, space, batch, pos, mineral_list):
+        Action.__init__(self, space, batch, pos,
+                        "mining_animation/frame_0000.png","mining")
+        self.mineral_list = mineral_list
+        self.timer = None
+        self.current_frame = 0
+        self.current_frame_duration = self.FRAME_DURATION
+        self.frames = list()
+        for img in sorted(glob.glob("img/mining_animation/frame_*")):
+            self.frames.append(pyglet_util.load_image(img.split("img/")[1]))
+
+    def update(self):
+        if self.timer:
+            self.switch_frame()
+        if self.timer and self.timer < time.time():
+            self.perform_callback()
+            self.timer = None
+
+    def switch_frame(self):
+        self.current_frame_duration -= 1
+        if self.current_frame_duration == 0:
+            self.current_frame += 1
+            if self.current_frame >= len(self.frames):
+                self.current_frame = 0
+            self.image = self.frames[self.current_frame]
+            self.current_frame_duration = self.FRAME_DURATION
+
+    def perform_callback(self):
+            mineral = random.choice(self.mineral_list)
+            self.callback(mineral)
+
+    def on_click(self, callback):
+        self.clicked = True
+        self.callback = callback
+        self.timer = time.time() + self.ACTION_TIME
+
+    def on_release(self, callback = None):
+        self.clicked = False
+        self.timer = None
+        self.image = self.frames[0]

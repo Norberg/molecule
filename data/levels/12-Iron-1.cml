@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="SCl2(g)"/>
+    <molecule title="C2H4(g)"/>
+    <molecule title="C2H4(g)"/>
+    <molecule title="S8(g)"/>
+    <molecule title="Cl2(g)"/>
+  </moleculeList>
+  <effectList>
+	  <effect title="Mining" x2="200" y2="550">
+	    <molecule title="Fe2O3(s)"/>
+	    <molecule title="Fe3O4(s)"/>
+	  </effect>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Fe"/>
+  </victoryCondition>
+  <objective text="Create Elementary Fe "/>
+  <hint text="FeXOX + ?  => Fe"/>
+</level>

@@ -24,6 +24,7 @@ from molecule import Config
 from molecule import CollisionTypes
 from molecule import Effects
 from molecule import Gui
+from molecule import pyglet_util
 from libcml import Cml
 
 class Levels:
@@ -92,7 +93,7 @@ class Level:
             x = effect.x2
             y = effect.y2
             value = effect.value
-            
+            molecules = effect.molecules 
             if effect.title == "Fire":
                 fire = Effects.Fire(self.space, self.batch, (x,y), value)
                 new_effects.append(fire)
@@ -102,6 +103,9 @@ class Level:
             elif effect.title == "WaterBeaker":
                 water = Effects.Water_Beaker(self.space, self.batch, (x, y))
                 new_effects.append(water)
+            elif effect.title == "Mining":
+                mining = Effects.Mining(self.space, self.batch, (x, y), molecules)
+                new_effects.append(mining)
             else:
                 raise Exception("Effect not implemented:"+effect.title)
 
@@ -194,6 +198,18 @@ class Level:
             element.update()
         for area in self.areas:
             area.update()
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        def create_elements_cb(elements):
+            self.create_elements(elements, (x,y))
+        for action in self.areas:
+            if action.supports("action") and pyglet_util.clicked((x,y), action):
+                action.on_click(create_elements_cb)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        for action in self.areas:
+            if action.supports("action") and action.clicked == True:
+                action.on_release()
 
     def reset(self):
         self.__init__(self.cml, self.window)

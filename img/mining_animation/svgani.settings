@@ -1,0 +1,78 @@
+## SVGAni - A simple, manual SVG animation tool
+## Version 1.0 - 2009-05-21
+## 
+## For details about the necessary modifications to the SVG input file,
+## and the format of the svgani.settings file, please visit:
+## http://www.mbeckler.org/inkscape/svgani/
+##
+## Written by Matthew L Beckler - matthew at mbeckler dot org
+##
+## lines starting with '#' will be ignored.
+## Sections are denoted by [section_name].
+
+[general]
+## This is the input SVG filename:
+input_svg_filename: mining.svg
+
+## This is the base of the output filename, and will be appended with
+## a four-digit image number, followed by .png
+## Example: 'frame_' will become 'frame_0000.png', 'frame_0001.png', etc.
+output_png_basename: frame_
+
+## The size of the output images, in pixels.
+output_width: 256
+output_height: 256
+
+## Do you want the output images converted to gif?
+## (requires the ImageMagick utility 'convert')
+convert_to_gif = false
+
+## How many phases of animation. If your animation becomes more complex than
+## can be handled by creative use of the index variable, then you can have 
+## multiple phases. Each phase needed must have a corresponding section below
+## with names like [phase_0000], [phase_0001], etc.
+num_phases: 2
+
+## If enabled, svgani will draw a nice progress bar. If your terminal doesn't
+## support fancy ANSI terminal codes (most do), then you might want to disable
+## the progress bar.
+draw_progress: true 
+
+## If you need to use more fancy kinds of functions in your eval strings,
+## such as the math module, you can specify any required modules as a
+## space-separated list here. Leave it empty (but not commented-out) if
+## you don't need to import any extra modules.
+modules: math
+
+
+
+
+
+[phase_0000]
+## There is a variable called 'index'. These values control how index
+## is changed from one image to the next. Steps should be an integer,
+## but the other two can be either integers or decimals.
+index_start: 255
+index_end: 0
+steps: 2
+
+## Inside each phase's definition, the lines are of the following format:
+## search_string: replacement_string
+## All instances of search_string will be replaced with the result of calling
+## python's eval() function on replacement_string
+left_flash: "%02X%02X%02X" % (index,index,index)
+right_flash: "%02X%02X%02X" % (255,255,255)
+
+
+
+
+
+[phase_0001]
+## Phase index controls:
+index_start: 255
+index_end: 0
+steps: 2
+## Replacements to make:
+left_flash: "%02X%02X%02X" % (255,255,255)
+right_flash: "%02X%02X%02X" % (index, index, index)
+

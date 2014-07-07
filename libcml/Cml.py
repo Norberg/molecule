@@ -78,9 +78,10 @@ class Reaction:
         self.products = products
 
 class Effect:
-    def __init__(self, title = None, value = None, x2 = None, y2 = None):
+    def __init__(self, title = None, value = None, x2 = None, y2 = None, molecules = []):
         self.title = title
         self.value = value
+        self.molecules = molecules
         self.x2 = x2
         self.y2 = y2
 
@@ -170,6 +171,8 @@ class Level(Cml):
             effect.value = float(effect_tag.attrib["value"])
         effect.x2 = float(effect_tag.attrib["x2"])
         effect.y2 = float(effect_tag.attrib["y2"])
+        effect.molecules = self.parseMoleculeList(effect_tag)
+
         return effect
 
     def write(self, filename):

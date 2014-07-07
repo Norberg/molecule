@@ -21,3 +21,16 @@ loader = Loader("img", script_home=os.getcwd())
 def load_image(name):
     img = loader.image(name)
     return img
+
+def clicked(pos, sprite):
+    return pos_inside(pos, sprite.position, sprite.width, sprite.height)
+
+def pos_inside(pos, rec_pos, rec_width, rec_height):
+    x, y = pos
+    rec_x, rec_y = rec_pos
+    rec_X = rec_x + rec_width
+    rec_Y = rec_y + rec_height
+    return between(x, rec_x, rec_X) and between(y, rec_y, rec_Y)
+
+def between(a, b, B):
+    return a >= b and a <= B

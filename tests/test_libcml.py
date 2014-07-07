@@ -275,7 +275,13 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.victory_condition, ["H2O"])
         self.assertEqual(m.objective, "Create a water molecule")
         self.assertEqual(m.hint, "H + H + O => H2O")
- 
+
+    def testParseLevelWithMiningEffect(self):
+        m = Cml.Level()
+        m.parse("data/levels/12-Iron-1.cml")
+        self.assertEqual(m.effects[0].title, "Mining")
+        self.assertEqual(m.effects[0].molecules, ['Fe2O3(s)', 'Fe3O4(s)'])
+
     def testAllMolecules(self):
         for filename in glob.glob("data/molecule/*"):
             m = Cml.Molecule()

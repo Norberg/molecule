@@ -117,6 +117,7 @@ class Game(pyglet.window.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         self.handle_mouse_button_down(x, y)
+        self.level.on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_release(self, x, y, button, modifiers):
         if self.mouse_spring != None:
@@ -125,6 +126,7 @@ class Game(pyglet.window.Window):
             self.mouse_spring.b.molecule.set_dragging(False)
             self.space.remove(self.mouse_spring)
             self.mouse_spring = None
+        self.level.on_mouse_release(x, y, button, modifiers)
     
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         x,y = self.limit_pos_to_screen(x,y)
