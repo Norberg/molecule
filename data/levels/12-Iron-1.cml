@@ -1,21 +1,34 @@
 <?xml version="1.0"?>
 <level>
   <moleculeList>
-    <molecule title="SCl2(g)"/>
-    <molecule title="C2H4(g)"/>
-    <molecule title="C2H4(g)"/>
-    <molecule title="S8(g)"/>
-    <molecule title="Cl2(g)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
   </moleculeList>
   <effectList>
 	  <effect title="Mining" x2="200" y2="550">
 	    <molecule title="Fe2O3(s)"/>
 	    <molecule title="Fe3O4(s)"/>
 	  </effect>
+    <effect title="Fire" value="2300" x2="800" y2="130"/>
   </effectList>
   <victoryCondition>
     <molecule title="Fe"/>
+    <molecule title="Fe"/>
+    <molecule title="Fe"/>
+    <molecule title="Fe"/>
+    <molecule title="Fe"/>
   </victoryCondition>
-  <objective text="Create Elementary Fe "/>
+  <objective text="Create 5 Elementary Fe "/>
   <hint text="FeXOX + ?  => Fe"/>
 </level>

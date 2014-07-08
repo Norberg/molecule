@@ -233,4 +233,68 @@
       <molecule title="C2H7NO3S(l)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="CO(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CO"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="C(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Fe2O3"/>
+      <molecule title="Fe2O3"/>
+      <molecule title="Fe2O3"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="Fe3O4(s)"/>
+      <molecule title="Fe3O4(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Fe3O4"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="FeO(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="FeO"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="Fe(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
 </reactions>

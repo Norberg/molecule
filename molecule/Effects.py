@@ -42,8 +42,8 @@ class Effect(pyglet.sprite.Sprite):
         x, y = self.shape.body.position
         self.x = x - self.width/2
         self.y = y - self.height/2
-    
-    def init_chipmunk(self,space):    
+
+    def init_chipmunk(self,space):
         body = pymunk.Body(pymunk.inf, pymunk.inf)
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
         space.add(shape, body)
@@ -54,7 +54,7 @@ class Effect(pyglet.sprite.Sprite):
 
     def supports(self, attribute):
         return attribute in self.supported_attributes
-    
+
     def update(self):
         pass
 
@@ -95,7 +95,7 @@ class Water_Beaker(Effect):
     def __init__(self, space, batch, pos):
         Effect.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
 
-    def init_chipmunk(self,space):    
+    def init_chipmunk(self,space):
         body = pymunk.Body(pymunk.inf, pymunk.inf)
         walls = [pymunk.Segment(body, (-144,-320), (-144, 200), 10), #left
                  pymunk.Segment(body, (-144,-320), (280, -320), 10), #bottom
@@ -113,7 +113,7 @@ class Water_Beaker(Effect):
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
-    
+
     def set_pos(self, pos):
         OFFSET_X, OFFSET_Y = 60,-30
         self.shape.body.position = pos

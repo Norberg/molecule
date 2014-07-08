@@ -27,17 +27,17 @@ class Atom:
 
     @property
     def pos(self):
-        return (self.x, self.y)        
+        return (self.x, self.y)
 
     @property
     def x_str(self):
-        return str(self.x)    
+        return str(self.x)
     @property
     def y_str(self):
-        return str(self.y)    
+        return str(self.y)
     @property
     def z_str(self):
-        return str(self.z)    
+        return str(self.z)
 
 class Bond:
     def __init__(self, atomA = None, atomB = None, bonds = None):
@@ -45,7 +45,7 @@ class Bond:
         self.atomA = atomA
         self.atomB = atomB
         self.bonds = bonds
-    
+
     @property
     def atomRefs2(self):
         return self.atomA.id + " " + self.atomB.id
@@ -87,9 +87,9 @@ class Effect:
 
 class Cml:
     NS = "{http://www.xml-cml.org/schema}"
-        
+
     def treefind(self, xpath):
-        return self.xmlfind(self.tree, xpath)    
+        return self.xmlfind(self.tree, xpath)
 
     def xmlfind(self, document, xpath):
         element = document.find(xpath)
@@ -104,7 +104,7 @@ class Cml:
             elif part.tag.endswith("reactantList"):
                 reaction.reactants = self.parseMoleculeList(part)
         return reaction
-        
+
     def parseMoleculeList(self, moleculesTag):
         molecules = list()
         for molecule in moleculesTag:
@@ -112,7 +112,7 @@ class Cml:
         return molecules
     def writeReaction(self, reaction, parrentTag):
         if reaction is None:
-            return        
+            return
         tagReaction = etree.SubElement(parrentTag, "reaction")
         if reaction.products != None:
             tagProducts = etree.SubElement(tagReaction, "productList")
@@ -124,11 +124,11 @@ class Cml:
     def writeReactionMolecules(self, products, parrentTag):
         for product in products:
             etree.SubElement(parrentTag, "molecule", {"title":product})
-    
+
     def parseText(self, tagname):
         tag = self.treefind(tagname)
         return tag.attrib["text"]
-        
+
 
 class Level(Cml):
     MOLECULE_LIST = "moleculeList"
@@ -158,12 +158,12 @@ class Level(Cml):
 
         self.objective = self.parseText(self.OBJECTIVE)
         self.hint = self.parseText(self.HINT)
-    
+
     def parseEffectList(self, effect_list_tag):
         for effect_tag in effect_list_tag:
             effect = self.parseEffect(effect_tag)
             self.effects.append(effect)
-        
+
     def parseEffect(self, effect_tag):
         effect = Effect()
         effect.title = effect_tag.attrib["title"]
@@ -177,7 +177,7 @@ class Level(Cml):
 
     def write(self, filename):
         raise NotImplementedError
-    
+
 class Reactions(Cml):
     def __init__(self):
         self.tree = None
@@ -186,13 +186,13 @@ class Reactions(Cml):
     def parse(self, filename):
         self.tree = etree.parse(filename)
         self.parseReactions(self.tree.getroot())
-        
+
 
     def parseReactions(self, reactions):
         for reaction in reactions:
             r = self.parseReaction(reaction)
             self.reactions.append(r)
-    
+
     def empty_cml(self):
         reactions = etree.Element("reactions")
         return etree.ElementTree(reactions)
@@ -200,15 +200,15 @@ class Reactions(Cml):
     def write(self, filename):
         if self.tree is None:
             self.tree = self.empty_cml()
-        
+
         self.writeReactions()
-        self.tree.write(filename)        
+        self.tree.write(filename)
 
     def writeReactions(self):
         reactionsTag = self.tree.getroot()
         for reaction in self.reactions:
             self.writeReaction(reaction, reactionsTag)
-        
+
 
 class Molecule(Cml):
     ATOM_ARRAY = 'atomArray'
@@ -235,7 +235,7 @@ class Molecule(Cml):
 
     @property
     def atoms_sorted(self):
-        return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id)) 
+        return sorted(self.atoms.values(), key=lambda x:self.getDigits(x.id))
 
     @property
     def is_atom(self):
@@ -250,7 +250,7 @@ class Molecule(Cml):
             return self.states[statename]
         else:
             return None
-    
+
     def printer(self):
         print("Atoms:")
         for atom in self.atoms.values():
@@ -280,7 +280,7 @@ class Molecule(Cml):
     def normalize_pos(self):
         """ normalize position to be as close to (0,0,[0]) as possible """
         adj_x, adj_y, adj_z = self.min_pos()
-        
+
         for atom in self.atoms.values():
             atom.x -= adj_x
             atom.y -= adj_y
@@ -294,7 +294,7 @@ class Molecule(Cml):
         self.parseBonds(self.treefind(self.BOND_ARRAY))
         self.parseStates(self.treefind(self.STATES))
         self.parseProperties(self.treefind(self.PROPERTY))
-        
+
     def parseAtoms(self,atoms):
         for atom in atoms:
             new = Atom()
@@ -311,9 +311,9 @@ class Molecule(Cml):
                 new.formalCharge = int(atom.attrib["formalCharge"])
             except KeyError:
                 new.formalCharge = 0
-                pass    
+                pass
             self.atoms[new.id] = new
-            
+
     def parseBonds(self,bonds):
         if bonds == None:
             return
@@ -333,14 +333,14 @@ class Molecule(Cml):
             new_state = State(name)
             self.states[name] = new_state
             for property in state:
-                title = property.attrib["title"] 
+                title = property.attrib["title"]
                 if title == "entropy":
                     new_state.entropy = float(property[0].text)
                 elif title == "enthalpy":
                     new_state.enthalpy = float(property[0].text)
                 elif title == "ions":
-                    new_state.ions = self.parseIons(property) 
-    
+                    new_state.ions = self.parseIons(property)
+
     def parseProperties(self, properties):
         if properties == None:
             return
@@ -367,13 +367,13 @@ class Molecule(Cml):
     def write(self, filename):
         if self.tree is None:
             self.tree = self.empty_cml()
-        
+
         self.writeAtoms()
         self.writeBonds()
         self.writeStates()
         self.writePropertys()
-        self.tree.write(filename)        
-    
+        self.tree.write(filename)
+
     def writeBonds(self):
         bondArray = self.treefind(self.BOND_ARRAY)
         if bondArray == None:
@@ -427,7 +427,7 @@ class Molecule(Cml):
         scalar = etree.SubElement(tagEnthalpy, "scalar",
                                   {"units":"units:molar_energy"})
         scalar.text = str(state.enthalpy)
-    
+
     def writeEntropy(self,state, stateTag):
         if state.entropy is None:
             return
@@ -436,16 +436,16 @@ class Molecule(Cml):
         scalar = etree.SubElement(tagEntropy, "scalar",
                                   {"units":"units:molar_energy"})
         scalar.text = str(state.entropy)
-    
+
     def writeIons(self, ions, parrentTag):
         if ions is None or len(ions) == 0:
             return
         r = Reaction(None, ions)
         tagIons = etree.SubElement(parrentTag, "property",
                                        {"title": "ions"})
-        
+
         self.writeReaction(r, tagIons)
-    
+
     def writePropertys(self):
         propertys = self.treefind(self.PROPERTY)
         if propertys is None:
@@ -459,4 +459,4 @@ class Molecule(Cml):
         for name, value in self.property.items():
             propertyTag = etree.SubElement(propertys, "property",
                                            {"title":name})
-            propertyTag.text = str(value)    
+            propertyTag.text = str(value)

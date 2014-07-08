@@ -26,7 +26,7 @@ class TestReact(unittest.TestCase):
         r1 = Cml.Reaction(["O","H+"], ["OH-(aq)"])
         r2 = Cml.Reaction(["O","O"], ["O2(g)"])
         return Reactor([r1,r2])
-    
+
     def setupRealReactor(self):
         cml = Cml.Reactions()
         cml.parse("data/reactions.cml")
@@ -34,15 +34,17 @@ class TestReact(unittest.TestCase):
         return reactor
 
     def addState(self, stateless):
+        default_order = ["Aqueous","Gas", "Liquid", "Solid"]
         statefull = list()
         for s in stateless:
             m = CachedCml.getMolecule(s)
-            for k in  m.states.values():
-                state = k.short
-                break
+            for k in default_order:
+                if k in m.states:
+                    state = m.states[k].short
+                    break
             statefull.append(s+"(%s)"%state)
         return statefull
-    
+
     def testSublistInList(self):
         self.assertTrue(sublist_in_list("abcd", "abcdefg"))
         self.assertTrue(sublist_in_list("abcd", "bdeafbcg"))
@@ -53,16 +55,16 @@ class TestReact(unittest.TestCase):
         reactor = self.setupSimpleReactor()
         reactants = ["O(g)", "O(g)"]
         find = list(reactor.find_reactions(reactants))[0]
-        self.assertEqual(find.reactants, ["O", "O"])    
-        self.assertEqual(find.products, ["O2(g)"])    
+        self.assertEqual(find.reactants, ["O", "O"])
+        self.assertEqual(find.products, ["O2(g)"])
         reaction = Reaction(find, reactants)
         self.assertAlmostEqual(reaction.deltaEntropy(), -0.117)
         self.assertAlmostEqual(reaction.deltaEnthalpy(), -498)
-        self.assertTrue(reaction.isSpontaneous())    
-        self.assertTrue(reaction.isSpontaneous(K = 0))    
-        self.assertFalse(reaction.isSpontaneous(K = 5000))    
+        self.assertTrue(reaction.isSpontaneous())
+        self.assertTrue(reaction.isSpontaneous(K = 0))
+        self.assertFalse(reaction.isSpontaneous(K = 5000))
 
-    def testSimpleReaction(self):    
+    def testSimpleReaction(self):
         reactor = self.setupSimpleReactor()
         reaction = reactor.react(["O(g)", "O(g)"])
         self.assertTrue(reaction.isSpontaneous())
@@ -89,36 +91,54 @@ class TestReact(unittest.TestCase):
         self.assertEqual(reaction.reactants, ["H+(g)", "H+(g)"])
 
     def testPerformAllReactions(self):
+        unsupported_reactions = [["C2H7NO3S(l)"]]
+        tempranges = [0, 298, 1000, 2000, 4000, 8000, 50]
         reactor = self.setupRealReactor()
         for reaction in reactor.reactions:
             reactants = self.addState(reaction.reactants)
             expected_products = reaction.products
-            result = reactor.react(reactants)
-            #some reactions depends of temperature and therfore returns None
-            if result is not None:
-                self.assertEqual(result.products, expected_products)
-                self.assertEqual(result.reactants, reactants)
+            result = None
+            temp = None
+            for temp in tempranges:
+                result = reactor.react(reactants, temp)
+                if result is not None and expected_products == result.products:
+                    break # have found a temp where the expected reaction occurs
+            if expected_products in unsupported_reactions:
+                continue
+            msg = "Expected reaction did not occur" + str(reactants) + "->" + \
+                  str(expected_products) + " at:" + str(temp) + "K"
+            self.assertNotEqual(result, None, msg)
+            self.assertEqual(result.products, expected_products)
+            self.assertEqual(result.reactants, reactants)
 
     def testPidgenonProcess(self):
         reactor = self.setupRealReactor()
         reaction = reactor.react(["Si(s)", "MgO(s)", "MgO(s)"], K=2300)
         self.assertEqual(reaction.products, ["SiO2(s)", "Mg(g)", "Mg(g)"])
         self.assertEqual(reaction.reactants, ["Si(s)", "MgO(s)", "MgO(s)"])
-    
+
     def testSulfurDichloride(self):
         reactor = self.setupRealReactor()
         reaction = reactor.react(["S2Cl2(g)", "Cl2(g)"], trace=True)
         self.assertEqual(reaction.products, ["SCl2(g)", "SCl2(g)"])
         self.assertEqual(reaction.reactants, ["S2Cl2(g)", "Cl2(g)"])
-        
+
     def testSulfurMustard(self):
         reactor = self.setupRealReactor()
         reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], trace=True)
         self.assertEqual(reaction.products, ["C4H8Cl2S(g)"])
         self.assertEqual(reaction.reactants, ["SCl2(g)", "C2H4(g)", "C2H4(g)"])
-    
+
     def testAmmonia(self):
         reactor = self.setupRealReactor()
         reaction = reactor.react(["NH3(g)", "H2O(g)"], trace=True, K=250)
         self.assertEqual(reaction.products, ["NH4+(aq)", "OH-(aq)"])
         self.assertEqual(reaction.reactants, ["NH3(g)", "H2O(g)"])
+
+    def testIron(self):
+        reactor = self.setupRealReactor()
+        reaction = reactor.react(["Fe3O4(s)", "CO(g)"],
+                                  K=700)
+        self.assertEqual(reaction.products, ['FeO(s)', 'FeO(s)', 'FeO(s)',
+                                             'CO2(g)'])
+        self.assertEqual(reaction.reactants, ["Fe3O4(s)","CO(g)"])
