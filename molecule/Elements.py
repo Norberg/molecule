@@ -13,8 +13,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import random
 import math
+import random
+import time
 
 import pyglet
 from pyglet import gl
@@ -33,12 +34,13 @@ DEFAULT_SIZE = 32.0
 SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE
 SPRITE_RADIUS = SPRITE_SIZE/2
 BOND_LENGTH_FACTOR = 1.4
-ATOM_SPACE = SPRITE_SIZE / 1.5 
+ATOM_SPACE = SPRITE_SIZE / 1.5
 
 class Molecule:
     def __init__(self, formula_with_state, space, batch, pos=None, render_only=False):
         self.space = space
         self.batch = batch
+        self.creation_time = time.time()
         formula, state = Reaction.split_state(formula_with_state)
         self.formula = formula
         self.cml = CachedCml.getMolecule(formula)
@@ -47,7 +49,7 @@ class Molecule:
         if self.current_state is None and render_only:
             self.current_state = Cml.State("Gas")
         elif self.current_state is None:
-            raise Exception("Did not find state for:" + formula_with_state 
+            raise Exception("Did not find state for:" + formula_with_state
                     + " existing states are:" + str(self.cml.states.keys()))
         if pos is None:
             pos = (random.randint(10, 600), random.randint(10, 400))
@@ -56,7 +58,7 @@ class Molecule:
 
     def __repr__(self):
         return "Molecule<%s>" % (self.state_formula)
-            
+
     @property
     def enthalpy(self):
         """Return enthalpy(aka H) for current state"""
@@ -92,12 +94,12 @@ class Molecule:
             return False
         else:
             self.current_state = state
-            return True    
-    
+            return True
+
     def to_aqueous(self):
         if self.try_change_state("aq"):
             return self.state.ions
-    
+
     def create_atoms(self):
         self.atoms = dict()
         for atom in self.cml.atoms.values():
@@ -113,7 +115,7 @@ class Molecule:
         for cml_bond in self.cml.bonds:
             atomA = self.atoms[cml_bond.atomA.id]
             atomB = self.atoms[cml_bond.atomB.id]
-            bond = Bond(cml_bond, atomA, atomB, self.space, self.batch) 
+            bond = Bond(cml_bond, atomA, atomB, self.space, self.batch)
             self.bonds.append(bond)
 
     def set_dragging(self, value):
@@ -123,10 +125,13 @@ class Molecule:
             else:
                 atom.shape.layers = CollisionTypes.LAYER_ALL
 
+    def can_react(self):
+        return self.creation_time + 2 < time.time()
+
     def update(self):
         for atom in self.atoms.values():
             atom.update()
-        
+
         for bond in self.bonds:
             bond.update()
 
@@ -139,7 +144,7 @@ class Molecule:
             atom.delete()
         self.atoms = dict()
 
-        
+
 class Bond:
     def __init__(self, cml_bond, atomA, atomB, space, batch):
         self.joints = list()
@@ -158,14 +163,14 @@ class Bond:
         self.space.add(slide_joint)
 
         if self.cml_bond.bonds > 0:
-            self.vertex = self.create_vertex() 
-            
+            self.vertex = self.create_vertex()
+
             groove_joint_a = self.create_groove_joint(atomA, atomB)
             groove_joint_b = self.create_groove_joint(atomB, atomA)
-            
+
             self.joints.append(groove_joint_a)
             self.joints.append(groove_joint_b)
-            
+
             self.space.add(groove_joint_a)
             self.space.add(groove_joint_b)
 
@@ -182,7 +187,7 @@ class Bond:
         if bond.bonds != 0:
             bond_lenght *= BOND_LENGTH_FACTOR
         return bond_lenght
-    
+
     def create_parallell_lines(self, pv1, pv2, nr):
         line = (pv1.x, pv1.y, pv2.x, pv2.y)
         if nr == 1:
@@ -199,13 +204,13 @@ class Bond:
             return line1 + line + line3
         raise Exception("Unsupported nr of lines",nr)
 
-    
-    def create_parallell_factor(self, pv1, pv2, k):    
+
+    def create_parallell_factor(self, pv1, pv2, k):
         if pv2.x - pv1.x != 0.0:
             v = math.atan((pv2.y-pv1.y)/(pv2.x-pv1.x))
         else:
             v = 0
-        k_x = k * math.sin(v) 
+        k_x = k * math.sin(v)
         k_y = k * -math.cos(v)
         return k_x, k_y
 
@@ -226,7 +231,7 @@ class Bond:
         if self.vertex is not None:
             pv1 = self.joints[0].a.position
             pv2 = self.joints[0].b.position
-            line = self.create_parallell_lines(pv1,pv2,self.cml_bond.bonds) 
+            line = self.create_parallell_lines(pv1,pv2,self.cml_bond.bonds)
             self.vertex.vertices = line
 
     def delete(self):
@@ -253,9 +258,9 @@ class Atom(pyglet.sprite.Sprite):
         self.active = False
         self.init_chipmunk()
         self.move(pos)
-    
+
     def init_chipmunk(self):
-        weight = self.cml.property["Weight"]    
+        weight = self.cml.property["Weight"]
         radius = self.scale * SPRITE_RADIUS
         body = pymunk.Body(weight,moment = pymunk.moment_for_circle(weight, 0, radius))
         body.velocity_limit = 1000
@@ -266,7 +271,7 @@ class Atom(pyglet.sprite.Sprite):
         shape.layer = CollisionTypes.LAYER_ALL
         shape.molecule = self.molecule
         self.space.add(body, shape)
-        
+
         body.apply_impulse(self.create_force_vector())
         self.body = body
         self.shape = shape
@@ -290,7 +295,7 @@ class Atom(pyglet.sprite.Sprite):
             charge_str = "+" + str(charge)
         else:
             charge_str = str(charge)
-            
+
         e = pyglet_util.load_image("e" + charge_str + ".png")
         group = RenderingOrder.charge
         self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
@@ -299,10 +304,10 @@ class Atom(pyglet.sprite.Sprite):
     def get_only_atom_symbol(self, symbol):
         """ returns the atom symbol without any electric charge """
         return symbol.split("-")[0].split("+")[0]
-    
+
     def move(self, pos):
         self.body.position = pos
-        
+
     def update(self):
         x, y = self.body.position
         self.x = x - self.width/2

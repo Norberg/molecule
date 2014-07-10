@@ -39,7 +39,7 @@ class Levels:
         #files that contains # is disabled
         self.levels = [name for name in filenames if not '#' in name]
         self.levels.sort()
-    
+
     def next_level(self):
         self.current_level += 1
         if self.current_level >= len(self.levels):
@@ -65,7 +65,7 @@ class Level:
         self.init_elements()
         self.init_effects()
         self.init_gui()
-    
+
     def init_chipmunk(self):
         self.space = pymunk.Space()
         self.space.idle_speed_threshold = 0.5
@@ -82,8 +82,8 @@ class Level:
             boundary.elasticity = 0.95
             boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
         self.space.add(screen_boundaries)
-    
-    def init_elements(self):    
+
+    def init_elements(self):
         self.elements = Universe.create_elements(self.space, self.cml.molecules,
                                           self.batch)
 
@@ -93,7 +93,7 @@ class Level:
             x = effect.x2
             y = effect.y2
             value = effect.value
-            molecules = effect.molecules 
+            molecules = effect.molecules
             if effect.title == "Fire":
                 fire = Effects.Fire(self.space, self.batch, (x,y), value)
                 new_effects.append(fire)
@@ -128,10 +128,10 @@ class Level:
                 #each atom in the molecule can have 1 entry in the collision
                 #map, make sure that the molecule is only added once.
                 molecule = collision["shape"].molecule
-                if not molecule in molecules:
+                if not molecule in molecules and molecule.can_react():
                     molecules.append(molecule)
-        return molecules    
-    
+        return molecules
+
     def is_molecule_part_of_reactants(self, molecule, reactants):
         """
         check if the molecule is part of the reactants,
@@ -150,7 +150,7 @@ class Level:
             if self.is_molecule_part_of_reactants(molecule, reactants):
                 molecules.append(molecule)
         return molecules
-        
+
     def react(self, collisions, reacting_areas):
         collidingMolecules = self.get_colliding_molecules(collisions)
         reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
@@ -161,8 +161,8 @@ class Level:
         for molecule in reactingMolecules:
             molecule.delete()
         self.create_elements(reaction.products, position)
-        self.check_victory()    
-    
+        self.check_victory()
+
     def element_collision(self, space, arbiter):
         """ Called if two elements collides"""
         a,b = arbiter.shapes
@@ -170,7 +170,7 @@ class Level:
         collisions = space.nearest_point_query(a.body.position, 100)
         reaction = self.react(collisions, reacting_areas)
         if reaction != None:
-            key = 1 # use 1 as key so only one callback per iteration can trigger 
+            key = 1 # use 1 as key so only one callback per iteration can trigger
             space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
 
     def effect_reaction(self, space, arbiter):
@@ -181,8 +181,8 @@ class Level:
         reaction = effect.react(molecule)
         collisions = [{"shape" : a}]
         if reaction != None:
-            key = 1 # use 1 as key so only one callback per iteration can trigger 
-            space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)    
+            key = 1 # use 1 as key so only one callback per iteration can trigger
+            space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)
         return False
 
     def get_affecting_areas(self, position):
@@ -219,7 +219,7 @@ class Level:
         for element in self.elements:
             if element.formula in to_check:
                 to_check.remove(element.formula)
-        
+
         if len(to_check) == 0:
             self.victory = True
             return True
