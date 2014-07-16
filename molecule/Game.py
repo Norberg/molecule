@@ -42,6 +42,7 @@ class Game(pyglet.window.Window):
         self.init_pyglet()
         self.init_pymunk()
         self.DEBUG_GRAPHICS = False
+        self.level = None
         self.start()
 
 
@@ -62,7 +63,6 @@ class Game(pyglet.window.Window):
 
     def start(self):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
-        self.fps_display = pyglet.clock.ClockDisplay()
         self.levels = Levels("data/levels", Config.current.level, window=self)
         self.switch_level() 
         pyglet.clock.schedule_interval(self.update, 1/100.0)
@@ -77,15 +77,17 @@ class Game(pyglet.window.Window):
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
     
     def on_draw(self):
+        pyglet.clock.tick()
         self.clear()
         self.level.update()
         self.batch.draw()
         if self.DEBUG_GRAPHICS:
             pymunk.pyglet_util.draw(self.space)
-        self.fps_display.draw()
     
     def switch_level(self, level=None):
         """ Switch to level, if level=None switch to next level"""
+        if self.level is not None:
+            self.level.delete()
         if level is None:
             level = self.levels.next_level()
             self.run_level(level)

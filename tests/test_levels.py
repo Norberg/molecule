@@ -174,8 +174,11 @@ class VerticeMock():
         self.colors = list()
 
 class WindowMock():
+    def __init__(self):
+        self.width = 1024
+        self.height = 768
     def get_size(self):
-        return (1024,768)
+        return (self.width, self.height)
 
-    def push_handlers(self, arg):
+    def push_handlers(self, *arg, **kwargs):
         pass

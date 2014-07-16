@@ -2,9 +2,9 @@
     "font": "Arial",
     "font_size": 12,
     "font_size_small": 10,
-    "gui_color": [105, 108, 201, 255],
+    "gui_color": [255, 255, 255, 255],
     "disabled_color": [160, 160, 160, 255],
-    "text_color": [255, 255, 255, 255],
+    "text_color": [0, 0, 0, 255],
     "highlight_color": [255, 0, 0, 64],
     "focus_color": [255, 255, 255, 64],
     "button": {
@@ -78,7 +78,7 @@
         "knob": {
             "image": {
                 "source": "vscrollbar.png",
-                "region": [0, 16, 16, 16],
+                "region": [0, 0, 16, 16],
                 "frame": [0, 6, 16, 4],
                 "padding": [0, 0, 0, 0]
             },
@@ -87,7 +87,7 @@
         "bar": {
             "image": {
                 "source": "vscrollbar.png",
-                "region": [0, 64, 16, 16]
+                "region": [0, 16, 16, 16]
             },
             "padding": [0, 0, 0, 0]
         }

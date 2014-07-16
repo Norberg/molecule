@@ -52,7 +52,7 @@ class Molecule:
             raise Exception("Did not find state for:" + formula_with_state
                     + " existing states are:" + str(self.cml.states.keys()))
         if pos is None:
-            pos = (random.randint(10, 600), random.randint(10, 400))
+            pos = (random.randint(10, 600), random.randint(200, 500))
         self.pos = pos
         self.create_atoms()
 

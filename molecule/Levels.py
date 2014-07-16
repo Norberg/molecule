@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import glob
 import math
+import time
 
 import pyglet
 import pymunk
@@ -25,6 +26,7 @@ from molecule import CollisionTypes
 from molecule import Effects
 from molecule import Gui
 from molecule import pyglet_util
+from molecule import HUD
 from libcml import Cml
 
 class Levels:
@@ -61,6 +63,8 @@ class Level:
         self.victory = False
         self.window = window
         self.batch = pyglet.graphics.Batch()
+        self.start_time = time.time()
+        self.points = 0
         self.init_chipmunk()
         self.init_elements()
         self.init_effects()
@@ -71,12 +75,16 @@ class Level:
         self.space.idle_speed_threshold = 0.5
         thickness = 1000
         offset = thickness
-        max_x, max_y = map(sum, zip(self.window.get_size(),(offset,offset)))
+        game_area = self.window.get_size()
+
+        max_x, max_y = map(sum, zip(game_area,(offset,offset)))
+        hud_x = max_x - 214
+        hud_y = offset - 134
         screen_boundaries = [
-          pymunk.Segment(self.space.static_body, (-offset,-offset), (max_x, -offset), thickness),
+          pymunk.Segment(self.space.static_body, (-offset, -hud_y), (max_x, -hud_y), thickness),
           pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thickness),
           pymunk.Segment(self.space.static_body, (-offset, max_y), (max_x, max_y), thickness),
-          pymunk.Segment(self.space.static_body, (max_x, max_y), (max_x, -offset), thickness)
+          pymunk.Segment(self.space.static_body, (hud_x, max_y), (hud_x, -offset), thickness)
                 ]
         for boundary in screen_boundaries:
             boundary.elasticity = 0.95
@@ -112,10 +120,7 @@ class Level:
         self.areas = new_effects
 
     def init_gui(self):
-        chapters = [("Hint", self.cml.hint)]
-        Gui.create_folding_description(self.window,self.batch, "Objective",
-                                      self.cml.objective, chapters)
-
+        self.hud = HUD.HUD(self.window, self.batch)
 
     def create_elements(self, elements, pos = None):
         self.elements.extend(Universe.create_elements(self.space, elements,
@@ -212,6 +217,7 @@ class Level:
                 action.on_release()
 
     def reset(self):
+        self.delete()
         self.__init__(self.cml, self.window)
 
     def check_victory(self):
@@ -225,3 +231,12 @@ class Level:
             return True
         else:
             return False
+
+    def get_time(self):
+        return time.time() - self.start_time
+
+    def get_points(self):
+        return self.points
+
+    def delete(self):
+        self.hud.delete()
