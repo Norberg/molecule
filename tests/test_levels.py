@@ -179,6 +179,7 @@ class WindowMock():
         self.height = 768
     def get_size(self):
         return (self.width, self.height)
-
     def push_handlers(self, *arg, **kwargs):
+        pass
+    def set_handlers(self, *arg, **kwargs):
         pass

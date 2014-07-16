@@ -46,6 +46,9 @@ class Levels:
         self.current_level += 1
         if self.current_level >= len(self.levels):
             return None
+        return self.get_current_level()
+
+    def get_current_level(self):
         path = self.levels[self.current_level]
         cml = Cml.Level()
         cml.parse(path)
@@ -66,6 +69,7 @@ class Level:
         self.start_time = time.time()
         self.points = 0
         self.init_chipmunk()
+        self.init_pyglet()
         self.init_elements()
         self.init_effects()
         self.init_gui()
@@ -90,6 +94,17 @@ class Level:
             boundary.elasticity = 0.95
             boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
         self.space.add(screen_boundaries)
+        self.mouse_spring = None
+        self.mouse_body = pymunk.Body()
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,
+                                         CollisionTypes.ELEMENT,
+                                         post_solve=self.element_collision)
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,
+                                         CollisionTypes.EFFECT,
+                                         begin=self.effect_reaction)
+
+    def init_pyglet(self):
+        self.window.set_handlers(self)
 
     def init_elements(self):
         self.elements = Universe.create_elements(self.space, self.cml.molecules,
@@ -197,29 +212,6 @@ class Level:
             if shape.collision_type == CollisionTypes.EFFECT:
                 yield shape.effect
 
-    def update(self):
-        """Update pos of all included elements"""
-        for element in self.elements:
-            element.update()
-        for area in self.areas:
-            area.update()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        def create_elements_cb(elements):
-            self.create_elements(elements, (x,y))
-        for action in self.areas:
-            if action.supports("action") and pyglet_util.clicked((x,y), action):
-                action.on_click(create_elements_cb)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        for action in self.areas:
-            if action.supports("action") and action.clicked == True:
-                action.on_release()
-
-    def reset(self):
-        self.delete()
-        self.__init__(self.cml, self.window)
-
     def check_victory(self):
         to_check = list(self.cml.victory_condition)
         for element in self.elements:
@@ -238,5 +230,83 @@ class Level:
     def get_points(self):
         return self.points
 
+    def limit_pos_to_screen(self, x, y):
+        x = max(0,x)
+        y = max(0,y)
+        w, h = self.window.get_size()
+        x = min(w,x)
+        y = min(h,y)
+        return x,y
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.handle_element_pressed(x, y)
+        def create_elements_cb(elements):
+            self.create_elements(elements, (x,y))
+        for action in self.areas:
+            if action.supports("action") and pyglet_util.clicked((x,y), action):
+                action.on_click(create_elements_cb)
+
+    def handle_element_pressed(self, x, y):
+        if self.mouse_spring != None:
+            self.handle_element_released(None, None, None, None)
+        self.mouse_body.position = (x, y)
+        clicked = self.space.nearest_point_query_nearest((x,y), 16)
+        if (clicked != None and
+            clicked["shape"].collision_type == CollisionTypes.ELEMENT and
+            clicked["shape"].molecule.draggable):
+            clicked = clicked["shape"]
+            clicked.molecule.set_dragging(True)
+            rest_length = self.mouse_body.position.get_distance(clicked.body.position)
+            self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
+            self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+            clicked.body.mass /= 50
+            self.space.add(self.mouse_spring)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.handle_element_released(x, y, button, modifiers)
+        for action in self.areas:
+            if action.supports("action") and action.clicked == True:
+                action.on_release()
+
+    def handle_element_released(self, x, y, button, modifiers):
+        if self.mouse_spring != None:
+            self.mouse_spring.b.mass *= 50
+            self.mouse_spring.b.velocity = (0,0)
+            self.mouse_spring.b.molecule.set_dragging(False)
+            self.space.remove(self.mouse_spring)
+            self.mouse_spring = None
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        x,y = self.limit_pos_to_screen(x,y)
+        self.mouse_body.position = (x, y)
+
+    def on_key_press(self, symbol, modifiers):
+        if symbol == pyglet.window.key.M:
+            print("dumping memory..")
+            from meliae import scanner
+            scanner.dump_all_objects("memory.dump")
+        elif symbol == pyglet.window.key.ESCAPE:
+                self.window.close()
+        elif symbol == pyglet.window.key.S:
+            Gui.create_popup(self.window, self.batch, "Skipping level, Cheater!",
+                             on_escape=self.window.switch_level)
+        elif symbol == pyglet.window.key.R:
+            self.window.reset_level()
+        elif symbol == pyglet.window.key.D:
+            self.window.DEBUG_GRAPHICS = not self.window.DEBUG_GRAPHICS
+
+    def update(self):
+        self.space.step(1/120.0)
+        if self.victory:
+            Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
+                             on_escape=self.window.switch_level)
+            self.victory = False
+            return
+        for element in self.elements:
+            element.update()
+        for area in self.areas:
+            area.update()
+
     def delete(self):
+        self.window.remove_handlers(self)
         self.hud.delete()
