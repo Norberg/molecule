@@ -90,8 +90,8 @@ class Cold(Temperature):
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
-class Water_Beaker(Effect):
-    """Water Beaker"""
+class WaterBeaker(Effect):
+    """WaterBeaker"""
     def __init__(self, space, batch, pos):
         Effect.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
 
@@ -174,3 +174,27 @@ class Mining(Action):
         self.clicked = False
         self.timer = None
         self.image = self.frames[0]
+
+def create_effects(space, batch, effects):
+    new_effects = list()
+    for effect in effects:
+        x = effect.x2
+        y = effect.y2
+        value = effect.value
+        molecules = effect.molecules
+        if effect.title == "Fire":
+            fire = Fire(space, batch, (x,y), value)
+            new_effects.append(fire)
+        elif effect.title == "Cold":
+            cold = Cold(space, batch, (x,y), value)
+            new_effects.append(cold)
+        elif effect.title == "WaterBeaker":
+            water = WaterBeaker(space, batch, (x, y))
+            new_effects.append(water)
+        elif effect.title == "Mining":
+            mining = Mining(space, batch, (x, y), molecules)
+            new_effects.append(mining)
+        else:
+            raise Exception("Effect not implemented:" + effect.title)
+
+    return new_effects

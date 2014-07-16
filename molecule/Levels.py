@@ -111,28 +111,7 @@ class Level:
                                           self.batch)
 
     def init_effects(self):
-        new_effects = list()
-        for effect in self.cml.effects:
-            x = effect.x2
-            y = effect.y2
-            value = effect.value
-            molecules = effect.molecules
-            if effect.title == "Fire":
-                fire = Effects.Fire(self.space, self.batch, (x,y), value)
-                new_effects.append(fire)
-            elif effect.title == "Cold":
-                cold = Effects.Cold(self.space, self.batch, (x,y), value)
-                new_effects.append(cold)
-            elif effect.title == "WaterBeaker":
-                water = Effects.Water_Beaker(self.space, self.batch, (x, y))
-                new_effects.append(water)
-            elif effect.title == "Mining":
-                mining = Effects.Mining(self.space, self.batch, (x, y), molecules)
-                new_effects.append(mining)
-            else:
-                raise Exception("Effect not implemented:"+effect.title)
-
-        self.areas = new_effects
+        self.areas = Effects.create_effects(self.space, self.batch, self.cml.effects)
 
     def init_gui(self):
         self.hud = HUD.HUD(self.window, self.batch)
