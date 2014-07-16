@@ -33,6 +33,9 @@ class Game(pyglet.window.Window):
         resizable = Config.current.resizable
         width = Config.current.width
         height = Config.current.height
+        if fullscreen:
+            width = None
+            height = None
         super(Game, self).__init__(caption="Molecule", config=config,
             vsync=True, resizable=resizable, fullscreen=fullscreen,
             width=width, height=height)
