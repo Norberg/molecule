@@ -26,15 +26,18 @@ from libreact import Reaction
 from libcml import Cml
 
 
-class Effect(pyglet.sprite.Sprite):
-    """Effect base class, draw sprite and act as sensor"""
-    def __init__(self, space, batch, pos, img_path, name):
-        group = RenderingOrder.background
-        img = pyglet_util.load_image(img_path)
-        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+class Effect:
+    """Effect base class, act as a sensor"""
+    def __init__(self, space = None, width = None, height = None, pos = None,
+            name = None):
         self.name = name
+        if width != None:
+            self.width = width
+        if height != None:
+            self.height = height
         self.init_chipmunk(space)
-        self.set_pos(pos)
+        if pos != None:
+            self.set_pos(pos)
         self.supported_attributes = list()
 
     def set_pos(self, pos):
@@ -52,6 +55,11 @@ class Effect(pyglet.sprite.Sprite):
         self.shape.sensor = True
         self.shape.effect = self
 
+    def clicked(self, pos):
+        bp = self.shape.body.position
+        position = (bp.x - self.width / 2, bp.y - self.height / 2)
+        return pos_inside(pos, position, self.width, self.height)
+
     def supports(self, attribute):
         return attribute in self.supported_attributes
 
@@ -67,16 +75,26 @@ class Effect(pyglet.sprite.Sprite):
     def on_release(self, callback = None):
         pass
 
-class Action(Effect):
+
+class EffectSprite(pyglet.sprite.Sprite, Effect):
+    """Effect base class + sprite"""
     def __init__(self, space, batch, pos, img_path, name):
-        Effect.__init__(self, space, batch, pos, img_path, name)
+        group = RenderingOrder.background
+        img = pyglet_util.load_image(img_path)
+        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+        Effect.__init__(self, space = space, name = name, pos = pos)
+
+
+class Action(EffectSprite):
+    def __init__(self, space, batch, pos, img_path, name):
+        EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.supported_attributes.append("action")
-        self.clicked = False
+        self.is_clicked = False
         self.callback = None
 
-class Temperature(Effect):
+class Temperature(EffectSprite):
     def __init__(self, space, batch, pos, img_path, name, temp):
-        Effect.__init__(self, space, batch, pos, img_path, name)
+        EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.temp = temp
         self.supported_attributes.append("temp")
 
@@ -90,10 +108,10 @@ class Cold(Temperature):
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
-class WaterBeaker(Effect):
+class WaterBeaker(EffectSprite):
     """WaterBeaker"""
     def __init__(self, space, batch, pos):
-        Effect.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
+        EffectSprite.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
 
     def init_chipmunk(self,space):
         body = pymunk.Body(pymunk.inf, pymunk.inf)
@@ -166,14 +184,97 @@ class Mining(Action):
             self.callback(mineral)
 
     def on_click(self, callback):
-        self.clicked = True
+        self.is_clicked = True
         self.callback = callback
         self.timer = time.time() + self.ACTION_TIME
 
     def on_release(self, callback = None):
-        self.clicked = False
+        self.is_clicked = False
         self.timer = None
         self.image = self.frames[0]
+
+
+
+class Inventory(Effect):
+    def __init__(self, space, pos, name, width, height, content = [],
+            capacity = 0):
+        Effect.__init__(self, space = space, pos = pos, width =
+                width, height = height, name = name)
+        self.content = dict()
+        self.content = self.list_to_inventory(content)
+        self.supported_attributes.append("get")
+        self.supported_attributes.append("put")
+
+    def put_element(self, element):
+        self.add_to_inventroy(self.content, element.state_formula)
+        return True
+
+    def get_element(self, element, x, y):
+        return None
+
+    def list_to_inventory(self, inventory_list):
+        inventory = dict()
+        for element in inventory_list:
+            self.add_to_inventroy(inventory, element)
+        return inventory
+
+    def add_to_inventroy(self, inventory, element):
+        if element in inventory:
+            inventory[element] += 1
+        else:
+            inventory[element] = 1
+
+class VictoryInventory(Inventory):
+    def __init__(self, space, pos, name, width, height, victory_condition):
+        Inventory.__init__(self, space, pos, name, width, height)
+        self.victory_condition = self.list_to_inventory(victory_condition)
+        self.supported_attributes.append("put")
+        self.supported_attributes.append("victory")
+
+    def put_element(self, element):
+        element = element.formula
+        if element in self.victory_condition:
+            if self.victory_condition_fullfilled(element):
+                return False
+            else:
+                self.add_to_inventroy(self.content, element)
+                return True
+        return False
+
+    def victory_condition_fullfilled(self, element):
+        needed = self.victory_condition[element]
+        if element in self.content:
+            return needed <= self.content[element]
+        return False
+
+    def progress_text(self):
+        progress = ""
+        for element, victory_count in self.victory_condition.items():
+            if len(progress) != 0:
+                progress += " "
+            current_count = 0
+            if element in self.content:
+                current_count = self.content[element]
+            progress += "%d/%d %s" % (current_count,victory_count, element)
+
+        return progress
+
+    def victory(self):
+        for element in self.victory_condition:
+            if not self.victory_condition_fullfilled(element):
+                return False
+        return True
+
+
+def pos_inside(pos, rec_pos, rec_width, rec_height):
+    x, y = pos
+    rec_x, rec_y = rec_pos
+    rec_X = rec_x + rec_width
+    rec_Y = rec_y + rec_height
+    return between(x, rec_x, rec_X) and between(y, rec_y, rec_Y)
+
+def between(a, b, B):
+    return a >= b and a <= B
 
 def create_effects(space, batch, effects):
     new_effects = list()

@@ -25,24 +25,30 @@ from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
 from pyglet_gui.scrollable import Scrollable
 
 from molecule import RenderingOrder
+from molecule import Effects
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
 
 class HUD:
-    def __init__(self, window, batch):
+    def __init__(self, window, batch, space, level):
         height = 100
         width = window.width - 300
-        self.horizontal = HorizontalHUD(window, batch, height, width)
+        self.horizontal = HorizontalHUD(window, batch, space, level, height, width)
         height = window.height - 40
         width = 180
-        self.vertical = VerticalHUD(window, batch, height, width)
-    
+        self.vertical = VerticalHUD(window, batch, space, level, height, width)
+
+    def get_effects(self):
+        return self.horizontal.get_effects()
+
     def delete(self):
         self.horizontal.delete()
         self.vertical.delete()
 
 class HorizontalHUD:
-    def __init__(self, window, batch, height, width):
-        progress_text = "Progress: 0/1 CO   1/3 H2"
+    def __init__(self, window, batch, space, level, height, width):
+        self.space = space
+        self.level = level
+        progress_text = "Progress: ..."
         self.progress_doc = Document(progress_text, height=height, width=width/2,
                 is_fixed_size = True)
         progress_frame = Frame(self.progress_doc)
@@ -66,7 +72,18 @@ dioxide and water.
         self.window = window
         self.window.push_handlers(on_draw=self.on_draw)
         self.tick = 0
-    
+        self.init_effects(space, level)
+
+    def init_effects(self, space, level):
+        pos = (self.progress_doc.x + self.progress_doc.width / 2,
+               self.progress_doc.y + self.progress_doc.height / 2)
+        self.victory = Effects.VictoryInventory(space, pos, "Victory Inventory",
+                self.progress_doc.width, self.progress_doc.height,
+                level.victory_condition)
+
+    def get_effects(self):
+        return [self.victory]
+
     def on_draw(self):
         self.tick += 1
         if self.tick > 30:
@@ -75,7 +92,7 @@ dioxide and water.
         self.update_progress()
 
     def update_progress(self):
-        progress_text = "Progress: 1/1 CO   1/3 H2"
+        progress_text = self.victory.progress_text()
         self.progress_doc.set_text(progress_text)
 
     def delete(self):
@@ -84,7 +101,9 @@ dioxide and water.
 
 
 class VerticalHUD():
-    def __init__(self, window, batch, height, width):
+    def __init__(self, window, batch, space, level, height, width):
+        self.space = space
+        self.level = level
         status_text = pyglet.text.decode_attributed('''
 Time: 0 sec \n
 Points: 0 points \n

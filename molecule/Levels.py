@@ -63,7 +63,7 @@ class Levels:
 class Level:
     def __init__(self, cml, window):
         self.cml = cml
-        self.victory = False
+        self.finished = False
         self.window = window
         self.batch = pyglet.graphics.Batch()
         self.start_time = time.time()
@@ -71,8 +71,8 @@ class Level:
         self.init_chipmunk()
         self.init_pyglet()
         self.init_elements()
-        self.init_effects()
         self.init_gui()
+        self.init_effects()
 
     def init_chipmunk(self):
         self.space = pymunk.Space()
@@ -112,9 +112,10 @@ class Level:
 
     def init_effects(self):
         self.areas = Effects.create_effects(self.space, self.batch, self.cml.effects)
+        self.areas.extend(self.hud.get_effects())
 
     def init_gui(self):
-        self.hud = HUD.HUD(self.window, self.batch)
+        self.hud = HUD.HUD(self.window, self.batch, self.space, self.cml)
 
     def create_elements(self, elements, pos = None):
         self.elements.extend(Universe.create_elements(self.space, elements,
@@ -160,7 +161,6 @@ class Level:
         for molecule in reactingMolecules:
             molecule.delete()
         self.create_elements(reaction.products, position)
-        self.check_victory()
 
     def element_collision(self, space, arbiter):
         """ Called if two elements collides"""
@@ -191,23 +191,14 @@ class Level:
             if shape.collision_type == CollisionTypes.EFFECT:
                 yield shape.effect
 
-    def check_victory(self):
-        to_check = list(self.cml.victory_condition)
-        for element in self.elements:
-            if element.formula in to_check:
-                to_check.remove(element.formula)
-
-        if len(to_check) == 0:
-            self.victory = True
-            return True
-        else:
-            return False
-
     def get_time(self):
         return time.time() - self.start_time
 
     def get_points(self):
         return self.points
+
+    def victory(self):
+        return self.hud.horizontal.victory.victory()
 
     def limit_pos_to_screen(self, x, y):
         x = max(0,x)
@@ -217,12 +208,17 @@ class Level:
         y = min(h,y)
         return x,y
 
+    def get_effect_supporting(self, support):
+        for effect in self.areas:
+            if effect.supports(support):
+                yield effect
+
     def on_mouse_press(self, x, y, button, modifiers):
         self.handle_element_pressed(x, y)
         def create_elements_cb(elements):
             self.create_elements(elements, (x,y))
-        for action in self.areas:
-            if action.supports("action") and pyglet_util.clicked((x,y), action):
+        for action in self.get_effect_supporting("action"):
+            if action.clicked((x,y)):
                 action.on_click(create_elements_cb)
 
     def handle_element_pressed(self, x, y):
@@ -243,17 +239,24 @@ class Level:
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.handle_element_released(x, y, button, modifiers)
-        for action in self.areas:
-            if action.supports("action") and action.clicked == True:
+        for action in self.get_effect_supporting("action"):
+            if action.is_clicked == True:
                 action.on_release()
 
     def handle_element_released(self, x, y, button, modifiers):
         if self.mouse_spring != None:
             self.mouse_spring.b.mass *= 50
             self.mouse_spring.b.velocity = (0,0)
-            self.mouse_spring.b.molecule.set_dragging(False)
+            molecule = self.mouse_spring.b.molecule
+            molecule.set_dragging(False)
             self.space.remove(self.mouse_spring)
             self.mouse_spring = None
+            for effect in self.get_effect_supporting("put"):
+                if effect.clicked((x,y)):
+                    if effect.put_element(molecule):
+                        molecule.delete()
+
+
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         x,y = self.limit_pos_to_screen(x,y)
@@ -276,11 +279,10 @@ class Level:
 
     def update(self):
         self.space.step(1/120.0)
-        if self.victory:
+        if self.victory() and self.finished == False:
             Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.switch_level)
-            self.victory = False
-            return
+            self.finished = True
         for element in self.elements:
             element.update()
         for area in self.areas:

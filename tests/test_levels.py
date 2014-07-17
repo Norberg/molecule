@@ -33,10 +33,12 @@ class TestLevels(unittest.TestCase):
         self.assertEqual(l.cml.victory_condition, ["H2O"])
         self.assertEqual(l.cml.objective, "Create a water molecule")
         self.assertEqual(l.cml.hint, "H + H + O => H2O")
-        self.assertEqual(l.check_victory(), False)
+        self.assertEqual(l.victory(), False)
         batch = pyglet.graphics.Batch()
         l.elements.extend(Universe.create_elements(l.space, "H2O(g)", batch, None))
-        self.assertEqual(l.check_victory(), True)
+        victory_effect = l.hud.horizontal.victory
+        victory_effect.put_element(l.elements.pop())
+        self.assertEqual(l.victory(), True)
 
         l = levels.next_level()
         expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'OH-(aq)', 'CO2(g)', 'CH4(g)']
@@ -52,7 +54,7 @@ class TestLevels(unittest.TestCase):
         levels = Levels("data/levels", window=WindowMock())
         for level in levels.level_iter():
             self.assertIsNotNone(level.cml.objective)
-            self.assertEqual(level.check_victory(), False)
+            self.assertEqual(level.victory(), False)
 
     def testDestroyElements(self):
         levels = Levels("data/levels", window=WindowMock())
@@ -131,6 +133,30 @@ class TestLevels(unittest.TestCase):
         collisions = createCollisionsMock(H2SO4, NaCl)
         reaction = level1.react(collisions,[])
         self.assertEqual(reaction, None)
+
+    def testVictoryEffect(self):
+        level1 = getLevel1()
+        victory_effect = level1.hud.horizontal.victory
+        level1.create_elements(["CH4(g)"], pos = (200,300))
+        level1.create_elements(["H2O(g)"], pos = (300,300))
+        level1.update()
+
+        level1.handle_element_pressed(234, 300)
+        self.assertIsNotNone(level1.mouse_spring)
+        level1.handle_element_released(50, 50, None, None)
+        self.assertIsNone(level1.mouse_spring)
+        self.assertEqual(victory_effect.content, {})
+        self.assertEqual(victory_effect.victory(), False)
+        self.assertEqual(victory_effect.progress_text(), "0/1 H2O")
+
+        level1.handle_element_pressed(300, 300)
+        self.assertIsNotNone(level1.mouse_spring)
+        level1.handle_element_released(50, 50, None, None)
+        self.assertIsNone(level1.mouse_spring)
+        self.assertEqual(victory_effect.content, {"H2O":1})
+        self.assertEqual(victory_effect.victory(), True)
+        self.assertEqual(victory_effect.progress_text(), "1/1 H2O")
+
 
 def setupSimpleReactor():
     r1 = Cml.Reaction(["H2SO4(aq)","NaCl(s)", "NaCl(s)"],
