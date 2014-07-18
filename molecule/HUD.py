@@ -18,7 +18,7 @@ import os
 import pyglet
 import pyglet_gui.theme
 from pyglet_gui.manager import Manager
-from pyglet_gui.containers import HorizontalContainer,VerticalContainer
+from pyglet_gui.containers import Container, HorizontalContainer,VerticalContainer
 from pyglet_gui.document import Document
 from pyglet_gui.constants import ANCHOR_BOTTOM_LEFT, HALIGN_LEFT, ANCHOR_TOP_RIGHT
 from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
@@ -49,10 +49,11 @@ class HorizontalHUD:
         self.space = space
         self.level = level
         progress_text = "Progress: ..."
-        self.progress_doc = Document(progress_text, height=height, width=width/2,
-                is_fixed_size = True)
-        progress_frame = Frame(self.progress_doc)
-        progress_container = VerticalContainer([progress_frame])
+        self.progress_doc = Document(progress_text, width = width/2)
+        objective_doc = Document(level.objective, width = width/2)
+        left_frame = Frame(VerticalContainer([objective_doc, None,
+            self.progress_doc]), is_expandable = True)
+        self.left_container = VerticalContainer([left_frame])
         info_text = pyglet.text.decode_attributed('''
 Methane is a hydrocarbon that is a gas at room temperature (20°C). Its
 molecular formula is CH4, so it has one carbon atom and four hydrogen
@@ -65,7 +66,7 @@ dioxide and water.
                 is_fixed_size = True)
         info_frame = Frame(info_doc)
         info_container = VerticalContainer([info_frame])
-        container = HorizontalContainer([progress_container, info_container])
+        container = HorizontalContainer([self.left_container, info_container])
         self.manager = Manager(container, window=window, batch=batch,
                 group=RenderingOrder.hud, anchor=ANCHOR_BOTTOM_LEFT,
                 theme=theme, is_movable=False)
@@ -75,10 +76,10 @@ dioxide and water.
         self.init_effects(space, level)
 
     def init_effects(self, space, level):
-        pos = (self.progress_doc.x + self.progress_doc.width / 2,
-               self.progress_doc.y + self.progress_doc.height / 2)
+        pos = (self.left_container.x + self.left_container.width / 2,
+               self.left_container.y + self.left_container.height / 2)
         self.victory = Effects.VictoryInventory(space, pos, "Victory Inventory",
-                self.progress_doc.width, self.progress_doc.height,
+                self.left_container.width, self.left_container.height,
                 level.victory_condition)
 
     def get_effects(self):
@@ -93,7 +94,7 @@ dioxide and water.
 
     def update_progress(self):
         progress_text = self.victory.progress_text()
-        self.progress_doc.set_text(progress_text)
+        self.progress_doc.set_text("Progress: " + progress_text)
 
     def delete(self):
         self.window.remove_handlers(on_draw = self.on_draw)

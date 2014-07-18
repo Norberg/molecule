@@ -80,7 +80,8 @@ class Molecule:
 
     @property
     def draggable(self):
-        return self.current_state.short != "aq"
+        return True
+        #return self.current_state.short != "aq"
 
     def change_state(self, new_state):
         """new_state: shortform of wanted state"""
