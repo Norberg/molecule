@@ -77,9 +77,9 @@ dioxide and water.
 
     def init_effects(self, space, level):
         pos = (self.left_container.x + self.left_container.width / 2,
-               self.left_container.y + self.left_container.height / 2)
+               self.left_container.y + self.left_container.height / 2 - 100)
         self.victory = Effects.VictoryInventory(space, pos, "Victory Inventory",
-                self.left_container.width, self.left_container.height,
+                self.left_container.width, self.left_container.height + 100,
                 level.victory_condition)
 
     def get_effects(self):

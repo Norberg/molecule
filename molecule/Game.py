@@ -22,7 +22,6 @@ from pyglet import gl
 
 from molecule import Universe
 from molecule import Config
-from molecule import CollisionTypes
 from molecule.Levels import Levels
 from molecule import Gui
 

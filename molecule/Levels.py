@@ -93,6 +93,7 @@ class Level:
         for boundary in screen_boundaries:
             boundary.elasticity = 0.95
             boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
+            boundary.layers = CollisionTypes.LAYER_WALL
         self.space.add(screen_boundaries)
         self.mouse_spring = None
         self.mouse_body = pymunk.Body()
