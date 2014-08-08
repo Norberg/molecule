@@ -75,7 +75,6 @@ class Game(pyglet.window.Window):
         self.level.update()
 
     def on_draw(self):
-        pyglet.clock.tick()
         self.clear()
         self.batch.draw()
         if self.DEBUG_GRAPHICS:
