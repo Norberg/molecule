@@ -35,7 +35,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.bonds[0].atomA.id, "a1")
         self.assertEqual(m.bonds[0].atomB.id, "a2")
         self.assertEqual(m.is_atom, False)
-        
+
     def testParsePropane(self):
         m = Cml.Molecule()
         m.parse("tests/testPropane.cml")
@@ -60,8 +60,8 @@ class TestCML(unittest.TestCase):
         self.assertAlmostEqual(m.bonds[0].atomA.z, -1.096199)
         self.assertAlmostEqual(m.bonds[0].atomB.x, -4.299694)
         self.assertAlmostEqual(m.bonds[0].atomB.y, 2.06041)
-        self.assertAlmostEqual(m.bonds[0].atomB.z, -2.091249) 
-    
+        self.assertAlmostEqual(m.bonds[0].atomB.z, -2.091249)
+
     def testWriteAndParseAgain(self):
         m = Cml.Molecule()
         m.parse("tests/testPropane.cml")
@@ -81,7 +81,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.bonds[0].atomA.id, "a1")
         self.assertEqual(m.bonds[0].atomB.id, "a2")
         os.remove("tests/testWrite.cml")
-    
+
     def testSortedAtoms(self):
         m = Cml.Molecule()
         m.parse("tests/testPropane.cml")
@@ -98,7 +98,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.atoms_sorted[10].id, "a11")
         self.assertEqual(m.atoms_sorted[11].id, "a12")
         self.assertEqual(m.getDigits("asdas23434"), 23434)
-    
+
     def testNormalizePos(self):
         m = Cml.Molecule()
         m.parse("tests/testPropane.cml")
@@ -119,7 +119,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.atoms["a2"].elementType, "C")
         self.assertEqual(m.bonds[0].atomA.id, "a1")
         self.assertEqual(m.bonds[0].atomB.id, "a2")
-    
+
     def testCreateMoleculeWithCharge(self):
         m = Cml.Molecule()
         a1 = Cml.Atom("a1", "C",-1, 0, 0)
@@ -132,18 +132,18 @@ class TestCML(unittest.TestCase):
         m = Cml.Molecule()
         m.parse("tests/testOxygen.cml")
         self.assertAlmostEqual(m.atoms["a1"].x, 0.0)
-        self.assertAlmostEqual(m.atoms["a1"].y, 0.0)    
+        self.assertAlmostEqual(m.atoms["a1"].y, 0.0)
         self.assertEqual(m.atoms["a1"].elementType, "C")
         self.assertEqual(m.atoms["a1"].formalCharge,-1)
         self.assertAlmostEqual(m.atoms["a2"].x, 1.0)
-        self.assertAlmostEqual(m.atoms["a2"].y, 0.0)    
+        self.assertAlmostEqual(m.atoms["a2"].y, 0.0)
         self.assertEqual(m.atoms["a2"].elementType, "O")
         self.assertEqual(m.atoms["a2"].formalCharge,1)
         self.assertEqual(m.bonds[0].atomA.id, "a1")
         self.assertEqual(m.bonds[0].atomB.id, "a2")
         self.assertEqual(m.bonds[0].bonds, 2)
         os.remove("tests/testOxygen.cml")
-    
+
     def testParseStatePropertys(self):
         m = Cml.Molecule()
         m.parse("tests/testProperty.cml")
@@ -183,7 +183,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.property["Radius"], 25)
         self.assertEqual(m.is_atom, True)
         os.remove("tests/testHydrogen.cml")
-    
+
     def testParseReactions(self):
         r = Cml.Reactions()
         r.parse("tests/reactions.cml")
@@ -239,7 +239,7 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.atoms["a2"].elementType, "C")
         self.assertEqual(m.bonds[0].atomA.id, "a1")
         self.assertEqual(m.bonds[0].atomB.id, "a2")
-        
+
     def testParseMoleculeWithoutBonds(self):
         m = Cml.Molecule()
         m.parse("data/molecule/NaCl.cml")
@@ -287,6 +287,17 @@ class TestCML(unittest.TestCase):
             m = Cml.Molecule()
             m.parse(filename)
             self.assertNotEqual(len(m.states), 0, msg="%s dont have any state info!" % filename)
+
+    def testReadAndWriteDescription(self):
+        m = Cml.Molecule()
+        m.property["Description"] = "H20 is the base of all life."
+        m.property["Description-Attribution"] = "Wikipedia, CC-BY-SA"
+        m.write("tests/testWrite.cml")
+        m = Cml.Molecule()
+        m.parse("tests/testWrite.cml")
+        self.assertEqual(m.property["Description"],  "H20 is the base of all life.")
+        self.assertEqual(m.property["Description-Attribution"],  "Wikipedia, CC-BY-SA")
+        os.remove("tests/testWrite.cml")
 
 if __name__ == '__main__':
     unittest.main()

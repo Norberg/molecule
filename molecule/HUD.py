@@ -59,9 +59,9 @@ class HorizontalHUD:
         left_frame = Frame(VerticalContainer([objective_doc, None,
             self.progress_doc]), is_expandable = True)
         self.left_container = VerticalContainer([left_frame])
-        info_text = pyglet.text.decode_attributed('''
+        info_text = pyglet.text.decode_html('''
 Methane is a hydrocarbon that is a gas at room temperature (20°C). Its
-molecular formula is CH4, so it has one carbon atom and four hydrogen
+molecular formula is CH<sub>4</sub>, so it has one carbon atom and four hydrogen
 atoms in a molecule. It is often found as the main part of natural gas.
 Methane is a greenhouse gas 22 times more effective than carbon
 dioxide. It is also less stable and slowly oxidates by oxygen to carbon

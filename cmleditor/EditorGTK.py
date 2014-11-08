@@ -95,6 +95,12 @@ class EditorGTK:
             state = Cml.State(name, enthalpy, entropy, ions)
             self.molecule.states[name] = state
         self.molecule.property["Name"] = self.txtMoleculeName.get_text()
+        textbuffer = self.widget("textbufferDescription")
+        start_iter = textbuffer.get_start_iter()
+        end_iter = textbuffer.get_end_iter()
+        description = textbuffer.get_text(start_iter, end_iter, True)
+        self.molecule.property["Description"] = description
+        self.molecule.property["DescriptionAttribution"] = self.widget("txtAttribution").get_text()
         if self.molecule.is_atom:
             self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
             self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
@@ -147,11 +153,13 @@ class EditorGTK:
         self.txtMoleculeName = self.createAndAttachTextBox("Name:",
                                    tableWriteable,0)
         self.txtMoleculeName.set_text(str(molecule.property.get("Name", "")))
+        self.widget("txtAttribution").set_text(
+                molecule.property.get("DescriptionAttribution", ""))
+        self.widget("textbufferDescription").set_text(
+                molecule.property.get("Description", ""))
 
         if self.molecule.is_atom:
             self.readAtomSettings()
-        else:
-            pass
 
         self.modelStates.clear()
         for state in molecule.states.values():
