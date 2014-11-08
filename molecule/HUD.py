@@ -130,7 +130,8 @@ FPS: 00.00 FPS
         self.window = window
         self.window.push_handlers(on_draw=self.on_draw)
         self.tick = 0
-        self.init_effects(space, level)
+        # Currently disabled
+        #self.init_effects(space, level)
 
     def init_effects(self, space, level):
         pos = (self.inventory_frame.x,
@@ -140,7 +141,9 @@ FPS: 00.00 FPS
                 ["H2O(l)", "CH4(g)", "NaCl(s)"], gui_container = self.inventory_container)
 
     def get_effects(self):
-        return [self.inventory_effect]
+        return []
+        #currently disabled
+        #return [self.inventory_effect]
 
     def on_draw(self):
         self.tick += 1

@@ -214,6 +214,7 @@ class Inventory(Effect):
         return True
 
     def get_callback(self, button):
+        self.remove_element(button.element)
         if button.count > 1:
             button.count -= 1
             button.update_label()
@@ -234,6 +235,12 @@ class Inventory(Effect):
             inventory[element] += 1
         else:
             inventory[element] = 1
+
+    def remove_element(self, element):
+        if self.content[element] == 1:
+            self.content.pop(element)
+        else:
+            self.content[element] -= 1
 
     def reload_gui(self):
         if self.gui_container is None:
