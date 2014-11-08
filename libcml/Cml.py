@@ -371,7 +371,7 @@ class Molecule(Cml):
         self.writeAtoms()
         self.writeBonds()
         self.writeStates()
-        self.writePropertys()
+        self.writeProperties()
         self.tree.write(filename)
 
     def writeBonds(self):
@@ -446,17 +446,17 @@ class Molecule(Cml):
 
         self.writeReaction(r, tagIons)
 
-    def writePropertys(self):
-        propertys = self.treefind(self.PROPERTY)
-        if propertys is None:
+    def writeProperties(self):
+        properties = self.treefind(self.PROPERTY)
+        if properties is None:
             molecule = self.tree.getroot()
-            propertys = etree.SubElement(molecule, "propertyList",
+            properties = etree.SubElement(molecule, "propertyList",
                                       {"title":"property"})
         else:
-            propertys.clear() # Remove all old entires
-            propertys.attrib["title"] = "property"
+            properties.clear() # Remove all old entires
+            properties.attrib["title"] = "property"
 
         for name, value in self.property.items():
-            propertyTag = etree.SubElement(propertys, "property",
+            propertyTag = etree.SubElement(properties, "property",
                                            {"title":name})
             propertyTag.text = str(value)
