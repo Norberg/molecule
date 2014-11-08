@@ -18,10 +18,12 @@ import random
 import time
 import pyglet
 import pymunk
+from collections import OrderedDict
 from molecule import Config
 from molecule import CollisionTypes
 from molecule import pyglet_util
 from molecule import RenderingOrder
+from molecule import Gui
 from libreact import Reaction
 from libcml import Cml
 
@@ -197,23 +199,32 @@ class Mining(Action):
 
 class Inventory(Effect):
     def __init__(self, space, pos, name, width, height, content = [],
-            capacity = 0):
+            capacity = 0, gui_container = None):
         Effect.__init__(self, space = space, pos = pos, width =
                 width, height = height, name = name)
-        self.content = dict()
         self.content = self.list_to_inventory(content)
         self.supported_attributes.append("get")
         self.supported_attributes.append("put")
+        self.gui_container = gui_container
+        self.reload_gui()
 
     def put_element(self, element):
         self.add_to_inventroy(self.content, element.state_formula)
+        self.reload_gui()
         return True
+
+    def get_callback(self, button):
+        if button.count > 1:
+            button.count -= 1
+            button.update_label()
+        else:
+            self.gui_container.remove(button)
 
     def get_element(self, element, x, y):
         return None
 
     def list_to_inventory(self, inventory_list):
-        inventory = dict()
+        inventory = OrderedDict()
         for element in inventory_list:
             self.add_to_inventroy(inventory, element)
         return inventory
@@ -223,6 +234,33 @@ class Inventory(Effect):
             inventory[element] += 1
         else:
             inventory[element] = 1
+
+    def reload_gui(self):
+        if self.gui_container is None:
+            return
+        gui_elements = list()
+        #Update existing elements
+        index = 0
+        for button in list(self.gui_container.content):
+            element = button.element
+            count = self.content[button.element]
+            if (element in self.content.keys() and
+                button.count != count):
+                new_btn = Gui.MoleculeButton(element, count, self.get_callback)
+                self.gui_container.remove(button)
+                offset =len(self.gui_container.content)
+                self.gui_container.add(new_btn, offset - index)
+            if element not in self.content.keys():
+                self.gui_container.remove(button)
+            index += 1
+            gui_elements.append(button.element)
+
+        #Add new elements
+        for element, count in self.content.items():
+            if element in gui_elements:
+                continue
+            button = Gui.MoleculeButton(element, count, self.get_callback)
+            self.gui_container.add(button)
 
 class VictoryInventory(Inventory):
     def __init__(self, space, pos, name, width, height, victory_condition):

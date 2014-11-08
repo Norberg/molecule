@@ -23,9 +23,11 @@ from pyglet_gui.document import Document
 from pyglet_gui.constants import ANCHOR_BOTTOM_LEFT, HALIGN_LEFT, ANCHOR_TOP_RIGHT
 from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
 from pyglet_gui.scrollable import Scrollable
+from pyglet_gui.buttons import Button, OneTimeButton
 
 from molecule import RenderingOrder
 from molecule import Effects
+from molecule import Gui
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
 
 class HUD:
@@ -38,7 +40,10 @@ class HUD:
         self.vertical = VerticalHUD(window, batch, space, level, height, width)
 
     def get_effects(self):
-        return self.horizontal.get_effects()
+        l = list()
+        l.extend(self.horizontal.get_effects())
+        l.extend(self.vertical.get_effects())
+        return l
 
     def delete(self):
         self.horizontal.delete()
@@ -112,21 +117,30 @@ FPS: 00.00 FPS
 ''')
         self.status_doc = Document(status_text, height=height, width=width)
         status_frame = Frame(self.status_doc)
-        inventory_text = pyglet.text.decode_attributed('''
-Inventory: \n
-H2O 1 mol  18 g\n
-CH4 2 mol 18 g\n
-Total: 36/100 g \n
-''')
-        inventory_doc = Document(inventory_text, height=height, width=width)
-        inventory_frame = Frame(inventory_doc)
-        container = VerticalContainer([status_frame, inventory_frame])
+        inv_text = pyglet.text.decode_html("<h4>Inventory</h4>")
+        inventory_header = Document(inv_text, width=width)
+        self.inventory_container = VerticalContainer([])
+
+        container = VerticalContainer([inventory_header, self.inventory_container])
+        self.inventory_frame = Frame(container)
+        container = VerticalContainer([status_frame, self.inventory_frame])
         self.manager = Manager(container, window=window, batch=batch,
                 group=RenderingOrder.hud, anchor=ANCHOR_TOP_RIGHT, theme=theme,
                 is_movable=False)
         self.window = window
         self.window.push_handlers(on_draw=self.on_draw)
         self.tick = 0
+        self.init_effects(space, level)
+
+    def init_effects(self, space, level):
+        pos = (self.inventory_frame.x,
+               self.inventory_frame.y + self.inventory_frame.height / 2 - 50)
+        self.inventory_effect = Effects.Inventory(space, pos, "Inventory",
+                self.inventory_frame.width, self.inventory_frame.height + 100,
+                ["H2O(l)", "CH4(g)", "NaCl(s)"], gui_container = self.inventory_container)
+
+    def get_effects(self):
+        return [self.inventory_effect]
 
     def on_draw(self):
         self.tick += 1

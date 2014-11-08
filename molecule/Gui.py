@@ -23,10 +23,12 @@ from pyglet_gui.document import Document
 from pyglet_gui.constants import ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
 from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
 from pyglet_gui.scrollable import Scrollable
+from pyglet_gui.buttons import OneTimeButton
 
 from molecule import RenderingOrder
 
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
+NA = "<b>N<sub>A<sub><b>"
 
 def create_folding_description(window, batch, heading, description, chapters=list()):
     """
@@ -37,7 +39,7 @@ def create_folding_description(window, batch, heading, description, chapters=lis
         chapters - list of tuples (heading,text)
     """
     description_doc = pyglet.text.decode_attributed(description)
-    
+
     layout = list()
     layout.append(SectionHeader(heading))
     layout.append(Document(description_doc, width=300))
@@ -45,8 +47,8 @@ def create_folding_description(window, batch, heading, description, chapters=lis
     for chapter in chapters:
         heading, text = chapter
         text_doc = pyglet.text.decode_attributed(text)
-        layout.append(FoldingSection(heading, 
-                      Document(text_doc, width=300), 
+        layout.append(FoldingSection(heading,
+                      Document(text_doc, width=300),
                       is_open=False))
 
     content = Frame(Scrollable(VerticalContainer(layout, align=HALIGN_LEFT),height=400))
@@ -59,7 +61,7 @@ def create_popup(window, batch, text, on_escape=None):
         window - window
         batch - batch
         text - text message in popup
-        on_escape - callback when popup is closed 
+        on_escape - callback when popup is closed
     """
     def on_escape_cb(dialog):
             if on_escape is not None:
@@ -67,3 +69,26 @@ def create_popup(window, batch, text, on_escape=None):
     PopupMessage(text=text, window=window, batch=batch,
                  group=RenderingOrder.gui, theme=theme, on_escape=on_escape_cb)
 
+class MoleculeButton(OneTimeButton):
+    def __init__(self, element, count, on_click=None):
+        self.element = element
+        self.count = count
+        self.update_label()
+        OneTimeButton.__init__(self, self.label)
+        self._on_click = on_click
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.change_state()
+        if self._on_click is not None:
+            self._on_click(self)
+
+    def update_label(self):
+        self.label = "%d - %s" % (self.count, self.element)
+
+    def get_path(self):
+        path = ["molecule-button"]
+        if self.is_pressed:
+                path.append('down')
+        else:
+                path.append('up')
+        return path

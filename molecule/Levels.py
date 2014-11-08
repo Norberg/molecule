@@ -265,9 +265,12 @@ class Level:
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.M:
-            print("dumping memory..")
-            from meliae import scanner
-            scanner.dump_all_objects("memory.dump")
+            import objgraph
+            objgraph.show_growth()
+            m  = objgraph.by_type("Molecule")
+            print ("nr of Molecule:", len(m))
+            #for n in m:
+            #    objgraph.show_backrefs(n)
         elif symbol == pyglet.window.key.ESCAPE:
                 self.window.close()
         elif symbol == pyglet.window.key.S:
