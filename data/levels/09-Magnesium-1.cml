@@ -6,7 +6,7 @@
     <molecule title="MgO(s)"/>
   </moleculeList>
   <effectList>
-    <effect title="Fire" value="2300" x2="200" y2="130"/>
+    <effect title="Fire" value="2300" x2="200" y2="270"/>
   </effectList>
   <victoryCondition>
     <molecule title="Mg"/>
