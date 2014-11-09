@@ -10,7 +10,7 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="default_width">200</property>
+    <property name="default_width">300</property>
     <property name="default_height">800</property>
     <signal name="destroy" handler="on_winMain_destroy" swapped="no"/>
     <child>
@@ -943,17 +943,26 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkTextView" id="twDescription">
-                    <property name="height_request">100</property>
+                  <object class="GtkScrolledWindow" id="scrolledwindow1">
+                    <property name="height_request">200</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">4</property>
-                    <property name="margin_right">4</property>
-                    <property name="pixels_above_lines">5</property>
-                    <property name="pixels_below_lines">5</property>
-                    <property name="pixels_inside_wrap">5</property>
-                    <property name="indent">4</property>
-                    <property name="buffer">textbufferDescription</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkTextView" id="twDescription">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_left">4</property>
+                        <property name="margin_right">4</property>
+                        <property name="resize_mode">immediate</property>
+                        <property name="pixels_above_lines">5</property>
+                        <property name="pixels_below_lines">5</property>
+                        <property name="pixels_inside_wrap">5</property>
+                        <property name="wrap_mode">word-char</property>
+                        <property name="indent">4</property>
+                        <property name="buffer">textbufferDescription</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
