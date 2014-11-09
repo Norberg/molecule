@@ -237,6 +237,7 @@ class Level:
             self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
             clicked.body.mass /= 50
             self.space.add(self.mouse_spring)
+            self.hud.update_info_text(clicked.molecule.formula)
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.handle_element_released(x, y, button, modifiers)

@@ -28,6 +28,8 @@ from pyglet_gui.buttons import Button, OneTimeButton
 from molecule import RenderingOrder
 from molecule import Effects
 from molecule import Gui
+from libcml import CachedCml
+
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
 
 class HUD:
@@ -38,6 +40,9 @@ class HUD:
         height = window.height - 40
         width = 180
         self.vertical = VerticalHUD(window, batch, space, level, height, width)
+
+    def update_info_text(self, formula):
+        self.horizontal.update_info_text(formula)
 
     def get_effects(self):
         l = list()
@@ -53,25 +58,18 @@ class HorizontalHUD:
     def __init__(self, window, batch, space, level, height, width):
         self.space = space
         self.level = level
+        self.height = height
+        self.width = width
         progress_text = "Progress: ..."
         self.progress_doc = Document(progress_text, width = width/2)
         objective_doc = Document(level.objective, width = width/2)
         left_frame = Frame(VerticalContainer([objective_doc, None,
             self.progress_doc]), is_expandable = True)
         self.left_container = VerticalContainer([left_frame])
-        info_text = pyglet.text.decode_html('''
-Methane is a hydrocarbon that is a gas at room temperature (20°C). Its
-molecular formula is CH<sub>4</sub>, so it has one carbon atom and four hydrogen
-atoms in a molecule. It is often found as the main part of natural gas.
-Methane is a greenhouse gas 22 times more effective than carbon
-dioxide. It is also less stable and slowly oxidates by oxygen to carbon
-dioxide and water.
-''')
-        info_doc = Document(info_text, height=height, width=width/2,
-                is_fixed_size = True)
-        info_frame = Frame(info_doc)
-        info_container = VerticalContainer([info_frame])
-        container = HorizontalContainer([self.left_container, info_container])
+        victory_formula = level.victory_condition[0]
+        info_frame = self.create_info_frame(victory_formula)
+        self.info_container = VerticalContainer([info_frame])
+        container = HorizontalContainer([self.left_container, self.info_container])
         self.manager = Manager(container, window=window, batch=batch,
                 group=RenderingOrder.hud, anchor=ANCHOR_BOTTOM_LEFT,
                 theme=theme, is_movable=False)
@@ -89,6 +87,24 @@ dioxide and water.
 
     def get_effects(self):
         return [self.victory]
+
+    def update_info_text(self, formula):
+        info_frame = self.create_info_frame(formula)
+        for content in self.info_container.content:
+            self.info_container.remove(content)
+        self.info_container.add(info_frame)
+
+    def create_info_frame(self, formula):
+        cml = CachedCml.getMolecule(formula)
+        info_text = pyglet.text.decode_html("<b>%s</b><br> %s" %
+                ( cml.property.get("Name", "Undefined"),
+                  cml.property.get("Description", "No Description Available")
+                ))
+        info_doc = Document(info_text, height=self.height, width=self.width/2,
+                is_fixed_size = True)
+        info_frame = Frame(info_doc)
+        return info_frame
+
 
     def on_draw(self):
         self.tick += 1
