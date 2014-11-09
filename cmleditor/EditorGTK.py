@@ -148,10 +148,10 @@ class EditorGTK:
         imgPreview = self.widget("imgPreview")
         imgPreview.set_from_pixbuf(pixBuffPreview)
 
-        tableWriteable = self.widget("tableWriteable")
-        self.emptyContainer(tableWriteable)
-        self.txtMoleculeName = self.createAndAttachTextBox("Name:",
-                                   tableWriteable,0)
+        self.txtMoleculeName = self.widget("txtName")
+        self.txtAtomWeight = self.widget("txtWeight")
+        self.txtAtomRadius = self.widget("txtRadius")
+
         self.txtMoleculeName.set_text(str(molecule.property.get("Name", "")))
         self.widget("txtAttribution").set_text(
                 molecule.property.get("DescriptionAttribution", ""))
@@ -159,7 +159,12 @@ class EditorGTK:
                 molecule.property.get("Description", ""))
 
         if self.molecule.is_atom:
-            self.readAtomSettings()
+            self.setAtomSettings()
+        else:
+            self.txtAtomWeight.set_text("")
+            self.txtAtomWeight.set_sensitive(False)
+            self.txtAtomRadius.set_text("")
+            self.txtAtomRadius.set_sensitive(False)
 
         self.modelStates.clear()
         for state in molecule.states.values():
@@ -167,14 +172,11 @@ class EditorGTK:
             stateList = [str(x) if x is not None else "" for x in stateList]
             self.modelStates.append(stateList)
 
-    def readAtomSettings(self):
-        tableWriteable = self.widget("tableWriteable")
+    def setAtomSettings(self):
+        self.txtAtomWeight.set_sensitive(True)
+        self.txtAtomRadius.set_sensitive(True)
         molecule = self.molecule
-        self.txtAtomWeight = self.createAndAttachTextBox("Weight:",
-                                   tableWriteable,1)
         self.txtAtomWeight.set_text(str(molecule.property.get("Weight","")))
-        self.txtAtomRadius = self.createAndAttachTextBox("Radius:",
-                                   tableWriteable,2)
         self.txtAtomRadius.set_text(str(molecule.property.get("Radius","")))
 
     def emptyContainer(self, container):
@@ -183,13 +185,13 @@ class EditorGTK:
 
     def createAndAttachLabel(self, text, table, col, row):
         label = Gtk.Label(label=text)
-        table.attach(label, col, col+1, row, row+1)
+        table.attach(label, col, row, col+1, row+1)
         label.set_visible(True)
 
     def createAndAttachTextBox(self,text,table, row):
         self.createAndAttachLabel(text, table, 0, row)
         entry = Gtk.Entry()
-        table.attach(entry, 1, 2, row, row+1)
+        table.attach(entry, 1, row, 2, row+1)
         entry.set_visible(True)
         return entry
 
