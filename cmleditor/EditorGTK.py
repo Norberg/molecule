@@ -56,6 +56,9 @@ class EditorGTK:
         cmbStates.set_model(self.modelStateNames)
         cmbStates.pack_start(cell, True)
         cmbStates.add_attribute(cell, "text", 0)
+        #init licenses
+        self.widget("cmbLicense").pack_start(cell, True)
+        self.widget("cmbLicense").add_attribute(cell, "text", 0)
         #create columns
         edit0 = Gtk.CellRendererText()
         #edit0.set_property('editable', True)
@@ -101,6 +104,7 @@ class EditorGTK:
         description = textbuffer.get_text(start_iter, end_iter, True)
         self.molecule.property["Description"] = description
         self.molecule.property["DescriptionAttribution"] = self.widget("txtAttribution").get_text()
+        self.molecule.property["DescriptionLicense"] = get_active_text(self.widget("cmbLicense"))
         if self.molecule.is_atom:
             self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
             self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
@@ -172,6 +176,14 @@ class EditorGTK:
             stateList = [str(x) if x is not None else "" for x in stateList]
             self.modelStates.append(stateList)
 
+        self.widget("cmbLicense").set_active(-1)
+        index = 0
+        for license in self.widget("liststoreLicenses"):
+            if license[0] == molecule.property.get("DescriptionLicense", "N/A"):
+                self.widget("cmbLicense").set_active(index)
+                break
+            index += 1
+
     def setAtomSettings(self):
         self.txtAtomWeight.set_sensitive(True)
         self.txtAtomRadius.set_sensitive(True)
@@ -214,9 +226,7 @@ class EditorGTK:
 
     def on_btnAddState_clicked(self, widget):
         cmbStates = self.widget("cmbStates")
-        tree_iter = cmbStates.get_active_iter()
-        model = cmbStates.get_model()
-        new_state = model[tree_iter][0]
+        new_state = get_active_text(cmbStates)
         if not self.state_already_added(new_state):
             self.modelStates.append([new_state, "","", ""])
 
@@ -255,6 +265,10 @@ class EditorGTK:
 
 
 
+def get_active_text(cmb):
+    tree_iter = cmb.get_active_iter()
+    model = cmb.get_model()
+    return model[tree_iter][0]
 
 def MsgBox(message):
         dialog = Gtk.MessageDialog(None,
