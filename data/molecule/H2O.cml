@@ -1,23 +1,15 @@
 <?xml version="1.0"?>
 <molecule>
   <atomArray>
+    <atom elementType="O" id="a2" x3="0.586932" y3="-0.072007" z3="-5.899978"/>
     <atom elementType="H" id="a1" x3="1.336043" y3="-0.622136" z3="-6.10094"/>
     <atom elementType="H" id="a3" x3="-0.181554" y3="-0.631081" z3="-5.866836"/>
-    <atom elementType="O" id="a2" x3="0.586932" y3="-0.072007" z3="-5.899978"/>
   </atomArray>
   <bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
     <bond atomRefs2="a2 a3" order="1"/>
   </bondArray>
   <propertyList title="states">
-    <propertyList title="Gas">
-      <property title="enthalpy">
-        <scalar units="units:molar_energy">-242.0</scalar>
-      </property>
-      <property title="entropy">
-        <scalar units="units:molar_energy">189.0</scalar>
-      </property>
-    </propertyList>
     <propertyList title="Liquid">
       <property title="enthalpy">
         <scalar units="units:molar_energy">-286.0</scalar>
@@ -26,8 +18,19 @@
         <scalar units="units:molar_energy">70.0</scalar>
       </property>
     </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-242.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">189.0</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Water</property>
     <property title="Name">Water</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Water is a transparent fluid which forms the world's streams, lakes, oceans and rain, and is the major constituent of the fluids of living things. As a chemical compound, a water molecule contains one oxygen and two hydrogen atoms that are connected by covalent bonds. Water is a liquid at standard ambient temperature and pressure, but it often co-exists on Earth with its solid state, ice; and gaseous state, steam (water vapor).</property>
   </propertyList>
 </molecule>
