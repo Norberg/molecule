@@ -4,14 +4,6 @@
     <atom elementType="P" id="a1" x2="1.0" y2="0.0"/>
   </ns0:atomArray>
   <propertyList title="states">
-    <propertyList title="Solid">
-      <property title="enthalpy">
-        <scalar units="units:molar_energy">0.0</scalar>
-      </property>
-      <property title="entropy">
-        <scalar units="units:molar_energy">41.0</scalar>
-      </property>
-    </propertyList>
     <propertyList title="Gas">
       <property title="enthalpy">
         <scalar units="units:molar_energy">316.0</scalar>
@@ -20,10 +12,21 @@
         <scalar units="units:molar_energy">163.0</scalar>
       </property>
     </propertyList>
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">41.0</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Radius">1.8</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Phosphorus is a chemical element with symbol P and atomic number 15. A multivalent pnictogen, phosphorus as a mineral is almost always present in its maximally oxidised state, as inorganic phosphate rocks. Elemental phosphorus exists in two major forms&#x2014;white phosphorus and red phosphorus&#x2014;but due to its high reactivity, phosphorus is never found as a free element on Earth.</property>
     <property title="Name">Phosphorus</property>
     <property title="Weight">31.0</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Phosphorus</property>
   </propertyList>
 </ns0:molecule>

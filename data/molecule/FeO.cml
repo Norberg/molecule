@@ -1,2 +1,23 @@
+<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
- <ns0:atomArray><atom elementType="Fe" id="a1" x2="1.0" y2="-0.0" /><atom elementType="O" id="a2" x2="-0.0" y2="-0.0" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="2" /></ns0:bondArray><propertyList title="states"><propertyList title="Solid"><property title="enthalpy"><scalar units="units:molar_energy">-272.0</scalar></property><property title="entropy"><scalar units="units:molar_energy">61.0</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Iron(II) oxide</property></propertyList></ns0:molecule>
+  <ns0:atomArray>
+    <atom elementType="Fe" id="a1" x2="1.0" y2="-0.0"/>
+    <atom elementType="O" id="a2" x2="-0.0" y2="-0.0"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-272.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">61.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Iron(II) oxide</property>
+  </propertyList>
+</ns0:molecule>

@@ -18,6 +18,11 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Carbon monoxide (CO) is a colorless, odorless, and tasteless gas that is slightly less dense than air. It is toxic to humans when encountered in concentrations above about 35 ppm, although it is also produced in normal animal metabolism in low quantities, and is thought to have some normal biological functions. In the atmosphere, it is spatially variable and short lived, having a role in the formation of ground-level ozone.
+
+Carbon monoxide consists of one carbon atom and one oxygen atom, connected by a triple bond that consists of two covalent bonds as well as one dative covalent bond. </property>
     <property title="Name">Carbon monoxide</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Carbon_monoxide</property>
   </propertyList>
 </ns0:molecule>

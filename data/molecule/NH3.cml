@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="N" id="a1" x2="1.0" y2="0.0"/>
     <atom elementType="H" id="a3" x2="0.49" y2="0.883346"/>
     <atom elementType="H" id="a2" x2="2.02" y2="0.0"/>
     <atom elementType="H" id="a4" x2="0.49" y2="-0.883346"/>
+    <atom elementType="N" id="a1" x2="1.0" y2="0.0"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -30,6 +30,9 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Ammonia</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Ammonia, or azane, is a compound of nitrogen and hydrogen with the formula NH3. It is a colourless gas with a characteristic pungent smell. Ammonia contributes significantly to the nutritional needs of terrestrial organisms by serving as a precursor to food and fertilizers. Ammonia, either directly or indirectly, is also a building-block for the synthesis of many pharmaceuticals and is used in many commercial cleaning products. Although in wide use, ammonia is both caustic and hazardous.</property>
     <property title="Name">Ammonia</property>
   </propertyList>
 </ns0:molecule>

@@ -14,8 +14,11 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">1.75</property>
-    <property title="Name">Aluminium</property>
     <property title="Weight">30.0</property>
+    <property title="Description">Aluminium is a chemical element in the boron group with symbol Al and atomic number 13. It is a silvery white, soft, ductile metal. Aluminium is the third most abundant element (after oxygen and silicon), and the most abundant metal in the Earth's crust. It makes up about 8% by weight of the Earth's solid surface. Aluminium metal is so chemically reactive that native specimens are rare and limited to extreme reducing environments. Instead, it is found combined in over 270 different minerals. The chief ore of aluminium is bauxite.</property>
+    <property title="Name">Aluminium</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Aluminium</property>
+    <property title="Radius">1.75</property>
   </propertyList>
 </ns0:molecule>

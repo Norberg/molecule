@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
     <atom elementType="O" id="a3" x2="2.0" y2="0.0"/>
-    <atom elementType="S" id="a2" x2="1.0" y2="0.0"/>
-    <atom elementType="O" id="a5" x2="0.0" y2="0.0"/>
-    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
-    <atom elementType="H" id="a7" x2="-0.485" y2="0.840045"/>
+    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
     <atom elementType="H" id="a6" x2="0.159955" y2="-1.485"/>
+    <atom elementType="S" id="a2" x2="1.0" y2="0.0"/>
+    <atom elementType="H" id="a7" x2="-0.485" y2="0.840045"/>
+    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
+    <atom elementType="O" id="a5" x2="0.0" y2="0.0"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -28,6 +28,10 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Sulfuric_acid</property>
+    <property title="Description">Sulfuric acid is a highly corrosive strong mineral acid with the molecular formula H&lt;sub&gt;2&lt;/sub&gt;SO&lt;/sub&gt;4&lt;/sub&gt;. It is a pungent-ethereal, colorless to slightly yellow viscous liquid which is soluble in water at all concentrations.Sometimes, it is dyed dark brown during production to alert people to its hazards. The historical name of this acid is oil of vitriol.
+Sulfuric acid is a diprotic acid and shows different properties depending upon its concentration. Its corrosiveness on other materials, like metals, living tissues or even stones, can be mainly ascribed to its strong acidic nature and, if concentrated, strong dehydrating and oxidizing property.</property>
     <property title="Name">Sulfuric acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="1.732051" y2="-0.0"/>
     <atom elementType="O" id="a3" x2="0.866025" y2="1.5"/>
-    <atom elementType="S" id="a2" x2="0.866025" y2="0.5"/>
+    <atom elementType="O" id="a1" x2="1.732051" y2="-0.0"/>
     <atom elementType="O" id="a4" x2="-0.0" y2="-0.0"/>
+    <atom elementType="S" id="a2" x2="0.866025" y2="0.5"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -22,6 +22,12 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Name">Sulfite</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Sulfur_trioxide</property>
+    <property title="Description">Sulfur trioxide (also sulphur trioxide) is the chemical compound with the formula SO&lt;sub&gt;3&lt;/sub&gt;. In the gaseous form, this species is a significant pollutant, being the primary agent in acid rain. It is prepared on massive scales as a precursor to sulfuric acid.
+Sulfur trioxide will cause serious burns on both inhalation and ingestion since it is highly corrosive and hygroscopic in nature. SO&lt;sub&gt;3&lt;/sub&gt; should be handled with extreme care as it reacts with water violently and produces highly corrosive sulfuric acid.
+
+</property>
+    <property title="Name">Sulfur trioxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

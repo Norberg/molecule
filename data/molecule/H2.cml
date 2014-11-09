@@ -18,6 +18,10 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="Description">Hydrogen is a chemical element with chemical symbol H and atomic number 1. With an atomic weight of 1.00794 u, hydrogen is the lightest element on the periodic table. Its monatomic form (H) is the most abundant chemical substance in the universe, constituting roughly 75% of all baryonic mass.
+Hydrogen gas is highly flammable and will burn in air at a very wide range of concentrations between 4% and 75% by volume</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Hydrogen</property>
     <property title="Name">Hydrogen</property>
   </propertyList>
 </ns0:molecule>

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="N" formalCharge="1" id="a1" x2="1.0" y2="-0.0"/>
+    <atom elementType="H" id="a5" x2="0.0" y2="0.0"/>
     <atom elementType="H" id="a3" x2="2.0" y2="0.0"/>
     <atom elementType="H" id="a2" x2="1.0" y2="-1.0"/>
-    <atom elementType="H" id="a5" x2="0.0" y2="0.0"/>
     <atom elementType="H" id="a4" x2="1.0" y2="1.0"/>
+    <atom elementType="N" formalCharge="1" id="a1" x2="1.0" y2="-0.0"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -24,6 +24,9 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Ammonium</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Description">The ammonium cation is a positively charged polyatomic ion with the chemical formula NH&lt;sub&gt;4&lt;/sub&gt;+. It is formed by the protonation of ammonia (NH&lt;sub&gt;3&lt;/sub&gt;). Ammonium is also a general name for positively charged or protonated substituted amines and quaternary ammonium cations (NR4+), where one or more hydrogen atoms are replaced by organic radical groups (indicated by R).</property>
     <property title="Name">Ammonium</property>
   </propertyList>
 </ns0:molecule>

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="-0.0" y2="1.0"/>
     <atom elementType="N" id="a3" x2="-0.866025" y2="1.5"/>
     <atom elementType="O" id="a2" x2="0.866025" y2="1.5"/>
-    <atom elementType="H" id="a5" x2="-0.866025" y2="2.4845"/>
-    <atom elementType="N" id="a4" x2="-0.0" y2="-0.0"/>
-    <atom elementType="H" id="a7" x2="-0.852602" y2="-0.49225"/>
     <atom elementType="H" id="a6" x2="-1.718627" y2="1.00775"/>
+    <atom elementType="H" id="a5" x2="-0.866025" y2="2.4845"/>
+    <atom elementType="H" id="a7" x2="-0.852602" y2="-0.49225"/>
+    <atom elementType="N" id="a4" x2="-0.0" y2="-0.0"/>
     <atom elementType="H" id="a8" x2="0.852602" y2="-0.49225"/>
+    <atom elementType="C" id="a1" x2="-0.0" y2="1.0"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -38,6 +38,10 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Urea</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Urea is an organic compound with two &#x2014;NH&lt;sub&gt;2&lt;/sub&gt; groups joined by a carbonyl (C=O) functional group.
+Urea serves an important role in the metabolism of nitrogen-containing compounds by animals and is the main nitrogen-containing substance in the urine of mammals. It is a colorless, odorless solid, highly soluble in water and practically non-toxic Dissolved in water, it is neither acidic nor alkaline. The body uses it in many processes, the most notable one being nitrogen excretion. Urea is widely used in fertilizers as a convenient source of nitrogen. Urea is also an important raw material for the chemical industry.</property>
     <property title="Name">Urea</property>
   </propertyList>
 </ns0:molecule>

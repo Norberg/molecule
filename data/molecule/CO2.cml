@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="2.0" y2="-0.0"/>
     <atom elementType="O" id="a3" x2="-0.0" y2="-0.0"/>
+    <atom elementType="O" id="a1" x2="2.0" y2="-0.0"/>
     <atom elementType="C" id="a2" x2="1.0" y2="-0.0"/>
   </ns0:atomArray>
   <ns0:bondArray>
@@ -20,6 +20,9 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Carbon dioxide was one of the first gases to be described as a substance distinct from air. In the seventeenth century, the Flemish chemist Jan Baptist van Helmont observed that when he burned charcoal in a closed vessel, the mass of the resulting ash was much less than that of the original charcoal. His interpretation was that the rest of the charcoal had been transmuted into an invisible substance he termed a "gas" or "wild spirit".</property>
     <property title="Name">Carbon dioxide</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Carbon_dioxide</property>
   </propertyList>
 </ns0:molecule>

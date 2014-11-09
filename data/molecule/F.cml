@@ -14,8 +14,11 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">1.47</property>
-    <property title="Name">Fluoride</property>
+    <property title="Description">Fluorine is a chemical element with symbol F and atomic number 9. It is the lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard conditions. As the most electronegative element, it is extremely reactive: almost all other elements, including some noble gases, form compounds with fluorine.</property>
+    <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Fluorine</property>
+    <property title="Name">Fluorine</property>
     <property title="Weight">19.0</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Radius">1.47</property>
   </propertyList>
 </ns0:molecule>
