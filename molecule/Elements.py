@@ -25,13 +25,15 @@ import pymunk
 from molecule import pyglet_util
 from molecule import CollisionTypes
 from molecule import RenderingOrder
+from molecule import Config
 from libcml import Cml
 from libcml import CachedCml
 from libreact import Reaction
 
+
 SPRITE_SIZE = 96.0
 DEFAULT_SIZE = 32.0
-SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE
+SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE * Config.current.zoom
 SPRITE_RADIUS = SPRITE_SIZE/2
 BOND_LENGTH_FACTOR = 1.4
 ATOM_SPACE = SPRITE_SIZE / 1.5

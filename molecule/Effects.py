@@ -34,9 +34,9 @@ class Effect:
             name = None):
         self.name = name
         if width != None:
-            self.width = width
+            self.width = width * Config.current.zoom
         if height != None:
-            self.height = height
+            self.height = height * Config.current.zoom
         self.init_chipmunk(space)
         if pos != None:
             self.set_pos(pos)
@@ -84,6 +84,7 @@ class EffectSprite(pyglet.sprite.Sprite, Effect):
         group = RenderingOrder.background
         img = pyglet_util.load_image(img_path)
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
+        self.scale = Config.current.zoom
         Effect.__init__(self, space = space, name = name, pos = pos)
 
 

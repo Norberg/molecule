@@ -21,4 +21,5 @@ class Config:
         self.resizable = False
         self.width = 1650
         self.height = 1080
+        self.zoom = 1.0
 current = Config()
