@@ -12,13 +12,14 @@ Dependencies:
 * pyglet-gui 0.1
 
 ###Cmleditor:###
-* python 2.7
-* pygtk2
+* python 3
+* PyGObject
+* GTK+3
 * openbabel (optional, needed to create new molecules)
 
 How to play:
 ---------
-    python start.py --help 
+    python start.py --help
     Molecule - a chemical reaction puzzle game
     -h --help print this help
     --level=LEVEL choose what level to start on
