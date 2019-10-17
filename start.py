@@ -65,6 +65,7 @@ class CliInterface:
         print("r - reset current level")
         print("d - switch Graphic debug on/off")
         print("s - skip level")
+        print("h - print hint for level")
 import code, traceback, signal
 
 def debug(sig, frame):

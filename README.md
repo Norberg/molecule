@@ -39,6 +39,7 @@ How to play:
     r - reset current level
     d - switch Graphic debug on/off
     s - skip level
+    h - print help for level
 
 Structure:
 -------
