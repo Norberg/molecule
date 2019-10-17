@@ -281,6 +281,9 @@ class Level:
             self.window.reset_level()
         elif symbol == pyglet.window.key.D:
             self.window.DEBUG_GRAPHICS = not self.window.DEBUG_GRAPHICS
+        elif symbol == pyglet.window.key.H:
+            hint = self.window.level.cml.hint
+            Gui.create_popup(self.window, self.batch, hint)
 
     def update(self):
         self.space.step(1/120.0)
