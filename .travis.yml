@@ -1,14 +1,16 @@
 language: python
 python:
-  - "3.2"
-  - "3.3"
   - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+services:
+  - xvfb
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - "sudo apt-get install freeglut3-dev"
 install:
-  - "pip install pymunk --use-mirrors"
-  - "pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip"
+  - "pip install pymunk==4"
+  - "pip install pyglet"
   - "pip install --upgrade https://github.com/jorgecarleitao/pyglet-gui/archive/master.zip"
 script: 
   - "python -m unittest discover"
