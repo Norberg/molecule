@@ -44,8 +44,7 @@ class Game(pyglet.window.Window):
         self.start()
 
     def create_config(self):
-        platform = pyglet.window.get_platform()
-        display = platform.get_default_display()
+        display = pyglet.canvas.get_display();
         screen = display.get_default_screen()
         try:
             template = pyglet.gl.Config(sample_buffers=1,
