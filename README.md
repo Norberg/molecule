@@ -1,12 +1,14 @@
 molecule
 ========
 
+[![Build Status](https://travis-ci.org/Norberg/molecule.svg?branch=master)](https://travis-ci.org/Norberg/molecule)
+
 Molecule - a chemical reaction puzzle game
 
 Dependencies:
 -------
-### Game:###
-* python 3.2, 3.3, 3.4
+### Game:
+* python 3.4, 3.5, 3.6, 3.7
 * pyglet 1.4
 * pymunk 4.0
 * pyglet-gui 0.1
@@ -18,7 +20,7 @@ pip3 install pyglet
 pip3 install git+https://github.com/jorgecarleitao/pyglet-gui.git
 ```
 
-###Cmleditor:###
+### Cmleditor:
 * python 3
 * PyGObject
 * GTK+3
@@ -43,23 +45,23 @@ How to play:
 
 Structure:
 -------
-###libcml/###
+### libcml/
 Library responsible for parsing cml files containing molecules and reactions.
 
-###libreact/###
+### libreact/
 Library responsible for simulating reactions.
 
-###cmleditor/###
+### cmleditor/
 GUI for editing cml files
 
-###molecule/###
+### molecule/
 Game code.
 
-###data/###
+### data/
 All data for the game.
 
-###tests/###
+### tests/
 All testcases for the game.
 
-###img/###
+### img/
 All images.
