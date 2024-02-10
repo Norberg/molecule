@@ -13,11 +13,14 @@ Dependencies:
 * pymunk 4.0
 * pyglet-gui 0.1
 ```
-pip3 install pyglet
-pip3 install pymunk
-pip3 install pymunk==4
-pip3 install pyglet
-pip3 install git+https://github.com/jorgecarleitao/pyglet-gui.git
+curl https://pyenv.run | bash
+pyenv install pypy3.7-7.3.9
+pyenv virtualenv pypy3.7-7.3.9 venv
+pyenv local venv
+pip install pyglet==1.2.4
+pip install pyglet==1.4.2
+pip install pymunk==4
+pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 ```
 
 ### Cmleditor:
