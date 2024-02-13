@@ -169,22 +169,20 @@ def getLevel1():
     level1 = levels.next_level()
     return level1
 
-def createShapeDict(molecule):
-    shape = pymunk.Circle(None, 16)
-    shape.molecule = molecule
-    shape.collision_type = CollisionTypes.ELEMENT
-    d = dict()
-    d["shape"] = shape
-    return d
-
 def createCollisionsMock(*molecules):
     collision = list()
     for molecule in molecules:
-        collision.append(createShapeDict(molecule))
+        collision.append(CollisionMock(molecule))
     return collision
 
 def createSpaceAndBatchMock():
     return(SpaceMock(), BatchMock())
+
+class CollisionMock():
+    def __init__(self, molecule):
+        self.molecule = molecule
+        self.collision_type = CollisionTypes.ELEMENT
+        self.shape = pymunk.Circle(None, 16);
 
 class SpaceMock():
     def add(*args):

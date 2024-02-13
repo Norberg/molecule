@@ -96,13 +96,12 @@ class Level:
             boundary.layers = CollisionTypes.LAYER_WALL
         self.space.add(screen_boundaries)
         self.mouse_spring = None
-        self.mouse_body = pymunk.Body()
-        self.space.add_collision_handler(CollisionTypes.ELEMENT,
-                                         CollisionTypes.ELEMENT,
-                                         post_solve=self.element_collision)
-        self.space.add_collision_handler(CollisionTypes.ELEMENT,
-                                         CollisionTypes.EFFECT,
-                                         begin=self.effect_reaction)
+        #Kinematic is working but to much energy in the system
+        self.mouse_body = pymunk.Body(body_type = pymunk.Body.KINEMATIC)
+        #self.mouse_body = pymunk.Body(mass=0.1, moment=10)
+
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.ELEMENT).post_solve=self.element_collision
+        self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.EFFECT).begin=self.effect_reaction
 
     def init_pyglet(self):
         self.window.set_handlers(self)
@@ -125,10 +124,10 @@ class Level:
     def get_colliding_molecules(self, collisions):
         molecules = list()
         for collision in collisions:
-            if collision["shape"].collision_type == CollisionTypes.ELEMENT:
+            if collision.shape.collision_type == CollisionTypes.ELEMENT:
+                molecule = collision.shape.molecule
                 #each atom in the molecule can have 1 entry in the collision
                 #map, make sure that the molecule is only added once.
-                molecule = collision["shape"].molecule
                 if not molecule in molecules and molecule.can_react():
                     molecules.append(molecule)
         return molecules
@@ -157,23 +156,23 @@ class Level:
         reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
         return Universe.universe.react(reactingForumlas, reacting_areas)
 
-    def perform_reaction(self, key, reaction, collisions, position):
+    def perform_reaction(self, space, key, reaction, collisions, position):
         reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
         for molecule in reactingMolecules:
             molecule.delete()
         self.create_elements(reaction.products, position)
 
-    def element_collision(self, space, arbiter):
+    def element_collision(self, arbiter, space, data):
         """ Called if two elements collides"""
         a,b = arbiter.shapes
         reacting_areas = list(self.get_affecting_areas(a.body.position))
-        collisions = space.nearest_point_query(a.body.position, 100)
+        collisions = space.point_query(a.body.position, 100, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
         reaction = self.react(collisions, reacting_areas)
         if reaction != None:
             key = 1 # use 1 as key so only one callback per iteration can trigger
             space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
 
-    def effect_reaction(self, space, arbiter):
+    def effect_reaction(self, arbiter, space, data):
         """ Called if an element touches a effect """
         a,b = arbiter.shapes
         molecule = a.molecule
@@ -187,8 +186,9 @@ class Level:
 
     def get_affecting_areas(self, position):
         """Return all areas that have a affect on position"""
-        shapes = self.space.point_query(position)
-        for shape in shapes:
+        points = self.space.point_query(position, 0, pymunk.ShapeFilter(group=CollisionTypes.EFFECT))
+        for point in points:
+            shape = point.shape
             if shape.collision_type == CollisionTypes.EFFECT:
                 yield shape.effect
 
@@ -226,11 +226,11 @@ class Level:
         if self.mouse_spring != None:
             self.handle_element_released(None, None, None, None)
         self.mouse_body.position = (x, y)
-        clicked = self.space.nearest_point_query_nearest((x,y), 16)
+        clicked = self.space.point_query_nearest((x,y), 16, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.LAYER_DRAGGING))
         if (clicked != None and
-            clicked["shape"].collision_type == CollisionTypes.ELEMENT and
-            clicked["shape"].molecule.draggable):
-            clicked = clicked["shape"]
+            clicked.shape.collision_type == CollisionTypes.ELEMENT and
+            clicked.shape.molecule.draggable):
+            clicked = clicked.shape
             clicked.molecule.set_dragging(True)
             rest_length = self.mouse_body.position.get_distance(clicked.body.position)
             self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))

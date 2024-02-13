@@ -49,7 +49,7 @@ class Effect:
         self.y = y - self.height/2
 
     def init_chipmunk(self,space):
-        body = pymunk.Body(pymunk.inf, pymunk.inf)
+        body = pymunk.Body(body_type=pymunk.Body.STATIC)
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
         space.add(shape, body)
         self.shape = shape
@@ -117,7 +117,7 @@ class WaterBeaker(EffectSprite):
         EffectSprite.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
 
     def init_chipmunk(self,space):
-        body = pymunk.Body(pymunk.inf, pymunk.inf)
+        body = pymunk.Body(body_type=pymunk.Body.STATIC)
         walls = [pymunk.Segment(body, (-144,-320), (-144, 200), 10), #left
                  pymunk.Segment(body, (-144,-320), (280, -320), 10), #bottom
                  pymunk.Segment(body, (277,-320), (277, 200), 10), #right
@@ -128,7 +128,7 @@ class WaterBeaker(EffectSprite):
             wall.collision_type = CollisionTypes.WALL
             wall.layers = CollisionTypes.LAYER_WALL
         space.add(walls)
-        shape = pymunk.Poly.create_box(body, (400,520), (66,-60))
+        shape = pymunk.Poly.create_box(body, (400,520), 5)
         space.add(shape, body)
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT

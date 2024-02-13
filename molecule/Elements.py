@@ -275,7 +275,7 @@ class Atom(pyglet.sprite.Sprite):
         shape.molecule = self.molecule
         self.space.add(body, shape)
 
-        body.apply_impulse(self.create_force_vector())
+        body.apply_impulse_at_local_point(self.create_force_vector())
         self.body = body
         self.shape = shape
 
@@ -313,6 +313,8 @@ class Atom(pyglet.sprite.Sprite):
 
     def update(self):
         x, y = self.body.position
+        if math.isnan(x) or math.isnan(y):
+                print(f"Broken position with NaN! for {self.symbol} {self.body.position}")
         self.x = x - self.width/2
         self.y = y - self.height/2
         if self.electric_charge_sprite is not None:

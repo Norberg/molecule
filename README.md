@@ -8,18 +8,17 @@ Molecule - a chemical reaction puzzle game
 Dependencies:
 -------
 ### Game:
-* python 3.4, 3.5, 3.6, 3.7
-* pyglet 1.4
-* pymunk 4.0
+* python 3.8
+* pyglet 1.5
+* pymunk 5.0
 * pyglet-gui 0.1
 ```
 curl https://pyenv.run | bash
-pyenv install pypy3.7-7.3.9
-pyenv virtualenv pypy3.7-7.3.9 venv
-pyenv local venv
-pip install pyglet==1.2.4
-pip install pyglet==1.4.2
-pip install pymunk==4
+pyenv install 3.8.18
+pyenv virtualenv 3.8.18 venv-molecule
+pyenv activate venv-molecule
+pip install pyglet==1.5
+pip install pymunk==5.7
 pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 ```
 
