@@ -130,8 +130,6 @@ class Level:
                 #map, make sure that the molecule is only added once.
                 if not molecule in molecules and molecule.can_react():
                     molecules.append(molecule)
-            else:
-                print("Unknown collision type:", collision.collision_type)
         return molecules
 
     def is_molecule_part_of_reactants(self, molecule, reactants):
@@ -192,7 +190,6 @@ class Level:
         """Return all areas that have a affect on position"""
         for area in  self.areas:
             if area.inside(position):
-                print(area)
                 yield area
 
     def get_time(self):
