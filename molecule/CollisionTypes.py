@@ -22,3 +22,5 @@ SCREEN_BOUNDARY = 3
 LAYER_WALL = 2**1
 LAYER_ALL = -1
 LAYER_DRAGGING = 2**2
+
+#FIXME switch to use ShapeFilters on everything

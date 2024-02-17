@@ -58,6 +58,9 @@ class Effect:
         space.add(shape, body)
 
     def clicked(self, pos):
+        return self.inside(pos)
+
+    def inside(self, pos):
         bp = self.shape.body.position
         position = (bp.x - self.width / 2, bp.y - self.height / 2)
         return pos_inside(pos, position, self.width, self.height)
@@ -110,11 +113,6 @@ class Cold(Temperature):
     """Cold effect"""
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
-        self.supported_attributes.append("put")
-
-    def put_element(self, element):
-        print("Cold put element:", element)
-
 
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""

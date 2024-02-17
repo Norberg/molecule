@@ -130,6 +130,8 @@ class Level:
                 #map, make sure that the molecule is only added once.
                 if not molecule in molecules and molecule.can_react():
                     molecules.append(molecule)
+            else:
+                print("Unknown collision type:", collision.collision_type)
         return molecules
 
     def is_molecule_part_of_reactants(self, molecule, reactants):
@@ -166,6 +168,7 @@ class Level:
         """ Called if two elements collides"""
         a,b = arbiter.shapes
         reacting_areas = list(self.get_affecting_areas(a.body.position))
+        #FIXME: this point query return more than just elements. something is wrong with the filter
         pointQuery = space.point_query(a.body.position, 100, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
         collisions = [point.shape for point in pointQuery]
         reaction = self.react(collisions, reacting_areas)
@@ -187,12 +190,10 @@ class Level:
 
     def get_affecting_areas(self, position):
         """Return all areas that have a affect on position"""
-        points = self.space.point_query(position, 100, pymunk.ShapeFilter(categories=CollisionTypes.EFFECT))
-        for point in points:
-            shape = point.shape
-            if shape.collision_type == CollisionTypes.EFFECT:
-                print(shape.effect)
-                yield shape.effect
+        for area in  self.areas:
+            if area.inside(position):
+                print(area)
+                yield area
 
     def get_time(self):
         return time.time() - self.start_time
