@@ -107,7 +107,7 @@ class Molecule:
         self.atoms = dict()
         for atom in self.cml.atoms.values():
             x, y = self.pos
-            pos = (x + atom.x * ATOM_SPACE, y + atom.y *ATOM_SPACE)
+            pos = (x + atom.x * ATOM_SPACE, y + atom.y * ATOM_SPACE)
             new = Atom(atom.elementType, atom.formalCharge,
                        self.space, self.batch, self, pos)
             self.atoms[atom.id] = new

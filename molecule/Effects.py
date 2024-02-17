@@ -51,11 +51,11 @@ class Effect:
     def init_chipmunk(self,space):
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
-        space.add(shape, body)
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        space.add(shape, body)
 
     def clicked(self, pos):
         bp = self.shape.body.position
@@ -110,6 +110,11 @@ class Cold(Temperature):
     """Cold effect"""
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
+        self.supported_attributes.append("put")
+
+    def put_element(self, element):
+        print("Cold put element:", element)
+
 
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""

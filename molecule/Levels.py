@@ -186,10 +186,11 @@ class Level:
 
     def get_affecting_areas(self, position):
         """Return all areas that have a affect on position"""
-        points = self.space.point_query(position, 0, pymunk.ShapeFilter(group=CollisionTypes.EFFECT))
+        points = self.space.point_query(position, 100, pymunk.ShapeFilter(categories=CollisionTypes.EFFECT))
         for point in points:
             shape = point.shape
             if shape.collision_type == CollisionTypes.EFFECT:
+                print(shape.effect)
                 yield shape.effect
 
     def get_time(self):
