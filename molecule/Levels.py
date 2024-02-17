@@ -94,7 +94,7 @@ class Level:
             boundary.elasticity = 0.95
             boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
             boundary.layers = CollisionTypes.LAYER_WALL
-        self.space.add(screen_boundaries)
+        self.space.add(*screen_boundaries)
         self.mouse_spring = None
         #Kinematic is working but to much energy in the system
         self.mouse_body = pymunk.Body(body_type = pymunk.Body.KINEMATIC)
@@ -124,8 +124,8 @@ class Level:
     def get_colliding_molecules(self, collisions):
         molecules = list()
         for collision in collisions:
-            if collision.shape.collision_type == CollisionTypes.ELEMENT:
-                molecule = collision.shape.molecule
+            if collision.collision_type == CollisionTypes.ELEMENT:
+                molecule = collision.molecule
                 #each atom in the molecule can have 1 entry in the collision
                 #map, make sure that the molecule is only added once.
                 if not molecule in molecules and molecule.can_react():
@@ -166,7 +166,8 @@ class Level:
         """ Called if two elements collides"""
         a,b = arbiter.shapes
         reacting_areas = list(self.get_affecting_areas(a.body.position))
-        collisions = space.point_query(a.body.position, 100, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
+        pointQuery = space.point_query(a.body.position, 100, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
+        collisions = [point.shape for point in pointQuery]
         reaction = self.react(collisions, reacting_areas)
         if reaction != None:
             key = 1 # use 1 as key so only one callback per iteration can trigger
@@ -178,7 +179,7 @@ class Level:
         molecule = a.molecule
         effect = b.effect
         reaction = effect.react(molecule)
-        collisions = [{"shape" : a}]
+        collisions = [a]
         if reaction != None:
             key = 1 # use 1 as key so only one callback per iteration can trigger
             space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)

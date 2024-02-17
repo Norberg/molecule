@@ -132,9 +132,10 @@ class WaterBeaker(EffectSprite):
             wall.elasticity = 0.95
             wall.collision_type = CollisionTypes.WALL
             wall.layers = CollisionTypes.LAYER_WALL
-        space.add(walls)
+        space.add(body)
+        space.add(*walls)
         shape = pymunk.Poly.create_box(body, (400,520), 5)
-        space.add(shape, body)
+        space.add(shape)
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
