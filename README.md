@@ -27,6 +27,11 @@ pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 * PyGObject
 * GTK+3
 * openbabel (optional, needed to create new molecules)
+```
+sudo apt install libgirepository1.0-dev openbabel
+pip install pygobject 
+```
+
 
 How to play:
 ---------

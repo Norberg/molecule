@@ -61,7 +61,7 @@ def convert_cml2png(formula, output):
         window.clear()
         batch.draw()
         pyglet.image.get_buffer_manager().get_color_buffer().save(output)
-        window.close()
+        #window.close()
         pyglet.app.exit()
     pyglet.app.run()
 

@@ -21,12 +21,13 @@ import glob
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository.GdkPixbuf import Pixbuf
-#import Gtk.glade
 from gi.repository import GObject
 import libcml.Cml as Cml
 import cml2img
 from subprocess import call
-import time
+
+
+
 class EditorGTK:
 
     def __init__(self):
