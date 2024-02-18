@@ -3,3 +3,10 @@
 *.swp
 *.bak
 __pycache__
+.python-version
+.tags
+.tags1
+.venv
+.vscode
+*.*~
+preview.png
