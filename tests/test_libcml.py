@@ -285,8 +285,30 @@ class TestCML(unittest.TestCase):
     def testAllMolecules(self):
         for filename in glob.glob("data/molecule/*"):
             m = Cml.Molecule()
-            m.parse(filename)
+            try:
+                m.parse(filename)
+            except Exception as e:
+                self.fail("Failed to parse %s: %s" % (filename, e))
             self.assertNotEqual(len(m.states), 0, msg="%s dont have any state info!" % filename)
+
+
+    def testThatNoDuplicatesExists(self):
+        atomMatrix = {}
+        for filename in glob.glob("data/molecule/*"):
+            m = Cml.Molecule()
+            try:
+                m.parse(filename)
+                if m.is_atom:
+                    continue
+                atoms_string = ""
+                for atom in m.atoms_sorted:
+                    atoms_string += atom.elementType + str(atom.formalCharge) + str(atom.x) + str(atom.y) + str(atom.z)
+                print(atoms_string) 
+                if atoms_string in atomMatrix:
+                    self.fail("Duplicate found: %s and %s" % (atomMatrix[atoms_string], filename))
+                atomMatrix[atoms_string] = filename
+            except Exception as e:
+                self.fail("Failed to parse %s: %s" % (filename, e))
 
     def testReadAndWriteDescription(self):
         m = Cml.Molecule()

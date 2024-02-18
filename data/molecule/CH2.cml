@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="C"/>
+    <atom x2="2.07" y2="0.0" id="a2" elementType="H"/>
+    <atom x2="0.465" y2="0.926647" id="a3" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">193.9</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">386.4</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Methylene</property>
+    <property title="Description">Methylene, also called carbene or methene) is an organic compound with the chemical formula CH2
+It is a colourless gas that fluoresces in the mid-infrared range, and only persists in dilution, or as an adduct.
+
+Methylene is the simplest carbene. It is usually detected only at very low temperatures, or as a short-lived intermediate in chemical reactions.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methylene_(compound)</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
