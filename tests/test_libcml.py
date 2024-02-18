@@ -303,7 +303,6 @@ class TestCML(unittest.TestCase):
                 atoms_string = ""
                 for atom in m.atoms_sorted:
                     atoms_string += atom.elementType + str(atom.formalCharge) + str(atom.x) + str(atom.y) + str(atom.z)
-                print(atoms_string) 
                 if atoms_string in atomMatrix:
                     self.fail("Duplicate found: %s and %s" % (atomMatrix[atoms_string], filename))
                 atomMatrix[atoms_string] = filename
