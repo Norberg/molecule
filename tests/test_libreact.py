@@ -17,6 +17,7 @@ import unittest
 from libcml import Cml
 from libcml import CachedCml
 from libreact.Reaction import Reaction
+from libreact.Reaction import verify as Reaction_verify
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
 
@@ -89,6 +90,11 @@ class TestReact(unittest.TestCase):
         reaction = reactor.react(["H+(g)", "H+(g)", "H+(g)"])
         self.assertEqual(reaction.products, ["H2(g)"])
         self.assertEqual(reaction.reactants, ["H+(g)", "H+(g)"])
+
+    def testVerifyElements(self):
+        Reaction_verify(["P4O10(g)"])
+        #expecting an exception
+        self.assertRaises(Exception, Reaction_verify, ["P4O10H0(g)"])
 
     def testPerformAllReactions(self):
         unsupported_reactions = [["C2H7NO3S(l)"]]

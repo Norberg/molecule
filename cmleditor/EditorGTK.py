@@ -25,8 +25,9 @@ from gi.repository import GObject
 import libcml.Cml as Cml
 import cml2img
 from subprocess import call
-
-
+from libcml import CachedCml
+from libreact.Reaction import Reaction, list_without_state
+from libreact.Reactor import Reactor
 
 class EditorGTK:
 
@@ -41,6 +42,30 @@ class EditorGTK:
         self.builder.connect_signals(self)
         self.folder = "data/molecule/"
         self.init_twStates()
+        self.init_twReactions()
+        self.init_reactions()
+
+    def init_reactions(self):
+        cml = Cml.Reactions()
+        cml.parse("data/reactions.cml")
+        self.reactor = Reactor(cml.reactions)
+
+    def init_twReactions(self):
+        twReactions = self.widget("twReactions")
+        #set what data type twStates twReactions should contain
+        self.reactionStates = Gtk.ListStore(str, str, str)
+        twReactions.set_model(self.reactionStates)
+        #create columns
+        edit0 = Gtk.CellRendererText()
+        edit1 = Gtk.CellRendererText()
+        edit2 = Gtk.CellRendererText()
+
+        col1 = Gtk.TreeViewColumn("Reactants", edit0, text=0)
+        col2 = Gtk.TreeViewColumn("Products", edit1, text=1)
+        col3 = Gtk.TreeViewColumn("Temperature (K)", edit2, text=2)
+        twReactions.append_column(col1)
+        twReactions.append_column(col2)
+        twReactions.append_column(col3)
 
     def init_twStates(self):
         twStates = self.widget("twStates")
@@ -110,6 +135,8 @@ class EditorGTK:
             self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
             self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
         self.molecule.write(self.filename)
+        CachedCml.evictFromCache(self.formula)
+        self.updateReactions(self.formula)
 
     def on_btnNext_clicked(self, widget):
         self.switch_molecule(1)
@@ -146,8 +173,8 @@ class EditorGTK:
         molecule = Cml.Molecule()
         self.molecule = molecule
         molecule.parse(filename)
-        formula = filename.split("/")[-1].split(".cml")[0]
-        state_formula = formula+"(g)"
+        self.formula = filename.split("/")[-1].split(".cml")[0]
+        state_formula = self.formula+"(g)"
         cml2img.convert_cml2png(state_formula, "preview.png")
         pixBuffPreview = Pixbuf.new_from_file("preview.png")
         imgPreview = self.widget("imgPreview")
@@ -184,6 +211,37 @@ class EditorGTK:
                 self.widget("cmbLicense").set_active(index)
                 break
             index += 1
+        self.updateReactions(self.formula)
+
+    def updateReactions(self, formula):
+        self.reactionStates.clear()
+        for reaction in self.reactor.reactions:
+            if formula not in reaction.reactants and formula not in list_without_state(reaction.products):
+                 continue
+            reactants = addState(reaction.reactants)
+            expected_products = reaction.products
+            result = None
+            reactingTemp = self.findReactingTemperatures(reactants, expected_products)
+            if reactingTemp == []:
+                reactingTemp = self.findReactingTemperatures(reactants, expected_products, trace = True)
+            reactants_str = " + ".join(reactants)
+            expected_products_str = " + ".join(expected_products)
+            reactingTemp_str = " , ".join([str(x) for x in reactingTemp])
+            if reactingTemp_str == "":
+                reactingTemp_str = "Never occurs"
+            self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
+
+    def findReactingTemperatures(self, reactants, expected_products, trace = False):
+        if trace:
+            print("\nFinding reacting temperatures for:", reactants, expected_products)
+        tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
+        result = None
+        reactingTemp = []
+        for temp in tempranges:
+            result = self.reactor.react(reactants, temp, trace=trace)
+            if result is not None and expected_products == result.products:
+                reactingTemp.append(temp)
+        return reactingTemp
 
     def setAtomSettings(self):
         self.txtAtomWeight.set_sensitive(True)
@@ -265,6 +323,17 @@ class EditorGTK:
         sys.__excepthook__(type, value, traceback)
 
 
+def addState(stateless):
+    default_order = ["Aqueous","Gas", "Liquid", "Solid"]
+    statefull = list()
+    for s in stateless:
+        m = CachedCml.getMolecule(s)
+        for k in default_order:
+            if k in m.states:
+                state = m.states[k].short
+                break
+        statefull.append(s+"(%s)"%state)
+    return statefull
 
 def get_active_text(cmb):
     tree_iter = cmb.get_active_iter()

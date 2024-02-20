@@ -29,4 +29,8 @@ def getMoleculeCml(filename):
     m.parse(filename)
     __cml_cache[filename] = m
     return m
-                
+
+def evictFromCache(element):
+    filename = "data/molecule/%s.cml" % element
+    if filename in __cml_cache:
+        del __cml_cache[filename]                

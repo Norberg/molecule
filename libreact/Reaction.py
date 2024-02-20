@@ -26,6 +26,14 @@ class Reaction:
         verify(self.products)    
         verify(self.reactants)    
 
+    @property
+    def products_stateless(self):
+        return list_without_state(self.products)
+    
+    @property
+    def reactants_stateless(self):
+        return list_without_state(self.reactants)
+
     def __str__(self):
         return "Reaction(%s -> %s)" % (str(self.reactants), str(self.products))
     
@@ -110,10 +118,11 @@ def remove_state(molecule):
     return split_state(molecule)[0]
 
 def verify(elements):
-    """Sanity check of symbol name, make sure no zeros have been used by mistake"""
+    """Sanity check of symbol name, make sure no zeros without preceeding digit have been used by mistake"""
     for element in elements:
-        if "0" in element:
-            raise Exception("Tried to create reaction with invalid values")
+        atom_numbers = [int(num) for num in re.findall(r"\d+", element)]
+        if 0 in atom_numbers:
+             raise Exception(f"Tried to create reaction with invalid values {element} in {elements}")
 
 def list_without_state(molecules):
     """Return a list of molecules without any state """

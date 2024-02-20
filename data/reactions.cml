@@ -297,4 +297,17 @@
       <molecule title="CO2(g)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="P4"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="P4O10(s)"/>
+    </productList>
+  </reaction>
 </reactions>
