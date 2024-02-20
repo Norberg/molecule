@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="P4(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="CO2(g)"/>
+  </moleculeList>
+  <effectList>
+    <effect title="Fire" value="900" x2="200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="P4O10"/>
+  </victoryCondition>
+  <objective text="Create a P4O10 molecule"/>
+  <hint text="Everything needs to be close! P4 + 5 O2 + Heat => P4O10"/>
+</level>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="2.182187" y2="0.453836" id="a1" elementType="O"/>
+    <atom x2="1.183974" y2="0.34312" id="a2" elementType="P"/>
+    <atom x2="1.183988" y2="1.441246" id="a3" elementType="O"/>
+    <atom x2="0.292272" y2="1.956079" id="a4" elementType="P"/>
+    <atom x2="0.292227" y2="2.960413" id="a5" elementType="O"/>
+    <atom x2="0.807558" y2="1.064588" id="a6" elementType="O"/>
+    <atom x2="0.807543" y2="-0.067781" id="a7" elementType="P"/>
+    <atom x2="0.807588" y2="-1.072116" id="a8" elementType="O"/>
+    <atom x2="1.778447" y2="-0.342444" id="a9" elementType="O"/>
+    <atom x2="-0.031155" y2="-0.342421" id="a10" elementType="O"/>
+    <atom x2="-0.599232" y2="0.412578" id="a11" elementType="P"/>
+    <atom x2="-1.571963" y2="0.662545" id="a12" elementType="O"/>
+    <atom x2="-0.599219" y2="1.441269" id="a13" elementType="O"/>
+    <atom x2="0.0" y2="-0.0" id="a14" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a4 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a7 a9" order="1"/>
+    <bond atomRefs2="a2 a9" order="1"/>
+    <bond atomRefs2="a7 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="1"/>
+    <bond atomRefs2="a11 a12" order="2"/>
+    <bond atomRefs2="a11 a13" order="1"/>
+    <bond atomRefs2="a4 a13" order="1"/>
+    <bond atomRefs2="a11 a14" order="1"/>
+    <bond atomRefs2="a2 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">61.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">1310.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Phosphorus pentoxide</property>
+    <property title="Description">Phosphorus pentoxide is a chemical compound with molecular formula P4O10 (with its common name derived from its empirical formula, P2O5). This white crystalline solid is the anhydride of phosphoric acid. It is a powerful desiccant and dehydrating agent. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphorus_pentoxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
