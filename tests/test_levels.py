@@ -27,7 +27,7 @@ import pymunk
 class TestLevels(unittest.TestCase):
     def testLevels(self):
         levels = Levels("data/levels", window=WindowMock())
-        l = levels.next_level()
+        l = levels.get_current_level()
         expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'P(g)', 'F(g)', 'Al(s)']
         self.assertEqual(l.cml.molecules, expected)
         self.assertEqual(l.cml.victory_condition, ["H2O"])
@@ -166,7 +166,7 @@ def setupSimpleReactor():
 
 def getLevel1():
     levels = Levels("data/levels", window=WindowMock())
-    level1 = levels.next_level()
+    level1 = levels.get_current_level()
     return level1
 
 def createCollisionsMock(*molecules):

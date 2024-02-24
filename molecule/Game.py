@@ -60,8 +60,8 @@ class Game(pyglet.window.Window):
     def start(self):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.levels = Levels("data/levels", Config.current.level, window=self)
-        self.switch_level()
         pyglet.clock.schedule_interval(self.update, 1/100.0)
+        self.reset_level()
 
     def init_pyglet(self):
         gl.glLineWidth(4)

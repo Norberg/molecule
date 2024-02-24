@@ -34,7 +34,16 @@ class Levels:
         self.path = path
         self.window = window
         self.init_levels()
-        self.current_level = start_level - 2
+        self.current_level = None
+        for i, level in enumerate(self.levels):
+            levelIndex = int(level.strip("data/levels/").split("-")[0])
+            if levelIndex == start_level:
+                self.current_level = i
+                break
+        if self.current_level is None:
+            raise Exception(f"Requested level {start_level} not found!")
+        elif self.current_level > 0:
+            print("Starting on level %s" % self.levels[self.current_level])
 
     def init_levels(self):
         filenames = glob.glob(self.path+"/*")
