@@ -325,7 +325,7 @@
       <molecule title="HCl"/>
     </reactantList>
     <productList>
-      <molecule title="CH3CH2Cl(g)"/>
+      <molecule title="C2H5Cl(g)"/>
     </productList>
   </reaction>
 </reactions>
