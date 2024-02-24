@@ -1,2 +1,38 @@
+<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
- <ns0:atomArray><atom x2="1.732051" y2="-0.0" id="a1" elementType="C" /><atom x2="0.866025" y2="0.5" id="a2" elementType="C" /><atom x2="-0.0" y2="-0.0" id="a3" elementType="Br" /><atom x2="1.732051" y2="-1.07" id="a4" elementType="H" /><atom x2="2.658698" y2="0.535" id="a5" elementType="H" /><atom x2="2.658698" y2="-0.535" id="a6" elementType="H" /><atom x2="0.866025" y2="1.57" id="a7" elementType="H" /><atom x2="-0.060622" y2="1.035" id="a8" elementType="H" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="1" /><bond atomRefs2="a2 a3" order="1" /><bond atomRefs2="a1 a4" order="1" /><bond atomRefs2="a1 a5" order="1" /><bond atomRefs2="a1 a6" order="1" /><bond atomRefs2="a2 a7" order="1" /><bond atomRefs2="a2 a8" order="1" /></ns0:bondArray><propertyList title="states"><propertyList title="Gas"><property title="enthalpy"><scalar units="units:molar_energy">-97.6</scalar></property><property title="entropy"><scalar units="units:molar_energy">198.7</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Bromoethane</property><property title="Description">Bromoethane, also known as ethyl bromide, is a chemical compound of the haloalkanes group. It is abbreviated by chemists as EtBr (which is also used as an abbreviation for ethidium bromide). This volatile compound has an ether-like odor. </property><property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromoethane</property><property title="DescriptionLicense">CC BY-SA 3.0</property></propertyList></ns0:molecule>
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="Br"/>
+    <atom x2="1.732051" y2="-1.07" id="a4" elementType="H"/>
+    <atom x2="2.658698" y2="0.535" id="a5" elementType="H"/>
+    <atom x2="2.658698" y2="-0.535" id="a6" elementType="H"/>
+    <atom x2="0.866025" y2="1.57" id="a7" elementType="H"/>
+    <atom x2="-0.060622" y2="1.035" id="a8" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a2 a7" order="1"/>
+    <bond atomRefs2="a2 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-97.6</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">198.7</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Bromoethane</property>
+    <property title="Description">Bromoethane, also known as ethyl bromide, is a chemical compound of the haloalkanes group. It is abbreviated by chemists as EtBr (which is also used as an abbreviation for ethidium bromide). This volatile compound has an ether-like odor. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromoethane</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

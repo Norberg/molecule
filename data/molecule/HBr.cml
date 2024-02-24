@@ -1,2 +1,26 @@
+<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
- <ns0:atomArray><atom x2="1.0" y2="0.0" id="a1" elementType="Br" /><atom x2="2.39" y2="0.0" id="a2" elementType="H" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="1" /></ns0:bondArray><propertyList title="states"><propertyList title="Gas"><property title="enthalpy"><scalar units="units:molar_energy">-36.4</scalar></property><property title="entropy"><scalar units="units:molar_energy">198.6</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Hydrogen bromide</property><property title="Description">Hydrogen bromide is the inorganic compound with the formula HBr. It is a hydrogen halide consisting of hydrogen and bromine. A colorless gas, it dissolves in water, forming hydrobromic acid, which is saturated at 68.85% HBr by weight at room temperature. Aqueous solutions that are 47.6% HBr by mass form a constant-boiling azeotrope mixture that boils at 124.3 &#176;C (255.7 &#176;F). Boiling less concentrated solutions releases H2O until the constant-boiling mixture composition is reached. </property><property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydrogen_bromide</property><property title="DescriptionLicense">CC BY-SA 3.0</property></propertyList></ns0:molecule>
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Br"/>
+    <atom x2="2.39" y2="0.0" id="a2" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-36.4</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">198.6</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydrogen bromide</property>
+    <property title="Description">Hydrogen bromide is the inorganic compound with the formula HBr. It is a hydrogen halide consisting of hydrogen and bromine. A colorless gas, it dissolves in water, forming hydrobromic acid, which is saturated at 68.85% HBr by weight at room temperature. Aqueous solutions that are 47.6% HBr by mass form a constant-boiling azeotrope mixture that boils at 124.3 &#xB0;C (255.7 &#xB0;F). Boiling less concentrated solutions releases H2O until the constant-boiling mixture composition is reached. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydrogen_bromide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

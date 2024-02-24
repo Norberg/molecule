@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="C2H4(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="CH4(g)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="CH3CH2Cl"/>
+  </victoryCondition>
+  <objective text="Create CH3CH2Cl by performing an Addition reaction"/>
+  <hint text="C2H4 + HCl => CH3CH2Cl"/>
+</level>

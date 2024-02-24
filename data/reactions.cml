@@ -319,4 +319,13 @@
       <molecule title="C2H5Br(g)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H4"/>
+      <molecule title="HCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3CH2Cl(g)"/>
+    </productList>
+  </reaction>
 </reactions>
