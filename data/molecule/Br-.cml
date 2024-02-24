@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="-1">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" formalCharge="-1" id="a1" elementType="Br"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-219.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">163.4</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-121.5</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">82.4</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Bromide</property>
+    <property title="Description">A bromide ion is the negatively charged form (Br&#x2212;) of the element bromine, a member of the halogens group on the periodic table. Most bromides are colorless. Bromides have many practical roles, being found in anticonvulsants, flame-retardant materials, and cell stains.Although uncommon, chronic toxicity from bromide can result in bromism, a syndrome with multiple neurological symptoms. Bromide toxicity can also cause a type of skin eruption, see potassium bromide. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Weight">79.0</property>
+    <property title="Radius">1.85</property>
+  </propertyList>
+</ns0:molecule>
