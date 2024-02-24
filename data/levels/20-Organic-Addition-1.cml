@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="HBr(g)"/>
+    <molecule title="HBr(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="C2H4(g)"/>
+  </moleculeList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="C2H5Br"/>
+  </victoryCondition>
+  <objective text="Create C2H5Br by performing an Addition reaction"/>
+  <hint text="C2H4 + HBr  => C2H5Br"/>
+</level>

@@ -310,4 +310,13 @@
       <molecule title="P4O10(s)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H4"/>
+      <molecule title="HBr"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5Br(g)"/>
+    </productList>
+  </reaction>
 </reactions>
