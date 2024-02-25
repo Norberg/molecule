@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
+from collections import Counter
 from libcml import CachedCml
 
 class Reaction:
@@ -24,7 +25,8 @@ class Reaction:
         self.trace = False
         self.addStateToReactants(reacting_elements)
         verify(self.products)    
-        verify(self.reactants)    
+        verify(self.reactants)
+        verifyReactionIsBalanced(self.products, self.reactants)    
 
     @property
     def products_stateless(self):
@@ -133,4 +135,25 @@ def list_without_state(molecules):
     
 def isSpontaneous(free_energy):
         return free_energy < 0
+
+def verifyReactionIsBalanced(products, reactants):
+    """Verify that the reaction is balanced"""
+    productsAtoms = getAtomCount(products)
+    reactantsAtoms = getAtomCount(reactants)
+    if productsAtoms != reactantsAtoms:
+        raise Exception(f"Reaction is not balanced for reactions {reactants} -> {products} reactions atoms is {reactantsAtoms} != {productsAtoms}")
+
+def getAtomCount(molecules):
+    moleules = list_without_state(molecules)
+    atom_count = Counter()
+    for molecule in moleules:
+        atoms = re.findall('([A-Z][a-z]?)(\d*)', molecule)
+        for atom, num in atoms:
+            if num == '':
+                num = 1
+            else:
+                num = int(num)
+            atom_count[atom] += num
+    return atom_count
+
 

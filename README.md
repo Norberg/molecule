@@ -72,3 +72,17 @@ All testcases for the game.
 
 ### img/
 All images.
+
+
+
+
+
+#### Adding a new atom
+Copy one of the existing SVGs and in a editor find the "feFlood10943" and replace the coloring with that from https://en.wikipedia.org/wiki/User:Benjah-bmm27/MakingMolecules/DSV
+by converting the hexcode to decimal RGB. The text can be edited in inkscape.
+```
+cd img
+python export_svg2png.py 
+```
+There will be a lot of warnings from the program that the script calls but it should work anyway.
+Make a copy of /data/molecule/Br.cml or another atom and adjust it for the new atom. After this molecules will be possible to add in the cmleditor as usual.

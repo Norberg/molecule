@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="0.0" formalCharge="1" id="a1" elementType="K"/>
+    <atom x2="1.2" y2="0.0" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="2.17" y2="0.0" id="a3" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-424.7</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">78.9</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Potassium hydroxide</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Potassium_hydroxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Potassium hydroxide is an inorganic compound with the formula KOH, and is commonly called caustic potash.
+
+Along with sodium hydroxide (NaOH), KOH is a prototypical strong base. It has many industrial and niche applications, most of which utilize its caustic nature and its reactivity toward acids. An estimated 700,000 to 800,000 tonnes were produced in 2005. KOH is noteworthy as the precursor to most soft and liquid soaps, as well as numerous potassium-containing chemicals. It is a white solid that is dangerously corrosive.</property>
+  </propertyList>
+</ns0:molecule>

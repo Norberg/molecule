@@ -1,4 +1,48 @@
+<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
-  <ns0:atomArray><atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl" /><atom x2="0.866025" y2="0.5" id="a2" elementType="C" /><atom x2="-0.0" y2="-0.0" id="a3" elementType="C" /><atom x2="0.866025" y2="1.57" id="a4" elementType="H" /><atom x2="-0.060622" y2="1.035" id="a5" elementType="H" /><atom x2="-0.926647" y2="0.535" id="a6" elementType="H" /><atom x2="-0.0" y2="-1.07" id="a7" elementType="H" /><atom x2="-0.926647" y2="-0.535" id="a8" elementType="H" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="1" /><bond atomRefs2="a2 a3" order="1" /><bond atomRefs2="a2 a4" order="1" /><bond atomRefs2="a2 a5" order="1" /><bond atomRefs2="a3 a6" order="1" /><bond atomRefs2="a3 a7" order="1" /><bond atomRefs2="a3 a8" order="1" /></ns0:bondArray><propertyList title="states"><propertyList title="Solid"><property title="enthalpy"><scalar units="units:molar_energy">-137.0</scalar></property><property title="entropy"><scalar units="units:molar_energy">275.7</scalar></property></propertyList><propertyList title="Gas"><property title="enthalpy"><scalar units="units:molar_energy">-137.0</scalar></property><property title="entropy"><scalar units="units:molar_energy">257.7</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Chloroethane</property><property title="Description">Chloroethane, commonly known as ethyl chloride, is a chemical compound with chemical formula CH3CH2Cl, once widely used in producing tetraethyllead, a gasoline additive. It is a colorless, flammable gas or refrigerated liquid with a faintly sweet odor.
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="0.866025" y2="1.57" id="a4" elementType="H"/>
+    <atom x2="-0.060622" y2="1.035" id="a5" elementType="H"/>
+    <atom x2="-0.926647" y2="0.535" id="a6" elementType="H"/>
+    <atom x2="-0.0" y2="-1.07" id="a7" elementType="H"/>
+    <atom x2="-0.926647" y2="-0.535" id="a8" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a3 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-137.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">275.7</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-137.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">257.7</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Chloroethane</property>
+    <property title="Description">Chloroethane, commonly known as ethyl chloride, is a chemical compound with chemical formula CH3CH2Cl, once widely used in producing tetraethyllead, a gasoline additive. It is a colorless, flammable gas or refrigerated liquid with a faintly sweet odor.
 
-Ethyl chloride was first synthesised by Basil Valentine by reacting ethanol and hydrochloric acid in 1440. Glauber made it in 1648 by reacting ethanol and zinc chloride. </property><property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Chloroethane</property><property title="DescriptionLicense">CC BY-SA 3.0</property></propertyList></ns0:molecule>
+Ethyl chloride was first synthesised by Basil Valentine by reacting ethanol and hydrochloric acid in 1440. Glauber made it in 1648 by reacting ethanol and zinc chloride. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Chloroethane</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="-0.0" formalCharge="1" id="a1" elementType="K"/>
+    <atom x2="1.2" y2="-0.0" formalCharge="-1" id="a2" elementType="Br"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-393.8</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">95.9</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Potassium bromide</property>
+    <property title="Description">Potassium bromide (KBr) is a salt, widely used as an anticonvulsant and a sedative in the late 19th and early 20th centuries, with over-the-counter use extending to 1975 in the US. Its action is due to the bromide ion (sodium bromide is equally effective). Potassium bromide is used as a veterinary drug, in antiepileptic medication for dogs.
+
+Under standard conditions, potassium bromide is a white crystalline powder. It is freely soluble in water; it is not soluble in acetonitrile. In a dilute aqueous solution, potassium bromide tastes sweet, at higher concentrations it tastes bitter, and tastes salty when the concentration is even higher. These effects are mainly due to the properties of the potassium ion&#x2014;sodium bromide tastes salty at any concentration. In high concentration, potassium bromide strongly irritates the gastric mucous membrane, causing nausea and sometimes vomiting (a typical effect of all soluble potassium salts).</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Potassium_bromide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

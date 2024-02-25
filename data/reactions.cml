@@ -77,7 +77,7 @@
     <productList>
       <molecule title="CO(g)"/>
       <molecule title="H2O(g)"/>
-      <molecule title="H2O(g)"/>
+      <molecule title="H2(g)"/>
     </productList>
   </reaction>
   <reaction>
@@ -225,16 +225,6 @@
   </reaction>
   <reaction>
     <reactantList>
-      <molecule title="C2H4O"/>
-      <molecule title="Na+"/>
-      <molecule title="HSO4-"/>
-    </reactantList>
-    <productList>
-      <molecule title="C2H7NO3S(l)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
       <molecule title="C"/>
       <molecule title="O2"/>
     </reactantList>
@@ -326,6 +316,16 @@
     </reactantList>
     <productList>
       <molecule title="C2H5Cl(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H6"/>
+      <molecule title="Br2"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5Br(g)"/>
+      <molecule title="HBr(g)"/>
     </productList>
   </reaction>
 </reactions>
