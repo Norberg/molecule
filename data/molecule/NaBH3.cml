@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-1.0" y2="0.0" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="1.2" y2="0.0" formalCharge="-1" id="a2" elementType="B"/>
+    <atom x2="2.2" y2="0.0" id="a3" elementType="H"/>
+    <atom x2="1.2" y2="1.0" id="a4" elementType="H"/>
+    <atom x2="1.2" y2="-1.0" id="a5" elementType="H"/>
+    <atom x2="0.2" y2="0.0" id="a6" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-188.6</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">101.3</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium borohydride</property>
+    <property title="Description">Sodium borohydride, also known as sodium tetrahydridoborate and sodium tetrahydroborate, is an inorganic compound with the formula NaBH4 (sometimes written as Na[BH4]). It is a white crystalline solid, usually encountered as an aqueous basic solution. Sodium borohydride is a reducing agent that finds application in papermaking and dye industries. It is also used as a reagent in organic synthesis.
+
+The compound was discovered in the 1940s by H. I. Schlesinger, who led a team seeking volatile uranium compounds. Results of this wartime research were declassified and published in 1953. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_borohydride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

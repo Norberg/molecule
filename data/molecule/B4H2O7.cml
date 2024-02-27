@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-1.732051" y2="3.0" id="a1" elementType="O"/>
+    <atom x2="-2.598076" y2="2.5" id="a2" elementType="B"/>
+    <atom x2="-3.464102" y2="3.0" id="a3" elementType="O"/>
+    <atom x2="-4.330127" y2="2.5" id="a4" elementType="B"/>
+    <atom x2="-5.196152" y2="3.0" id="a5" elementType="O"/>
+    <atom x2="-2.598076" y2="1.5" id="a6" elementType="O"/>
+    <atom x2="-1.732051" y2="1.0" id="a7" elementType="B"/>
+    <atom x2="-1.732051" y2="0.0" id="a8" elementType="O"/>
+    <atom x2="-0.866025" y2="1.5" id="a9" elementType="O"/>
+    <atom x2="-0.0" y2="1.0" id="a10" elementType="B"/>
+    <atom x2="0.0" y2="-0.0" id="a11" elementType="O"/>
+    <atom x2="-0.892006" y2="2.515" id="a12" elementType="H"/>
+    <atom x2="-2.572095" y2="-0.485" id="a13" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a7 a9" order="1"/>
+    <bond atomRefs2="a9 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="2"/>
+    <bond atomRefs2="a1 a12" order="1"/>
+    <bond atomRefs2="a8 a13" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas"/>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Tetraboric acid</property>
+    <property title="Description">Tetraboric acid or pyroboric acid is a chemical compound with empirical formula H2B4O7.[2] It is a colourless water-soluble solid formed by the dehydration or polymerization of boric acid.
+
+Tetraboric acid is formally the parent acid of the tetraborate anion [B4O7]2&#x2212;. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Tetraboric_acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

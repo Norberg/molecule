@@ -328,4 +328,24 @@
       <molecule title="HBr(g)"/>
     </productList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5OH"/>
+      <molecule title="HNO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H7NO(s)"/>
+      <molecule title="O3(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H7NO"/>
+      <molecule title="C4H6O3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C8H9NO2(g)"/>
+      <molecule title="CH3COOH(l)"/>
+    </productList>
+  </reaction>
 </reactions>

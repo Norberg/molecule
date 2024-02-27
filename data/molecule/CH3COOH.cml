@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="O"/>
+    <atom x2="1.732051" y2="-1.07" id="a5" elementType="H"/>
+    <atom x2="2.658698" y2="0.535" id="a6" elementType="H"/>
+    <atom x2="2.658698" y2="-0.535" id="a7" elementType="H"/>
+    <atom x2="1.677491" y2="1.9685" id="a8" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="2"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-486.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">86.6</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-486.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">159.8</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Acetic acid</property>
+    <property title="Description">Acetic acid /&#x259;&#x2C8;si&#x2D0;t&#x26A;k/, systematically named ethanoic acid /&#x2CC;&#x25B;&#x3B8;&#x259;&#x2C8;no&#x28A;&#x26A;k/, is an acidic, colourless liquid and organic compound with the chemical formula CH3COOH (also written as CH3CO2H, C2H4O2, or HC2H3O2). Vinegar is at least 4% acetic acid by volume, making acetic acid the main component of vinegar apart from water. It has been used, as a component of vinegar, throughout history from at least the third century BC.
+
+Acetic acid is the second simplest carboxylic acid (after formic acid). It is an important chemical reagent and industrial chemical across various fields, used primarily in the production of cellulose acetate for photographic film, polyvinyl acetate for wood glue, and synthetic fibres and fabrics.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Acetic_acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

@@ -141,7 +141,7 @@ def verifyReactionIsBalanced(products, reactants):
     productsAtoms = getAtomCount(products)
     reactantsAtoms = getAtomCount(reactants)
     if productsAtoms != reactantsAtoms:
-        raise Exception(f"Reaction is not balanced for reactions {reactants} -> {products} reactions atoms is {reactantsAtoms} != {productsAtoms}")
+        raise Exception(f"Reaction is not balanced for reactions {reactants} -> {products}   \n reactions atoms is {reactantsAtoms} != {productsAtoms} \ndiff being {diffCounters(productsAtoms,reactantsAtoms)}")
 
 def getAtomCount(molecules):
     moleules = list_without_state(molecules)
@@ -156,4 +156,9 @@ def getAtomCount(molecules):
             atom_count[atom] += num
     return atom_count
 
-
+def diffCounters(productsAtoms, reactantsAtoms):
+    diff = Counter()
+    for atom in productsAtoms:
+        if productsAtoms[atom] != reactantsAtoms[atom]:
+            diff[atom] = productsAtoms[atom] - reactantsAtoms[atom]
+    return diff

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-1.5" id="a1" elementType="O"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a4" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a5" elementType="C"/>
+    <atom x2="-0.866025" y2="2.5" id="a6" elementType="N"/>
+    <atom x2="-0.0" y2="1.0" id="a7" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a8" elementType="C"/>
+    <atom x2="-1.677491" y2="-1.9685" id="a9" elementType="H"/>
+    <atom x2="-2.625789" y2="-0.516" id="a10" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a11" elementType="H"/>
+    <atom x2="-0.013423" y2="2.99225" id="a12" elementType="H"/>
+    <atom x2="-1.718627" y2="2.99225" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="1.516" id="a14" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a15" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="2"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a2 a8" order="2"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a3 a10" order="1"/>
+    <bond atomRefs2="a4 a11" order="1"/>
+    <bond atomRefs2="a6 a12" order="1"/>
+    <bond atomRefs2="a6 a13" order="1"/>
+    <bond atomRefs2="a7 a14" order="1"/>
+    <bond atomRefs2="a8 a15" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-190.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">96.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">4-Aminophenol</property>
+    <property title="Description">4-Aminophenol (or para-aminophenol or p-aminophenol) is an organic compound with the formula H2NC6H4OH. Typically available as a white powder,it is commonly used as a developer for black-and-white film, marketed under the name Rodinal.
+
+Reflecting its slightly hydrophilic character, the white powder is moderately soluble in alcohols and can be recrystallized from hot water. In the presence of a base, it oxidizes readily. The methylated derivatives N-methylaminophenol and N,N-dimethylaminophenol are of commercial value. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/4-Aminophenol</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

@@ -79,7 +79,7 @@ All images.
 
 #### Adding a new atom
 Copy one of the existing SVGs and in a editor find the "feFlood10943" and replace the coloring with that from https://en.wikipedia.org/wiki/User:Benjah-bmm27/MakingMolecules/DSV
-by converting the hexcode to decimal RGB. The text can be edited in inkscape.
+by converting the hexcode to decimal RGB. The text can be edited in inkscape or manualy change the text on the second last line of the svg.
 ```
 cd img
 python export_svg2png.py 
