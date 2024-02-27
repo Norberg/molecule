@@ -28,6 +28,7 @@ from subprocess import call
 from libcml import CachedCml
 from libreact.Reaction import Reaction, list_without_state
 from libreact.Reactor import Reactor
+import subprocess
 
 class EditorGTK:
 
@@ -312,7 +313,12 @@ class EditorGTK:
             res = YesNo("Molecule already exist, do you want to overwrite?")
             if res == "No":
                 return
-        ret = call(["obabel", "-:%s" % smiles, "-h", "--gen2d", "-ocml", "-O", path])
+        result = subprocess.run(["obabel", "-:%s" % smiles.strip(), "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
+        print("Obabel response:", result.stdout)
+        print(result.stderr)
+        if ("0 molecule"  in result.stderr):
+            MsgBox("Could not create molecule from SMILES " + result.stderr)
+            return
         MsgBox("Creating molecule...")
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
