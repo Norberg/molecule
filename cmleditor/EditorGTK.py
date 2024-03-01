@@ -29,6 +29,7 @@ from libcml import CachedCml
 from libreact.Reaction import Reaction, list_without_state
 from libreact.Reactor import Reactor
 import subprocess
+from cmleditor import wiki_fetch
 
 class EditorGTK:
 
@@ -205,14 +206,17 @@ class EditorGTK:
             stateList = [str(x) if x is not None else "" for x in stateList]
             self.modelStates.append(stateList)
 
+        self.setLicense(molecule.property.get("DescriptionLicense", "N/A"))
+        self.updateReactions(self.formula)
+
+    def setLicense(self, selectedLicense):
         self.widget("cmbLicense").set_active(-1)
         index = 0
         for license in self.widget("liststoreLicenses"):
-            if license[0] == molecule.property.get("DescriptionLicense", "N/A"):
+            if license[0] == selectedLicense:
                 self.widget("cmbLicense").set_active(index)
                 break
             index += 1
-        self.updateReactions(self.formula)
 
     def updateReactions(self, formula):
         self.reactionStates.clear()
@@ -323,6 +327,37 @@ class EditorGTK:
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+    
+    def on_btnNewMoleculeFromWiki_clicked(self, widget):
+        answers = InputBox("Molecule", ["Wikipedia link:"])
+        print(answers)
+        if answers is None:
+            return
+        url = answers[0]
+        wiki = wiki_fetch.extract_wikipedia_info(url)
+
+        formula = wiki.chemical_formula
+        smiles = wiki.smiles
+        path = "data/molecule/%s.cml" % formula
+        if os.path.isfile(path):
+            res = YesNo(f"Molecule {formula} already exist, do you want to overwrite?")
+            if res == "No":
+                return
+        result = subprocess.run(["obabel", "-:%s" % smiles.strip(), "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
+        print("Obabel response:", result.stdout)
+        print(result.stderr)
+        if ("0 molecule"  in result.stderr):
+            MsgBox("Could not create molecule from SMILES " + result.stderr)
+            return
+        MsgBox("Creating molecule...")
+        self.update_folder_list()
+        self.widget("fcbOpen").set_filename(path)
+        self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+        self.txtMoleculeName.set_text(wiki.name)
+        self.setLicense("CC BY-SA 3.0")
+        self.widget("txtAttribution").set_text(url)
+        self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
+
 
     def excepthook(self, type, value, traceback):
         MsgBox("Error:"+ str(type) +"\n"+ str(value))
