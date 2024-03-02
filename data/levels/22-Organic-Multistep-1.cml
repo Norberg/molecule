@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="C6H6(g)"/>
+    <molecule title="Br2(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="CH4(g)"/>
+    <molecule title="KOH(s)"/>
+    <molecule title="C6H5OH(g)"/>
+    <molecule title="HNO3(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="Ni8(s)"/>
+    <molecule title="C4H6O3(l)"/>
+  </moleculeList>
+  <effectList>
+    <effect title="Fire" value="900" x2="200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C8H9NO2"/>
+  </victoryCondition>
+  <objective text="Create Paracetamol C8H9NO2 by performing an addition and an elemination reaction"/>
+  <hint text="C6H5Br + KOH -> "/>
+</level>

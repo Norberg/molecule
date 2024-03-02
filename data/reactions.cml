@@ -328,14 +328,26 @@
       <molecule title="HBr(g)"/>
     </productList>
   </reaction>
-  <reaction>
+  <reaction title="Nitration of phenol to 4-nitrophenol">
     <reactantList>
       <molecule title="C6H5OH"/>
       <molecule title="HNO3"/>
     </reactantList>
     <productList>
+      <molecule title="C6H5NO3(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="4-nitrophenol is reduced to 4-aminophenol by hydrogenation over Raney nickel">
+    <reactantList>
+      <molecule title="C6H5NO3"/>
+      <molecule title="H2"/>
+      <molecule title="Ni8"/>
+    </reactantList>
+    <productList>
       <molecule title="C6H7NO(s)"/>
-      <molecule title="O3(g)"/>
+      <molecule title="O2(g)"/>
+      <molecule title="Ni8(s)"/>
     </productList>
   </reaction>
   <reaction>

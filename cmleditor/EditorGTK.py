@@ -219,6 +219,8 @@ class EditorGTK:
             index += 1
 
     def updateReactions(self, formula):
+        #Refresh the reactions in case the reaction file have been changed
+        self.init_reactions()
         self.reactionStates.clear()
         for reaction in self.reactor.reactions:
             if formula not in reaction.reactants and formula not in list_without_state(reaction.products):
@@ -356,6 +358,7 @@ class EditorGTK:
         self.txtMoleculeName.set_text(wiki.name)
         self.setLicense("CC BY-SA 3.0")
         self.widget("txtAttribution").set_text(url)
+
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
 
     def excepthook(self, type, value, traceback):

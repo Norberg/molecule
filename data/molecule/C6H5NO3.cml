@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-1.732051" y2="-2.0" id="a1" elementType="O"/>
+    <atom x2="-0.866025" y2="-1.5" formalCharge="1" id="a2" elementType="N"/>
+    <atom x2="-0.0" y2="-2.0" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="-0.866025" y2="-0.5" id="a4" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a5" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a6" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a7" elementType="C"/>
+    <atom x2="-0.866025" y2="2.5" id="a8" elementType="O"/>
+    <atom x2="-0.0" y2="1.0" id="a9" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a10" elementType="C"/>
+    <atom x2="-2.625789" y2="-0.516" id="a11" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a12" elementType="H"/>
+    <atom x2="-0.05456" y2="2.9685" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="1.516" id="a14" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a15" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="2"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a7 a9" order="2"/>
+    <bond atomRefs2="a9 a10" order="1"/>
+    <bond atomRefs2="a4 a10" order="2"/>
+    <bond atomRefs2="a5 a11" order="1"/>
+    <bond atomRefs2="a6 a12" order="1"/>
+    <bond atomRefs2="a8 a13" order="1"/>
+    <bond atomRefs2="a9 a14" order="1"/>
+    <bond atomRefs2="a10 a15" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-115.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">50.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-210.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">50.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">4-Nitrophenol</property>
+    <property title="Description">4-Nitrophenol (also called p-nitrophenol or 4-hydroxynitrobenzene) is a phenolic compound that has a nitro group at the opposite position of the hydroxyl group on the benzene ring.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/4-Nitrophenol</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
