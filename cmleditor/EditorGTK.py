@@ -358,7 +358,6 @@ class EditorGTK:
         self.widget("txtAttribution").set_text(url)
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
 
-
     def excepthook(self, type, value, traceback):
         MsgBox("Error:"+ str(type) +"\n"+ str(value))
         sys.__excepthook__(type, value, traceback)
