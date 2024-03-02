@@ -77,6 +77,7 @@ class Level:
         self.batch = pyglet.graphics.Batch()
         self.start_time = time.time()
         self.points = 0
+        Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
         self.init_elements()

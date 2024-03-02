@@ -131,6 +131,7 @@ class Cml:
 
 
 class Level(Cml):
+    LEVEL_TAG = "level"
     MOLECULE_LIST = "moleculeList"
     EFFECT_LIST = "effectList"
     VICTORY_CONDITION = "victoryCondition"
@@ -144,9 +145,12 @@ class Level(Cml):
         self.objective = None
         self.victory_condition = list()
         self.hint = None
+        self.zoom = 1.0
 
     def parse(self, filename):
         self.tree = etree.parse(filename)
+        self.zoom = float(self.tree.getroot().attrib.get("zoom", self.zoom))
+
         molecule_list_tag = self.treefind(self.MOLECULE_LIST)
         self.molecules = self.parseMoleculeList(molecule_list_tag)
 

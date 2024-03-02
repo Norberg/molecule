@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<level>
+<level zoom="0.7">
   <moleculeList>
     <molecule title="C6H6(g)"/>
     <molecule title="Br2(g)"/>

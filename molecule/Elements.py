@@ -33,7 +33,6 @@ from libreact import Reaction
 
 SPRITE_SIZE = 96.0
 DEFAULT_SIZE = 32.0
-SCALE_FACTOR = DEFAULT_SIZE/SPRITE_SIZE * Config.current.zoom
 SPRITE_RADIUS = SPRITE_SIZE/2
 BOND_LENGTH_FACTOR = 1.4
 ATOM_SPACE = SPRITE_SIZE / 1.5
@@ -186,7 +185,7 @@ class Bond:
     def get_bond_lenght(self, bond):
         rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
         rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
-        bond_lenght = (rA + rB) * SPRITE_RADIUS * SCALE_FACTOR
+        bond_lenght = (rA + rB) * SPRITE_RADIUS * scaleFactor()
         if bond.bonds != 0:
             bond_lenght *= BOND_LENGTH_FACTOR
         return bond_lenght
@@ -252,7 +251,7 @@ class Atom(pyglet.sprite.Sprite):
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
         self.cml = CachedCml.getMolecule(symbol)
-        self.scale = self.cml.property["Radius"] * SCALE_FACTOR
+        self.scale = self.cml.property["Radius"] * scaleFactor()
         self.create_electric_charge_sprite(charge, batch)
         self.molecule = molecule
         self.symbol = symbol
@@ -335,3 +334,6 @@ class Atom(pyglet.sprite.Sprite):
         if self.electric_charge_sprite is not None:
             self.electric_charge_sprite.delete()
         super(Atom, self).delete()
+
+def scaleFactor():
+    return DEFAULT_SIZE/SPRITE_SIZE * Config.current.zoom
