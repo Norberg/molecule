@@ -265,7 +265,7 @@ class Atom(pyglet.sprite.Sprite):
         weight = self.cml.property["Weight"]
         radius = self.scale * SPRITE_RADIUS
         body = pymunk.Body(weight,moment = pymunk.moment_for_circle(weight, 0, radius))
-        body.velocity_limit = 1000
+        body.velocity_func = limit_velocity
         body.molecule = self.molecule
         shape = pymunk.Circle(body, radius)
         shape.elasticity = 0.95
@@ -320,13 +320,9 @@ class Atom(pyglet.sprite.Sprite):
             self.electric_charge_sprite.x = self.x
             self.electric_charge_sprite.y = self.y
         if self.affected_by_gravity:
-            self.body.velocity_func = self.gravity_func
+            self.body.velocity_func = gravity_func
         else:
-            self.body.velocity_func = pymunk.Body.update_velocity
-
-    def gravity_func(self, body, gravity, damping, dt):
-        gravity = (0.0,-920.0)
-        return pymunk.Body.update_velocity(body, gravity, damping, dt)
+            self.body.velocity_func = limit_velocity
 
     def delete(self):
         self.space.remove(self.shape)
@@ -337,3 +333,16 @@ class Atom(pyglet.sprite.Sprite):
 
 def scaleFactor():
     return DEFAULT_SIZE/SPRITE_SIZE * Config.current.zoom
+
+
+def gravity_func(body, gravity, damping, dt):
+    gravity = (0.0,-920.0)
+    return limit_velocity(body, gravity, damping, dt)
+    
+def limit_velocity(body, gravity, damping, dt):
+    max_velocity = 1000
+    pymunk.Body.update_velocity(body, gravity, damping, dt)
+    l = body.velocity.length
+    if l > max_velocity:
+        scale = max_velocity / l
+        body.velocity = body.velocity * scale
