@@ -125,7 +125,7 @@ class Level:
         self.areas.extend(self.hud.get_effects())
 
     def init_gui(self):
-        self.hud = HUD.HUD(self.window, self.batch, self.space, self.cml)
+        self.hud = HUD.HUD(self.window, self.batch, self.space, self.cml, self.create_elements)
 
     def create_elements(self, elements, pos = None):
         self.elements.extend(Universe.create_elements(self.space, elements,

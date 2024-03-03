@@ -87,7 +87,6 @@ class EffectSprite(pyglet.sprite.Sprite, Effect):
         group = RenderingOrder.background
         img = pyglet_util.load_image(img_path)
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
-        self.scale = Config.current.zoom
         Effect.__init__(self, space = space, name = name, pos = pos)
 
 
@@ -204,13 +203,14 @@ class Mining(Action):
 
 class Inventory(Effect):
     def __init__(self, space, pos, name, width, height, content = [],
-            capacity = 0, gui_container = None):
+            capacity = 0, gui_container = None, create_element_callback = None):
         Effect.__init__(self, space = space, pos = pos, width =
                 width, height = height, name = name)
         self.content = self.list_to_inventory(content)
         self.supported_attributes.append("get")
         self.supported_attributes.append("put")
         self.gui_container = gui_container
+        self.create_element_callback = create_element_callback
         self.reload_gui()
 
     def put_element(self, element):
@@ -219,6 +219,7 @@ class Inventory(Effect):
         return True
 
     def get_callback(self, button):
+        self.create_element_callback(button.element, (button.x, button.y))
         self.remove_element(button.element)
         if button.count > 1:
             button.count -= 1

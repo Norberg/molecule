@@ -137,6 +137,7 @@ class Level(Cml):
     VICTORY_CONDITION = "victoryCondition"
     OBJECTIVE = "objective"
     HINT = "hint"
+    INVENTORY_LIST = "inventoryList"
 
     def __init__(self):
         self.tree = None
@@ -146,6 +147,7 @@ class Level(Cml):
         self.victory_condition = list()
         self.hint = None
         self.zoom = 1.0
+        self.inventory = ["O(g)", "H2(g)", "H2O(l)"]
 
     def parse(self, filename):
         self.tree = etree.parse(filename)
@@ -162,6 +164,10 @@ class Level(Cml):
 
         self.objective = self.parseText(self.OBJECTIVE)
         self.hint = self.parseText(self.HINT)
+
+        inventory_list_tag = self.treefind(self.INVENTORY_LIST)
+        if inventory_list_tag is not None:
+            self.inventory = self.parseMoleculeList(inventory_list_tag)
 
     def parseEffectList(self, effect_list_tag):
         for effect_tag in effect_list_tag:

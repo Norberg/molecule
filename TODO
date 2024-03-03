@@ -10,7 +10,6 @@
 - GUI to edit levels
 - Write adequate unittests for the game logic
 - Add pressure effect
-- Create inventory for molecules
 
 ### Big TODOs ###
 - Functional group reactions for organic compounds

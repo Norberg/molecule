@@ -33,13 +33,13 @@ from libcml import CachedCml
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
 
 class HUD:
-    def __init__(self, window, batch, space, level):
+    def __init__(self, window, batch, space, level, create_elements_callback):
         height = 100
         width = window.width - 300
         self.horizontal = HorizontalHUD(window, batch, space, level, height, width)
         height = window.height - 40
         width = 180
-        self.vertical = VerticalHUD(window, batch, space, level, height, width)
+        self.vertical = VerticalHUD(window, batch, space, level, height, width, create_elements_callback)
 
     def update_info_text(self, formula):
         self.horizontal.update_info_text(formula)
@@ -122,8 +122,8 @@ class HorizontalHUD:
         self.manager.delete()
 
 
-class VerticalHUD():
-    def __init__(self, window, batch, space, level, height, width):
+class VerticalHUD:
+    def __init__(self, window, batch, space, level, height, width, create_elements_callback):
         self.space = space
         self.level = level
         status_text = pyglet.text.decode_attributed('''
@@ -146,20 +146,18 @@ FPS: 00.00 FPS
         self.window = window
         self.window.push_handlers(on_draw=self.on_draw)
         self.tick = 0
-        # Currently disabled
-        #self.init_effects(space, level)
+        self.create_element_callback = create_elements_callback
+        self.init_effects(space, level)
 
     def init_effects(self, space, level):
-        pos = (self.inventory_frame.x,
-               self.inventory_frame.y + self.inventory_frame.height / 2 - 50)
+        pos = (self.inventory_frame.x + self.inventory_frame.width / 2,
+               self.inventory_frame.y + self.inventory_frame.height / 2 - 400)
         self.inventory_effect = Effects.Inventory(space, pos, "Inventory",
-                self.inventory_frame.width, self.inventory_frame.height + 100,
-                ["H2O(l)", "CH4(g)", "NaCl(s)"], gui_container = self.inventory_container)
+                self.inventory_frame.width, self.inventory_frame.height + 800,
+                level.inventory, gui_container = self.inventory_container, create_element_callback = self.create_element_callback)
 
     def get_effects(self):
-        return []
-        #currently disabled
-        #return [self.inventory_effect]
+        return [self.inventory_effect]
 
     def on_draw(self):
         self.tick += 1
