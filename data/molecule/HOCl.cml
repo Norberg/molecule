@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Cl" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="H" id="a3" x2="-0.485" y2="0.840045"/>
-    <atom elementType="O" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="-0.485" y2="0.840045" id="a3" elementType="H"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="O"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -21,5 +21,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Hypochlorous acid</property>
+    <property title="Description">Hypochlorous acid is an inorganic compound with the chemical formula ClOH, also written as HClO, HOCl, or ClHO. Its structure is H&#x2212;O&#x2212;Cl. It is an acid that forms when chlorine dissolves in water, and itself partially dissociates, forming hypochlorite anion, ClO&#x2212;. HClO and ClO&#x2212; are oxidizers, and the primary disinfection agents of chlorine solutions. HClO cannot be isolated from these solutions due to rapid equilibration with its precursor, chlorine. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hypochlorous_acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

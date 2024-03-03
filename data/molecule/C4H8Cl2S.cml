@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a15" x2="-0.060622" y2="-1.035"/>
-    <atom elementType="H" id="a14" x2="0.866025" y2="-1.57"/>
-    <atom elementType="H" id="a11" x2="2.537454" y2="0.535"/>
-    <atom elementType="H" id="a10" x2="3.464102" y2="1.07"/>
-    <atom elementType="H" id="a13" x2="0.805404" y2="0.535"/>
-    <atom elementType="H" id="a12" x2="1.732051" y2="1.07"/>
-    <atom elementType="Cl" id="a1" x2="4.330127" y2="-1.5"/>
-    <atom elementType="C" id="a3" x2="3.464102" y2="0.0"/>
-    <atom elementType="C" id="a2" x2="4.330127" y2="-0.5"/>
-    <atom elementType="C" id="a5" x2="1.732051" y2="0.0"/>
-    <atom elementType="S" id="a4" x2="2.598076" y2="-0.5"/>
-    <atom elementType="Cl" id="a7" x2="-0.0" y2="-0.0"/>
-    <atom elementType="C" id="a6" x2="0.866025" y2="-0.5"/>
-    <atom elementType="H" id="a9" x2="4.330127" y2="0.57"/>
-    <atom elementType="H" id="a8" x2="5.256774" y2="0.035"/>
+    <atom x2="-0.060622" y2="-1.035" id="a15" elementType="H"/>
+    <atom x2="0.866025" y2="-1.57" id="a14" elementType="H"/>
+    <atom x2="2.537454" y2="0.535" id="a11" elementType="H"/>
+    <atom x2="3.464102" y2="1.07" id="a10" elementType="H"/>
+    <atom x2="0.805404" y2="0.535" id="a13" elementType="H"/>
+    <atom x2="1.732051" y2="1.07" id="a12" elementType="H"/>
+    <atom x2="4.330127" y2="-1.5" id="a1" elementType="Cl"/>
+    <atom x2="3.464102" y2="0.0" id="a3" elementType="C"/>
+    <atom x2="4.330127" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="1.732051" y2="0.0" id="a5" elementType="C"/>
+    <atom x2="2.598076" y2="-0.5" id="a4" elementType="S"/>
+    <atom x2="-0.0" y2="-0.0" id="a7" elementType="Cl"/>
+    <atom x2="0.866025" y2="-0.5" id="a6" elementType="C"/>
+    <atom x2="4.330127" y2="0.57" id="a9" elementType="H"/>
+    <atom x2="5.256774" y2="0.035" id="a8" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -45,5 +45,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sulfur mustard</property>
+    <property title="Description">Mustard gas or sulfur mustard is any of several chemical compounds that contain the chemical structure S(CH2CH2Cl)2. In the wider sense, compounds with the substituent S(CH2CH2X)2 and N(CH2CH2X)3 are known as sulfur mustards and nitrogen mustards, respectively, where X = Cl or Br. Such compounds are potent alkylating agents, which can interfere with several biological processes. Also known as mustard agents, this family of compounds are infamous cytotoxins and blister agents with a long history of use as chemical weapons. The name mustard gas is technically incorrect: the substances, when dispersed, are often not gases but a fine mist of liquid droplets. Sulfur mustards are viscous liquids at room temperature and have an odor resembling mustard plants, garlic, or horseradish, hence the name. When pure, they are colorless, but when used in impure forms, such as in warfare, they are usually yellow-brown. Mustard gases form blisters on exposed skin and in the lungs, often resulting in prolonged illness ending in death. The typical mustard gas is the organosulfur compound bis(2-chloroethyl) sulfide.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Mustard_gas</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

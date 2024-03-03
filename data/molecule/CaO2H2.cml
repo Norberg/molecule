@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="1.732051" y2="-0.0"/>
-    <atom elementType="O" id="a3" x2="-0.0" y2="-0.0"/>
-    <atom elementType="Ca" id="a2" x2="0.866025" y2="0.5"/>
-    <atom elementType="H" id="a5" x2="-0.840045" y2="0.485"/>
-    <atom elementType="H" id="a4" x2="1.732051" y2="-0.97"/>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Ca"/>
+    <atom x2="-0.840045" y2="0.485" id="a5" elementType="H"/>
+    <atom x2="1.732051" y2="-0.97" id="a4" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -36,5 +36,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Calcium Hydroxide</property>
+    <property title="Description">Calcium hydroxide (traditionally called slaked lime) is an inorganic compound with the chemical formula Ca(OH)2. It is a colorless crystal or white powder and is produced when quicklime (calcium oxide) is mixed with water. It has many names including hydrated lime, caustic lime, builders' lime, slaked lime, cal, and pickling lime. Calcium hydroxide is used in many applications, including food preparation, where it has been identified as E number E526. Limewater, also called milk of lime, is the common name for a saturated solution of calcium hydroxide. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_hydroxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

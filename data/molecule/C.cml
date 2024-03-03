@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="C"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -25,5 +25,8 @@
     <property title="Radius">1.7</property>
     <property title="Name">Coal</property>
     <property title="Weight">12.0</property>
+    <property title="Description">Coal is a combustible black or brownish-black sedimentary rock, formed as rock strata called coal seams. Coal is mostly carbon with variable amounts of other elements, chiefly hydrogen, sulfur, oxygen, and nitrogen. Coal is a type of fossil fuel, formed when dead plant matter decays into peat and is converted into coal by the heat and pressure of deep burial over millions of years. Vast deposits of coal originate in former wetlands called coal forests that covered much of the Earth's tropical land areas during the late Carboniferous (Pennsylvanian) and Permian times.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Coal</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

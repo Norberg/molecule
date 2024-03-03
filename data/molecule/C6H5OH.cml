@@ -50,9 +50,9 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Phenol</property>
-    <property title="Description">Phenol (also known as carbolic acid, phenolic acid, or benzenol) is an aromatic organic compound with the molecular formula C6H5OH.[5] It is a white crystalline solid that is volatile. The molecule consists of a phenyl group (&#x2212;C6H5) bonded to a hydroxy group (&#x2212;OH). Mildly acidic, it requires careful handling because it can cause chemical burns.[5]
+    <property title="Description">Phenol (also known as carbolic acid, phenolic acid, or benzenol) is an aromatic organic compound with the molecular formula C6H5OH. It is a white crystalline solid that is volatile. The molecule consists of a phenyl group (&#x2212;C6H5) bonded to a hydroxy group (&#x2212;OH). Mildly acidic, it requires careful handling because it can cause chemical burns.
 
-Phenol was first extracted from coal tar, but today is produced on a large scale (about 7 million tonnes a year) from petroleum-derived feedstocks. It is an important industrial commodity as a precursor to many materials and useful compounds.[8] It is primarily used to synthesize plastics and related materials.</property>
+Phenol was first extracted from coal tar, but today is produced on a large scale (about 7 million tonnes a year) from petroleum-derived feedstocks. It is an important industrial commodity as a precursor to many materials and useful compounds. It is primarily used to synthesize plastics and related materials.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phenol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>

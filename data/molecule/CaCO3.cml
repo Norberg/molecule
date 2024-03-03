@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="1.366025" y2="-1.0"/>
-    <atom elementType="O" formalCharge="-1" id="a3" x2="0.5" y2="-0.5"/>
-    <atom elementType="O" id="a2" x2="2.232051" y2="-0.5"/>
-    <atom elementType="Ca" formalCharge="2" id="a5" x2="-0.333017" y2="-0.458359"/>
-    <atom elementType="O" formalCharge="-1" id="a4" x2="1.366025" y2="-2.0"/>
+    <atom x2="1.366025" y2="-1.0" id="a1" elementType="C"/>
+    <atom x2="0.5" y2="-0.5" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="2.232051" y2="-0.5" id="a2" elementType="O"/>
+    <atom x2="-0.333017" y2="-0.458359" formalCharge="2" id="a5" elementType="Ca"/>
+    <atom x2="1.366025" y2="-2.0" formalCharge="-1" id="a4" elementType="O"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -26,5 +26,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Calcium carbonate</property>
+    <property title="Description">Calcium carbonate is a chemical compound with the chemical formula CaCO3. It is a common substance found in rocks as the minerals calcite and aragonite, most notably in chalk and limestone, eggshells, gastropod shells, shellfish skeletons and pearls. Materials containing much calcium carbonate or resembling it are described as calcareous. Calcium carbonate is the active ingredient in agricultural lime and is produced when calcium ions in hard water react with carbonate ions to form limescale. It has medical use as a calcium supplement or as an antacid, but excessive consumption can be hazardous and cause hypercalcemia and digestive issues.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_carbonate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

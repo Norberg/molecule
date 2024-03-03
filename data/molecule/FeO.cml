@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Fe" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="O" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="Fe"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="O"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -19,5 +19,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Iron(II) oxide</property>
+    <property title="Description">Iron(II) oxide or ferrous oxide is the inorganic compound with the formula FeO. Its mineral form is known as w&#xFC;stite. One of several iron oxides, it is a black-colored powder that is sometimes confused with rust, the latter of which consists of hydrated iron(III) oxide (ferric oxide). Iron(II) oxide also refers to a family of related non-stoichiometric compounds, which are typically iron deficient with compositions ranging from Fe0.84O to Fe0.95O.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(II)_oxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

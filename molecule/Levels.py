@@ -266,8 +266,6 @@ class Level:
                     if effect.put_element(molecule):
                         molecule.delete()
 
-
-
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         x,y = self.limit_pos_to_screen(x,y)
         self.mouse_body.position = (x, y)

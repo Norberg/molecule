@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="2.0" y2="0.0"/>
-    <atom elementType="C" id="a3" x2="0.5" y2="0.866025"/>
-    <atom elementType="C" id="a2" x2="1.5" y2="0.866025"/>
-    <atom elementType="H" id="a5" x2="1.515" y2="-0.840045"/>
-    <atom elementType="Cl" id="a4" x2="-0.0" y2="-0.0"/>
-    <atom elementType="H" id="a7" x2="0.965" y2="1.792673"/>
-    <atom elementType="H" id="a6" x2="2.035" y2="1.792673"/>
-    <atom elementType="H" id="a9" x2="-0.57" y2="0.866025"/>
-    <atom elementType="H" id="a8" x2="-0.035" y2="1.792673"/>
+    <atom x2="2.0" y2="0.0" id="a1" elementType="O"/>
+    <atom x2="0.5" y2="0.866025" id="a3" elementType="C"/>
+    <atom x2="1.5" y2="0.866025" id="a2" elementType="C"/>
+    <atom x2="1.515" y2="-0.840045" id="a5" elementType="H"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="Cl"/>
+    <atom x2="0.965" y2="1.792673" id="a7" elementType="H"/>
+    <atom x2="2.035" y2="1.792673" id="a6" elementType="H"/>
+    <atom x2="-0.57" y2="0.866025" id="a9" elementType="H"/>
+    <atom x2="-0.035" y2="1.792673" id="a8" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -33,5 +33,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">2-Chloroethanol</property>
+    <property title="Description">2-Chloroethanol (also called ethylene chlorohydrin or glycol chlorohydrin) is an organic chemical compound with the chemical formula HOCH2CH2Cl and the simplest beta-halohydrin (chlorohydrin). This colorless liquid has a pleasant ether-like odor. It is miscible with water. The molecule is bifunctional, consisting of both an alkyl chloride and an alcohol functional group.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/2-Chloroethanol</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

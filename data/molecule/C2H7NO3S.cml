@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a14" x2="-2.01" y2="-0.017321"/>
-    <atom elementType="H" id="a11" x2="0.035" y2="1.792673"/>
-    <atom elementType="H" id="a10" x2="-1.07" y2="0.0"/>
-    <atom elementType="H" id="a13" x2="-2.01" y2="1.749371"/>
-    <atom elementType="H" id="a12" x2="-1.035" y2="1.792673"/>
-    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
-    <atom elementType="O" id="a3" x2="2.0" y2="0.0"/>
-    <atom elementType="S" id="a2" x2="1.0" y2="-0.0"/>
-    <atom elementType="C" id="a5" x2="0.0" y2="0.0"/>
-    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
-    <atom elementType="N" id="a7" x2="-1.5" y2="0.866025"/>
-    <atom elementType="C" id="a6" x2="-0.5" y2="0.866025"/>
-    <atom elementType="H" id="a9" x2="-0.535" y2="-0.926647"/>
-    <atom elementType="H" id="a8" x2="1.840045" y2="1.485"/>
+    <atom x2="-2.01" y2="-0.017321" id="a14" elementType="H"/>
+    <atom x2="0.035" y2="1.792673" id="a11" elementType="H"/>
+    <atom x2="-1.07" y2="0.0" id="a10" elementType="H"/>
+    <atom x2="-2.01" y2="1.749371" id="a13" elementType="H"/>
+    <atom x2="-1.035" y2="1.792673" id="a12" elementType="H"/>
+    <atom x2="1.0" y2="-1.0" id="a1" elementType="O"/>
+    <atom x2="2.0" y2="0.0" id="a3" elementType="O"/>
+    <atom x2="1.0" y2="-0.0" id="a2" elementType="S"/>
+    <atom x2="0.0" y2="0.0" id="a5" elementType="C"/>
+    <atom x2="1.0" y2="1.0" id="a4" elementType="O"/>
+    <atom x2="-1.5" y2="0.866025" id="a7" elementType="N"/>
+    <atom x2="-0.5" y2="0.866025" id="a6" elementType="C"/>
+    <atom x2="-0.535" y2="-0.926647" id="a9" elementType="H"/>
+    <atom x2="1.840045" y2="1.485" id="a8" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -43,5 +43,10 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Taurine</property>
+    <property title="Description">Taurine or 2-aminoethanesulfonic acid, is a non-proteinogenic amino sulfonic acid that is widely distributed in animal tissues. It is a major constituent of bile and can be found in the large intestine, and accounts for up to 0.1% of total human body weight.
+
+Taurine is named after Latin taurus (cognate to Ancient Greek &#x3C4;&#x3B1;&#x1FE6;&#x3C1;&#x3BF;&#x3C2;, ta&#xFB;ros) meaning bull or ox, as it was first isolated from ox bile in 1827 by German scientists Friedrich Tiedemann and Leopold Gmelin. It was discovered in human bile in 1846 by Edmund Ronalds.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Taurine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="3.0" y2="-0.0"/>
-    <atom elementType="O" id="a3" x2="1.5" y2="0.866025"/>
-    <atom elementType="Fe" id="a2" x2="2.5" y2="0.866025"/>
-    <atom elementType="O" id="a5" x2="-0.0" y2="-0.0"/>
-    <atom elementType="Fe" id="a4" x2="1.0" y2="0.0"/>
+    <atom x2="3.0" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="1.5" y2="0.866025" id="a3" elementType="O"/>
+    <atom x2="2.5" y2="0.866025" id="a2" elementType="Fe"/>
+    <atom x2="-0.0" y2="-0.0" id="a5" elementType="O"/>
+    <atom x2="1.0" y2="0.0" id="a4" elementType="Fe"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -25,5 +25,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Iron(III) oxide</property>
+    <property title="Description">Iron(III) oxide or ferric oxide is the inorganic compound with the formula Fe2O3. It is one of the three main oxides of iron, the other two being iron(II) oxide (FeO), which is rare; and iron(II,III) oxide (Fe3O4), which also occurs naturally as the mineral magnetite. As the mineral known as hematite, Fe2O3 is the main source of iron for the steel industry. Fe2O3 is readily attacked by acids. Iron(III) oxide is often called rust, since rust shares several properties and has a similar composition; however, in chemistry, rust is considered an ill-defined material, described as hydrous ferric oxide.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(III)_oxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

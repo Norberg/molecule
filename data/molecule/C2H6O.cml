@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="1.732051" y2="-0.0"/>
-    <atom elementType="O" id="a3" x2="-0.0" y2="-0.0"/>
-    <atom elementType="C" id="a2" x2="0.866025" y2="0.5"/>
-    <atom elementType="H" id="a5" x2="2.658698" y2="0.535"/>
-    <atom elementType="H" id="a4" x2="1.732051" y2="-1.07"/>
-    <atom elementType="H" id="a7" x2="0.866025" y2="1.57"/>
-    <atom elementType="H" id="a6" x2="2.658698" y2="-0.535"/>
-    <atom elementType="H" id="a9" x2="-0.840045" y2="0.485"/>
-    <atom elementType="H" id="a8" x2="-0.060622" y2="1.035"/>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="2.658698" y2="0.535" id="a5" elementType="H"/>
+    <atom x2="1.732051" y2="-1.07" id="a4" elementType="H"/>
+    <atom x2="0.866025" y2="1.57" id="a7" elementType="H"/>
+    <atom x2="2.658698" y2="-0.535" id="a6" elementType="H"/>
+    <atom x2="-0.840045" y2="0.485" id="a9" elementType="H"/>
+    <atom x2="-0.060622" y2="1.035" id="a8" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -33,5 +33,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Ethanol</property>
+    <property title="Description">Ethanol (also called ethyl alcohol, grain alcohol, drinking alcohol, or simply alcohol) is an organic compound with the chemical formula CH3CH2OH. It is an alcohol, with its formula also written as C2H5OH, C2H6O or EtOH, where Et stands for ethyl. Ethanol is a volatile, flammable, colorless liquid with a characteristic wine-like odor and pungent taste.  It is a psychoactive recreational drug, and the active ingredient in alcoholic drinks. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ethanol</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

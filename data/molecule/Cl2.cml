@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Cl" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="Cl" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="Cl"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -19,5 +19,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Chlorine gas</property>
+    <property title="Description">Chlorine gas was first used by French chemist Claude Berthollet to bleach textiles in 1785. Modern bleaches resulted from further work by Berthollet, who first produced sodium hypochlorite in 1789 in his laboratory in the town of Javel (now part of Paris, France), by passing chlorine gas through a solution of sodium carbonate. The resulting liquid, known as "Eau de Javel" ("Javel water"), was a weak solution of sodium hypochlorite. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Chlorine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

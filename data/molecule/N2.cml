@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="N" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="N" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="N"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="N"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="3"/>
@@ -19,5 +19,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Nitrogen</property>
+    <property title="Description">Nitrogen is a chemical element; it has symbol N and atomic number 7. Nitrogen is a nonmetal and the lightest member of group 15 of the periodic table, often called the pnictogens. It is a common element in the universe, estimated at seventh in total abundance in the Milky Way and the Solar System. At standard temperature and pressure, two atoms of the element bond to form N2, a colorless and odorless diatomic gas. N2 forms about 78% of Earth's atmosphere, making it the most abundant uncombined element in air. Because of the volatility of nitrogen compounds, nitrogen is relatively rare in the solid parts of the Earth. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitrogen</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

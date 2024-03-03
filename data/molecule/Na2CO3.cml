@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="1.366025" y2="-1.0"/>
-    <atom elementType="O" formalCharge="-1" id="a3" x2="0.5" y2="-0.5"/>
-    <atom elementType="O" id="a2" x2="2.232051" y2="-0.5"/>
-    <atom elementType="Na" formalCharge="1" id="a5" x2="-0.739637" y2="-0.366025"/>
-    <atom elementType="O" formalCharge="-1" id="a4" x2="1.366025" y2="-2.0"/>
-    <atom elementType="Na" formalCharge="1" id="a6" x2="3.232051" y2="-0.5"/>
+    <atom x2="1.366025" y2="-1.0" id="a1" elementType="C"/>
+    <atom x2="0.5" y2="-0.5" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="2.232051" y2="-0.5" id="a2" elementType="O"/>
+    <atom x2="-0.739637" y2="-0.366025" formalCharge="1" id="a5" elementType="Na"/>
+    <atom x2="1.366025" y2="-2.0" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="3.232051" y2="-0.5" formalCharge="1" id="a6" elementType="Na"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -38,5 +38,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sodium sulfite</property>
+    <property title="Description">Sodium sulfite (sodium sulphite) is the inorganic compound with the chemical formula Na2SO3. A white, water-soluble solid, it is used commercially as an antioxidant and preservative. It is also suitable for the softening of lignin in the pulping and refining processes of wood and lignocellulosic materials.A heptahydrate is also known but it is less useful because of its greater susceptibility toward oxidation by air.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_sulfite</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

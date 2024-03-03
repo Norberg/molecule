@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a1" x2="1.0" y2="-1.0"/>
-    <atom elementType="O" id="a3" x2="2.0" y2="0.0"/>
-    <atom elementType="S" id="a2" x2="1.0" y2="0.0"/>
-    <atom elementType="O" formalCharge="-1" id="a5" x2="0.0" y2="0.0"/>
-    <atom elementType="O" id="a4" x2="1.0" y2="1.0"/>
-    <atom elementType="H" id="a6" x2="0.159955" y2="-1.485"/>
+    <atom x2="1.0" y2="-1.0" id="a1" elementType="O"/>
+    <atom x2="2.0" y2="0.0" id="a3" elementType="O"/>
+    <atom x2="1.0" y2="0.0" id="a2" elementType="S"/>
+    <atom x2="0.0" y2="0.0" formalCharge="-1" id="a5" elementType="O"/>
+    <atom x2="1.0" y2="1.0" id="a4" elementType="O"/>
+    <atom x2="0.159955" y2="-1.485" id="a6" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -27,5 +27,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Hydrogen Sulfate</property>
+    <property title="Description">The hydrogensulfate ion (HSO&#x2212;4), also called the bisulfate ion, is the conjugate base of sulfuric acid (H2SO4). Sulfuric acid is classified as a strong acid; in aqueous solutions it ionizes completely to form hydronium (H3O+) and hydrogensulfate (HSO&#x2212;4) ions. In other words, the sulfuric acid behaves as a Br&#xF8;nsted&#x2013;Lowry acid and is deprotonated to form hydrogensulfate ion. Hydrogensulfate has a valency of 1. An example of a salt containing the HSO&#x2212;4 ion is sodium bisulfate, NaHSO4. In dilute solutions the hydrogensulfate ions also dissociate, forming more hydronium ions and sulfate ions (SO2&#x2212;4). </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sulfate#Hydrogensulfate_(bisulfate)</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

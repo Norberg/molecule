@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" formalCharge="-2" id="a1" x2="1.0" y2="0.0"/>
-    <atom elementType="Mg" formalCharge="2" id="a2" x2="0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="0.0" formalCharge="-2" id="a1" elementType="O"/>
+    <atom x2="0.0" y2="-0.0" formalCharge="2" id="a2" elementType="Mg"/>
   </ns0:atomArray>
   <bondArray>
     <bond atomRefs2="a1 a2" order="0"/>
@@ -19,5 +19,10 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Magnesium oxide</property>
+    <property title="Description">Magnesium oxide (MgO), or magnesia, is a white hygroscopic solid mineral that occurs naturally as periclase and is a source of magnesium (see also oxide). It has an empirical formula of MgO and consists of a lattice of Mg2+ ions and O2&#x2212; ions held together by ionic bonding. Magnesium hydroxide forms in the presence of water (MgO + H2O &#x2192; Mg(OH)2), but it can be reversed by heating it to remove moisture.
+
+Magnesium oxide was historically known as magnesia alba (literally, the white mineral from Magnesia), to differentiate it from magnesia nigra, a black mineral containing what is now known as manganese. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Magnesium_oxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

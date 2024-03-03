@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="B" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="B"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -17,5 +17,8 @@
     <property title="Radius">1.92</property>
     <property title="Name">Boron</property>
     <property title="Weight">10.8</property>
+    <property title="Description">Boron is a chemical element; it has symbol B and atomic number 5. In its crystalline form it is a brittle, dark, lustrous metalloid; in its amorphous form it is a brown powder. As the lightest element of the boron group it has three valence electrons for forming covalent bonds, resulting in many compounds such as boric acid, the mineral sodium borate, and the ultra-hard crystals of boron carbide and boron nitride. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Boron</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

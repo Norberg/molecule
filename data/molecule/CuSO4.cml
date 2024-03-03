@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" formalCharge="-1" id="a1" x2="1.5" y2="-2.5"/>
-    <atom elementType="O" id="a3" x2="2.5" y2="-1.5"/>
-    <atom elementType="S" id="a2" x2="1.5" y2="-1.5"/>
-    <atom elementType="O" formalCharge="-1" id="a5" x2="0.5" y2="-1.5"/>
-    <atom elementType="O" id="a4" x2="1.5" y2="-0.5"/>
-    <atom elementType="Cu" formalCharge="2" id="a6" x2="-1.124096" y2="-0.503616"/>
+    <atom x2="1.5" y2="-2.5" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="2.5" y2="-1.5" id="a3" elementType="O"/>
+    <atom x2="1.5" y2="-1.5" id="a2" elementType="S"/>
+    <atom x2="0.5" y2="-1.5" formalCharge="-1" id="a5" elementType="O"/>
+    <atom x2="1.5" y2="-0.5" id="a4" elementType="O"/>
+    <atom x2="-1.124096" y2="-0.503616" formalCharge="2" id="a6" elementType="Cu"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -31,5 +31,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Copper(II) sulfate</property>
+    <property title="Description">Copper(II) sulfate, also known as copper sulphate, is an inorganic compound with the chemical formula CuSO4. It forms hydrates CuSO4&#xB7;nH2O, where n can range from 1 to 7. The pentahydrate (n = 5), a bright blue crystal, is the most commonly encountered hydrate of copper(II) sulfate, while its anhydrous form is white. Older names for the pentahydrate include blue vitriol, bluestone, vitriol of copper, and Roman vitriol. It exothermically dissolves in water to give the aquo complex [Cu(H2O)6]2+, which has octahedral molecular geometry. The structure of the solid pentahydrate reveals a polymeric structure wherein copper is again octahedral but bound to four water ligands. The Cu(II)(H2O)4 centers are interconnected by sulfate anions to form chains.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Copper(II)_sulfate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

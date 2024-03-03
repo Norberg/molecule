@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a10" x2="0.852602" y2="-0.49225"/>
-    <atom elementType="C" id="a1" x2="1.732051" y2="1.0"/>
-    <atom elementType="C" id="a3" x2="0.0" y2="1.0"/>
-    <atom elementType="C" id="a2" x2="0.866025" y2="1.5"/>
-    <atom elementType="N" id="a5" x2="-0.0" y2="-0.0"/>
-    <atom elementType="O" id="a4" x2="-0.866025" y2="1.5"/>
-    <atom elementType="H" id="a7" x2="2.625789" y2="1.516"/>
-    <atom elementType="H" id="a6" x2="1.732051" y2="-0.032"/>
-    <atom elementType="H" id="a9" x2="-0.852602" y2="-0.49225"/>
-    <atom elementType="H" id="a8" x2="0.866025" y2="2.532"/>
+    <atom x2="0.852602" y2="-0.49225" id="a10" elementType="H"/>
+    <atom x2="1.732051" y2="1.0" id="a1" elementType="C"/>
+    <atom x2="0.0" y2="1.0" id="a3" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a2" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a5" elementType="N"/>
+    <atom x2="-0.866025" y2="1.5" id="a4" elementType="O"/>
+    <atom x2="2.625789" y2="1.516" id="a7" elementType="H"/>
+    <atom x2="1.732051" y2="-0.032" id="a6" elementType="H"/>
+    <atom x2="-0.852602" y2="-0.49225" id="a9" elementType="H"/>
+    <atom x2="0.866025" y2="2.532" id="a8" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -35,5 +35,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Acrylamide</property>
+    <property title="Description">Acrylamide (or acrylic amide) is an organic compound with the chemical formula CH2=CHC(O)NH2. It is a white odorless solid, soluble in water and several organic solvents. From the chemistry perspective, acrylamide is a vinyl-substituted primary amide (CONH2). It is produced industrially mainly as a precursor to polyacrylamides, which find many uses as water-soluble thickeners and flocculation agents.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Acrylamide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Ag" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Ag"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -14,8 +14,11 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Radius">2.10</property>
+    <property title="Radius">2.1</property>
     <property title="Name">Silver</property>
     <property title="Weight">108.0</property>
+    <property title="Description">Silver is a chemical element; it has symbol Ag (from Latin argentum 'silver') and atomic number 47. A soft, white, lustrous transition metal, it exhibits the highest electrical conductivity, thermal conductivity, and reflectivity of any metal. The metal is found in the Earth's crust in the pure, free elemental form ("native silver"), as an alloy with gold and other metals, and in minerals such as argentite and chlorargyrite. Most silver is produced as a byproduct of copper, gold, lead, and zinc refining. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Silver</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

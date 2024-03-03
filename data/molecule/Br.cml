@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Br" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Br"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Gas">
@@ -17,5 +17,8 @@
     <property title="Radius">1.85</property>
     <property title="Name">Bromine</property>
     <property title="Weight">79.0</property>
+    <property title="Description">Bromine is a chemical element; it has symbol Br and atomic number 35. It is a volatile red-brown liquid at room temperature that evaporates readily to form a similarly coloured vapour. Its properties are intermediate between those of chlorine and iodine. Isolated independently by two chemists, Carl Jacob L&#xF6;wig (in 1825) and Antoine J&#xE9;r&#xF4;me Balard (in 1826), its name was derived from the Ancient Greek &#x3B2;&#x3C1;&#x1FF6;&#x3BC;&#x3BF;&#x3C2; (bromos) meaning "stench", referring to its sharp and pungent smell. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

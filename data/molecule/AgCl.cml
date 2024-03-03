@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Cl" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="Ag" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="Ag"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -19,5 +19,10 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Silver chloride</property>
+    <property title="Description">Silver chloride is an inorganic chemical compound with the chemical formula AgCl. This white crystalline solid is well known for its low solubility in water and its sensitivity to light. Upon illumination or heating, silver chloride converts to silver (and chlorine), which is signaled by grey to black or purplish coloration in some samples. AgCl occurs naturally as the mineral chlorargyrite.
+
+It is produced by a metathesis reaction for use in photography and in pH meters as electrodes. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Silver_chloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

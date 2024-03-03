@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="C" id="a1" x2="1.0" y2="0.0"/>
-    <atom elementType="O" id="a3" x2="0.0" y2="-0.0"/>
-    <atom elementType="C" id="a2" x2="0.5" y2="-0.866025"/>
-    <atom elementType="H" id="a5" x2="1.756604" y2="-0.756604"/>
-    <atom elementType="H" id="a4" x2="1.926647" y2="0.535"/>
-    <atom elementType="H" id="a7" x2="-0.533541" y2="-1.142962"/>
-    <atom elementType="H" id="a6" x2="0.5" y2="-1.936025"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="C"/>
+    <atom x2="0.0" y2="-0.0" id="a3" elementType="O"/>
+    <atom x2="0.5" y2="-0.866025" id="a2" elementType="C"/>
+    <atom x2="1.756604" y2="-0.756604" id="a5" elementType="H"/>
+    <atom x2="1.926647" y2="0.535" id="a4" elementType="H"/>
+    <atom x2="-0.533541" y2="-1.142962" id="a7" elementType="H"/>
+    <atom x2="0.5" y2="-1.936025" id="a6" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -38,5 +38,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Ethylene oxide</property>
+    <property title="Description">Ethylene oxide is an organic compound with the formula C2H4O. It is a cyclic ether and the simplest epoxide: a three-membered ring consisting of one oxygen atom and two carbon atoms. Ethylene oxide is a colorless and flammable gas with a faintly sweet odor. Because it is a strained ring, ethylene oxide easily participates in a number of addition reactions that result in ring-opening. Ethylene oxide is isomeric with acetaldehyde and with vinyl alcohol. Ethylene oxide is industrially produced by oxidation of ethylene in the presence of a silver catalyst. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ethylene_oxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>
