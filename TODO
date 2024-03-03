@@ -1,5 +1,4 @@
 ### Small TODOs ###
-- Cold effect needed for some reactions eg. level 5
 - Use a logger library and allow fine tuning wanted debug messages
 - Give aqueous molecules a blueish background
 - Extract all level logic from Game to Level
@@ -10,8 +9,8 @@
 - GUI to edit reactions
 - GUI to edit levels
 - Write adequate unittests for the game logic
-- Allow zooming to enable levels with many/big molecules
 - Add pressure effect
+- Create inventory for molecules
 
 ### Big TODOs ###
-- move to pygtk3
+- Functional group reactions for organic compounds
