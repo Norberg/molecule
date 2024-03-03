@@ -245,7 +245,6 @@ class Level:
             rest_length = self.mouse_body.position.get_distance(clicked.body.position)
             self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
             self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
-            clicked.body.mass /= 50
             self.space.add(self.mouse_spring)
             self.hud.update_info_text(clicked.molecule.formula)
 
@@ -257,7 +256,6 @@ class Level:
 
     def handle_element_released(self, x, y, button, modifiers):
         if self.mouse_spring != None:
-            self.mouse_spring.b.mass *= 50
             self.mouse_spring.b.velocity = (0,0)
             molecule = self.mouse_spring.b.molecule
             molecule.set_dragging(False)
