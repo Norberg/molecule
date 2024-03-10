@@ -360,4 +360,15 @@
       <molecule title="CH3COOH(l)"/>
     </productList>
   </reaction>
+  <reaction title="Phenol to Sodium phenoxide">
+    <reactantList>
+      <molecule title="C6H5OH"/>
+      <molecule title="Na+"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5NaO(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
 </reactions>

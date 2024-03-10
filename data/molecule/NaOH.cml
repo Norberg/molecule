@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <molecule>
   <atomArray>
-    <atom elementType="O" formalCharge="-1" id="a1" x2="2.5" y2="-0.5"/>
-    <atom elementType="Na" formalCharge="1" id="a3" x2="-0.910684" y2="-0.333333"/>
-    <atom elementType="H" id="a2" x2="1.5" y2="-0.5"/>
+    <atom x2="2.5" y2="-0.5" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="-0.910684" y2="-0.333333" formalCharge="1" id="a3" elementType="Na"/>
+    <atom x2="1.5" y2="-0.5" id="a2" elementType="H"/>
   </atomArray>
   <bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -30,5 +30,10 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sodium hydroxide</property>
+    <property title="Description">Sodium hydroxide, also known as lye and caustic soda, is an inorganic compound with the formula NaOH. It is a white solid ionic compound consisting of sodium cations Na+ and hydroxide anions OH&#x2212;.
+
+Sodium hydroxide is a highly corrosive base and alkali that decomposes lipids and proteins at ambient temperatures and may cause severe chemical burns. It is highly soluble in water, and readily absorbs moisture and carbon dioxide from the air. It forms a series of hydrates NaOH&#xB7;nH2O. The monohydrate NaOH&#xB7;H2O crystallizes from water solutions between 12.3 and 61.8 &#xB0;C. The commercially available "sodium hydroxide" is often this monohydrate, and published data may refer to it instead of the anhydrous compound. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_hydroxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </molecule>

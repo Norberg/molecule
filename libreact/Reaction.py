@@ -81,12 +81,16 @@ class Reaction:
     def sumEntropy(self, elements):
         sum = 0
         for molecule in self.getStates(elements):
+            if molecule.entropy is None:
+                raise Exception(f"Entropy is None for {molecule}")
             sum += molecule.entropy
         return sum
         
     def sumEnthalpy(self, elements):
         sum = 0
         for molecule in self.getStates(elements):
+            if molecule.enthalpy is None:
+                raise Exception(f"Enthalpy is None for {molecule}")
             sum += molecule.enthalpy
         return sum
     

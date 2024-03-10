@@ -58,6 +58,10 @@ class State:
         self.entropy = entropy
         self.ions = ions
 
+
+    def __str__(self):
+        return "State: " + self.name
+
     @property
     def short(self):
         return self.STATE_MAP[self.name]
@@ -235,6 +239,8 @@ class Molecule(Cml):
         self.tree = None
         self.property = dict()
 
+    def __str__(self):
+        return "Molecule: " + str(self.atoms)
 
     def getDigits(self, string):
         temp = [s for s in string if s.isdigit()]

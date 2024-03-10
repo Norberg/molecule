@@ -372,6 +372,8 @@ def addState(stateless):
     for s in stateless:
         m = CachedCml.getMolecule(s)
         for k in default_order:
+            if k in m.states and m.states[k].ions is not None:
+                continue
             if k in m.states:
                 state = m.states[k].short
                 break

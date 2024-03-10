@@ -40,6 +40,8 @@ class TestReact(unittest.TestCase):
         for s in stateless:
             m = CachedCml.getMolecule(s)
             for k in default_order:
+                if k in m.states and m.states[k].ions is not None:
+                    continue
                 if k in m.states:
                     state = m.states[k].short
                     break
@@ -114,8 +116,8 @@ class TestReact(unittest.TestCase):
             msg = "Expected reaction did not occur" + str(reactants) + "->" + \
                   str(expected_products) + " at:" + str(temp) + "K"
             self.assertNotEqual(result, None, msg)
-            self.assertEqual(result.products, expected_products)
-            self.assertEqual(result.reactants, reactants)
+            self.assertEqual(result.products, expected_products, f"For reaction {reactants} -> {expected_products} at {temp}K")
+            self.assertEqual(result.reactants, reactants, f"For reaction {reactants} -> {expected_products} at {temp}K")
 
     def testPidgenonProcess(self):
         reactor = self.setupRealReactor()
