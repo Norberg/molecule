@@ -17,6 +17,7 @@ import pyglet
 
 background = pyglet.graphics.OrderedGroup(0)
 hud = pyglet.graphics.OrderedGroup(1)
-elements = pyglet.graphics.OrderedGroup(2)
-charge = pyglet.graphics.OrderedGroup(3)
-gui = pyglet.graphics.OrderedGroup(4)
+state = pyglet.graphics.OrderedGroup(2)
+elements = pyglet.graphics.OrderedGroup(3)
+charge = pyglet.graphics.OrderedGroup(4)
+gui = pyglet.graphics.OrderedGroup(5)

@@ -252,12 +252,13 @@ class Atom(pyglet.sprite.Sprite):
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
         self.cml = CachedCml.getMolecule(symbol)
         self.scale = self.cml.property["Radius"] * scaleFactor()
-        self.create_electric_charge_sprite(charge, batch)
         self.molecule = molecule
         self.symbol = symbol
         self.charge = charge
         self.space = space
         self.active = False
+        self.create_electric_charge_sprite(charge, batch)
+        self.create_state_sprite(batch)
         self.init_chipmunk()
         self.move(pos)
 
@@ -303,6 +304,16 @@ class Atom(pyglet.sprite.Sprite):
         self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
         self.electric_charge_sprite.scale = self.scale
 
+    def create_state_sprite(self, batch):
+        self.state_sprite = None
+        if self.molecule.current_state.short != "aq":
+            return
+
+        e = pyglet_util.load_image("aq.png")
+        group = RenderingOrder.state
+        self.state_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group, subpixel=True)
+        self.state_sprite.scale = self.scale
+
     def get_only_atom_symbol(self, symbol):
         """ returns the atom symbol without any electric charge """
         return symbol.split("-")[0].split("+")[0]
@@ -319,6 +330,9 @@ class Atom(pyglet.sprite.Sprite):
         if self.electric_charge_sprite is not None:
             self.electric_charge_sprite.x = self.x
             self.electric_charge_sprite.y = self.y
+        if self.state_sprite is not None:
+            self.state_sprite.x = x - self.state_sprite.width / 2
+            self.state_sprite.y = y - self.state_sprite.height / 2
         if self.affected_by_gravity:
             self.body.velocity_func = gravity_func
         else:

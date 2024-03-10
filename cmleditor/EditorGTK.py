@@ -176,7 +176,7 @@ class EditorGTK:
         self.molecule = molecule
         molecule.parse(filename)
         self.formula = filename.split("/")[-1].split(".cml")[0]
-        state_formula = self.formula+"(g)"
+        state_formula = self.formula+"(aq)"
         cml2img.convert_cml2png(state_formula, "preview.png")
         pixBuffPreview = Pixbuf.new_from_file("preview.png")
         imgPreview = self.widget("imgPreview")

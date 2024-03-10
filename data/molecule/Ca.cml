@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Ca" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Ca"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -25,5 +25,8 @@
     <property title="Radius">2.31</property>
     <property title="Name">Calcium</property>
     <property title="Weight">40.0</property>
+    <property title="Description">The chemistry of calcium is that of a typical heavy alkaline earth metal. For example, calcium spontaneously reacts with water more quickly than magnesium and less quickly than strontium to produce calcium hydroxide and hydrogen gas. It also reacts with the oxygen and nitrogen in the air to form a mixture of calcium oxide and calcium nitride.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>
