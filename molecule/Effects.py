@@ -37,7 +37,7 @@ class Effect:
             self.width = width * Config.current.zoom
         if height != None:
             self.height = height * Config.current.zoom
-        self.init_chipmunk(space)
+        self.init_chipmunk(space, pos)
         if pos != None:
             self.set_pos(pos)
         self.supported_attributes = list()
@@ -48,8 +48,9 @@ class Effect:
         self.x = x - self.width/2
         self.y = y - self.height/2
 
-    def init_chipmunk(self,space):
+    def init_chipmunk(self,space, pos):
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        body.position = pos
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT
@@ -102,6 +103,7 @@ class Temperature(EffectSprite):
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.temp = temp
         self.supported_attributes.append("temp")
+        self.supported_attributes.append("reaction")
 
 class Fire(Temperature):
     """Fire effect"""
@@ -117,21 +119,26 @@ class WaterBeaker(EffectSprite):
     """WaterBeaker"""
     def __init__(self, space, batch, pos):
         EffectSprite.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
+        self.supported_attributes.append("reaction")
+        self.supported_attributes.append("action")
+        self.is_clicked = False
+        self.body = None
 
-    def init_chipmunk(self,space):
-        body = pymunk.Body(body_type=pymunk.Body.STATIC)
-        walls = [pymunk.Segment(body, (-144,-320), (-144, 200), 10), #left
-                 pymunk.Segment(body, (-144,-320), (280, -320), 10), #bottom
-                 pymunk.Segment(body, (277,-320), (277, 200), 10), #right
-                 pymunk.Segment(body, (-144,200), (280, 200), 10) #top
+    def init_chipmunk(self,space, pos):
+        static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        x, y = pos
+        walls = [pymunk.Segment(static_body, (x-280,y-380), (x-280, y+275), 10), #left
+                 pymunk.Segment(static_body, (x-280,y-380), (x+285, y-380), 10), #bottom
+                 pymunk.Segment(static_body, (x+285,y-380), (x+285, y+275), 10), #right
+                 pymunk.Segment(static_body, (x-280,y+275), (x+285, y+275), 10), #top
                 ]
         for wall in walls:
             wall.elasticity = 0.95
             wall.collision_type = CollisionTypes.WALL
             wall.layers = CollisionTypes.LAYER_WALL
-        space.add(body)
-        space.add(*walls)
-        shape = pymunk.Poly.create_box(body, (400,520), 5)
+        space.add(static_body, *walls)
+        shape = pymunk.Poly.create_box(static_body, (570,630), 5)
+        shape.body.position = pos
         space.add(shape)
         self.shape = shape
         self.shape.collision_type = CollisionTypes.EFFECT
@@ -139,11 +146,10 @@ class WaterBeaker(EffectSprite):
         self.shape.effect = self
 
     def set_pos(self, pos):
-        OFFSET_X, OFFSET_Y = 60,-30
         self.shape.body.position = pos
-        x, y = self.shape.body.position
-        self.x = x - self.width/2 + OFFSET_X
-        self.y = y - self.height/2 + OFFSET_Y
+        x, y = pos
+        self.x = x - self.width/2
+        self.y = y - self.height/2
 
     def react(self, molecule):
         ions = molecule.to_aqueous()
@@ -154,6 +160,9 @@ class WaterBeaker(EffectSprite):
             return reaction
         elif Config.current.DEBUG:
             print("Water beaker didnt react with:", molecule.formula)
+
+    def on_click(self, callback):
+        print("Water beaker clicked")
 
 class Mining(Action):
     ACTION_TIME = 3

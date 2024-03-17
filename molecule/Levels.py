@@ -197,8 +197,8 @@ class Level:
         return False
 
     def get_affecting_areas(self, position):
-        """Return all areas that have a affect on position"""
-        for area in  self.areas:
+        """Return all areas that have a affect on reactions in the area """
+        for area in self.get_effect_supporting("reaction"):
             if area.inside(position):
                 yield area
 

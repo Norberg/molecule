@@ -24,6 +24,7 @@ from molecule import Universe
 from molecule import Config
 from molecule.Levels import Levels
 from molecule import Gui
+from molecule import pymunk_debug
 
 class Game(pyglet.window.Window):
     def __init__(self):
@@ -76,7 +77,8 @@ class Game(pyglet.window.Window):
         self.clear()
         self.batch.draw()
         if self.DEBUG_GRAPHICS:
-            pymunk.pyglet_util.draw(self.space)
+            options = pymunk_debug.DrawOptions()
+            self.space.debug_draw(options)
 
     def switch_level(self, level=None):
         """ Switch to level, if level=None switch to next level"""

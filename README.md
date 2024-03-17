@@ -17,7 +17,7 @@ curl https://pyenv.run | bash
 pyenv install 3.8.18
 pyenv virtualenv 3.8.18 venv-molecule
 pyenv activate venv-molecule
-pip install pyglet==1.5
+pip install pyglet==1.5.16
 pip install pymunk==6.6
 pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 ```

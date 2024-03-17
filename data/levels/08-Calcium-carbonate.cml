@@ -12,7 +12,7 @@
     <molecule title="SO3(g)"/>
   </moleculeList>
   <effectList>
-    <effect title="WaterBeaker" x2="680" y2="470"/>
+    <effect title="WaterBeaker" x2="680" y2="530"/>
   </effectList>
   <victoryCondition>
     <molecule title="CaCO3"/>
