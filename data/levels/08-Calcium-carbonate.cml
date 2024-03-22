@@ -7,10 +7,12 @@
     <molecule title="N(g)"/>
     <molecule title="N(g)"/>
     <molecule title="O(g)"/>
+  </moleculeList>
+  <inventoryList>
     <molecule title="CaO2H2(s)"/>
     <molecule title="Na2CO3(s)"/>
     <molecule title="SO3(g)"/>
-  </moleculeList>
+  </inventoryList>
   <effectList>
     <effect title="WaterBeaker" x2="680" y2="480"/>
   </effectList>
