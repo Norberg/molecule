@@ -127,11 +127,20 @@ class WaterBeaker(EffectSprite):
     def init_chipmunk(self,space, pos):
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
-        walls = [pymunk.Segment(static_body, (x-280,y-380), (x-280, y+275), 10), #left
-                 pymunk.Segment(static_body, (x-280,y-380), (x+285, y-380), 10), #bottom
-                 pymunk.Segment(static_body, (x+285,y-380), (x+285, y+275), 10), #right
-                 pymunk.Segment(static_body, (x-280,y+275), (x+285, y+275), 10), #top
-                ]
+        # Rectangle dimensions
+        left_x = x - 280
+        right_x = x + 285
+        bottom_y = y - 320
+        top_y = y + 340
+        thickness = 10
+
+        # Creating walls with clearer structure
+        walls = [
+            pymunk.Segment(static_body, (left_x, bottom_y), (left_x, top_y), thickness),  # Left wall
+            pymunk.Segment(static_body, (left_x, bottom_y), (right_x, bottom_y), thickness),  # Bottom wall
+            pymunk.Segment(static_body, (right_x, bottom_y), (right_x, top_y), thickness),  # Right wall
+            pymunk.Segment(static_body, (left_x, top_y), (right_x, top_y), thickness),  # Top wall
+        ]
         for wall in walls:
             wall.elasticity = 0.95
             wall.collision_type = CollisionTypes.WALL
@@ -146,10 +155,11 @@ class WaterBeaker(EffectSprite):
         self.shape.effect = self
 
     def set_pos(self, pos):
+        OFFSET_X, OFFSET_Y = 0,60
         self.shape.body.position = pos
-        x, y = pos
-        self.x = x - self.width/2
-        self.y = y - self.height/2
+        x, y = self.shape.body.position
+        self.x = x - self.width/2 + OFFSET_X
+        self.y = y - self.height/2 + OFFSET_Y
 
     def react(self, molecule):
         ions = molecule.to_aqueous()
