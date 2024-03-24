@@ -13,14 +13,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-WALL = 0
-ELEMENT = 1
-EFFECT = 2
-SCREEN_BOUNDARY = 3
+import pymunk
 
+WALL = 0b0001
+ELEMENT = 0b0010
+EFFECT = 0b0100
+SCREEN_BOUNDARY = 0b1000
 
-LAYER_WALL = 2**1
-LAYER_ALL = -1
-LAYER_DRAGGING = 2**2
+WALL_MASK = WALL | ELEMENT | EFFECT | SCREEN_BOUNDARY
+ELEMENT_MASK = WALL | ELEMENT | EFFECT | SCREEN_BOUNDARY
+ELEMENT_MASK_DRAGGING = ELEMENT | EFFECT | SCREEN_BOUNDARY
+EFFECT_MASK = ELEMENT
+SCREEN_BOUNDARY_MASK = WALL | ELEMENT | EFFECT | SCREEN_BOUNDARY
 
-#FIXME switch to use ShapeFilters on everything
+WALL_FILTER = pymunk.ShapeFilter(categories=WALL, mask=WALL_MASK)
+ELEMENT_FILTER = pymunk.ShapeFilter(categories=ELEMENT, mask=ELEMENT_MASK)
+ELEMENT_FILTER_DRAGGING = pymunk.ShapeFilter(categories=ELEMENT, mask=ELEMENT_MASK_DRAGGING)
+EFFECT_FILTER = pymunk.ShapeFilter(categories=EFFECT, mask=EFFECT_MASK)
+SCREEN_BOUNDARY_FILTER = pymunk.ShapeFilter(categories=SCREEN_BOUNDARY, mask=SCREEN_BOUNDARY_MASK)

@@ -103,7 +103,7 @@ class Level:
         for boundary in screen_boundaries:
             boundary.elasticity = 0.95
             boundary.collision_type = CollisionTypes.SCREEN_BOUNDARY
-            boundary.layers = CollisionTypes.LAYER_WALL
+            boundary.filter = CollisionTypes.SCREEN_BOUNDARY_FILTER
         self.space.add(*screen_boundaries)
         self.mouse_spring = None
         #Kinematic is working but to much energy in the system
@@ -134,6 +134,7 @@ class Level:
     def get_colliding_molecules(self, collisions):
         molecules = list()
         for collision in collisions:
+            #TODO: Should be possible to filter collision type earlier
             if collision.collision_type == CollisionTypes.ELEMENT:
                 molecule = collision.molecule
                 #each atom in the molecule can have 1 entry in the collision
@@ -236,7 +237,8 @@ class Level:
         if self.mouse_spring != None:
             self.handle_element_released(None, None, None, None)
         self.mouse_body.position = (x, y)
-        clicked = self.space.point_query_nearest((x,y), 16, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.LAYER_DRAGGING))
+        #TODO: Fix the ShapeFilter
+        clicked = self.space.point_query_nearest((x,y), 16, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
         if (clicked != None and
             clicked.shape.collision_type == CollisionTypes.ELEMENT and
             clicked.shape.molecule.draggable):

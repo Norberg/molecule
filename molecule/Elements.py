@@ -123,9 +123,9 @@ class Molecule:
     def set_dragging(self, value):
         for atom in self.atoms.values():
             if value:
-                atom.shape.layers = CollisionTypes.LAYER_DRAGGING
+                atom.shape.filter = CollisionTypes.ELEMENT_FILTER_DRAGGING
             else:
-                atom.shape.layers = CollisionTypes.LAYER_ALL
+                atom.shape.filter = CollisionTypes.ELEMENT_FILTER
 
     def can_react(self):
         return self.creation_time + 2 < time.time()
@@ -271,7 +271,7 @@ class Atom(pyglet.sprite.Sprite):
         shape = pymunk.Circle(body, radius)
         shape.elasticity = 0.95
         shape.collision_type = CollisionTypes.ELEMENT
-        shape.layer = CollisionTypes.LAYER_ALL
+        shape.filter = CollisionTypes.ELEMENT_FILTER
         shape.molecule = self.molecule
         self.space.add(body, shape)
 
