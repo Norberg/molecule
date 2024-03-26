@@ -34,9 +34,9 @@ class Effect:
             name = None):
         self.name = name
         if width != None:
-            self.width = width * Config.current.zoom
+            self.width = width
         if height != None:
-            self.height = height * Config.current.zoom
+            self.height = height
         self.init_chipmunk(space, pos)
         if pos != None:
             self.set_pos(pos)
