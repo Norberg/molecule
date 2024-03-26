@@ -128,7 +128,7 @@ class Molecule:
                 atom.shape.filter = CollisionTypes.ELEMENT_FILTER
 
     def can_react(self):
-        return self.creation_time + 2 < time.time()
+        return self.creation_time + 2 < time.time() and not self.is_deleted()
 
     def update(self):
         for atom in self.atoms.values():
@@ -145,6 +145,9 @@ class Molecule:
         for atom in self.atoms.values():
             atom.delete()
         self.atoms = dict()
+    
+    def is_deleted(self):
+        return len(self.atoms) == 0
 
 
 class Bond:

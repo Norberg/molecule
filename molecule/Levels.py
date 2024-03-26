@@ -167,8 +167,17 @@ class Level:
         reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
         return Universe.universe.react(reactingForumlas, reacting_areas)
 
-    def perform_reaction(self, space, key, reaction, collisions, position):
-        reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
+    def perform_reaction(self, reaction, collisions, position):
+        if len(collisions) == 1:
+            print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
+            reactingMolecules = [collisions[0].molecule]
+        else:
+            reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
+
+        if len(reactingMolecules) < 1:
+            print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} without any reacting molecules")
+            reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
+            return
         for molecule in reactingMolecules:
             molecule.delete()
         self.create_elements(reaction.products, position)
@@ -182,9 +191,8 @@ class Level:
         collisions = [point.shape for point in pointQuery]
         reaction = self.react(collisions, reacting_areas)
         if reaction != None:
-            key = 1 # use 1 as key so only one callback per iteration can trigger
-            space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, a.body.position)
-
+            self.perform_reaction(reaction, collisions, a.body.position)
+            
     def effect_reaction(self, arbiter, space, data):
         """ Called if an element touches a effect """
         a,b = arbiter.shapes
@@ -193,8 +201,7 @@ class Level:
         reaction = effect.react(molecule)
         collisions = [a]
         if reaction != None:
-            key = 1 # use 1 as key so only one callback per iteration can trigger
-            space.add_post_step_callback(self.perform_reaction, key, reaction, collisions, b.body.position)
+            self.perform_reaction(reaction, collisions, b.body.position)
         return False
 
     def get_affecting_areas(self, position):
