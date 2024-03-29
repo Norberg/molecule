@@ -371,12 +371,15 @@ def addState(stateless):
     statefull = list()
     for s in stateless:
         m = CachedCml.getMolecule(s)
+        state = None
         for k in default_order:
             if k in m.states and m.states[k].ions is not None:
                 continue
             if k in m.states:
                 state = m.states[k].short
                 break
+        if state is None:
+            print(f"No state found for {s}")
         statefull.append(s+"(%s)"%state)
     return statefull
 
