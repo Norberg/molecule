@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a3" x2="-0.0" y2="-0.0"/>
-    <atom elementType="O" id="a1" x2="2.0" y2="-0.0"/>
-    <atom elementType="C" id="a2" x2="1.0" y2="-0.0"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="O"/>
+    <atom x2="2.0" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="1.0" y2="-0.0" id="a2" elementType="C"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -16,6 +16,14 @@
       </property>
       <property title="entropy">
         <scalar units="units:molar_energy">214.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-413.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">119.0</scalar>
       </property>
     </propertyList>
   </propertyList>

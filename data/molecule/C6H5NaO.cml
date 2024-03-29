@@ -28,30 +28,31 @@
     <bond atomRefs2="a6 a11" order="1"/>
     <bond atomRefs2="a7 a12" order="1"/>
     <bond atomRefs2="a8 a13" order="1"/>
+    <bond atomRefs2="a1 a2" order="0"/>
   </ns0:bondArray>
   <propertyList title="states">
-    <propertyList title="Gas">
-      <property title="enthalpy">
-        <scalar units="units:molar_energy">0.0</scalar>
-      </property>
-      <property title="entropy">
-        <scalar units="units:molar_energy">0.0</scalar>
-      </property>
-    </propertyList>
     <propertyList title="Liquid">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">-400.0</scalar>
+        <scalar units="units:molar_energy">-250.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">50.0</scalar>
+        <scalar units="units:molar_energy">200.0</scalar>
       </property>
     </propertyList>
     <propertyList title="Solid">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">-400.0</scalar>
+        <scalar units="units:molar_energy">-250.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">50.0</scalar>
+        <scalar units="units:molar_energy">400.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-250.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">400.0</scalar>
       </property>
     </propertyList>
   </propertyList>

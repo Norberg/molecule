@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" formalCharge="1" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" formalCharge="1" id="a1" elementType="H"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Aqueous">
@@ -27,6 +27,6 @@
     <property title="Name">Hydrogen ion</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Hydron_(chemistry)</property>
     <property title="Radius">1.1</property>
-    <property title="Description">The hydrogen ion (a completely free or "naked" hydrogen atomic nucleus) is too reactive to occur in many liquids, even though it is sometimes visualized to do so by students of chemistry. A free hydrogen ion  would react with a molecule of the liquid to form a more complicated cation. Examples are the hydronium ion in water-based acids, and H2F+ , the unstable cation of fluoroantimonic acid, the strongest superacid.</property>
+    <property title="Description">The hydrogen ion (a completely free or "naked" hydrogen atomic nucleus) is too reactive to occur in many liquids, even though it is sometimes visualized to do so by students of chemistry. A free hydrogen ion  would react with a molecule of the liquid to form a more complicated cation. Examples are the hydronium ion in water-based acids, and H&lt;sub&gt;2&lt;/sub&gt;F+ , the unstable cation of fluoroantimonic acid, the strongest superacid.</property>
   </propertyList>
 </ns0:molecule>

@@ -174,6 +174,65 @@ class WaterBeaker(EffectSprite):
     def on_click(self, callback):
         print("Water beaker clicked")
 
+class HotplateBeaker(EffectSprite):
+    """HotplateBeaker"""
+    def __init__(self, space, batch, pos, temp=100):
+        EffectSprite.__init__(self, space, batch, pos, "hotplate.png","Hotplate Beaker")
+        self.supported_attributes.append("reaction")
+        self.supported_attributes.append("temp")
+        self.temp = temp
+        self.is_clicked = False
+        self.body = None
+
+    def init_chipmunk(self,space, pos):
+        static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        x, y = pos
+        # Rectangle dimensions
+        left_x = x - 300
+        right_x = x + 305
+        bottom_y = y - 265
+        top_y = y + 270
+        thickness = 10
+
+        # Creating walls with clearer structure
+        walls = [
+            pymunk.Segment(static_body, (left_x, bottom_y), (left_x, top_y), thickness),  # Left wall
+            pymunk.Segment(static_body, (left_x, bottom_y), (right_x, bottom_y), thickness),  # Bottom wall
+            pymunk.Segment(static_body, (right_x, bottom_y), (right_x, top_y), thickness),  # Right wall
+            pymunk.Segment(static_body, (left_x, top_y), (right_x, top_y), thickness),  # Top wall
+        ]
+        for wall in walls:
+            wall.elasticity = 0.95
+            wall.collision_type = CollisionTypes.WALL
+            wall.filter = CollisionTypes.WALL_FILTER
+        space.add(static_body, *walls)
+        shape = pymunk.Poly.create_box(static_body, (600,530), 5)
+        shape.body.position = pos
+        space.add(shape)
+        self.shape = shape
+        self.shape.collision_type = CollisionTypes.EFFECT
+        self.shape.sensor = True
+        self.shape.effect = self
+
+    def set_pos(self, pos):
+        OFFSET_X, OFFSET_Y = 0,-70
+        self.shape.body.position = pos
+        x, y = self.shape.body.position
+        self.x = x - self.width/2 + OFFSET_X
+        self.y = y - self.height/2 + OFFSET_Y
+
+    def react(self, molecule):
+        ions = molecule.to_aqueous()
+        if ions != None and len(ions) > 0:
+            print(molecule.formula, "-(Water)>", ions)
+            cml = Cml.Reaction([molecule.formula],ions)
+            reaction = Reaction.Reaction(cml,[molecule.state_formula])
+            return reaction
+        elif Config.current.DEBUG:
+            print("Water beaker didnt react with:", molecule.formula)
+
+
+
 class Mining(Action):
     ACTION_TIME = 3
     FRAME_DURATION = 5
@@ -362,6 +421,9 @@ def create_effects(space, batch, effects):
         elif effect.title == "WaterBeaker":
             water = WaterBeaker(space, batch, (x, y))
             new_effects.append(water)
+        elif effect.title == "HotplateBeaker":
+            hotplate_beaker = HotplateBeaker(space, batch, (x, y), value)
+            new_effects.append(hotplate_beaker)
         elif effect.title == "Mining":
             mining = Mining(space, batch, (x, y), molecules)
             new_effects.append(mining)

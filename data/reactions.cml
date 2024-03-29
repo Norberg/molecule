@@ -107,7 +107,7 @@
       <molecule title="H2O"/>
     </reactantList>
     <productList>
-      <molecule title="H2SO4(aq)"/>
+      <molecule title="H2SO4(l)"/>
     </productList>
   </reaction>
   <reaction>
@@ -369,6 +369,15 @@
     <productList>
       <molecule title="C6H5NaO(s)"/>
       <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="Sodium phenoixide to Sodium salicate">
+    <reactantList>
+      <molecule title="C6H5NaO"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="C7H5NaO3(g)"/>
     </productList>
   </reaction>
 </reactions>

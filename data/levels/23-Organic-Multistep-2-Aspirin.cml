@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<level zoom="0.7">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="C6H6(g)"/>
+    <molecule title="Br2(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="CO2(g)"/>
+    <molecule title="C6H5OH(g)"/>
+    <molecule title="HNO3(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="H2(g)"/>
+    <molecule title="NaOH(s)"/>
+    <molecule title="C4H6O3(l)"/>>
+    <molecule title="H2SO4(l)"/>>
+  </inventoryList>
+  <effectList>
+    <effect title="HotplateBeaker" x2="680" y2="650" value = "370"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C8H9NO2"/>
+  </victoryCondition>
+  <objective text="Create Aspirin C8H9NO2 by performing an addition and an elemination reaction"/>
+  <hint text="C6H5Br + KOH -> "/>
+</level>

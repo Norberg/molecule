@@ -112,7 +112,7 @@ class TestLevels(unittest.TestCase):
     def testSulfuricAcidReaction(self):
         level1 = getLevel1()
         space, batch = createSpaceAndBatchMock()
-        H2SO4 = Molecule("H2SO4(aq)", space, batch)
+        H2SO4 = Molecule("H2SO4(l)", space, batch)
         NaCl = Molecule("NaCl(s)", space, batch)
         NaCl_ = Molecule("NaCl(s)", space, batch)
         H2SO4.creation_time = 0
@@ -120,13 +120,13 @@ class TestLevels(unittest.TestCase):
         NaCl_.creation_time = 0
         collisions = createCollisionsMock(H2SO4, NaCl, NaCl_)
         reaction = level1.react(collisions,[])
-        self.assertEqual(reaction.reactants, ['H2SO4(aq)', 'NaCl(s)', 'NaCl(s)'])
+        self.assertEqual(reaction.reactants, ['H2SO4(l)', 'NaCl(s)', 'NaCl(s)'])
         self.assertEqual(reaction.products, ['HCl(g)', 'HCl(g)', 'Na2SO4(s)'])
 
     def testSulfuricAcidNoReaction(self):
         level1 = getLevel1()
         space, batch = createSpaceAndBatchMock()
-        H2SO4 = Molecule("H2SO4(aq)", space, batch)
+        H2SO4 = Molecule("H2SO4(l)", space, batch)
         NaCl = Molecule("NaCl(s)", space, batch)
         H2SO4.creation_time = 0
         NaCl.creation_time = 0
@@ -159,7 +159,7 @@ class TestLevels(unittest.TestCase):
 
 
 def setupSimpleReactor():
-    r1 = Cml.Reaction(["H2SO4(aq)","NaCl(s)", "NaCl(s)"],
+    r1 = Cml.Reaction(["H2SO4(l)","NaCl(s)", "NaCl(s)"],
                       ["HCl(g)", "HCl(g)", "Na2SO4(s)"])
     r2 = Cml.Reaction(["OH-","H+"], ["H2O(l)"])
     return Reactor([r1,r2])

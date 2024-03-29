@@ -96,6 +96,7 @@ class Molecule:
             return False
         else:
             self.current_state = state
+            print(f"{self.formula} changed state to {new_state}")
             return True
 
     def to_aqueous(self):

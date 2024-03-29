@@ -171,6 +171,9 @@ class Level:
         if len(collisions) == 1:
             print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
             reactingMolecules = [collisions[0].molecule]
+            if collisions[0].molecule.is_deleted():
+                print(f"self.perform_reaction(): reactants {reaction.reactants} is already deleted")
+                return
         else:
             reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
 

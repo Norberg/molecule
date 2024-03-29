@@ -48,51 +48,64 @@ class Reaction:
                 self.reactants.append(reactant)    
 
     def deltaEnthalpy(self):
-        enthalpyReactans = self.sumEnthalpy(self.reactants)
-        enthalpyProducts = self.sumEnthalpy(self.products)
-        deltaEnthalpy = enthalpyProducts - enthalpyReactans
+        enthalpyReactants = self.sumEnthalpy(self.reactants, "reactants")
+        enthalpyProducts = self.sumEnthalpy(self.products, "products")
+        deltaEnthalpy = enthalpyProducts - enthalpyReactants
         if self.trace:
-            print("deltaEnthalpy = enthalpyProducts - enthalpyReactans")
-            print(deltaEnthalpy, "=",  enthalpyProducts, "-", enthalpyReactans)
+            print(f"deltaEnthalpy = enthalpyProducts - enthalpyReactants = {enthalpyProducts} - {enthalpyReactants}")
+            print(f"deltaEnthalpy = {deltaEnthalpy} kJ/mol")
         return deltaEnthalpy
 
     def deltaEntropy(self):
-        entropyReactans = self.sumEntropy(self.reactants) / 1000.0 #j -> kj
-        entropyProducts = self.sumEntropy(self.products) / 1000.0 #j -> kj
-        deltaEntropy = entropyProducts - entropyReactans
+        entropyReactants = self.sumEntropy(self.reactants, "reactants") / 1000.0  # J -> kJ
+        entropyProducts = self.sumEntropy(self.products, "products") / 1000.0  # J -> kJ
+        deltaEntropy = entropyProducts - entropyReactants
         if self.trace:
-            print("deltaEntropy = entropyProducts - entropyReactans")
-            print(deltaEntropy, "=", entropyProducts, "-",entropyReactans)
+            print(f"deltaEntropy = entropyProducts - entropyReactants = {entropyProducts} - {entropyReactants}")
+            print(f"deltaEntropy = {deltaEntropy} kJ/K·mol")
         return deltaEntropy
 
-    def energyChange(self, K):
+    def energyChange(self, T):
         deltaEnthalpy = self.deltaEnthalpy()
-        deltaEntropy = self.deltaEntropy()    
-        free_energy = deltaEnthalpy - K * deltaEntropy
+        deltaEntropy = self.deltaEntropy()
+        free_energy = deltaEnthalpy - T * deltaEntropy
         if self.trace:
-            print("free_energy = deltaEnthalpy - K * deltaEntropy")
-            print(free_energy, "=", deltaEnthalpy, "-", K, "*", deltaEntropy)
+            print(f"Gibbs free energy (ΔG) = ΔH - T·ΔS = {deltaEnthalpy} kJ/mol - {T} K * {deltaEntropy} kJ/K·mol ")
+            print(f"Gibbs free energy (ΔG) = {free_energy} kJ/mol")
         return free_energy
 
     def isSpontaneous(self, K = 298):
         free_energy = self.energyChange(K)
         return free_energy < 0
 
-    def sumEntropy(self, elements):
-        sum = 0
-        for molecule in self.getStates(elements):
-            if molecule.entropy is None:
-                raise Exception(f"Entropy is None for {molecule}")
-            sum += molecule.entropy
-        return sum
-        
-    def sumEnthalpy(self, elements):
-        sum = 0
-        for molecule in self.getStates(elements):
-            if molecule.enthalpy is None:
-                raise Exception(f"Enthalpy is None for {molecule}")
-            sum += molecule.enthalpy
-        return sum
+    def sumEntropy(self, elements, text):
+        total_entropy = 0
+        for element in elements:
+            formula, state = split_state(element)
+            entropy = self.getMolecule(formula).get_state(state).entropy
+            if entropy is None:
+                raise Exception(f"Entropy is None for {element}")
+            total_entropy += entropy
+            if self.trace:
+                print(f"Entropy {element}: {entropy} J/K", end=", ")
+        if self.trace:
+            print(f"Total entropy for {text}: {total_entropy} J/K")
+        return total_entropy
+
+
+    def sumEnthalpy(self, elements, text):
+        total_enthalpy = 0
+        for element in elements:
+            formula, state = split_state(element)
+            enthalpy = self.getMolecule(formula).get_state(state).enthalpy
+            if enthalpy is None:
+                raise Exception(f"Enthalpy is None for {element}")
+            total_enthalpy += enthalpy
+            if self.trace:
+                print(f"Enthalpy {element}: {enthalpy} J/K", end=", ")
+        if self.trace:
+            print(f"Total enthalpy for {text}: {total_enthalpy} J/K")
+        return total_enthalpy
     
     def getMolecule(self,formula):
         return CachedCml.getMolecule(formula)

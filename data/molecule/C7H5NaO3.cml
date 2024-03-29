@@ -34,14 +34,23 @@
     <bond atomRefs2="a8 a14" order="1"/>
     <bond atomRefs2="a9 a15" order="1"/>
     <bond atomRefs2="a11 a16" order="1"/>
+    <bond atomRefs2="a1 a4" order="0"/>
   </ns0:bondArray>
   <propertyList title="states">
     <propertyList title="Gas">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <scalar units="units:molar_energy">-550.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <scalar units="units:molar_energy">800.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-550.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">800.0</scalar>
       </property>
     </propertyList>
   </propertyList>
