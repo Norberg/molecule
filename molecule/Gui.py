@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+import re
 
 import pyglet
 import pyglet_gui.theme
@@ -26,9 +27,12 @@ from pyglet_gui.scrollable import Scrollable
 from pyglet_gui.buttons import OneTimeButton
 
 from molecule import RenderingOrder
+import re
 
 theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
 NA = "<b>N<sub>A<sub><b>"
+formula_pattern = re.compile(r"([A-Z][a-z]?)(\d*)|(\+|\-)(\d*)?")
+identify_formula_pattern = re.compile(r"([A-Z][a-z]?)(\d+|[+-]\d*)")
 
 def create_folding_description(window, batch, heading, description, chapters=list()):
     """
@@ -92,3 +96,23 @@ class MoleculeButton(OneTimeButton):
         else:
                 path.append('up')
         return path
+
+def formula_to_html(formula):
+    def html_formatter(match):
+        element, count, charge_sign, charge_count = match.groups()
+        if element:
+            return f"{element}{f'<sub>{count}</sub>' if count else ''}"
+        else:
+            charge = charge_count if charge_count else ""
+            return f"<sup>{charge}{charge_sign}</sup>"
+    html_formula = formula_pattern.sub(html_formatter, formula)
+    return html_formula
+
+def find_and_convert_formulas(text):
+
+    def replace_formula(match):
+        #print(f"Match: {match.group()}")
+        return formula_to_html(match.group())
+    
+    converted_text = identify_formula_pattern.sub(replace_formula, text)
+    return converted_text

@@ -96,9 +96,10 @@ class HorizontalHUD:
 
     def create_info_frame(self, formula):
         cml = CachedCml.getMolecule(formula)
-        info_text = pyglet.text.decode_html("<b>%s</b><br> %s" %
+        info_text = pyglet.text.decode_html("<b>%s - %s</b><br> %s" %
                 ( cml.property.get("Name", "Undefined"),
-                  cml.property.get("Description", "No Description Available")
+                Gui.formula_to_html(formula),
+                Gui.find_and_convert_formulas(cml.property.get("Description", "No Description Available"))
                 ))
         info_doc = Document(info_text, height=self.height, width=self.width/2,
                 is_fixed_size = True)
