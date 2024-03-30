@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="1">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" formalCharge="1" id="a1" elementType="O"/>
+    <atom x2="1.97" y2="0.0" id="a2" elementType="H"/>
+    <atom x2="0.515" y2="0.840045" id="a3" elementType="H"/>
+    <atom x2="0.515" y2="-0.840045" id="a4" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous"/>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydronium cation</property>
+    <property title="Description">In chemistry, hydronium (hydroxonium in traditional British English) is the common name for the cation [H&lt;sub&gt;3&lt;/sub&gt;O]+, also written as H&lt;sub&gt;3&lt;/sub&gt;O+, the type of oxonium ion produced by protonation of water. It is often viewed as the positive ion present when an Arrhenius acid is dissolved in water, as Arrhenius acid molecules in solution give up a proton (a positive hydrogen ion, H+) to the surrounding water molecules (H&lt;sub&gt;2&lt;/sub&gt;O). In fact, acids must be surrounded by more than a single water molecule in order to ionize, yielding aqueous H+ and conjugate base. Three main structures for the aqueous proton have garnered experimental support: the Eigen cation, which is a tetrahydrate, H&lt;sub&gt;3&lt;/sub&gt;O+(H&lt;sub&gt;2&lt;/sub&gt;O)&lt;sub&gt;3&lt;/sub&gt; the Zundel cation, which is a symmetric dihydrate, H+(H&lt;sub&gt;2&lt;/sub&gt;O)&lt;sub&gt;2&lt;/sub&gt;, and the Stoyanov cation, an expanded Zundel cation, which is a hexahydrate: H+(H&lt;sub&gt;2&lt;/sub&gt;O)&lt;sub&gt;2&lt;/sub&gt;(H&lt;sub&gt;2&lt;/sub&gt;O)&lt;sub&gt;4&lt;/sub&gt;. Spectroscopic evidence from well-defined IR spectra overwhelmingly supports the Stoyanov cation as the predominant form. For this reason, it has been suggested that wherever possible, the symbol H+(aq) should be used instead of the hydronium ion.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydronium</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

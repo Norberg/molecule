@@ -377,7 +377,27 @@
       <molecule title="CO2"/>
     </reactantList>
     <productList>
-      <molecule title="C7H5NaO3(g)"/>
+      <molecule title="C7H5NaO3(aq)"/>
+    </productList>
+  </reaction>
+  <reaction title="Sodium salicate to Salicylic acid">
+    <reactantList>
+      <molecule title="C7H5NaO3"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="C7H6O3(aq)"/>
+      <molecule title="Na(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Salicylic acid to Asprin">
+    <reactantList>
+      <molecule title="C7H6O3"/>
+      <molecule title="C4H6O3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C9H8O4(s)"/>
+      <molecule title="CH3COOH(l)"/>
     </productList>
   </reaction>
 </reactions>

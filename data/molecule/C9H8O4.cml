@@ -52,7 +52,7 @@
         <scalar units="units:molar_energy">-816.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <scalar units="units:molar_energy">700.0</scalar>
       </property>
     </propertyList>
   </propertyList>
