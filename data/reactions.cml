@@ -400,4 +400,43 @@
       <molecule title="CH3COOH(l)"/>
     </productList>
   </reaction>
+  <reaction title ="Protonation of Methanol with sulphuric acid">
+    <reactantList>
+      <molecule title="CH3OH"/>
+      <molecule title="H2SO4"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3OH2+(l)"/>
+      <molecule title="HSO4-(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="Methyloxidanium ion deprotonated by Isobutylene">
+    <reactantList>
+      <molecule title="CH3OH2+"/>
+      <molecule title="C4H8"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H9+(l)"/>
+      <molecule title="CH3OH(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="C4H9+ reacts with methanol to form C5H13O+">
+    <reactantList>
+      <molecule title="C4H9+"/>
+      <molecule title="CH3OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="C5H13O+(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="C5H13O+ reacts with methanol to form MTBE">
+    <reactantList>
+      <molecule title="C5H13O+"/>
+      <molecule title="CH3OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="C5H12O(g)"/>
+      <molecule title="CH3OH2+(l)"/>
+    </productList>
+  </reaction>
 </reactions>

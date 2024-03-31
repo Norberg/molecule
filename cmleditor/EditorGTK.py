@@ -18,6 +18,8 @@ import sys
 import os
 import gi
 import glob
+from itertools import product
+
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository.GdkPixbuf import Pixbuf
@@ -46,6 +48,7 @@ class EditorGTK:
         self.init_twStates()
         self.init_twReactions()
         self.init_reactions()
+        self.handle_command_arguments()
 
     def init_reactions(self):
         cml = Cml.Reactions()
@@ -225,30 +228,38 @@ class EditorGTK:
         for reaction in self.reactor.reactions:
             if formula not in reaction.reactants and formula not in list_without_state(reaction.products):
                  continue
-            reactants = addState(reaction.reactants)
-            expected_products = reaction.products
-            result = None
-            reactingTemp = self.findReactingTemperatures(reactants, expected_products)
-            if reactingTemp == []:
-                reactingTemp = self.findReactingTemperatures(reactants, expected_products, trace = True)
-            reactants_str = " + ".join(reactants)
-            expected_products_str = " + ".join(expected_products)
-            reactingTemp_str = " , ".join([str(x) for x in reactingTemp])
-            if reactingTemp_str == "":
-                reactingTemp_str = "Never occurs"
-            self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
+            state_permutations = addStatePermutations(reaction.reactants)
+            for reactants in state_permutations:
+                expected_products = reaction.products
+                reactions = self.findReactingTemperatures(reactants, expected_products)
+                if len(reactions) == 0:
+                    reactingTemp_str = "Never occurs"
+                    reactants_str = " + ".join(reactants)
+                    expected_products_str = " + ".join(expected_products)
+                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
+
+                for reaction in reactions.values():
+                    reactants_str = " + ".join(reaction.reactants)
+                    expected_products_str = " + ".join(reaction.products)
+                    reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
+                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
 
     def findReactingTemperatures(self, reactants, expected_products, trace = False):
         if trace:
             print("\nFinding reacting temperatures for:", reactants, expected_products)
         tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
         result = None
-        reactingTemp = []
+        reactions = dict()
         for temp in tempranges:
             result = self.reactor.react(reactants, temp, trace=trace)
             if result is not None and expected_products == result.products:
-                reactingTemp.append(temp)
-        return reactingTemp
+                reaction = ReactionInfo(result)
+                if reactions.get(reaction.key) is None:
+                    reactions[reaction.key] = ReactionInfo(result)
+                reactions[reaction.key].temperatures.append(temp)
+        return reactions
+
+
 
     def setAtomSettings(self):
         self.txtAtomWeight.set_sensitive(True)
@@ -308,6 +319,15 @@ class EditorGTK:
             if iter:
                 model.remove(iter)
 
+    def on_twReactions_key_press_event(self, widget, userdata):
+        #if pressed t/T trace the reaction
+        if Gdk.keyval_name(userdata.keyval) == "t" or Gdk.keyval_name(userdata.keyval) == "T":
+            model, iter = self.widget("twReactions").get_selection().get_selected()
+            if iter:
+                reactants = model[iter][0].split(" + ")
+                products = model[iter][1].split(" + ")
+                self.findReactingTemperatures(reactants, products, trace = True)
+
     def on_btnNewMolecule_clicked(self, widget):
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
         print(answers)
@@ -365,23 +385,43 @@ class EditorGTK:
         MsgBox("Error:"+ str(type) +"\n"+ str(value))
         sys.__excepthook__(type, value, traceback)
 
+    def handle_command_arguments(self):
+        """Handle command line arguments with parseargs"""
+        import argparse
+        parser = argparse.ArgumentParser(description="Molecule editor")
+        parser.add_argument("-m", "--molecule", help="Open a molecule file")
+        args = parser.parse_args()
+        if args.molecule:
+            self.update_folder_list()
+            self.widget("fcbOpen").set_filename("data/molecule/"+args.molecule + ".cml")
+            self.openFile("data/molecule/"+args.molecule + ".cml")
 
-def addState(stateless):
-    default_order = ["Aqueous","Gas", "Liquid", "Solid"]
-    statefull = list()
-    for s in stateless:
-        m = CachedCml.getMolecule(s)
-        state = None
-        for k in default_order:
-            if k in m.states and m.states[k].ions is not None:
-                continue
-            if k in m.states:
-                state = m.states[k].short
-                break
-        if state is None:
-            print(f"No state found for {s}")
-        statefull.append(s+"(%s)"%state)
-    return statefull
+def addStatePermutations(stateless):
+    states_per_molecule = []
+    for formula in stateless:
+        m = CachedCml.getMolecule(formula)
+        available_states = []
+        for state in ["Aqueous", "Gas", "Liquid", "Solid"]:
+            if state in m.states and m.states[state].ions is None:
+                available_states.append(m.states[state].short)
+        if not available_states:
+            print(f"No state found for {formula}")
+            return []
+        states_per_molecule.append([f"{formula}({state})" for state in available_states])
+
+    all_permutations = product(*states_per_molecule)
+
+    unique_permutations_set = set()
+    unique_permutations = []
+
+    for permutation in all_permutations:
+        sorted_permutation = sorted(permutation)
+        if (str(sorted_permutation) in unique_permutations_set):
+            continue
+        unique_permutations_set.add(str(sorted_permutation))
+        unique_permutations.append(sorted_permutation)
+
+    return unique_permutations
 
 def get_active_text(cmb):
     tree_iter = cmb.get_active_iter()
@@ -453,3 +493,14 @@ def InputBox(title, questions):
         answers.append(entryBox.get_text())
     dialog.destroy()
     return answers
+
+class ReactionInfo:
+    def __init__(self, reaction):
+        self.reaction = reaction
+        self.temperatures = list()
+        self.reactants = reaction.reactants
+        self.products = reaction.products
+
+    @property
+    def key(self):
+        return str(self.reaction.reactants)+ "->" + str(self.reaction.products)

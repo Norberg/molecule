@@ -52,10 +52,12 @@ class TestLevels(unittest.TestCase):
 
     def testAllLevels(self):
         levels = Levels("data/levels", window=WindowMock())
+        space, batch = createSpaceAndBatchMock()
         for level in levels.level_iter():
             self.assertIsNotNone(level.cml.objective)
             self.assertEqual(level.victory(), False)
-
+            Universe.create_elements(level.space, level.cml.inventory, level.batch, None)
+    
     def testDestroyElements(self):
         levels = Levels("data/levels", window=WindowMock())
         l = levels.next_level()
@@ -64,7 +66,6 @@ class TestLevels(unittest.TestCase):
                                                    ["O2(g)", "O2(g)", "CH4(g)"],
                                                    batch, None))
         #self.assertEqual(l.elements, [])
-
 
     def testGetCollidingMolecules(self):
         level1 = getLevel1()

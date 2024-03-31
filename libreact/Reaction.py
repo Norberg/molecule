@@ -38,7 +38,7 @@ class Reaction:
 
     def __str__(self):
         return "Reaction(%s -> %s)" % (str(self.reactants), str(self.products))
-    
+
     def addStateToReactants(self, reactants):
         """ Take a list of reactans with state to populate the reaction with the same info"""
         for reactant in reactants:
@@ -97,7 +97,10 @@ class Reaction:
         total_enthalpy = 0
         for element in elements:
             formula, state = split_state(element)
-            enthalpy = self.getMolecule(formula).get_state(state).enthalpy
+            cml_state = self.getMolecule(formula).get_state(state)
+            if cml_state is None:
+                raise Exception(f"State {state} does not exist for {element}")
+            enthalpy = cml_state.enthalpy
             if enthalpy is None:
                 raise Exception(f"Enthalpy is None for {element}")
             total_enthalpy += enthalpy
