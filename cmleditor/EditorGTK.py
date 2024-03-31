@@ -328,6 +328,40 @@ class EditorGTK:
                 products = model[iter][1].split(" + ")
                 self.findReactingTemperatures(reactants, products, trace = True)
 
+    def on_twReactions_row_activated(self, widget, path, column):
+        """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
+        if column.get_title() == "Temperature (K)":
+            return
+        model = widget.get_model()
+        iter = model.get_iter(path)    
+        columns = widget.get_columns()
+        column_index = columns.index(column)
+        molecules = model.get_value(iter, column_index).split(" + ")
+        molecules = list_without_state(molecules)
+        if len(molecules) == 1:
+            self.widget("fcbOpen").set_filename("data/molecule/"+molecules[0]+".cml")
+            self.openFile("data/molecule/"+molecules[0]+".cml")
+        else:
+            dialog = Gtk.Dialog(title="Select molecule to open", parent=self.widget("winMain"), flags=0)
+            dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
+            dialog.set_default_response(Gtk.ResponseType.OK)
+
+            combo = Gtk.ComboBoxText()
+            for mol in molecules:
+                combo.append_text(mol)
+            combo.set_active(0)
+            
+            box = dialog.get_content_area()
+            box.add(combo)
+            dialog.show_all()
+
+            response = dialog.run()
+            if response == Gtk.ResponseType.OK:
+                selected_molecule = combo.get_active_text()
+                self.widget("fcbOpen").set_filename(f"data/molecule/{selected_molecule}.cml")
+                self.openFile(f"data/molecule/{selected_molecule}.cml")
+            dialog.destroy()
+
     def on_btnNewMolecule_clicked(self, widget):
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
         print(answers)
