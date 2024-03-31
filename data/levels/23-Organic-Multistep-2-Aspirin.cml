@@ -15,8 +15,8 @@
     <effect title="HotplateBeaker" x2="680" y2="650" value = "1370"/>
   </effectList>
   <victoryCondition>
-    <molecule title="C8H9NO2"/>
+    <molecule title="C9H8O4"/>
   </victoryCondition>
-  <objective text="Create Aspirin C8H9NO2 by performing an addition and an elemination reaction"/>
-  <hint text="C6H5Br + KOH -> "/>
+  <objective text="Create Aspirin C9H8O4 by performing an addition and an elemination reaction"/>
+  <hint text="Noop"/>
 </level>

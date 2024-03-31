@@ -17,5 +17,5 @@
     <molecule title="C5H12O"/>
   </victoryCondition>
   <objective text="Create MTBE C5H12O"/>
-  <hint text="C6H5Br + KOH -> "/>
+  <hint text="Noop"/>
 </level>

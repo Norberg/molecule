@@ -23,6 +23,6 @@
   <victoryCondition>
     <molecule title="C8H9NO2"/>
   </victoryCondition>
-  <objective text="Create Paracetamol C8H9NO2 by performing an addition and an elemination reaction"/>
-  <hint text="C6H5Br + KOH -> "/>
+  <objective text="Create Paracetamol C8H9NO2 by performing a series of organic reactions"/>
+  <hint text="Noop"/>
 </level>
