@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-0.5" id="a1" elementType="O"/>
+    <atom x2="-1.732051" y2="0.0" id="a2" elementType="C"/>
+    <atom x2="-2.732051" y2="0.0" id="a3" elementType="C"/>
+    <atom x2="-2.232051" y2="-0.866025" id="a4" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a5" elementType="C"/>
+    <atom x2="0.0" y2="-0.0" id="a6" elementType="C"/>
+    <atom x2="-3.267051" y2="0.926647" id="a7" elementType="H"/>
+    <atom x2="-3.267051" y2="-0.926647" id="a8" elementType="H"/>
+    <atom x2="-3.802051" y2="0.0" id="a9" elementType="H"/>
+    <atom x2="-3.302051" y2="-0.866025" id="a10" elementType="H"/>
+    <atom x2="-1.697051" y2="-1.792673" id="a11" elementType="H"/>
+    <atom x2="-2.767051" y2="-1.792673" id="a12" elementType="H"/>
+    <atom x2="-0.805404" y2="1.535" id="a13" elementType="H"/>
+    <atom x2="-2.658698" y2="1.535" id="a14" elementType="H"/>
+    <atom x2="-1.732051" y2="2.07" id="a15" elementType="H"/>
+    <atom x2="0.926647" y2="-0.535" id="a16" elementType="H"/>
+    <atom x2="0.0" y2="1.07" id="a17" elementType="H"/>
+    <atom x2="0.926647" y2="0.535" id="a18" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a3 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+    <bond atomRefs2="a4 a10" order="1"/>
+    <bond atomRefs2="a4 a11" order="1"/>
+    <bond atomRefs2="a4 a12" order="1"/>
+    <bond atomRefs2="a5 a13" order="1"/>
+    <bond atomRefs2="a5 a14" order="1"/>
+    <bond atomRefs2="a5 a15" order="1"/>
+    <bond atomRefs2="a6 a16" order="1"/>
+    <bond atomRefs2="a6 a17" order="1"/>
+    <bond atomRefs2="a6 a18" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-293.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">353.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Methyl tert-butyl ether</property>
+    <property title="Description">Methyl tert-butyl ether (MTBE), also known as tert-butyl methyl ether, is an organic compound with a structural formula (CH3)&lt;sub&gt;3&lt;/sub&gt;COCH3. MTBE is a volatile, flammable, and colorless liquid that is sparingly soluble in water. Primarily used as a fuel additive, MTBE is blended into gasoline to increase its octane rating and knock resistance, and reduce unwanted emissions.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methyl_tert-butyl_ether</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

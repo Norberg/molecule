@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="1">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" formalCharge="1" id="a1" elementType="C"/>
+    <atom x2="2.07" y2="0.0" id="a2" elementType="H"/>
+    <atom x2="0.465" y2="0.926647" id="a3" elementType="H"/>
+    <atom x2="0.465" y2="-0.926647" id="a4" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-80.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">194.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Methenium</property>
+    <property title="Description">In organic chemistry, methenium (also called methylium, carbenium, methyl cation, or protonated methylene) is a cation with the formula CH+3. It can be viewed as a methylene radical (:CH2) with an added proton (H+), or as a methyl radical (&#x2022;CH3) with one electron removed. It is a carbocation and an enium ion, making it the simplest of the carbenium ions.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methenium</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

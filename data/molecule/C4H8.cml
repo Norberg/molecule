@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="C"/>
+    <atom x2="1.732051" y2="-1.07" id="a5" elementType="H"/>
+    <atom x2="2.658698" y2="0.535" id="a6" elementType="H"/>
+    <atom x2="2.658698" y2="-0.535" id="a7" elementType="H"/>
+    <atom x2="1.759764" y2="2.016" id="a8" elementType="H"/>
+    <atom x2="-0.027713" y2="2.016" id="a9" elementType="H"/>
+    <atom x2="-0.926647" y2="0.535" id="a10" elementType="H"/>
+    <atom x2="-0.0" y2="-1.07" id="a11" elementType="H"/>
+    <atom x2="-0.926647" y2="-0.535" id="a12" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+    <bond atomRefs2="a4 a10" order="1"/>
+    <bond atomRefs2="a4 a11" order="1"/>
+    <bond atomRefs2="a4 a12" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-17.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">294.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Isobutylene</property>
+    <property title="Description">Isobutylene (or 2-methylpropene) is a hydrocarbon with the chemical formula (CH3)2C=CH2. It is a four-carbon branched alkene (olefin), one of the four isomers of butylene.  It is a colorless flammable gas, and is of considerable industrial value.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Isobutylene</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
