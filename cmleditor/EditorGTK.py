@@ -57,8 +57,9 @@ class EditorGTK:
 
     def init_twReactions(self):
         twReactions = self.widget("twReactions")
-        #set what data type twStates twReactions should contain
-        self.reactionStates = Gtk.ListStore(str, str, str)
+        #set what data type twReactions should contain
+        #4th column is shown as tooltip
+        self.reactionStates = Gtk.ListStore(str, str, str, str)
         twReactions.set_model(self.reactionStates)
         #create columns
         edit0 = Gtk.CellRendererText()
@@ -166,14 +167,15 @@ class EditorGTK:
 
     def on_fcbOpen_file_set(self, widget):
         new_folder = widget.get_current_folder()
-        if self.folder != new_folder:
-            self.folder = new_folder
-            self.update_folder_list()
-
-        self.openFile(widget.get_filename())
+        self.folder = os.path.relpath(new_folder)
+        self.update_folder_list()
+        filename = os.path.relpath(widget.get_filename())
+        self.openFile(filename)
 
     def openFile(self, filename):
         self.filename = filename
+        if filename not in self.folder_list:
+            print(f"File {filename} not in folder list of lenght {len(self.folder_list)} with content {self.folder_list}")
         self.current_pos = self.folder_list.index(filename)
         molecule = Cml.Molecule()
         self.molecule = molecule
@@ -236,13 +238,13 @@ class EditorGTK:
                     reactingTemp_str = "Never occurs"
                     reactants_str = " + ".join(reactants)
                     expected_products_str = " + ".join(expected_products)
-                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
+                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), None])
 
                 for reaction in reactions.values():
                     reactants_str = " + ".join(reaction.reactants)
                     expected_products_str = " + ".join(reaction.products)
                     reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
-                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str)])
+                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
 
     def findReactingTemperatures(self, reactants, expected_products, trace = False):
         if trace:
@@ -361,6 +363,20 @@ class EditorGTK:
                 self.widget("fcbOpen").set_filename(f"data/molecule/{selected_molecule}.cml")
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
+
+    def on_twReactions_query_tooltip(self, widget, x, y, keyboard_mode, tooltip):
+        x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)
+        path_info = widget.get_path_at_pos(x_bin_window, y_bin_window)
+
+        if path_info is not None:
+            path, col, cell_x, cell_y = path_info
+            model = widget.get_model()
+            iter = model.get_iter(path)
+            tooltip_text = model.get_value(iter, 3)
+            if tooltip_text is not None:
+                tooltip.set_text(tooltip_text)
+                return True
+        return False
 
     def on_btnNewMolecule_clicked(self, widget):
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
@@ -534,6 +550,7 @@ class ReactionInfo:
         self.temperatures = list()
         self.reactants = reaction.reactants
         self.products = reaction.products
+        self.title = reaction.cml.title
 
     @property
     def key(self):

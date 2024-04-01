@@ -441,7 +441,9 @@
                   <object class="GtkTreeView" id="twReactions">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="has-tooltip">True</property>
                     <signal name="key-press-event" handler="on_twReactions_key_press_event" swapped="no"/>
+                    <signal name="query-tooltip" handler="on_twReactions_query_tooltip" swapped="no"/>
                     <signal name="row-activated" handler="on_twReactions_row_activated" swapped="no"/>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>

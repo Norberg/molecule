@@ -77,9 +77,10 @@ class State:
 
 
 class Reaction:
-    def __init__(self,reactants = None,products = None):
+    def __init__(self,reactants = None,products = None, title = None):
         self.reactants = reactants
         self.products = products
+        self.title = title
 
 class Effect:
     def __init__(self, title = None, value = None, x2 = None, y2 = None, molecules = []):
@@ -102,6 +103,7 @@ class Cml:
         return element
     def parseReaction(self, reactionTag):
         reaction = Reaction()
+        reaction.title = reactionTag.get("title")
         for part in reactionTag:
             if part.tag.endswith("productList"):
                 reaction.products = self.parseMoleculeList(part)
@@ -118,6 +120,8 @@ class Cml:
         if reaction is None:
             return
         tagReaction = etree.SubElement(parrentTag, "reaction")
+        if reaction.title != None:
+            tagReaction.set("title", reaction.title)
         if reaction.products != None:
             tagProducts = etree.SubElement(tagReaction, "productList")
             self.writeReactionMolecules(reaction.products, tagProducts)
