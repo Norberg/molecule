@@ -1,31 +1,3 @@
-<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
-  <ns0:atomArray>
-    <atom x2="-0.0" y2="1.0" id="a1" elementType="C"/>
-    <atom x2="-0.866025" y2="1.5" formalCharge="-1" id="a3" elementType="O"/>
-    <atom x2="0.866025" y2="1.5" id="a2" elementType="O"/>
-    <atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a4" elementType="O"/>
-  </ns0:atomArray>
-  <ns0:bondArray>
-    <bond atomRefs2="a1 a2" order="2"/>
-    <bond atomRefs2="a1 a3" order="1"/>
-    <bond atomRefs2="a1 a4" order="1"/>
-  </ns0:bondArray>
-  <propertyList title="states">
-    <propertyList title="Aqueous">
-      <property title="enthalpy">
-        <scalar units="units:molar_energy">-677.0</scalar>
-      </property>
-      <property title="entropy">
-        <scalar units="units:molar_energy">-57.0</scalar>
-      </property>
-    </propertyList>
-  </propertyList>
-  <propertyList title="property">
-    <property title="Name">Carbonate</property>
-    <property title="Description">A carbonate is a salt of carbonic acid, H2CO3, characterized by the presence of the carbonate ion, a polyatomic ion with the formula CO2&#x2212;3. The word "carbonate" may also refer to a carbonate ester, an organic compound containing the carbonate group O=C(&#x2212;O&#x2212;)2.
-The term is also used as a verb, to describe carbonation: the process of raising the concentrations of carbonate and bicarbonate ions in water to produce carbonated water and other carbonated beverages &#x2013; either by the addition of carbon dioxide gas under pressure or by dissolving carbonate or bicarbonate salts into the water. </property>
-    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Carbonate</property>
-    <property title="DescriptionLicense">CC BY-SA 3.0</property>
-  </propertyList>
-</ns0:molecule>
+  <ns0:atomArray><atom x2="-0.0" y2="1.0" id="a1" elementType="C" /><atom x2="-0.866025" y2="1.5" formalCharge="-1" id="a3" elementType="O" /><atom x2="0.866025" y2="1.5" id="a2" elementType="O" /><atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a4" elementType="O" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="2" /><bond atomRefs2="a1 a3" order="1" /><bond atomRefs2="a1 a4" order="1" /></ns0:bondArray><propertyList title="states"><propertyList title="Aqueous"><property title="enthalpy"><scalar units="units:molar_energy">-677.0</scalar></property><property title="entropy"><scalar units="units:molar_energy">-57.0</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Carbonate</property><property title="Description">A carbonate is a salt of carbonic acid, H2CO3, characterized by the presence of the carbonate ion, a polyatomic ion with the formula CO2&#8722;3. The word "carbonate" may also refer to a carbonate ester, an organic compound containing the carbonate group O=C(&#8722;O&#8722;)2.
+The term is also used as a verb, to describe carbonation: the process of raising the concentrations of carbonate and bicarbonate ions in water to produce carbonated water and other carbonated beverages &#8211; either by the addition of carbon dioxide gas under pressure or by dissolving carbonate or bicarbonate salts into the water. </property><property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Carbonate</property><property title="DescriptionLicense">CC BY-SA 3.0</property></propertyList></ns0:molecule>

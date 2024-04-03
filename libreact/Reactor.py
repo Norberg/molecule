@@ -29,6 +29,11 @@ class Reactor:
  
     def find_all_reactions(self, reactants):
         reactants = Reaction.list_without_state(reactants)
+        if len(reactants) == 1:
+            # Add a None to the end of the list to make sure that the next loop
+            # will find all reactions that only have one reactant
+            reactants.append(None)
+
         for reactant in reactants[:-1]:
             try:
                 rs = self.reaction_map[reactant]
@@ -77,6 +82,10 @@ class Reactor:
                       "Energy:", energy)
         
         if Reaction.isSpontaneous(free_energy):
+            if trace:
+                print(f"\nfree_energy is {free_energy} for reaction at {K}K !")
+                reaction.trace = True
+                reaction.isSpontaneous(K)
             return reaction
         elif trace:
             print(f"\nfree_energy is not enough for reaction at {K}K !")

@@ -30,8 +30,14 @@ class Universe:
         self.reactor = Reactor(cml.reactions)
 
     def react(self, reactants, effects):
-        if len(reactants) < 2:
+        if len(reactants) == 0:
             return
+        elif len(reactants) == 1 and Config.current.DEBUG:
+            # Check if decomposition reaction, might be a bit innificient
+            # and also relies on self collision within the molecule
+            # Self colltions should optimaly be handled by the physics engine instead
+            print(f"Single reactant: {reactants}")
+
         temp = 298
         effect_names = list()
         for effect in effects:

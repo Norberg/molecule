@@ -60,9 +60,10 @@ class HorizontalHUD:
         self.level = level
         self.height = height
         self.width = width
-        progress_text = "Progress: ..."
+        progress_text = "<Progress:"
         self.progress_doc = Document(progress_text, width = width/2)
-        objective_doc = Document(level.objective, width = width/2)
+        objective_html = pyglet.text.decode_html(Gui.find_and_convert_formulas(level.objective))
+        objective_doc = Document(objective_html, width = width/2)
         left_frame = Frame(VerticalContainer([objective_doc, None,
             self.progress_doc]), is_expandable = True)
         self.left_container = VerticalContainer([left_frame])

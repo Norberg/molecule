@@ -439,4 +439,90 @@
       <molecule title="CH3OH2+(l)"/>
     </productList>
   </reaction>
+  <reaction title="Water and carbon dioxide reacts to form Carbonic acid">
+    <reactantList>
+      <molecule title="H2O"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2CO3(aq)"/>
+    </productList>
+  </reaction>
+  <reaction title="Preperation of Ammonium bicarbonate with Carbonic acid and amonia">
+  <reactantList>
+    <molecule title="H2CO3"/>
+    <molecule title="NH4OH"/>
+  </reactantList>
+  <productList>
+    <molecule title="NH4HCO3(aq)"/>
+    <molecule title="H2O(l)"/>
+  </productList>
+  </reaction>
+  <reaction title="Ammonium bicarbonate reacts with Natrimclorid to form Ammonium chloride and Sodium bicarbonate">
+    <reactantList>
+      <molecule title="NH4HCO3"/>
+      <molecule title="NaCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4Cl(aq)"/>
+      <nolecule title="NaHCO3(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Perperation of Sodium carbonate by drying and heating Sodium bicarbonate">
+    <reactantList>
+      <molecule title="NaHCO3"/>
+      <molecule title="NaHCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Preperation of Calcium oxide by heating Calcium carbonate">
+    <reactantList>
+      <molecule title="CaCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaO(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Preperation of slacked lime by adding water to Calcium oxide">
+    <reactantList>
+      <molecule title="CaO"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaO2H2(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Decomposition of Ammonium hydroxide to Ammonia and water by heating">
+    <reactantList>
+      <molecule title="NH4OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="Preperation of Ammonium hydroxide by adding Ammonia to water">
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4OH(aq)"/>
+    </productList>
+  </reaction>
+  <reaction title="Drying of solved Sodium carbonate to form Sodium carbonate">
+    <reactantList>
+      <molecule title="Na+"/>
+      <molecule title="Na+"/>
+      <molecule title="CO3-2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+    </productList>
+  </reaction>
 </reactions>

@@ -127,19 +127,19 @@ class TestReact(unittest.TestCase):
 
     def testSulfurDichloride(self):
         reactor = self.setupRealReactor()
-        reaction = reactor.react(["S2Cl2(g)", "Cl2(g)"], trace=True)
+        reaction = reactor.react(["S2Cl2(g)", "Cl2(g)"], trace=False)
         self.assertEqual(reaction.products, ["SCl2(g)", "SCl2(g)"])
         self.assertEqual(reaction.reactants, ["S2Cl2(g)", "Cl2(g)"])
 
     def testSulfurMustard(self):
         reactor = self.setupRealReactor()
-        reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], trace=True)
+        reaction = reactor.react(["SCl2(g)", "C2H4(g)", "C2H4(g)"], trace=False)
         self.assertEqual(reaction.products, ["C4H8Cl2S(g)"])
         self.assertEqual(reaction.reactants, ["SCl2(g)", "C2H4(g)", "C2H4(g)"])
 
     def testAmmonia(self):
         reactor = self.setupRealReactor()
-        reaction = reactor.react(["NH3(g)", "H2O(g)"], trace=True, K=250)
+        reaction = reactor.react(["NH3(g)", "H2O(g)"], trace=False, K=50)
         self.assertEqual(reaction.products, ["NH4+(aq)", "OH-(aq)"])
         self.assertEqual(reaction.reactants, ["NH3(g)", "H2O(g)"])
 

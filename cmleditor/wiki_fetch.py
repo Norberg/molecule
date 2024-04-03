@@ -47,13 +47,21 @@ def extract_value_with_unit(soup, title):
             return ChemicalInfo.clean_text(value_td.text.strip())
     return None
 
+def extract_summary(soup):
+    summary = soup.find('p').text.strip() if soup.find('p') else None
+    if not summary or len(summary) < 20:
+        additional_p = soup.find('p').find_next_sibling('p')
+        if additional_p:
+            summary = additional_p.text.strip()
+    return summary
+
 def extract_wikipedia_info(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     
     info = ChemicalInfo(
         name = soup.find('h1').text.strip() if soup.find('h1') else None,
-        summary = soup.find('p').text.strip() if soup.find('p') else None,
+        summary = extract_summary(soup),
         smiles = extract_smiles(soup),
         chemical_formula = extract_value_with_unit(soup, "Chemical formula"),
         std_molar_entropy = extract_value_with_unit(soup, "Standard molar entropy"),

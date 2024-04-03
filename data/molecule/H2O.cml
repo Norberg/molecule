@@ -26,14 +26,6 @@
         <scalar units="units:molar_energy">189.0</scalar>
       </property>
     </propertyList>
-    <propertyList title="Solid">
-      <property title="enthalpy">
-        <scalar units="units:molar_energy">-242.0</scalar>
-      </property>
-      <property title="entropy">
-        <scalar units="units:molar_energy">189.0</scalar>
-      </property>
-    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Water</property>

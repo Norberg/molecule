@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.232051" y2="-0.5" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="2.232051" y2="-2.0" id="a2" elementType="O"/>
+    <atom x2="1.366025" y2="-1.5" id="a3" elementType="C"/>
+    <atom x2="1.366025" y2="-0.5" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="0.5" y2="-2.0" id="a5" elementType="O"/>
+    <atom x2="2.232051" y2="-2.937" id="a6" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="2"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a1 a4" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-951.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">102.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium bicarbonate</property>
+    <property title="Description">Sodium bicarbonate (IUPAC name: sodium hydrogencarbonate), commonly known as baking soda or bicarbonate of soda, is a chemical compound with the formula NaHCO3. It is a salt composed of a sodium cation (Na+) and a bicarbonate anion (HCO3&#x2212;). Sodium bicarbonate is a white solid that is crystalline, but often appears as a fine powder. It has a slightly salty, alkaline taste resembling that of washing soda (sodium carbonate). The natural mineral form is nahcolite. It is a component of the mineral natron and is found dissolved in many mineral springs.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bicarbonate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

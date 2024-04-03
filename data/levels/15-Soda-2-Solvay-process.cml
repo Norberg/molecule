@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<level zoom="0.8">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="NaCl(s)"/>
+    <molecule title="NaCl(s)"/>
+    <molecule title="NH3(g)"/>
+    <molecule title="NH3(g)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="CaCO3(s)"/>
+    <molecule title="CaCO3(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="600" y2="480"/>
+    <effect title="Fire" value="2000" x2="1200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Na2CO3"/>
+    <molecule title="CaO"/>
+    <molecule title="CaO"/>
+  </victoryCondition>
+  <objective text="Create Sodium Carbonate Na2CO3 and Quicklime CaO in the Solvay process &lt;br&gt; Take care to not disolve the created Sodium Carbonate in water again."/>
+  <hint text="Noop"/>
+</level>
