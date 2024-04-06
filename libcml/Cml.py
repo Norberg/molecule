@@ -155,7 +155,7 @@ class Level(Cml):
         self.victory_condition = list()
         self.hint = None
         self.zoom = 1.0
-        self.inventory = ["O(g)", "H2(g)", "H2O(l)"]
+        self.inventory = []
 
     def parse(self, filename):
         self.tree = etree.parse(filename)

@@ -10,7 +10,9 @@
     <molecule title="NaCl(s)"/>
     <molecule title="SO3(g)"/>
   </moleculeList>
-  <effectList/>
+  <effectList>
+    <effect title="Fire" value="900" x2="200" y2="550"/>
+  </effectList>
   <victoryCondition>
     <molecule title="Na2SO4"/>
     <molecule title="HCl"/>
