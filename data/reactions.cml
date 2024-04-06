@@ -101,7 +101,7 @@
       <molecule title="H2O(g)"/>
     </productList>
   </reaction>
-  <reaction>
+  <reaction title="Sulfur trioxide reacts with water to form sulfuric acid">
     <reactantList>
       <molecule title="SO3"/>
       <molecule title="H2O"/>
@@ -578,6 +578,39 @@
     <productList>
       <molecule title="Na2CO3(s)"/>
       <molecule title="CaS(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Sulfur dioxide to sulpfur trioxide with Vandium trioxide catalyst">
+    <reactantList>
+      <molecule title="SO2"/>
+      <molecule title="V2O5"/>
+    </reactantList>
+    <productList>
+      <molecule title="SO3(g)"/>
+      <molecule title="VO2(s)"/>
+      <molecule title="VO2(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Vandium dioxide reacts with oxygen to form Vandium trioxide">
+    <reactantList>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="V2O5(s)"/>
+      <molecule title="V2O5(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Burning sulfur to form sulfur dioxide">
+    <reactantList>
+      <molecule title="S"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="SO2(g)"/>
     </productList>
   </reaction>
 </reactions>

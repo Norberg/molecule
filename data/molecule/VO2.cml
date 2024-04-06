@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" spinMultiplicity="2">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="V"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-500.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">300.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Vanadium(IV) oxide</property>
+    <property title="Description">Vanadium(IV) oxide or vanadium dioxide is an inorganic compound with the formula VO2. It is a dark blue solid. Vanadium(IV) dioxide is amphoteric, dissolving in non-oxidising acids to give the blue vanadyl ion, [VO]2+ and in alkali to give the brown [V4O9]2&#x2212; ion, or at high pH [VO4]4&#x2212;. VO2 has a phase transition very close to room temperature (~68&#xA0;&#xB0;C (341&#xA0;K)). Electrical resistivity, opacity, etc, can change up several orders. Owing to these properties, it has been used in surface coating, sensors, and imaging. Potential applications include use in memory devices, phase-change switches, passive radiative cooling applications, such as smart windows and roofs, that cool or warm depending on temperature, aerospace communication systems and neuromorphic computing.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Vanadium(IV)_oxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
