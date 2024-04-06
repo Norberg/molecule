@@ -458,7 +458,7 @@
     <molecule title="H2O(l)"/>
   </productList>
   </reaction>
-  <reaction title="Ammonium bicarbonate reacts with Natrimclorid to form Ammonium chloride and Sodium bicarbonate">
+  <reaction title="Ammonium bicarbonate reacts with sodium chloride to form Ammonium chloride and Sodium bicarbonate">
     <reactantList>
       <molecule title="NH4HCO3"/>
       <molecule title="NaCl"/>
@@ -523,6 +523,61 @@
     </reactantList>
     <productList>
       <molecule title="Na2CO3(s)"/>
+    </productList>
+  </reaction>
+  <reaction title="Regenerate Ammonia from Ammonium chloride with calcium oxide">
+    <reactantList>
+      <molecule title="NH4Cl"/>
+      <molecule title="NH4Cl"/>
+      <molecule title="CaO"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="NH3(g)"/>
+      <molecule title="CaCl2(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction title="1st step of Mannheim process to create sodium bisulfate from sodium sulfate and sulfuric acid">
+    <reactantList>
+      <molecule title="NaCl"/>
+      <molecule title="H2SO4"/>
+    </reactantList>
+    <productList>
+      <molecule title="NaHSO4(s)"/>
+      <molecule title="HCl(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="2nd step of Mannheim process to create sodium sulfate from sodium bisulfate and sodium chloride">
+    <reactantList>
+      <molecule title="NaHSO4"/>
+      <molecule title="NaCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2SO4(s)"/>
+      <molecule title="HCl(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Reduce Sodium sulfate to Sodium sulfide with Carbon">
+    <reactantList>
+      <molecule title="Na2SO4"/>
+      <molecule title="C"/>
+      <molecule title="C"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2S(s)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Produce sodium carbonate and calcium sulfide from sodium sulfide and calcium carbonate">
+    <reactantList>
+      <molecule title="Na2S"/>
+      <molecule title="CaCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+      <molecule title="CaS(s)"/>
     </productList>
   </reaction>
 </reactions>

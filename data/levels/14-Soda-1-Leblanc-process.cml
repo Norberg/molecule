@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<level zoom="0.8">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="NaCl(s)"/>
+    <molecule title="NaCl(s)"/>
+    <molecule title="H2SO4(l)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="CaCO3(s)"/>
+    <molecule title="CaCO3(s)"/>
+
+  </inventoryList>
+  <effectList>
+    <effect title="Fire" value="2000" x2="200" y2="300"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Na2CO3"/>
+  </victoryCondition>
+  <objective text="Create Sodium Carbonate Na2CO3 in the Leblanc process &lt;br&gt; By first creating Sodium sulfate Na2SO4 with the Mannheim process &lt;br&gt; Take care to not heat up the CaCO3 since it will break down."/>
+  <hint text="Noop"/>
+</level>

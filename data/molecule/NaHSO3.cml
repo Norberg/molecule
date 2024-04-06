@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Na" formalCharge="1" id="a1" x2="-0.410096" y2="-0.536656"/>
-    <atom elementType="S" id="a3" x2="1.366025" y2="-1.5"/>
-    <atom elementType="O" formalCharge="-1" id="a2" x2="2.232051" y2="-2.0"/>
-    <atom elementType="O" id="a5" x2="0.5" y2="-2.0"/>
-    <atom elementType="O" id="a4" x2="1.366025" y2="-0.5"/>
-    <atom elementType="H" id="a6" x2="-0.340045" y2="-1.515"/>
+    <atom x2="-0.410096" y2="-0.536656" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="1.366025" y2="-1.5" id="a3" elementType="S"/>
+    <atom x2="2.232051" y2="-2.0" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="0.5" y2="-2.0" id="a5" elementType="O"/>
+    <atom x2="1.366025" y2="-0.5" id="a4" elementType="O"/>
+    <atom x2="-0.340045" y2="-1.515" id="a6" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a2 a3" order="1"/>
@@ -31,5 +31,8 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sodium bisulfite</property>
+    <property title="Description">Sodium bisulfite (or sodium bisulphite, sodium hydrogen sulfite) is a chemical mixture with the approximate chemical formula NaHSO3. Sodium bisulfite in fact is not a real compound, but a mixture of salts that dissolve in water to give solutions composed of sodium and bisulfite ions. It appears in form of white or yellowish-white crystals with an odor of sulfur dioxide. Regardless of its ill-defined nature, sodium bisulfite is used in many different industries such as a food additive with E number E222 in the food industry, a reducing agent in the cosmetic industry, and a decomposer of residual hypochlorite used in the bleaching industry.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bisulfite</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

@@ -18,6 +18,6 @@
     <molecule title="H2O"/>
     <molecule title="H2O"/>
   </victoryCondition>
-  <objective text="Create a CO and 3 H20 molecules"/>
+  <objective text="Create a CO and 3 H2O molecules"/>
   <hint text="unknown"/>
 </level>

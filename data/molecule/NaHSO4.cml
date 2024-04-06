@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.5" y2="-0.5" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="1.5" y2="-0.5" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="1.5" y2="-1.5" id="a3" elementType="S"/>
+    <atom x2="2.5" y2="-1.5" id="a4" elementType="O"/>
+    <atom x2="1.5" y2="-2.5" id="a5" elementType="O"/>
+    <atom x2="0.5" y2="-1.5" id="a6" elementType="O"/>
+    <atom x2="0.015" y2="-0.659955" id="a7" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a3 a5" order="2"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a1 a2" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1100.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">200.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium bisulfate</property>
+    <property title="Description">Sodium bisulfate, also known as sodium hydrogen sulfate,[a] is the sodium salt of the bisulfate anion, with the molecular formula NaHSO4. Sodium bisulfate is an acid salt formed by partial neutralization of sulfuric acid by an equivalent of sodium base, typically in the form of either sodium hydroxide (lye) or sodium chloride (table salt). It is a dry granular product that can be safely shipped and stored. The anhydrous form is hygroscopic. Solutions of sodium bisulfate are acidic, with a 1M solution having a pH of slightly below 1.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bisulfate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

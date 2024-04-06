@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a5" x2="0.0" y2="0.0"/>
-    <atom elementType="H" id="a3" x2="2.0" y2="0.0"/>
-    <atom elementType="H" id="a2" x2="1.0" y2="-1.0"/>
-    <atom elementType="H" id="a4" x2="1.0" y2="1.0"/>
-    <atom elementType="N" formalCharge="1" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="Cl" formalCharge="-1" id="a6" x2="2.0" y2="1.0"/>
+    <atom x2="0.0" y2="0.0" id="a5" elementType="H"/>
+    <atom x2="2.0" y2="0.0" id="a3" elementType="H"/>
+    <atom x2="1.0" y2="-1.0" id="a2" elementType="H"/>
+    <atom x2="1.0" y2="1.0" id="a4" elementType="H"/>
+    <atom x2="1.0" y2="-0.0" formalCharge="1" id="a1" elementType="N"/>
+    <atom x2="2.0" y2="1.0" formalCharge="-1" id="a6" elementType="Cl"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -27,7 +27,7 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Ammonium chloride</property>
-    <property title="Description">Ammonium chloride is an inorganic chemical compound with the chemical formula NH4Cl, also written as [NH4]Cl. It is an ammonium salt of hydrogen chloride. It consists of ammonium cations [NH4]+ and chloride anions Cl&#x2212;. It is a white crystalline salt that is highly soluble in water. Solutions of ammonium chloride are mildly acidic. In its naturally occurring mineralogic form, it is known as sal ammoniac. The mineral is commonly formed on burning coal dumps from condensation of coal-derived gases. It is also found around some types of volcanic vents. It is mainly used as fertilizer and a flavouring agent in some types of liquorice. It is a product of the reaction of hydrochloric acid and ammonia.</property>
+    <property title="Description">Ammonium chloride is an inorganic chemical compound with the chemical formula NH4Cl, also written as [NH4]Cl. It is an ammonium salt of hydrogen chloride. It consists of ammonium cations NH4+ and chloride anions Cl&#x2212;. It is a white crystalline salt that is highly soluble in water. Solutions of ammonium chloride are mildly acidic. In its naturally occurring mineralogic form, it is known as sal ammoniac. The mineral is commonly formed on burning coal dumps from condensation of coal-derived gases. It is also found around some types of volcanic vents. It is mainly used as fertilizer and a flavouring agent in some types of liquorice. It is a product of the reaction of hydrochloric acid and ammonia.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ammonium_chloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>

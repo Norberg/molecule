@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Ca"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="Cl"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-795.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">108.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Calcium chloride</property>
+    <property title="Description">Calcium chloride is an inorganic compound, a salt with the chemical formula CaCl2. It is a white crystalline solid at room temperature, and it is highly soluble in water. It can be created by neutralising hydrochloric acid with calcium hydroxide.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_chloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

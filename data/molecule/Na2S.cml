@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="-0.0" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="2.0" y2="-0.0" formalCharge="1" id="a2" elementType="Na"/>
+    <atom x2="1.0" y2="-0.0" formalCharge="-2" id="a3" elementType="S"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a3" order="0"/>
+    <bond atomRefs2="a2 a3" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-365.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">84.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Sodium sulfide</property>
+    <property title="Description">Sodium sulfide is a chemical compound with the formula Na2S, or more commonly its hydrate Na2S&#xB7;9H2O. Both the anhydrous and the hydrated salts in pure crystalline form are colorless solids, although technical grades of sodium sulfide are generally yellow to brick red owing to the presence of polysulfides and commonly supplied as a crystalline mass, in flake form, or as a fused solid. They are water-soluble, giving strongly alkaline solutions.  When exposed to moist air, Na2S and its hydrates emit hydrogen sulfide, an extremely toxic, flammable and corrosive gas which smells like rotten eggs.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_sulfide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

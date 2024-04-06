@@ -121,17 +121,17 @@ class TestLevels(unittest.TestCase):
         NaCl_.creation_time = 0
         collisions = createCollisionsMock(H2SO4, NaCl, NaCl_)
         reaction = level1.react(collisions,[])
-        self.assertEqual(reaction.reactants, ['H2SO4(l)', 'NaCl(s)', 'NaCl(s)'])
-        self.assertEqual(reaction.products, ['HCl(g)', 'HCl(g)', 'Na2SO4(s)'])
+        self.assertEqual(reaction.reactants, ['H2SO4(l)', 'NaCl(s)'])
+        self.assertEqual(reaction.products, ['NaHSO4(s)', 'HCl(g)'])
 
     def testSulfuricAcidNoReaction(self):
         level1 = getLevel1()
         space, batch = createSpaceAndBatchMock()
         H2SO4 = Molecule("H2SO4(l)", space, batch)
-        NaCl = Molecule("NaCl(s)", space, batch)
+        HCl = Molecule("HCl(g)", space, batch)
         H2SO4.creation_time = 0
-        NaCl.creation_time = 0
-        collisions = createCollisionsMock(H2SO4, NaCl)
+        HCl.creation_time = 0
+        collisions = createCollisionsMock(H2SO4, HCl)
         reaction = level1.react(collisions,[])
         self.assertEqual(reaction, None)
 
