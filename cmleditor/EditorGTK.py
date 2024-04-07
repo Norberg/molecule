@@ -19,6 +19,7 @@ import os
 import gi
 import glob
 from itertools import product
+from collections import Counter
 
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -236,13 +237,13 @@ class EditorGTK:
                 reactions = self.findReactingTemperatures(reactants, expected_products)
                 if len(reactions) == 0:
                     reactingTemp_str = "Never occurs"
-                    reactants_str = " + ".join(reactants)
-                    expected_products_str = " + ".join(expected_products)
+                    reactants_str = format_elements(reactants)
+                    expected_products_str = format_elements(expected_products)
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), None])
 
                 for reaction in reactions.values():
-                    reactants_str = " + ".join(reaction.reactants)
-                    expected_products_str = " + ".join(reaction.products)
+                    reactants_str = format_elements(reaction.reactants)
+                    expected_products_str = format_elements(reaction.products)
                     reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
 
@@ -326,8 +327,8 @@ class EditorGTK:
         if Gdk.keyval_name(userdata.keyval) == "t" or Gdk.keyval_name(userdata.keyval) == "T":
             model, iter = self.widget("twReactions").get_selection().get_selected()
             if iter:
-                reactants = model[iter][0].split(" + ")
-                products = model[iter][1].split(" + ")
+                reactants = split_formated_elements(model[iter][0])
+                products = split_formated_elements(model[iter][1])
                 self.findReactingTemperatures(reactants, products, trace = True)
 
     def on_twReactions_row_activated(self, widget, path, column):
@@ -398,7 +399,7 @@ class EditorGTK:
         MsgBox("Creating molecule...")
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
-        self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+        self.on_fcbOpen_file_set(self.widget("fcbOpen"))    
     
     def on_btnNewMoleculeFromWiki_clicked(self, widget):
         answers = InputBox("Molecule", ["Wikipedia link:"])
@@ -555,3 +556,21 @@ class ReactionInfo:
     @property
     def key(self):
         return str(self.reaction.reactants)+ "->" + str(self.reaction.products)
+    
+
+def format_elements(elements):
+    element_count = Counter(elements)
+    formatted_elements = [f"{count} {element}" if count > 1 else element for element, count in element_count.items()]
+    return " + ".join(formatted_elements)
+
+def split_formated_elements(formated_elements):
+    elements_with_counts = formated_elements.split(" + ")
+    result = []
+    for item in elements_with_counts:
+        parts = item.split(" ")
+        if len(parts) == 2:
+            count, element = int(parts[0]), parts[1]
+        else:
+            count, element = 1, parts[0]
+        result.extend([element] * count)
+    return result
