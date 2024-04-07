@@ -47,7 +47,7 @@ class Universe:
         reaction = self.reactor.react(reactants, temp)
 
         if reaction == None:
-            if Config.current.DEBUG: print("Did not react:", reactants)
+            if Config.current.DEBUG: print(F"Did not react(T={temp}):", reactants)
             return None
         else:
             if Config.current.DEBUG:

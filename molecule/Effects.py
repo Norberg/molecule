@@ -236,6 +236,7 @@ class Furnace(EffectSprite):
     def __init__(self, space, batch, pos, temp=100):
         EffectSprite.__init__(self, space, batch, pos, "furnace.png","Furnace")
         self.supported_attributes.append("temp")
+        self.supported_attributes.append("reaction")
         self.temp = temp
         self.is_clicked = False
         self.body = None

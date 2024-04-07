@@ -12,7 +12,7 @@
     <molecule title="CO2(g)"/>
   </moleculeList>
   <effectList>
-    <effect title="Fire" value="900" x2="200" y2="550"/>
+    <effect title="Furnace" value="900" x2="400" y2="600"/>
   </effectList>
   <victoryCondition>
     <molecule title="P4O10"/>
