@@ -229,9 +229,53 @@ class HotplateBeaker(EffectSprite):
             reaction = Reaction.Reaction(cml,[molecule.state_formula])
             return reaction
         elif Config.current.DEBUG:
-            print("Water beaker didnt react with:", molecule.formula)
+            print("HotplateBeaker didnt react with:", molecule.formula)
 
+class Furnace(EffectSprite):
+    """Furnace"""
+    def __init__(self, space, batch, pos, temp=100):
+        EffectSprite.__init__(self, space, batch, pos, "furnace.png","Furnace")
+        self.supported_attributes.append("temp")
+        self.temp = temp
+        self.is_clicked = False
+        self.body = None
 
+    def init_chipmunk(self,space, pos):
+        static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        x, y = pos
+        # Rectangle dimensions
+        left_x = x - 160
+        right_x = x + 160
+        bottom_y = y - 140
+        top_y = y + 150
+        thickness = 10
+
+        # Creating walls with clearer structure
+        walls = [
+            pymunk.Segment(static_body, (left_x, bottom_y), (left_x, top_y), thickness),  # Left wall
+            pymunk.Segment(static_body, (left_x, bottom_y), (right_x, bottom_y), thickness),  # Bottom wall
+            pymunk.Segment(static_body, (right_x, bottom_y), (right_x, top_y), thickness),  # Right wall
+            pymunk.Segment(static_body, (left_x, top_y), (right_x, top_y), thickness),  # Top wall
+        ]
+        for wall in walls:
+            wall.elasticity = 0.95
+            wall.collision_type = CollisionTypes.WALL
+            wall.filter = CollisionTypes.WALL_FILTER
+        space.add(static_body, *walls)
+        shape = pymunk.Poly.create_box(static_body, (305,280), 5)
+        shape.body.position = pos
+        space.add(shape)
+        self.shape = shape
+        self.shape.collision_type = CollisionTypes.EFFECT
+        self.shape.sensor = True
+        self.shape.effect = self
+
+    def set_pos(self, pos):
+        OFFSET_X, OFFSET_Y = 5,-30
+        self.shape.body.position = pos
+        x, y = self.shape.body.position
+        self.x = x - self.width/2 + OFFSET_X
+        self.y = y - self.height/2 + OFFSET_Y
 
 class Mining(Action):
     ACTION_TIME = 3
@@ -424,6 +468,9 @@ def create_effects(space, batch, effects):
         elif effect.title == "HotplateBeaker":
             hotplate_beaker = HotplateBeaker(space, batch, (x, y), value)
             new_effects.append(hotplate_beaker)
+        elif effect.title == "Furnace":
+            furnace = Furnace(space, batch, (x, y), value)
+            new_effects.append(furnace)
         elif effect.title == "Mining":
             mining = Mining(space, batch, (x, y), molecules)
             new_effects.append(mining)
