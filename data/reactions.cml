@@ -613,4 +613,53 @@
       <molecule title="SO2(g)"/>
     </productList>
   </reaction>
+  <reaction title="Ammonia burns in oxygen to form nitric oxide">
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Nitric oxide reacts with oxygen to form nitrogen dioxide">
+    <reactantList>
+      <molecule title="NO"/>
+      <molecule title="NO"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NO2(g)"/>
+      <molecule title="NO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction title="Nitrogen dioxide reacts with water to form nitric acid">
+    <reactantList>
+      <molecule title="NO2"/>
+      <molecule title="NO2"/>
+      <molecule title="NO2"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="HNO3(aq)"/>
+      <molecule title="HNO3(aq)"/>
+      <molecule title="NO(g)"/>
+    </productList>
+  </reaction>
 </reactions>
