@@ -131,7 +131,7 @@
       <molecule title="N2(g)"/>
     </productList>
   </reaction>
-  <reaction>
+  <reaction title="Harber bosh process to create ammonia from nitrogen and hydrogen">
     <reactantList>
       <molecule title="H2"/>
       <molecule title="H2"/>
