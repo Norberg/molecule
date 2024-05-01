@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="I"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">107.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">70.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.98</property>
+    <property title="Name">Iodine</property>
+    <property title="Weight">126.9</property>
+    <property title="Description">Iodine is a chemical element; it has symbol I and atomic number 53. The heaviest of the stable halogens, it exists at standard conditions as a semi-lustrous, non-metallic solid that melts to form a deep violet liquid at 114 &#xB0;C (237 &#xB0;F), and boils to a violet gas at 184 &#xB0;C (363 &#xB0;F). The element was discovered by the French chemist Bernard Courtois in 1811 and was named two years later by Joseph Louis Gay-Lussac, after the Ancient Greek &#x399;&#x3CE;&#x3B4;&#x3B7;&#x3C2;, meaning 'violet'.
+
+Iodine occurs in many oxidation states, including iodide (I&#x2212;), iodate (IO&#x2212;
+3), and the various periodate anions. As the heaviest essential mineral nutrient, iodine is required for the synthesis of thyroid hormones. Iodine deficiency affects about two billion people and is the leading preventable cause of intellectual disabilities.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iodine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
