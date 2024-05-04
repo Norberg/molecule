@@ -115,6 +115,19 @@ class Cold(Temperature):
     def __init__(self, space, batch, pos, temp=250):
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
+class EnergySource(EffectSprite):
+    """EnergySource effect"""
+    def __init__(self, space, batch, pos, img_path, name, energy_source):
+        EffectSprite.__init__(self, space, batch, pos, img_path, name)
+        self.energy_source = energy_source
+        self.supported_attributes.append("energy_source")
+        self.supported_attributes.append("reaction")
+
+class UvLight(EnergySource):
+    """UvLight effect"""
+    def __init__(self, space, batch, pos):
+        EnergySource.__init__(self, space, batch, pos, "uv-light.png", "UvLight", Cml.Requirement.EnergyType.UV_LIGHT)
+
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""
     def __init__(self, space, batch, pos):
@@ -475,6 +488,9 @@ def create_effects(space, batch, effects):
         elif effect.title == "Mining":
             mining = Mining(space, batch, (x, y), molecules)
             new_effects.append(mining)
+        elif effect.title == "UvLight":
+            uv_light = UvLight(space, batch, (x, y))
+            new_effects.append(uv_light)
         else:
             raise Exception("Effect not implemented:" + effect.title)
 

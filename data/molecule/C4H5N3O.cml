@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-1.5" id="a1" elementType="O"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a3" elementType="N"/>
+    <atom x2="-1.732051" y2="1.0" id="a4" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a5" elementType="C"/>
+    <atom x2="-0.0" y2="1.0" id="a6" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a7" elementType="N"/>
+    <atom x2="0.0" y2="0.0" id="a8" elementType="N"/>
+    <atom x2="-2.584653" y2="-0.49225" id="a9" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a10" elementType="H"/>
+    <atom x2="-0.866025" y2="2.532" id="a11" elementType="H"/>
+    <atom x2="1.718627" y2="1.00775" id="a12" elementType="H"/>
+    <atom x2="0.866025" y2="2.4845" id="a13" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a6 a8" order="2"/>
+    <bond atomRefs2="a2 a8" order="1"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+    <bond atomRefs2="a4 a10" order="1"/>
+    <bond atomRefs2="a5 a11" order="1"/>
+    <bond atomRefs2="a7 a12" order="1"/>
+    <bond atomRefs2="a7 a13" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Cytosine</property>
+    <property title="Description">Cytosine (symbol C or Cyt) is one of the four nucleobases found in DNA and RNA, along with adenine, guanine, and thymine (uracil in RNA). It is a pyrimidine derivative, with a heterocyclic aromatic ring and two substituents attached (an amine group at position 4 and a keto group at position 2). The nucleoside of cytosine is cytidine.  In Watson&#x2013;Crick base pairing, it forms three hydrogen bonds with guanine.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Cytosine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

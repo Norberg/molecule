@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="N"/>
+    <atom x2="0.866025" y2="1.532" id="a4" elementType="H"/>
+    <atom x2="-0.852602" y2="0.49225" id="a5" elementType="H"/>
+    <atom x2="-0.0" y2="-0.9845" id="a6" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-254.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Formamide</property>
+    <property title="Description">Formamide is an amide derived from formic acid. It is a colorless liquid which is miscible with water and has an ammonia-like odor. It is chemical feedstock for the manufacture of sulfa drugs and other pharmaceuticals, herbicides and pesticides, and in the manufacture of hydrocyanic acid.  It has been used as a softener for paper and fiber. It is a solvent for many ionic compounds. It has also been used as a solvent for resins and plasticizers. Some astrobiologists suggest that it may be an alternative to water as the main solvent in other forms of life.
+</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Formamide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

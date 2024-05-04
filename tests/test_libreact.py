@@ -20,6 +20,7 @@ from libreact.Reaction import Reaction
 from libreact.Reaction import verify as Reaction_verify
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
+from libcml.Cml import Requirement
 
 class TestReact(unittest.TestCase):
 
@@ -100,6 +101,7 @@ class TestReact(unittest.TestCase):
 
     def testPerformAllReactions(self):
         unsupported_reactions = [["C2H7NO3S(l)"]]
+        all_energy_sources = [Requirement.EnergyType.UV_LIGHT]
         tempranges = [0, 298, 1000, 2000, 4000, 8000, 50]
         reactor = self.setupRealReactor()
         for reaction in reactor.reactions:
@@ -108,7 +110,7 @@ class TestReact(unittest.TestCase):
             result = None
             temp = None
             for temp in tempranges:
-                result = reactor.react(reactants, temp)
+                result = reactor.react(reactants, temp, energy_source=all_energy_sources)
                 if result is not None and expected_products == result.products:
                     break # have found a temp where the expected reaction occurs
             if expected_products in unsupported_reactions:

@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-1.0" y2="-1.0" id="a1" elementType="O"/>
+    <atom x2="0.0" y2="-1.0" id="a2" elementType="P"/>
+    <atom x2="0.0" y2="-2.0" id="a3" elementType="O"/>
+    <atom x2="1.0" y2="-1.0" id="a4" elementType="O"/>
+    <atom x2="0.0" y2="0.0" id="a5" elementType="O"/>
+    <atom x2="-0.0" y2="1.0" id="a6" elementType="P"/>
+    <atom x2="1.0" y2="1.0" id="a7" elementType="O"/>
+    <atom x2="-0.0" y2="2.0" id="a8" elementType="O"/>
+    <atom x2="-1.0" y2="1.0" id="a9" elementType="O"/>
+    <atom x2="-2.0" y2="1.0" id="a10" elementType="P"/>
+    <atom x2="-2.0" y2="2.0" id="a11" elementType="O"/>
+    <atom x2="-3.0" y2="1.0" id="a12" elementType="O"/>
+    <atom x2="-2.0" y2="0.0" id="a13" elementType="O"/>
+    <atom x2="-2.866025" y2="-0.5" id="a14" elementType="C"/>
+    <atom x2="-3.732051" y2="0.0" id="a15" elementType="C"/>
+    <atom x2="-4.645596" y2="-0.406737" id="a16" elementType="O"/>
+    <atom x2="-5.314727" y2="0.336408" id="a17" elementType="C"/>
+    <atom x2="-6.309249" y2="0.23188" id="a18" elementType="N"/>
+    <atom x2="-6.809249" y2="-0.634146" id="a19" elementType="C"/>
+    <atom x2="-7.787396" y2="-0.426234" id="a20" elementType="N"/>
+    <atom x2="-7.891925" y2="0.568288" id="a21" elementType="C"/>
+    <atom x2="-8.700942" y2="1.156073" id="a22" elementType="C"/>
+    <atom x2="-8.596413" y2="2.150595" id="a23" elementType="N"/>
+    <atom x2="-7.682868" y2="2.557332" id="a24" elementType="C"/>
+    <atom x2="-6.873851" y2="1.969546" id="a25" elementType="N"/>
+    <atom x2="-6.978379" y2="0.975025" id="a26" elementType="C"/>
+    <atom x2="-9.614487" y2="0.749337" id="a27" elementType="N"/>
+    <atom x2="-4.814727" y2="1.202434" id="a28" elementType="C"/>
+    <atom x2="-5.221464" y2="2.115979" id="a29" elementType="O"/>
+    <atom x2="-3.836579" y2="0.994522" id="a30" elementType="C"/>
+    <atom x2="-3.093434" y2="1.663653" id="a31" elementType="O"/>
+    <atom x2="-0.840045" y2="-2.485" id="a32" elementType="H"/>
+    <atom x2="1.485" y2="-1.840045" id="a33" elementType="H"/>
+    <atom x2="0.840045" y2="2.485" id="a34" elementType="H"/>
+    <atom x2="-3.485" y2="1.840045" id="a35" elementType="H"/>
+    <atom x2="-2.866025" y2="-1.57" id="a36" elementType="H"/>
+    <atom x2="-3.792673" y2="-1.035" id="a37" elementType="H"/>
+    <atom x2="-3.78805" y2="-1.068534" id="a38" elementType="H"/>
+    <atom x2="-5.698181" y2="-0.662523" id="a39" elementType="H"/>
+    <atom x2="-6.389497" y2="-1.576925" id="a40" elementType="H"/>
+    <atom x2="-7.574995" y2="3.583678" id="a41" elementType="H"/>
+    <atom x2="-10.410965" y2="1.328011" id="a42" elementType="H"/>
+    <atom x2="-9.717396" y2="-0.22977" id="a43" elementType="H"/>
+    <atom x2="-5.88326" y2="1.258433" id="a44" elementType="H"/>
+    <atom x2="-4.651312" y2="2.900726" id="a45" elementType="H"/>
+    <atom x2="-4.631744" y2="0.278552" id="a46" elementType="H"/>
+    <atom x2="-2.17091" y2="1.363906" id="a47" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="2"/>
+    <bond atomRefs2="a6 a8" order="1"/>
+    <bond atomRefs2="a6 a9" order="1"/>
+    <bond atomRefs2="a9 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="2"/>
+    <bond atomRefs2="a10 a12" order="1"/>
+    <bond atomRefs2="a10 a13" order="1"/>
+    <bond atomRefs2="a13 a14" order="1"/>
+    <bond atomRefs2="a14 a15" order="1"/>
+    <bond atomRefs2="a15 a16" order="1"/>
+    <bond atomRefs2="a16 a17" order="1"/>
+    <bond atomRefs2="a17 a18" order="1"/>
+    <bond atomRefs2="a18 a19" order="1"/>
+    <bond atomRefs2="a19 a20" order="2"/>
+    <bond atomRefs2="a20 a21" order="1"/>
+    <bond atomRefs2="a21 a22" order="1"/>
+    <bond atomRefs2="a22 a23" order="2"/>
+    <bond atomRefs2="a23 a24" order="1"/>
+    <bond atomRefs2="a24 a25" order="2"/>
+    <bond atomRefs2="a25 a26" order="1"/>
+    <bond atomRefs2="a21 a26" order="2"/>
+    <bond atomRefs2="a18 a26" order="1"/>
+    <bond atomRefs2="a22 a27" order="1"/>
+    <bond atomRefs2="a17 a28" order="1"/>
+    <bond atomRefs2="a28 a29" order="1"/>
+    <bond atomRefs2="a28 a30" order="1"/>
+    <bond atomRefs2="a15 a30" order="1"/>
+    <bond atomRefs2="a30 a31" order="1"/>
+    <bond atomRefs2="a3 a32" order="1"/>
+    <bond atomRefs2="a4 a33" order="1"/>
+    <bond atomRefs2="a8 a34" order="1"/>
+    <bond atomRefs2="a12 a35" order="1"/>
+    <bond atomRefs2="a14 a36" order="1"/>
+    <bond atomRefs2="a14 a37" order="1"/>
+    <bond atomRefs2="a15 a38" order="1"/>
+    <bond atomRefs2="a17 a39" order="1"/>
+    <bond atomRefs2="a19 a40" order="1"/>
+    <bond atomRefs2="a24 a41" order="1"/>
+    <bond atomRefs2="a27 a42" order="1"/>
+    <bond atomRefs2="a27 a43" order="1"/>
+    <bond atomRefs2="a28 a44" order="1"/>
+    <bond atomRefs2="a29 a45" order="1"/>
+    <bond atomRefs2="a30 a46" order="1"/>
+    <bond atomRefs2="a31 a47" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Adenosine triphosphate</property>
+    <property title="Description">Adenosine triphosphate (ATP) is a nucleotide that provides energy to drive and support many processes in living cells, such as muscle contraction, nerve impulse propagation, condensate dissolution, and chemical synthesis. Found in all known forms of life, it is often referred to as the "molecular unit of currency" of intracellular energy transfer.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Adenosine_triphosphate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

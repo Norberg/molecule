@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<level>
+<level zoom="0.7">
   <moleculeList>
     <molecule title="C4H8Cl2S(g)"/>
     <molecule title="C14H14N2O4(g)"/>
+    <molecule title="C10H16N5O13P3(aq)"/>
   </moleculeList>
   <effectList>
     <effect title="Fire" value="2300" x2="200" y2="270"/>

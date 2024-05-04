@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.817082" y2="-2.809017" id="a1" elementType="N"/>
+    <atom x2="1.817082" y2="-1.809017" id="a2" elementType="C"/>
+    <atom x2="2.683107" y2="-1.309017" id="a3" elementType="N"/>
+    <atom x2="2.683107" y2="-0.309017" id="a4" elementType="C"/>
+    <atom x2="1.817082" y2="0.190983" id="a5" elementType="N"/>
+    <atom x2="0.951057" y2="-0.309017" id="a6" elementType="C"/>
+    <atom x2="0.951057" y2="-1.309017" id="a7" elementType="C"/>
+    <atom x2="-0.0" y2="-1.618034" id="a8" elementType="N"/>
+    <atom x2="-0.587785" y2="-0.809017" id="a9" elementType="C"/>
+    <atom x2="0.0" y2="-0.0" id="a10" elementType="N"/>
+    <atom x2="0.96448" y2="-3.301267" id="a11" elementType="H"/>
+    <atom x2="2.669684" y2="-3.301267" id="a12" elementType="H"/>
+    <atom x2="3.576846" y2="0.206983" id="a13" elementType="H"/>
+    <atom x2="-1.619785" y2="-0.809017" id="a14" elementType="H"/>
+    <atom x2="-0.304227" y2="0.936315" id="a15" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="2"/>
+    <bond atomRefs2="a2 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a8 a9" order="2"/>
+    <bond atomRefs2="a9 a10" order="1"/>
+    <bond atomRefs2="a6 a10" order="1"/>
+    <bond atomRefs2="a1 a11" order="1"/>
+    <bond atomRefs2="a1 a12" order="1"/>
+    <bond atomRefs2="a4 a13" order="1"/>
+    <bond atomRefs2="a9 a14" order="1"/>
+    <bond atomRefs2="a10 a15" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Adenine</property>
+    <property title="Description">Adenine sometimes (A) or (Adn)  is a  purine nucleobase. It is one of the four nucleobases in the nucleic acids of DNA, the other three being guanine (G), cytosine (C), and thymine (T). Adenine derivatives have various roles in biochemistry including cellular respiration, in the form of both the energy-rich adenosine triphosphate (ATP) and the cofactors nicotinamide adenine dinucleotide (NAD), flavin adenine dinucleotide (FAD) and Coenzyme A. It also has functions in protein synthesis and as a chemical component of DNA and RNA. The shape of adenine is complementary to either thymine in DNA or uracil in RNA.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Adenine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

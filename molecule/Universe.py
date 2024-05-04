@@ -40,11 +40,14 @@ class Universe:
 
         temp = 298
         effect_names = list()
+        energy_source = list()
         for effect in effects:
             effect_names.append(effect.name)
             if effect.supports("temp"):
                 temp = effect.temp
-        reaction = self.reactor.react(reactants, temp)
+            if effect.supports("energy_source"):
+                energy_source.append(effect.energy_source)
+        reaction = self.reactor.react(reactants, temp, energy_source=energy_source)
 
         if reaction == None:
             if Config.current.DEBUG: print(F"Did not react(T={temp}):", reactants)

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.866025" y2="-0.5" id="a1" elementType="C"/>
+    <atom x2="1.732051" y2="-0.0" id="a2" elementType="C"/>
+    <atom x2="1.732051" y2="1.0" id="a3" elementType="C"/>
+    <atom x2="2.683107" y2="1.309017" id="a4" elementType="N"/>
+    <atom x2="3.270893" y2="0.5" id="a5" elementType="C"/>
+    <atom x2="2.683107" y2="-0.309017" id="a6" elementType="N"/>
+    <atom x2="0.866025" y2="1.5" id="a7" elementType="N"/>
+    <atom x2="0.0" y2="1.0" id="a8" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a9" elementType="N"/>
+    <atom x2="0.866025" y2="-1.532" id="a10" elementType="H"/>
+    <atom x2="4.302893" y2="0.5" id="a11" elementType="H"/>
+    <atom x2="2.987335" y2="-1.245332" id="a12" elementType="H"/>
+    <atom x2="-0.893738" y2="1.516" id="a13" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a3 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a8 a9" order="1"/>
+    <bond atomRefs2="a1 a9" order="2"/>
+    <bond atomRefs2="a1 a10" order="1"/>
+    <bond atomRefs2="a5 a11" order="1"/>
+    <bond atomRefs2="a6 a12" order="1"/>
+    <bond atomRefs2="a8 a13" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Purine</property>
+    <property title="Description">Purine is a heterocyclic aromatic organic compound that consists of two rings (pyrimidine and imidazole) fused together. It is water-soluble. Purine also gives its name to the wider class of molecules, purines, which include substituted purines and their tautomers. They are the most widely occurring nitrogen-containing heterocycles in nature.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Purine</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

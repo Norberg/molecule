@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<level zoom="1.0">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+  </inventoryList>
+  <effectList>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C4H4N4"/>
+  </victoryCondition>
+  <objective text="Diaminomaleonitrile is speculated to be an organic chemical present in prebiotic conditions. And can be use to synthesis basic builing blocks for life\n Lets create one, C4H4N4"/>
+  <hint text="Noop"/>
+</level>

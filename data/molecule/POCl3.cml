@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-1.0" id="a1" elementType="O"/>
+    <atom x2="1.0" y2="0.0" id="a2" elementType="P"/>
+    <atom x2="2.0" y2="0.0" id="a3" elementType="Cl"/>
+    <atom x2="1.0" y2="1.0" id="a4" elementType="Cl"/>
+    <atom x2="0.0" y2="0.0" id="a5" elementType="Cl"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-597.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">223.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-558.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">326.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Phosphoryl chloride</property>
+    <property title="Description">Phosphoryl chloride (commonly called phosphorus oxychloride) is a colourless liquid with the formula POCl3. It hydrolyses in moist air releasing phosphoric acid and fumes of hydrogen chloride. It is manufactured industrially on a large scale from phosphorus trichloride and oxygen or phosphorus pentoxide. It is mainly used to make phosphate esters.
+Enthalpy:597.1
+Entropy:222.5
+
+Std molar
+entropy (S&#x29B5;298)
+	222.5 J&#xB7;mol&#x2212;1&#xB7;K&#x2212;1 (liquid), 325.5 J&#xB7;mol&#x2212;1&#xB7;K&#x2212;1 (gas)
+Std enthalpy of
+formation (&#x394;fH&#x29B5;298)
+	&#x2212;597.1 kJ&#xB7;mol&#x2212;1 (liquid), &#x2212;558.5 kJ&#xB7;mol&#x2212;1 (gas) </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphoryl_chloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

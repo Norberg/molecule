@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.866025" y2="1.5" id="a1" elementType="C"/>
+    <atom x2="1.732051" y2="2.0" id="a2" elementType="N"/>
+    <atom x2="0.0" y2="1.0" id="a3" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a4" elementType="C"/>
+    <atom x2="-1.732051" y2="2.0" id="a5" elementType="N"/>
+    <atom x2="-0.0" y2="-0.0" id="a6" elementType="N"/>
+    <atom x2="-0.926647" y2="0.465" id="a7" elementType="H"/>
+    <atom x2="-0.883346" y2="-0.51" id="a8" elementType="H"/>
+    <atom x2="0.883346" y2="-0.51" id="a9" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="3"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="3"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a3 a7" order="1"/>
+    <bond atomRefs2="a6 a8" order="1"/>
+    <bond atomRefs2="a6 a9" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Aminomalononitrile</property>
+    <property title="Description">Aminomalononitrile is the trimer [(HCN) 3 ] of hydrogen cyanide [HCN], which is in a homologous series between the tetramer [(HCN) 4 ] diaminomaleonitrile and the dimers [(HCN) 2 ] iminoacetonitrile, aminocyanocarbene and azacyclopropenylideneimine stands. According to various hypotheses on prebiotic chemical evolution, the base aminomalononitrile could represent a precursor for proteinogenic amino acids and peptides as well as for nucleosides.
+
+Aminomalononitrile was detected as an oligomer of hydrogen cyanide (HCN) in space and is of scientific interest as a possible extraterrestrial source for the nucleobase adenine in the context of the hypothesis of an extraterrestrial origin of life. 
+Aminomalononitrile was first isolated and characterized in 1874 during the treatment of hydrogen cyanide with alkalis, which resulted in predominantly dark-colored polymers. </property>
+    <property title="DescriptionAttribution">https://de.wikipedia.org/wiki/Aminomalononitriltosylat</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

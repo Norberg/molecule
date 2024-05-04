@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.309017" y2="-0.951057" id="a1" elementType="C"/>
+    <atom x2="-1.309017" y2="-0.951057" id="a2" elementType="N"/>
+    <atom x2="-1.618034" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="-0.809017" y2="0.587785" id="a4" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a5" elementType="N"/>
+    <atom x2="-0.809017" y2="1.587785" id="a6" elementType="C"/>
+    <atom x2="-0.809017" y2="2.587785" id="a7" elementType="N"/>
+    <atom x2="-2.569091" y2="0.309017" id="a8" elementType="N"/>
+    <atom x2="0.297577" y2="-1.785962" id="a9" elementType="H"/>
+    <atom x2="0.936315" y2="0.304227" id="a10" elementType="H"/>
+    <atom x2="-2.77378" y2="1.272003" id="a11" elementType="H"/>
+    <atom x2="-3.300717" y2="-0.349742" id="a12" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a4 a6" order="1"/>
+    <bond atomRefs2="a6 a7" order="3"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a5 a10" order="1"/>
+    <bond atomRefs2="a8 a11" order="1"/>
+    <bond atomRefs2="a8 a12" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Name">5-aminoimidazole-4-carbonitrile</property>
+    <property title="Description">AICN form of Diaminomaleonitrile (DAMN) that allows further reactions to form various various nucleobases.</property>
+  </propertyList>
+</ns0:molecule>

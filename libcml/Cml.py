@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import xml.etree.ElementTree as etree
 import operator
+from enum import Enum
 
 class Atom:
     def __init__(self, id=None, element=None, charge=0, x=None, y=None, z=None):
@@ -77,10 +78,11 @@ class State:
 
 
 class Reaction:
-    def __init__(self,reactants = None,products = None, title = None):
+    def __init__(self,reactants = None,products = None, title = None, requirements=[]):
         self.reactants = reactants
         self.products = products
         self.title = title
+        self.requirements = requirements
 
 class Effect:
     def __init__(self, title = None, value = None, x2 = None, y2 = None, molecules = []):
@@ -90,6 +92,21 @@ class Effect:
         self.x2 = x2
         self.y2 = y2
 
+
+class Requirement:
+    class EnergyType(Enum):
+        UV_LIGHT = "UV light"
+
+    def __init__(self, type, molar_energy):
+        self.type = Requirement.EnergyType(type)
+        self.molar_energy = molar_energy
+
+    def __str__(self):
+        return f"Requirement: {self.type} {self.molar_energy}"
+    
+    def __repr__(self):
+        return self.__str__()
+    
 class Cml:
     NS = "{http://www.xml-cml.org/schema}"
 
@@ -109,6 +126,8 @@ class Cml:
                 reaction.products = self.parseMoleculeList(part)
             elif part.tag.endswith("reactantList"):
                 reaction.reactants = self.parseMoleculeList(part)
+            elif part.tag.endswith("requirementList"):
+                reaction.requirements = self.parseRequirements(part)
         return reaction
 
     def parseMoleculeList(self, moleculesTag):
@@ -116,6 +135,15 @@ class Cml:
         for molecule in moleculesTag:
             molecules.append(molecule.attrib["title"])
         return molecules
+    
+    def parseRequirements(self, requirementsTag):
+        requirements = list()
+        for requirement in requirementsTag:
+            type = requirement.attrib["type"]
+            molar_energy = float(requirement.attrib["molar_energy"])
+            requirements.append(Requirement(type, molar_energy))
+        return requirements
+
     def writeReaction(self, reaction, parrentTag):
         if reaction is None:
             return

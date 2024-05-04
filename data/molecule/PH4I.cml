@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="0.0" id="a5" elementType="H"/>
+    <atom x2="2.0" y2="0.0" id="a3" elementType="H"/>
+    <atom x2="1.0" y2="-1.0" id="a2" elementType="H"/>
+    <atom x2="1.0" y2="1.0" id="a4" elementType="H"/>
+    <atom x2="1.0" y2="-0.0" formalCharge="1" id="a1" elementType="P"/>
+    <atom x2="2.0" y2="1.0" formalCharge="-1" id="a6" elementType="I"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Phosphonium iodide</property>
+    <property title="Description">Phosphonium iodide is a chemical compound with the formula PH4I. It is an example of a salt containing an unsubstituted phosphonium cation (PH+4). Phosphonium iodide is commonly used as storage for phosphine and as a reagent for substituting phosphorus into organic molecules.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphonium_iodide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

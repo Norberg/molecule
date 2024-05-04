@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.149881" y2="-0.244415" id="a1" elementType="Cl"/>
+    <atom x2="0.743145" y2="0.669131" id="a2" elementType="P"/>
+    <atom x2="1.737667" y2="0.773659" id="a3" elementType="Cl"/>
+    <atom x2="0.951057" y2="1.647278" id="a4" elementType="Cl"/>
+    <atom x2="-0.122881" y2="1.169131" id="a5" elementType="Cl"/>
+    <atom x2="-0.0" y2="-0.0" id="a6" elementType="Cl"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">364.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Phosphorus pentachloride</property>
+    <property title="Description">Phosphorus pentachloride is the chemical compound with the formula PCl5. It is one of the most important phosphorus chlorides/oxychlorides, others being PCl3 and POCl3. PCl5 finds use as a chlorinating reagent.  It is a colourless, water-sensitive solid, although commercial samples can be yellowish and contaminated with hydrogen chloride.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphorus_pentachloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

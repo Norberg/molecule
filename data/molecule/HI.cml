@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="I"/>
+    <atom x2="2.561" y2="0.0" id="a2" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">26.5</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">206.6</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydrogen iodide</property>
+    <property title="Description">Hydrogen iodide (HI) is a diatomic molecule and hydrogen halide. Aqueous solutions of HI are known as hydroiodic acid or hydriodic acid, a strong acid. Hydrogen iodide and hydroiodic acid are, however, different in that the former is a gas under standard conditions, whereas the other is an aqueous solution of the gas. They are interconvertible. HI is used in organic and inorganic synthesis as one of the primary sources of iodine and as a reducing agent. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydrogen_iodide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

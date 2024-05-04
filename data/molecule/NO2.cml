@@ -1,4 +1,30 @@
+<?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" spinMultiplicity="2">
- <ns0:atomArray><atom x2="0.866025" y2="-0.5" id="a1" elementType="N" /><atom x2="1.732051" y2="-0.0" id="a2" elementType="O" /><atom x2="0.0" y2="0.0" id="a3" elementType="O" /></ns0:atomArray><ns0:bondArray><bond atomRefs2="a1 a2" order="2" /><bond atomRefs2="a1 a3" order="1" /></ns0:bondArray><propertyList title="states"><propertyList title="Gas"><property title="enthalpy"><scalar units="units:molar_energy">33.1</scalar></property><property title="entropy"><scalar units="units:molar_energy">240.0</scalar></property></propertyList></propertyList><propertyList title="property"><property title="Name">Nitrogen dioxide</property><property title="Description">Nitrogen dioxide is a chemical compound with the formula NO2. One of several nitrogen oxides, nitrogen dioxide is a reddish-brown gas. It is a paramagnetic, bent molecule with C2v point group symmetry. Industrially, NO2 is an intermediate in the synthesis of nitric acid, millions of tons of which are produced each year, primarily for the production of fertilizers.
+  <ns0:atomArray>
+    <atom x2="0.866025" y2="-0.5" id="a1" elementType="N"/>
+    <atom x2="1.732051" y2="-0.0" id="a2" elementType="O"/>
+    <atom x2="0.0" y2="0.0" id="a3" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">33.1</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">240.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Nitrogen dioxide</property>
+    <property title="Description">Nitrogen dioxide is a chemical compound with the formula NO2. One of several nitrogen oxides, nitrogen dioxide is a reddish-brown gas. It is a paramagnetic, bent molecule with C2v point group symmetry. Industrially, NO2 is an intermediate in the synthesis of nitric acid, millions of tons of which are produced each year, primarily for the production of fertilizers.
 
-Nitrogen dioxide is poisonous and can be fatal if inhaled in large quantities. The LC50 (median lethal dose) for humans has been estimated to be 174 ppm for a 1-hour exposure. It is also included in the NOx family of atmospheric pollutants. </property><property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitrogen_dioxide</property><property title="DescriptionLicense">CC BY-SA 3.0</property></propertyList></ns0:molecule>
+Nitrogen dioxide is poisonous and can be fatal if inhaled in large quantities. The LC50 (median lethal dose) for humans has been estimated to be 174 ppm for a 1-hour exposure. It is also included in the NOx family of atmospheric pollutants. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitrogen_dioxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

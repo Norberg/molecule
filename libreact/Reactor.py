@@ -22,6 +22,10 @@ class ReactionEntryMapper:
         self.keys = cml_reaction.reactants
         self.value = cml_reaction
 
+class Energy:
+    def __init(self, type):
+        self.type = type
+
 class Reactor:
     def __init__(self, cml_reactions):
         self.reactions = cml_reactions
@@ -52,7 +56,7 @@ class Reactor:
         """
         return set(self.find_all_reactions(reactants))
 
-    def react(self, reactants, K = 298, trace = False):
+    def react(self, reactants, K = 298, trace = False, energy_source = []):
         """ check if all elements needed for the reaction exists in
              in the reacting elements and that the reaction is spontaneous
             in the given temperature. 
@@ -66,10 +70,24 @@ class Reactor:
             return None
 
         reactions = list()
+
         for reactionCml in reactionCmls:
+            additional_energy = 0
+            if len(reactionCml.requirements) > 0 and not all([req.type in [e for e in energy_source] for req in reactionCml.requirements]):
+                if trace:
+                    print(f"Reaction {reactionCml.reactants} -> {reactionCml.products} requires {reactionCml.requirements} to occur where only {energy_source} is available.")
+                continue
+            elif len(reactionCml.requirements) > 0:
+                additional_energy = sum([req.molar_energy for req in reactionCml.requirements])
+                if trace:
+                    print(f"additional_energy = {additional_energy} for reaction {reactionCml.reactants} -> {reactionCml.products} with requirements {reactionCml.requirements}")
+
             r = Reaction.Reaction(reactionCml, reactants)
-            reactions.append((r.energyChange(K), r))
+            reactions.append((r.energyChange(K) - additional_energy, r))
         
+        if len(reactions) == 0:
+            return None
+
         free_energy, reaction = min(reactions)
  
         if len(reactions) > 1 and trace:

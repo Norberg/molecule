@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="N"/>
+    <atom x2="1.994" y2="0.0" id="a3" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="3"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">135.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">202.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydrogen cyanide</property>
+    <property title="Description">Hydrogen cyanide (also known as prussic acid) is a chemical compound with the formula HCN and structural formula H&#x2212;C&#x2261;N. It is a highly toxic and flammable liquid that boils slightly above room temperature, at 25.6 &#xB0;C (78.1 &#xB0;F). HCN is produced on an industrial scale and is a highly valued precursor to many chemical compounds ranging from polymers to pharmaceuticals. Large-scale applications are for the production of potassium cyanide and adiponitrile, used in mining and plastics, respectively. It is more toxic than solid cyanide compounds due to its volatile nature. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydrogen_cyanide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<level zoom="1.0">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="C4H4N4(s)"/>
+    <molecule title="C4H4N4(s)"/>
+    <molecule title="C4H4N4(s)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+    <molecule title="HCN(g)"/>
+  </inventoryList>
+  <effectList>
+      <effect title="UvLight" x2="200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C5H5N5"/>
+    <molecule title="C5H5N5"/>
+  </victoryCondition>
+  <objective text="Let make Adenine C5H5N5 one of 4 building blocks of DNA"/>
+  <hint text="Noop"/>
+</level>
