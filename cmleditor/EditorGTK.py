@@ -33,6 +33,7 @@ from libreact.Reaction import Reaction, list_without_state
 from libreact.Reactor import Reactor
 import subprocess
 from cmleditor import wiki_fetch
+import utils.rdkit_render as rdkit_render
 
 class EditorGTK:
 
@@ -333,6 +334,7 @@ class EditorGTK:
 
     def on_twReactions_row_activated(self, widget, path, column):
         """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
+        self.on_twReactions_row_selected(widget, path, column) # TODO: temp only
         if column.get_title() == "Temperature (K)":
             return
         model = widget.get_model()
@@ -364,6 +366,14 @@ class EditorGTK:
                 self.widget("fcbOpen").set_filename(f"data/molecule/{selected_molecule}.cml")
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
+
+    def on_twReactions_row_selected(self, widget, path, column):
+        model, iter = self.widget("twReactions").get_selection().get_selected()
+        if iter:
+            reactants = split_formated_elements(model[iter][0])
+            products = split_formated_elements(model[iter][1])
+            self.update_reaction_preview(reactants, products)
+
 
     def on_twReactions_query_tooltip(self, widget, x, y, keyboard_mode, tooltip):
         x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)
@@ -431,6 +441,14 @@ class EditorGTK:
         self.widget("txtAttribution").set_text(url)
 
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
+
+    def update_reaction_preview(self, reactants, products):
+        reactants = list_without_state(reactants)
+        products = list_without_state(products)
+        rdkit_render.render_reaction_image(reactants, products, "reaction-preview.png")
+        pixBuffPreview = Pixbuf.new_from_file("reaction-preview.png")
+        imgReactionPreview = self.widget("imgReactionPreview")
+        imgReactionPreview.set_from_pixbuf(pixBuffPreview)
 
     def excepthook(self, type, value, traceback):
         MsgBox("Error:"+ str(type) +"\n"+ str(value))

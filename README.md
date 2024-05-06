@@ -27,8 +27,10 @@ pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 * PyGObject
 * GTK+3
 * openbabel (optional, needed to create new molecules)
+* rdkit (optional, needed to create new molecules and reactions)
 ```
 sudo apt install libgirepository1.0-dev openbabel
+pip install rdkit 
 pip install pygobject 
 ```
 

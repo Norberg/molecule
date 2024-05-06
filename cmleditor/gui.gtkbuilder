@@ -431,6 +431,21 @@
               </packing>
             </child>
             <child>
+              <object class="GtkImage" id="imgReactionPreview">
+                <property name="width-request">60</property>
+                <property name="height-request">150</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="icon-name">gkt-missing-image</property>
+                <property name="icon_size">1</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -454,7 +469,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
