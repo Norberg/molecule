@@ -75,6 +75,8 @@ class EditorGTK:
         twReactions.append_column(col2)
         twReactions.append_column(col3)
 
+        twReactions.get_selection().set_select_function(self.on_twReactions_row_selected)
+
     def init_twStates(self):
         twStates = self.widget("twStates")
         #set what data type twStates shulld contain
@@ -183,11 +185,8 @@ class EditorGTK:
         self.molecule = molecule
         molecule.parse(filename)
         self.formula = filename.split("/")[-1].split(".cml")[0]
-        state_formula = self.formula+"(aq)"
-        cml2img.convert_cml2png(state_formula, "preview.png")
-        pixBuffPreview = Pixbuf.new_from_file("preview.png")
-        imgPreview = self.widget("imgPreview")
-        imgPreview.set_from_pixbuf(pixBuffPreview)
+        self.preview_molecule()
+        self.widget("imgReactionPreview").set_from_pixbuf(None)
 
         self.txtMoleculeName = self.widget("txtName")
         self.txtAtomWeight = self.widget("txtWeight")
@@ -215,6 +214,17 @@ class EditorGTK:
 
         self.setLicense(molecule.property.get("DescriptionLicense", "N/A"))
         self.updateReactions(self.formula)
+
+    def preview_molecule(self):
+        state_formula = self.formula+"(aq)"
+        cml2img.convert_cml2png(state_formula, "preview.png")
+        pixBuffPreview = Pixbuf.new_from_file("preview.png")
+        imgPreview = self.widget("imgPreview")
+        imgPreview.set_from_pixbuf(pixBuffPreview)
+        rdkit_render.render_individual_molecule(self.formula, None, "preview-skeletal.png")
+        pixBuffPreview = Pixbuf.new_from_file("preview-skeletal.png")
+        imgSkeletalPreview = self.widget("imgSkeletalPreview")
+        imgSkeletalPreview.set_from_pixbuf(pixBuffPreview)
 
     def setLicense(self, selectedLicense):
         self.widget("cmbLicense").set_active(-1)
@@ -334,7 +344,6 @@ class EditorGTK:
 
     def on_twReactions_row_activated(self, widget, path, column):
         """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
-        self.on_twReactions_row_selected(widget, path, column) # TODO: temp only
         if column.get_title() == "Temperature (K)":
             return
         model = widget.get_model()
@@ -367,13 +376,11 @@ class EditorGTK:
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
 
-    def on_twReactions_row_selected(self, widget, path, column):
-        model, iter = self.widget("twReactions").get_selection().get_selected()
-        if iter:
-            reactants = split_formated_elements(model[iter][0])
-            products = split_formated_elements(model[iter][1])
-            self.update_reaction_preview(reactants, products)
-
+    def on_twReactions_row_selected(self, selection, model, path, is_selected_data):
+        reactants = split_formated_elements(model[path][0])
+        products = split_formated_elements(model[path][1])
+        self.update_reaction_preview(reactants, products)
+        return True
 
     def on_twReactions_query_tooltip(self, widget, x, y, keyboard_mode, tooltip):
         x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)

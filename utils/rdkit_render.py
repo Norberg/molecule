@@ -6,10 +6,13 @@ from rdkit.Chem import Draw
 from rdkit.Chem import AllChem
 
 def render_molecule(molecule: str, size: tuple = (300, 300)):
-    mol = Chem.MolFromSmiles(molecule)
+    ps = Chem.SmilesParserParams()
+    ps.removeHs = False
+    mol = Chem.MolFromSmiles(molecule, ps)
     if mol is None:
+        print(f"Failed to render molecule: {molecule}")
         return None
-    Chem.Kekulize(mol)
+    #Chem.Kekulize(mol)
     return Draw.MolToImage(mol, size=size)
 
 def fetch_smiles(formula):
