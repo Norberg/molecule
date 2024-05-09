@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="H"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Gas">
@@ -17,5 +17,6 @@
     <property title="Radius">1.1</property>
     <property title="Name">Hydrogen</property>
     <property title="Weight">1.0</property>
+    <property title="Smiles">[HH]</property>
   </propertyList>
 </ns0:molecule>

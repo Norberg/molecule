@@ -49,5 +49,6 @@
     <property title="Description">Phosphorus pentoxide is a chemical compound with molecular formula P4O10 (with its common name derived from its empirical formula, P2O5). This white crystalline solid is the anhydride of phosphoric acid. It is a powerful desiccant and dehydrating agent. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphorus_pentoxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=P12OP3(=O)OP(=O)(O1)OP(=O)(O3)O2</property>
   </propertyList>
 </ns0:molecule>

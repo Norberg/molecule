@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Cl" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Cl"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Gas">
@@ -17,5 +17,6 @@
     <property title="Radius">1.75</property>
     <property title="Name">Chloride</property>
     <property title="Weight">35.0</property>
+    <property title="Smiles">Cl</property>
   </propertyList>
 </ns0:molecule>

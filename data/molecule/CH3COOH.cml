@@ -44,5 +44,6 @@
 Acetic acid is the second simplest carboxylic acid (after formic acid). It is an important chemical reagent and industrial chemical across various fields, used primarily in the production of cellulose acetate for photographic film, polyvinyl acetate for wood glue, and synthetic fibres and fabrics.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Acetic_acid</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CC(=O)O</property>
   </propertyList>
 </ns0:molecule>

@@ -60,5 +60,6 @@
     <property title="Description">Cellulose is an organic compound with the formula (C6H10O5)n, a polysaccharide consisting of a linear chain of several hundred to many thousands of &#x3B2;(1&#x2192;4) linked D-glucose units. Cellulose is an important structural component of the primary cell wall of green plants, many forms of algae and the oomycetes. Some species of bacteria secrete it to form biofilms.[5] Cellulose is the most abundant organic polymer on Earth. The cellulose content of cotton fiber is 90%, that of wood is 40&#x2013;50%, and that of dried hemp is approximately 57%.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Cellulose</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">OC(CC(=O)OC)C(=O)OC</property>
   </propertyList>
 </ns0:molecule>

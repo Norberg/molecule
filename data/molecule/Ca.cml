@@ -28,5 +28,6 @@
     <property title="Description">The chemistry of calcium is that of a typical heavy alkaline earth metal. For example, calcium spontaneously reacts with water more quickly than magnesium and less quickly than strontium to produce calcium hydroxide and hydrogen gas. It also reacts with the oxygen and nitrogen in the air to form a mixture of calcium oxide and calcium nitride.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ca]</property>
   </propertyList>
 </ns0:molecule>

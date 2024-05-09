@@ -49,5 +49,6 @@
     <property title="Description">Thymine (symbol T or Thy) is one of the four nucleobases in the nucleic acid of DNA that are represented by the letters G&#x2013;C&#x2013;A&#x2013;T. The others are adenine, guanine, and cytosine.  Thymine is also known as 5-methyluracil, a pyrimidine nucleobase. In RNA, thymine is replaced by the nucleobase uracil.  Thymine was first isolated in 1893 by Albrecht Kossel and Albert Neumann from calf thymus glands, hence its name.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Thymine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=c1[nH]c(=O)[nH]cc1C</property>
   </propertyList>
 </ns0:molecule>

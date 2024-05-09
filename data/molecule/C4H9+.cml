@@ -42,7 +42,6 @@
   <propertyList title="property">
     <property title="Name">C&lt;sub&gt;4&lt;sub&gt;H&lt;sub&gt;9&lt;/sub&gt;&lt;sup&gt;+&lt;/sup&gt;</property>
     <property title="DescriptionLicense">GPLv3</property>
-    <property title="Description"/>
-    <property title="DescriptionAttribution"/>
+    <property title="Smiles">C[C+](C)C</property>
   </propertyList>
 </ns0:molecule>

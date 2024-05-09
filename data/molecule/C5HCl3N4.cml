@@ -44,7 +44,7 @@
   <propertyList title="property">
     <property title="Name">2,6,8-trichloropurine</property>
     <property title="Description">A purin intermidiate</property>
-    <property title="DescriptionAttribution"/>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">c12c(nc([nH]1)Cl)nc(nc2Cl)Cl</property>
   </propertyList>
 </ns0:molecule>

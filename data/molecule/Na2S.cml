@@ -24,5 +24,6 @@
     <property title="Description">Sodium sulfide is a chemical compound with the formula Na2S, or more commonly its hydrate Na2S&#xB7;9H2O. Both the anhydrous and the hydrated salts in pure crystalline form are colorless solids, although technical grades of sodium sulfide are generally yellow to brick red owing to the presence of polysulfides and commonly supplied as a crystalline mass, in flake form, or as a fused solid. They are water-soluble, giving strongly alkaline solutions.  When exposed to moist air, Na2S and its hydrates emit hydrogen sulfide, an extremely toxic, flammable and corrosive gas which smells like rotten eggs.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_sulfide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][S-2][Na+]</property>
   </propertyList>
 </ns0:molecule>

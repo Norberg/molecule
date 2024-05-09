@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a5" x2="-0.07" y2="0.0"/>
-    <atom elementType="H" id="a3" x2="0.465" y2="0.926647"/>
-    <atom elementType="C" id="a1" x2="1.0" y2="0.0"/>
-    <atom elementType="H" id="a4" x2="0.465" y2="-0.926647"/>
-    <atom elementType="H" id="a2" x2="2.07" y2="0.0"/>
+    <atom x2="-0.07" y2="0.0" id="a5" elementType="H"/>
+    <atom x2="0.465" y2="0.926647" id="a3" elementType="H"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="C"/>
+    <atom x2="0.465" y2="-0.926647" id="a4" elementType="H"/>
+    <atom x2="2.07" y2="0.0" id="a2" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -29,5 +29,6 @@
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Methane</property>
     <property title="Description">Methane is a hydrocarbon that is a gas at room temperature (20&#xB0;C). Its molecular formula is CH&lt;sub&gt;4&lt;/sub&gt;, so it has one carbon atom and four hydrogen atoms in a molecule. It is often found as the main part of natural gas.
 Methane is a greenhouse gas 22 times more effective than carbon dioxide. It is also less stable and slowly oxidates by oxygen to carbon dioxide and water.</property>
+    <property title="Smiles">C</property>
   </propertyList>
 </ns0:molecule>

@@ -28,5 +28,6 @@
     <property title="Description">Iron(III) oxide or ferric oxide is the inorganic compound with the formula Fe2O3. It is one of the three main oxides of iron, the other two being iron(II) oxide (FeO), which is rare; and iron(II,III) oxide (Fe3O4), which also occurs naturally as the mineral magnetite. As the mineral known as hematite, Fe2O3 is the main source of iron for the steel industry. Fe2O3 is readily attacked by acids. Iron(III) oxide is often called rust, since rust shares several properties and has a similar composition; however, in chemistry, rust is considered an ill-defined material, described as hydrous ferric oxide.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(III)_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=[Fe]O[Fe]=O</property>
   </propertyList>
 </ns0:molecule>

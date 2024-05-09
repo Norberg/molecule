@@ -28,5 +28,6 @@
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="Weight">39.0</property>
     <property title="Radius">2.75</property>
+    <property title="Smiles">[K+]</property>
   </propertyList>
 </ns0:molecule>

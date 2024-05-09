@@ -36,5 +36,6 @@
     <property title="Description">Ethanol (also called ethyl alcohol, grain alcohol, drinking alcohol, or simply alcohol) is an organic compound with the chemical formula CH3CH2OH. It is an alcohol, with its formula also written as C2H5OH, C2H6O or EtOH, where Et stands for ethyl. Ethanol is a volatile, flammable, colorless liquid with a characteristic wine-like odor and pungent taste.  It is a psychoactive recreational drug, and the active ingredient in alcoholic drinks. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ethanol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CCO</property>
   </propertyList>
 </ns0:molecule>

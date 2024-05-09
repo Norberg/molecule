@@ -30,5 +30,6 @@
     <property title="Description">Carbonic acid is a chemical compound with the chemical formula H2CO3. The molecule rapidly converts to water and carbon dioxide in the presence of water. However, in the absence of water, it is (contrary to popular belief) quite stable at room temperature. The interconversion of carbon dioxide and carbonic acid is related to the breathing cycle of animals and the acidification of natural waters.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Carbonic_acid</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=C(O)O</property>
   </propertyList>
 </ns0:molecule>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="S" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="S"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -25,5 +25,6 @@
     <property title="Radius">1.8</property>
     <property title="Name">Sulphur</property>
     <property title="Weight">32.0</property>
+    <property title="Smiles">S</property>
   </propertyList>
 </ns0:molecule>

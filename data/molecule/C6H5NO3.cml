@@ -57,5 +57,6 @@
     <property title="Description">4-Nitrophenol (also called p-nitrophenol or 4-hydroxynitrobenzene) is a phenolic compound that has a nitro group at the opposite position of the hydroxyl group on the benzene ring.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/4-Nitrophenol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=[N+]([O-])c1ccc(O)cc1</property>
   </propertyList>
 </ns0:molecule>

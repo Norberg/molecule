@@ -36,5 +36,6 @@
 Sodium hydroxide is a highly corrosive base and alkali that decomposes lipids and proteins at ambient temperatures and may cause severe chemical burns. It is highly soluble in water, and readily absorbs moisture and carbon dioxide from the air. It forms a series of hydrates NaOH&#xB7;nH2O. The monohydrate NaOH&#xB7;H2O crystallizes from water solutions between 12.3 and 61.8 &#xB0;C. The commercially available "sodium hydroxide" is often this monohydrate, and published data may refer to it instead of the anhydrous compound. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_hydroxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][OH-]</property>
   </propertyList>
 </molecule>

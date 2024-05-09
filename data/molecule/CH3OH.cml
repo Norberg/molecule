@@ -40,5 +40,6 @@
 Methanol consists of a methyl group linked to a polar hydroxyl group. With more than 20 million tons produced annually, it is used as a precursor to other commodity chemicals, including formaldehyde, acetic acid, methyl tert-butyl ether, methyl benzoate, anisole, peroxyacids, as well as a host of more specialised chemicals.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methanol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CO</property>
   </propertyList>
 </ns0:molecule>

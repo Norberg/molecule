@@ -39,5 +39,6 @@ Aminomalononitrile was detected as an oligomer of hydrogen cyanide (HCN) in spac
 Aminomalononitrile was first isolated and characterized in 1874 during the treatment of hydrogen cyanide with alkalis, which resulted in predominantly dark-colored polymers. </property>
     <property title="DescriptionAttribution">https://de.wikipedia.org/wiki/Aminomalononitriltosylat</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C(#N)C(C#N)N</property>
   </propertyList>
 </ns0:molecule>

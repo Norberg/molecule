@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="F" id="a1" x2="1.149881" y2="-0.244415"/>
-    <atom elementType="F" id="a3" x2="1.737667" y2="0.773659"/>
-    <atom elementType="P" id="a2" x2="0.743145" y2="0.669131"/>
-    <atom elementType="F" id="a5" x2="-0.122881" y2="1.169131"/>
-    <atom elementType="F" id="a4" x2="0.951057" y2="1.647278"/>
-    <atom elementType="F" id="a6" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.149881" y2="-0.244415" id="a1" elementType="F"/>
+    <atom x2="1.737667" y2="0.773659" id="a3" elementType="F"/>
+    <atom x2="0.743145" y2="0.669131" id="a2" elementType="P"/>
+    <atom x2="-0.122881" y2="1.169131" id="a5" elementType="F"/>
+    <atom x2="0.951057" y2="1.647278" id="a4" elementType="F"/>
+    <atom x2="-0.0" y2="-0.0" id="a6" elementType="F"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -27,5 +27,6 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Phosphorus pentafluoride</property>
+    <property title="Smiles">FP(F)(F)(F)F</property>
   </propertyList>
 </ns0:molecule>

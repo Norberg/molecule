@@ -50,5 +50,6 @@
     <property title="Description">Adenine sometimes (A) or (Adn)  is a  purine nucleobase. It is one of the four nucleobases in the nucleic acids of DNA, the other three being guanine (G), cytosine (C), and thymine (T). Adenine derivatives have various roles in biochemistry including cellular respiration, in the form of both the energy-rich adenosine triphosphate (ATP) and the cofactors nicotinamide adenine dinucleotide (NAD), flavin adenine dinucleotide (FAD) and Coenzyme A. It also has functions in protein synthesis and as a chemical component of DNA and RNA. The shape of adenine is complementary to either thymine in DNA or uracil in RNA.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Adenine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Nc1ncnc2c1nc[nH]2</property>
   </propertyList>
 </ns0:molecule>

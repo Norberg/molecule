@@ -26,5 +26,6 @@ An important intermediate in industrial chemistry, nitric oxide forms in combust
 Nitric oxide should not be confused with nitrogen dioxide (NO2), a brown gas and major air pollutant, or with nitrous oxide (N2O), an anesthetic gas.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitric_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">N=O</property>
   </propertyList>
 </ns0:molecule>

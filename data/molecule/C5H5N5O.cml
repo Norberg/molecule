@@ -52,5 +52,6 @@
 With the formula C5H5N5O, guanine is a derivative of purine, consisting of a fused pyrimidine-imidazole ring system with conjugated double bonds. This unsaturated arrangement means the bicyclic molecule is planar. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Guanine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=c1c2[nH]cnc2nc(N)[nH]1</property>
   </propertyList>
 </ns0:molecule>

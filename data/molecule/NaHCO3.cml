@@ -30,5 +30,6 @@
     <property title="Description">Sodium bicarbonate (IUPAC name: sodium hydrogencarbonate), commonly known as baking soda or bicarbonate of soda, is a chemical compound with the formula NaHCO3. It is a salt composed of a sodium cation (Na+) and a bicarbonate anion (HCO3&#x2212;). Sodium bicarbonate is a white solid that is crystalline, but often appears as a fine powder. It has a slightly salty, alkaline taste resembling that of washing soda (sodium carbonate). The natural mineral form is nahcolite. It is a component of the mineral natron and is found dissolved in many mineral springs.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bicarbonate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][O-]C(=O)O</property>
   </propertyList>
 </ns0:molecule>

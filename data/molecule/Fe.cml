@@ -30,5 +30,6 @@
 Extracting usable metal from iron ores requires kilns or furnaces capable of reaching 1,500 &#xB0;C (2,730 &#xB0;F), about 500 &#xB0;C (932 &#xB0;F) higher than that required to smelt copper. Humans started to master that process in Eurasia during the 2nd millennium BC and the use of iron tools and weapons began to displace copper alloys &#x2013; in some regions, only around 1200 BC.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Fe]</property>
   </propertyList>
 </ns0:molecule>

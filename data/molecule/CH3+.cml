@@ -26,5 +26,6 @@
     <property title="Description">In organic chemistry, methenium (also called methylium, carbenium, methyl cation, or protonated methylene) is a cation with the formula CH+3. It can be viewed as a methylene radical (:CH2) with an added proton (H+), or as a methyl radical (&#x2022;CH3) with one electron removed. It is a carbocation and an enium ion, making it the simplest of the carbenium ions.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methenium</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[CH3+]</property>
   </propertyList>
 </ns0:molecule>

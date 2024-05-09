@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="F" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="F"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Gas">
@@ -20,5 +20,6 @@
     <property title="Weight">19.0</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="Radius">1.47</property>
+    <property title="Smiles">[F]</property>
   </propertyList>
 </ns0:molecule>

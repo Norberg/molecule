@@ -45,5 +45,6 @@
     <property title="Description">Cytosine (symbol C or Cyt) is one of the four nucleobases found in DNA and RNA, along with adenine, guanine, and thymine (uracil in RNA). It is a pyrimidine derivative, with a heterocyclic aromatic ring and two substituents attached (an amine group at position 4 and a keto group at position 2). The nucleoside of cytosine is cytidine.  In Watson&#x2013;Crick base pairing, it forms three hydrogen bonds with guanine.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Cytosine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=c1[nH]ccc(N)n1</property>
   </propertyList>
 </ns0:molecule>

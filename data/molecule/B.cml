@@ -20,5 +20,6 @@
     <property title="Description">Boron is a chemical element; it has symbol B and atomic number 5. In its crystalline form it is a brittle, dark, lustrous metalloid; in its amorphous form it is a brown powder. As the lightest element of the boron group it has three valence electrons for forming covalent bonds, resulting in many compounds such as boric acid, the mineral sodium borate, and the ultra-hard crystals of boron carbide and boron nitride. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Boron</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">B</property>
   </propertyList>
 </ns0:molecule>

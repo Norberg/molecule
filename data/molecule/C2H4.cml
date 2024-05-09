@@ -32,5 +32,6 @@
 Ethylene is widely used in the chemical industry, and its worldwide production (over 150 million tonnes in 2016) exceeds that of any other organic compound. Much of this production goes toward creating polyethylene, which is a widely used plastic containing polymer chains of ethylene units in various chain lengths. Production emits greenhouse gas: including methane from feedstock production and carbon dioxide from any non-sustainable energy used. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ethylene</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C=C</property>
   </propertyList>
 </ns0:molecule>

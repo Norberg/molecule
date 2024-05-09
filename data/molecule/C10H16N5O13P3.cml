@@ -115,5 +115,6 @@
     <property title="Description">Adenosine triphosphate (ATP) is a nucleotide that provides energy to drive and support many processes in living cells, such as muscle contraction, nerve impulse propagation, condensate dissolution, and chemical synthesis. Found in all known forms of life, it is often referred to as the "molecular unit of currency" of intracellular energy transfer.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Adenosine_triphosphate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=P(O)(O)OP(=O)(O)OP(=O)(O)OCC1OC(n2cnc3c(ncnc23)N)C(O)C1O</property>
   </propertyList>
 </ns0:molecule>

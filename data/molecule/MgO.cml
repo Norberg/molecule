@@ -24,5 +24,6 @@
 Magnesium oxide was historically known as magnesia alba (literally, the white mineral from Magnesia), to differentiate it from magnesia nigra, a black mineral containing what is now known as manganese. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Magnesium_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[O-2][Mg+2]</property>
   </propertyList>
 </ns0:molecule>

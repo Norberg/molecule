@@ -34,5 +34,6 @@
     <property title="Description">Bromoethane, also known as ethyl bromide, is a chemical compound of the haloalkanes group. It is abbreviated by chemists as EtBr (which is also used as an abbreviation for ethidium bromide). This volatile compound has an ether-like odor. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromoethane</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CCBr</property>
   </propertyList>
 </ns0:molecule>

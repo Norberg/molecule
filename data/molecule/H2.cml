@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="H" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="H" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="H"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -23,5 +23,6 @@ Hydrogen gas is highly flammable and will burn in air at a very wide range of co
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Hydrogen</property>
     <property title="Name">Hydrogen</property>
+    <property title="Smiles">[H][H]</property>
   </propertyList>
 </ns0:molecule>

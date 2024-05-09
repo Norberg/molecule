@@ -24,5 +24,6 @@
     <property title="Description">Vanadium(IV) oxide or vanadium dioxide is an inorganic compound with the formula VO2. It is a dark blue solid. Vanadium(IV) dioxide is amphoteric, dissolving in non-oxidising acids to give the blue vanadyl ion, [VO]2+ and in alkali to give the brown [V4O9]2&#x2212; ion, or at high pH [VO4]4&#x2212;. VO2 has a phase transition very close to room temperature (~68&#xA0;&#xB0;C (341&#xA0;K)). Electrical resistivity, opacity, etc, can change up several orders. Owing to these properties, it has been used in surface coating, sensors, and imaging. Potential applications include use in memory devices, phase-change switches, passive radiative cooling applications, such as smart windows and roofs, that cool or warm depending on temperature, aerospace communication systems and neuromorphic computing.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Vanadium(IV)_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=[V]=O</property>
   </propertyList>
 </ns0:molecule>

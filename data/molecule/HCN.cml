@@ -24,5 +24,6 @@
     <property title="Description">Hydrogen cyanide (also known as prussic acid) is a chemical compound with the formula HCN and structural formula H&#x2212;C&#x2261;N. It is a highly toxic and flammable liquid that boils slightly above room temperature, at 25.6 &#xB0;C (78.1 &#xB0;F). HCN is produced on an industrial scale and is a highly valued precursor to many chemical compounds ranging from polymers to pharmaceuticals. Large-scale applications are for the production of potassium cyanide and adiponitrile, used in mining and plastics, respectively. It is more toxic than solid cyanide compounds due to its volatile nature. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydrogen_cyanide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[H]C#N</property>
   </propertyList>
 </ns0:molecule>

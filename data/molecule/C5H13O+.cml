@@ -54,7 +54,6 @@
   <propertyList title="property">
     <property title="Name">Tert-butyl(methyl)oxidanium</property>
     <property title="DescriptionLicense">GPLv3</property>
-    <property title="Description"/>
-    <property title="DescriptionAttribution"/>
+    <property title="Smiles">CC(C)(C)[OH+]C</property>
   </propertyList>
 </ns0:molecule>

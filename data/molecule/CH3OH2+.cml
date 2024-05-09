@@ -40,5 +40,6 @@
     <property title="Description">Protonated Methanol. </property>
     <property title="DescriptionAttribution">Simon Norberg</property>
     <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">C[OH2+]</property>
   </propertyList>
 </ns0:molecule>

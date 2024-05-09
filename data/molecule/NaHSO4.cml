@@ -32,5 +32,6 @@
     <property title="Description">Sodium bisulfate, also known as sodium hydrogen sulfate,[a] is the sodium salt of the bisulfate anion, with the molecular formula NaHSO4. Sodium bisulfate is an acid salt formed by partial neutralization of sulfuric acid by an equivalent of sodium base, typically in the form of either sodium hydroxide (lye) or sodium chloride (table salt). It is a dry granular product that can be safely shipped and stored. The anhydrous form is hygroscopic. Solutions of sodium bisulfate are acidic, with a 1M solution having a pH of slightly below 1.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bisulfate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][O-]S(=O)(=O)O</property>
   </propertyList>
 </ns0:molecule>

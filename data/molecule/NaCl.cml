@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <molecule>
   <atomArray>
-    <atom elementType="Na" formalCharge="1" id="a1" x2="1.0" y2="0.0"/>
-    <atom elementType="Cl" formalCharge="-1" id="a2" x2="0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="0.0" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="0.0" y2="-0.0" formalCharge="-1" id="a2" elementType="Cl"/>
   </atomArray>
   <bondArray>
     <bond atomRefs2="a1 a2" order="0"/>
@@ -22,5 +22,6 @@
     <property title="Description">Sodium chloride, also known as salt, common salt, table salt or halite, is an ionic compound with the chemical formula NaCl, representing equal proportions of sodium and chlorine. Sodium chloride is the salt most responsible for the salinity of the ocean and of the extracellular fluid of many multicellular organisms. Large quantities of sodium chloride are used in many industrial processes, and it is a major source of sodium and chlorine compounds used as feedstocks for further chemical syntheses.</property>
     <property title="Name">Sodium chloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][Cl-]</property>
   </propertyList>
 </molecule>

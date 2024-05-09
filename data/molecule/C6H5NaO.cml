@@ -61,5 +61,6 @@
     <property title="Description">Sodium phenoxide (sodium phenolate) is an organic compound with the formula NaOC6H5.  It is a white crystalline solid. Its anion, phenoxide, also known as phenolate, is the conjugate base of phenol. It is used as a precursor to many other organic compounds, such as aryl ethers.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_phenoxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][O-]c1ccccc1</property>
   </propertyList>
 </ns0:molecule>

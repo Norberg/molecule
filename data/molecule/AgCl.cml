@@ -24,5 +24,6 @@
 It is produced by a metathesis reaction for use in photography and in pH meters as electrodes. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Silver_chloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Cl[Ag]</property>
   </propertyList>
 </ns0:molecule>

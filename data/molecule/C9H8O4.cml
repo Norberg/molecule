@@ -63,5 +63,6 @@
 Aspirin is also used long-term to help prevent further heart attacks, ischaemic strokes, and blood clots in people at high risk. For pain or fever, effects typically begin within 30 minutes. Aspirin works similarly to other NSAIDs but also suppresses the normal functioning of platelets.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Aspirin</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=C(C)Oc1ccccc1C(=O)O</property>
   </propertyList>
 </ns0:molecule>

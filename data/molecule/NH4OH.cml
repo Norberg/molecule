@@ -32,5 +32,6 @@
     <property title="Description">Ammonia solution, also known as ammonia water, ammonium hydroxide, ammoniacal liquor, ammonia liquor, aqua ammonia, aqueous ammonia, or (inaccurately) ammonia, is a solution of ammonia in water. It can be denoted by the symbols NH3(aq).  Although the name ammonium hydroxide suggests an alkali with the composition [NH+4][OH&#x2212;], it is actually impossible to isolate samples of NH4OH. The ions NH+4 and OH&#x2212; do not account for a significant fraction of the total amount of ammonia except in extremely dilute solutions.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ammonia_solution</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[NH4+][OH-]</property>
   </propertyList>
 </ns0:molecule>

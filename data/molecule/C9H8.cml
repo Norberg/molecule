@@ -54,5 +54,6 @@
     <property title="Description">Indene is an aromatic, polycyclic hydrocarbon with chemical formula C9H8. It is composed of a benzene ring fused with a cyclopentene ring. This flammable liquid is colorless although samples often are pale yellow. The principal industrial use of indene is in the production of indene/coumarone thermoplastic resins. Substituted indenes and their closely related indane derivatives are important structural motifs found in many natural products and biologically active molecules, such as sulindac.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Indene</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">c1ccc2c(c1)CC=C2</property>
   </propertyList>
 </ns0:molecule>

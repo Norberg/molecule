@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" formalCharge="-1" id="a1" x2="1.5" y2="-2.5"/>
-    <atom elementType="O" id="a3" x2="2.5" y2="-1.5"/>
-    <atom elementType="P" id="a2" x2="1.5" y2="-1.5"/>
-    <atom elementType="O" formalCharge="-1" id="a5" x2="0.5" y2="-1.5"/>
-    <atom elementType="O" formalCharge="-1" id="a4" x2="1.5" y2="-0.5"/>
-    <atom elementType="Na" formalCharge="1" id="a7" x2="3.5" y2="-0.5"/>
-    <atom elementType="Na" formalCharge="1" id="a6" x2="-1.736778" y2="-0.338289"/>
-    <atom elementType="Na" formalCharge="1" id="a8" x2="4.5" y2="-0.5"/>
+    <atom x2="1.5" y2="-2.5" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="2.5" y2="-1.5" id="a3" elementType="O"/>
+    <atom x2="1.5" y2="-1.5" id="a2" elementType="P"/>
+    <atom x2="0.5" y2="-1.5" formalCharge="-1" id="a5" elementType="O"/>
+    <atom x2="1.5" y2="-0.5" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="3.5" y2="-0.5" formalCharge="1" id="a7" elementType="Na"/>
+    <atom x2="-1.736778" y2="-0.338289" formalCharge="1" id="a6" elementType="Na"/>
+    <atom x2="4.5" y2="-0.5" formalCharge="1" id="a8" elementType="Na"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -35,6 +35,12 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Name">Sodium phosphate</property>
+    <property title="Name">Trisodium phosphate</property>
+    <property title="Description">Trisodium phosphate (TSP) is an inorganic compound with the chemical formula Na3PO4. It is a white, granular or crystalline solid, highly soluble in water, producing an alkaline solution. TSP is used as a cleaning agent, builder, lubricant, food additive, stain remover, and degreaser.
+
+The item of commerce is often partially hydrated and may range from anhydrous Na3PO4 to the dodecahydrate Na3PO4&#xB7;12H2O. Most often it is found in white powder form. It can also be called trisodium orthophosphate or simply sodium phosphate. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Trisodium_phosphate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[O-]P(=O)([O-])[O-].[Na+].[Na+].[Na+]</property>
   </propertyList>
 </ns0:molecule>

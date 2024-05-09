@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="S" id="a1" x2="0.707107" y2="-0.707107"/>
-    <atom elementType="S" id="a3" x2="0.0" y2="-2.414214"/>
-    <atom elementType="S" id="a2" x2="0.707107" y2="-1.707107"/>
-    <atom elementType="S" id="a5" x2="-1.707107" y2="-1.707107"/>
-    <atom elementType="S" id="a4" x2="-1.0" y2="-2.414214"/>
-    <atom elementType="S" id="a7" x2="-1.0" y2="-0.0"/>
-    <atom elementType="S" id="a6" x2="-1.707107" y2="-0.707107"/>
-    <atom elementType="S" id="a8" x2="0.0" y2="-0.0"/>
+    <atom x2="0.707107" y2="-0.707107" id="a1" elementType="S"/>
+    <atom x2="0.0" y2="-2.414214" id="a3" elementType="S"/>
+    <atom x2="0.707107" y2="-1.707107" id="a2" elementType="S"/>
+    <atom x2="-1.707107" y2="-1.707107" id="a5" elementType="S"/>
+    <atom x2="-1.0" y2="-2.414214" id="a4" elementType="S"/>
+    <atom x2="-1.0" y2="-0.0" id="a7" elementType="S"/>
+    <atom x2="-1.707107" y2="-0.707107" id="a6" elementType="S"/>
+    <atom x2="0.0" y2="-0.0" id="a8" elementType="S"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -32,5 +32,6 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Octasulfur</property>
+    <property title="Smiles">S1SSSSSSS1</property>
   </propertyList>
 </ns0:molecule>

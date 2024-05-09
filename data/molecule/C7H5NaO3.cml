@@ -59,5 +59,6 @@
     <property title="Description">Sodium salicylate is a sodium salt of salicylic acid. It can be prepared from sodium phenolate and carbon dioxide under higher temperature and pressure. Historically, it has been synthesized by refluxing  methyl salicylate (wintergreen oil) with an excess of sodium hydroxide.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_salicylate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+][O-]C(=O)c1ccccc1O</property>
   </propertyList>
 </ns0:molecule>

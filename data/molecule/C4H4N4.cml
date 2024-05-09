@@ -42,5 +42,6 @@
     <property title="Description">Diaminomaleonitrile (DAMN) is an organic compound composed of two amino groups and two nitrile groups bonded to a central alkene unit. The systematic name reflects its relationship to maleic acid. DAMN form by oligomerization of hydrogen cyanide. It is the starting point for the synthesis of several classes of heterocyclic compounds. It has been considered as a possible organic chemical present in prebiotic conditions.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Diaminomaleonitrile</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C(#N)/C(=C(\C#N)/N)/N</property>
   </propertyList>
 </ns0:molecule>

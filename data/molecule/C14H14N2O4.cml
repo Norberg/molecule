@@ -1,40 +1,40 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="N" id="a20" x2="6.696152" y2="-0.5"/>
-    <atom elementType="H" id="a21" x2="3.098076" y2="-4.532"/>
-    <atom elementType="H" id="a22" x2="1.338313" y2="-3.516"/>
-    <atom elementType="H" id="a23" x2="3.098076" y2="-0.468"/>
-    <atom elementType="H" id="a24" x2="4.85784" y2="-1.484"/>
-    <atom elementType="H" id="a25" x2="6.507618" y2="-3.4685"/>
-    <atom elementType="H" id="a26" x2="-0.311466" y2="-1.5315"/>
-    <atom elementType="H" id="a27" x2="8.428203" y2="-3.532"/>
-    <atom elementType="H" id="a28" x2="6.66844" y2="-2.516"/>
-    <atom elementType="H" id="a29" x2="8.428203" y2="0.532"/>
-    <atom elementType="H" id="a31" x2="10.160254" y2="-3.4845"/>
-    <atom elementType="H" id="a30" x2="10.187967" y2="-0.484"/>
-    <atom elementType="H" id="a33" x2="6.696152" y2="0.4845"/>
-    <atom elementType="H" id="a34" x2="5.84355" y2="-0.99225"/>
-    <atom elementType="H" id="a32" x2="11.012856" y2="-2.00775"/>
-    <atom elementType="C" id="a15" x2="7.562178" y2="-1.0"/>
-    <atom elementType="C" id="a14" x2="7.562178" y2="-2.0"/>
-    <atom elementType="C" id="a17" x2="9.294229" y2="-1.0"/>
-    <atom elementType="C" id="a16" x2="8.428203" y2="-0.5"/>
-    <atom elementType="O" id="a11" x2="1.366025" y2="-0.5"/>
-    <atom elementType="C" id="a10" x2="1.366025" y2="-1.5"/>
-    <atom elementType="C" id="a13" x2="8.428203" y2="-2.5"/>
-    <atom elementType="O" id="a12" x2="0.5" y2="-2.0"/>
-    <atom elementType="N" id="a19" x2="10.160254" y2="-2.5"/>
-    <atom elementType="C" id="a18" x2="9.294229" y2="-2.0"/>
-    <atom elementType="C" id="a1" x2="3.098076" y2="-3.5"/>
-    <atom elementType="C" id="a3" x2="2.232051" y2="-2.0"/>
-    <atom elementType="C" id="a2" x2="2.232051" y2="-3.0"/>
-    <atom elementType="C" id="a5" x2="3.964102" y2="-2.0"/>
-    <atom elementType="C" id="a4" x2="3.098076" y2="-1.5"/>
-    <atom elementType="C" id="a7" x2="4.830127" y2="-3.5"/>
-    <atom elementType="C" id="a6" x2="3.964102" y2="-3.0"/>
-    <atom elementType="O" id="a9" x2="5.696152" y2="-3.0"/>
-    <atom elementType="O" id="a8" x2="4.830127" y2="-4.5"/>
+    <atom x2="6.696152" y2="-0.5" id="a20" elementType="N"/>
+    <atom x2="3.098076" y2="-4.532" id="a21" elementType="H"/>
+    <atom x2="1.338313" y2="-3.516" id="a22" elementType="H"/>
+    <atom x2="3.098076" y2="-0.468" id="a23" elementType="H"/>
+    <atom x2="4.85784" y2="-1.484" id="a24" elementType="H"/>
+    <atom x2="6.507618" y2="-3.4685" id="a25" elementType="H"/>
+    <atom x2="-0.311466" y2="-1.5315" id="a26" elementType="H"/>
+    <atom x2="8.428203" y2="-3.532" id="a27" elementType="H"/>
+    <atom x2="6.66844" y2="-2.516" id="a28" elementType="H"/>
+    <atom x2="8.428203" y2="0.532" id="a29" elementType="H"/>
+    <atom x2="10.160254" y2="-3.4845" id="a31" elementType="H"/>
+    <atom x2="10.187967" y2="-0.484" id="a30" elementType="H"/>
+    <atom x2="6.696152" y2="0.4845" id="a33" elementType="H"/>
+    <atom x2="5.84355" y2="-0.99225" id="a34" elementType="H"/>
+    <atom x2="11.012856" y2="-2.00775" id="a32" elementType="H"/>
+    <atom x2="7.562178" y2="-1.0" id="a15" elementType="C"/>
+    <atom x2="7.562178" y2="-2.0" id="a14" elementType="C"/>
+    <atom x2="9.294229" y2="-1.0" id="a17" elementType="C"/>
+    <atom x2="8.428203" y2="-0.5" id="a16" elementType="C"/>
+    <atom x2="1.366025" y2="-0.5" id="a11" elementType="O"/>
+    <atom x2="1.366025" y2="-1.5" id="a10" elementType="C"/>
+    <atom x2="8.428203" y2="-2.5" id="a13" elementType="C"/>
+    <atom x2="0.5" y2="-2.0" id="a12" elementType="O"/>
+    <atom x2="10.160254" y2="-2.5" id="a19" elementType="N"/>
+    <atom x2="9.294229" y2="-2.0" id="a18" elementType="C"/>
+    <atom x2="3.098076" y2="-3.5" id="a1" elementType="C"/>
+    <atom x2="2.232051" y2="-2.0" id="a3" elementType="C"/>
+    <atom x2="2.232051" y2="-3.0" id="a2" elementType="C"/>
+    <atom x2="3.964102" y2="-2.0" id="a5" elementType="C"/>
+    <atom x2="3.098076" y2="-1.5" id="a4" elementType="C"/>
+    <atom x2="4.830127" y2="-3.5" id="a7" elementType="C"/>
+    <atom x2="3.964102" y2="-3.0" id="a6" elementType="C"/>
+    <atom x2="5.696152" y2="-3.0" id="a9" elementType="O"/>
+    <atom x2="4.830127" y2="-4.5" id="a8" elementType="O"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -84,5 +84,6 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">1,4-Bis-(2-furoyl)piperazine</property>
+    <property title="Smiles">Nc1ccc(cc1)N.O=C(O)c1ccc(cc1)C(=O)O</property>
   </propertyList>
 </ns0:molecule>

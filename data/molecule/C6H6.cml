@@ -53,5 +53,6 @@
 Benzene is a natural constituent of petroleum and is one of the elementary petrochemicals. Due to the cyclic continuous pi bonds between the carbon atoms, benzene is classed as an aromatic hydrocarbon. Benzene is a colorless and highly flammable liquid with a sweet smell, and is partially responsible for the aroma of gasoline. It is used primarily as a precursor to the manufacture of chemicals with more complex structures, such as ethylbenzene and cumene, of which billions of kilograms are produced annually. Although benzene is a major industrial chemical, it finds limited use in consumer items because of its toxicity. Benzene is a volatile organic compound.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Benzene</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">c1ccccc1</property>
   </propertyList>
 </ns0:molecule>

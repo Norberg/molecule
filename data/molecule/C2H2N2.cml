@@ -30,5 +30,6 @@
     <property title="DescriptionAttribution">Simon Norberg</property>
     <property title="DescriptionLicense">GPLv3</property>
     <property title="Description">Dimer of hydrogen cyanide</property>
+    <property title="Smiles">C(=N)C#N</property>
   </propertyList>
 </ns0:molecule>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Al" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Al"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Solid">
@@ -20,5 +20,6 @@
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Aluminium</property>
     <property title="Radius">1.75</property>
+    <property title="Smiles">[AlH3]</property>
   </propertyList>
 </ns0:molecule>

@@ -24,5 +24,6 @@ Due to the large size of the calcium ion (Ca2+), high coordination numbers are c
 </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ca+2]</property>
   </propertyList>
 </ns0:molecule>

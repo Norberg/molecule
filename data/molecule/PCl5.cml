@@ -30,5 +30,6 @@
     <property title="Description">Phosphorus pentachloride is the chemical compound with the formula PCl5. It is one of the most important phosphorus chlorides/oxychlorides, others being PCl3 and POCl3. PCl5 finds use as a chlorinating reagent.  It is a colourless, water-sensitive solid, although commercial samples can be yellowish and contaminated with hydrogen chloride.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphorus_pentachloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">ClP(Cl)(Cl)(Cl)Cl</property>
   </propertyList>
 </ns0:molecule>

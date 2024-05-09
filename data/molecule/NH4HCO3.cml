@@ -38,5 +38,6 @@
     <property title="Description">Ammonium bicarbonate is an inorganic compound with formula (NH4)HCO3. The compound has many names, reflecting its long history. Chemically speaking, it is the bicarbonate salt of the ammonium ion. It is a colourless solid that degrades readily to carbon dioxide, water and ammonia.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ammonium_bicarbonate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[O-](C(=O)O)[NH4+]</property>
   </propertyList>
 </ns0:molecule>

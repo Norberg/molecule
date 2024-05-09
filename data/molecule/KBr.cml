@@ -21,5 +21,6 @@
 Under standard conditions, potassium bromide is a white crystalline powder. It is freely soluble in water; it is not soluble in acetonitrile. In a dilute aqueous solution, potassium bromide tastes sweet, at higher concentrations it tastes bitter, and tastes salty when the concentration is even higher. These effects are mainly due to the properties of the potassium ion&#x2014;sodium bromide tastes salty at any concentration. In high concentration, potassium bromide strongly irritates the gastric mucous membrane, causing nausea and sometimes vomiting (a typical effect of all soluble potassium salts).</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Potassium_bromide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[K+].[Br-]</property>
   </propertyList>
 </ns0:molecule>

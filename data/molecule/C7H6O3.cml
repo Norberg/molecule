@@ -51,5 +51,6 @@
     <property title="Description">Salicylic acid is an organic compound with the formula C&lt;sub&gt;7&lt;/sub&gt;H&lt;sub&gt;6&lt;/sub&gt;O&lt;sub&gt;3&lt;/sub&gt;. A colorless (or, white), bitter-tasting solid, it is a precursor to and a metabolite of aspirin (acetylsalicylic acid). It is a plant hormone, and has been listed by the EPA Toxic Substances Control Act (TSCA) Chemical Substance Inventory as an experimental teratogen. The name is from Latin salix for willow tree, from which it was initially identified and derived. It is an  ingredient in some anti-acne products. Salts and esters of salicylic acid are known as salicylates.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Salicylic_acid</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=C(O)c1ccccc1O</property>
   </propertyList>
 </ns0:molecule>

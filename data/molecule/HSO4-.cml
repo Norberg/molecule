@@ -38,5 +38,6 @@
     <property title="Description">The hydrogensulfate ion  HSO4&#x2212;, also called the bisulfate ion, is the conjugate base of sulfuric acid (H2SO4). Sulfuric acid is classified as a strong acid; in aqueous solutions it ionizes completely to form hydronium (H3O+) and hydrogensulfate HSO4- ions. In other words, the sulfuric acid behaves as a Br&#xF8;nsted&#x2013;Lowry acid and is deprotonated to form hydrogensulfate ion. Hydrogensulfate has a valency of 1. An example of a salt containing the HSO4- ion is sodium bisulfate, NaHSO4. In dilute solutions the hydrogensulfate ions also dissociate, forming more hydronium ions and sulfate ions SO4-2. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sulfate#Hydrogensulfate_(bisulfate)</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">OS(=O)(=O)[O-]</property>
   </propertyList>
 </ns0:molecule>

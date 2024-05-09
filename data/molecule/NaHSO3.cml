@@ -34,5 +34,6 @@
     <property title="Description">Sodium bisulfite (or sodium bisulphite, sodium hydrogen sulfite) is a chemical mixture with the approximate chemical formula NaHSO3. Sodium bisulfite in fact is not a real compound, but a mixture of salts that dissolve in water to give solutions composed of sodium and bisulfite ions. It appears in form of white or yellowish-white crystals with an odor of sulfur dioxide. Regardless of its ill-defined nature, sodium bisulfite is used in many different industries such as a food additive with E number E222 in the food industry, a reducing agent in the cosmetic industry, and a decomposer of residual hypochlorite used in the bleaching industry.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_bisulfite</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+].[O-]S(=O)O</property>
   </propertyList>
 </ns0:molecule>

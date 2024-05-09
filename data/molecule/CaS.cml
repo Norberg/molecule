@@ -22,5 +22,6 @@
     <property title="Description">Calcium sulfide is the chemical compound with the formula CaS.  This white material crystallizes in cubes like rock salt.  CaS has been studied as a component in a process that would recycle gypsum, a product of flue-gas desulfurization. Like many salts containing sulfide ions, CaS typically has an odour of H2S, which results from small amount of this gas formed by hydrolysis of the salt.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_sulfide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ca]=S</property>
   </propertyList>
 </ns0:molecule>

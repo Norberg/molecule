@@ -41,5 +41,6 @@
     <property title="Description">Ethylene oxide is an organic compound with the formula C2H4O. It is a cyclic ether and the simplest epoxide: a three-membered ring consisting of one oxygen atom and two carbon atoms. Ethylene oxide is a colorless and flammable gas with a faintly sweet odor. Because it is a strained ring, ethylene oxide easily participates in a number of addition reactions that result in ring-opening. Ethylene oxide is isomeric with acetaldehyde and with vinyl alcohol. Ethylene oxide is industrially produced by oxidation of ethylene in the presence of a silver catalyst. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ethylene_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C1OC1</property>
   </propertyList>
 </ns0:molecule>

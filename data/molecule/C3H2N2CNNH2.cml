@@ -43,5 +43,6 @@
     <property title="DescriptionLicense">GPLv3</property>
     <property title="Name">5-aminoimidazole-4-carbonitrile</property>
     <property title="Description">AICN form of Diaminomaleonitrile (DAMN) that allows further reactions to form various various nucleobases.</property>
+    <property title="Smiles">c1nc(c([nH]1)C#N)N</property>
   </propertyList>
 </ns0:molecule>

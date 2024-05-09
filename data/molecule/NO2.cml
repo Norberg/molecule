@@ -26,5 +26,6 @@
 Nitrogen dioxide is poisonous and can be fatal if inhaled in large quantities. The LC50 (median lethal dose) for humans has been estimated to be 174 ppm for a 1-hour exposure. It is also included in the NOx family of atmospheric pollutants. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitrogen_dioxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">N(=O)O</property>
   </propertyList>
 </ns0:molecule>

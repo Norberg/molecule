@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" formalCharge="-1" id="a1" x2="1.0" y2="-0.0"/>
-    <atom elementType="H" id="a2" x2="-0.0" y2="-0.0"/>
+    <atom x2="1.0" y2="-0.0" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="H"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -22,5 +22,6 @@
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="Description">Hydroxide is a diatomic anion with chemical formula OH&#x2212;. It consists of an oxygen and a hydrogen atom held together by a covalent bond, and carries a negative electric charge. It is an important but usually minor constituent of water. It functions as a base, a ligand, a nucleophile and a catalyst. The hydroxide ion forms salts, some of which dissociate in aqueous solution, liberating solvated hydroxide ions.</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Hydroxide</property>
+    <property title="Smiles">[OH-]</property>
   </propertyList>
 </ns0:molecule>

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Cl" id="a1" x2="1.732051" y2="-0.0"/>
-    <atom elementType="Cl" id="a3" x2="-0.0" y2="-0.0"/>
-    <atom elementType="S" id="a2" x2="0.866025" y2="0.5"/>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="S"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="1"/>
@@ -21,5 +21,6 @@
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sulfur dichloride</property>
+    <property title="Smiles">ClSCl</property>
   </propertyList>
 </ns0:molecule>

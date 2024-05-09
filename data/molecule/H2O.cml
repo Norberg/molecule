@@ -32,5 +32,6 @@
     <property title="Name">Water</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="Description">Water is a transparent fluid which forms the world's streams, lakes, oceans and rain, and is the major constituent of the fluids of living things. As a chemical compound, a water molecule contains one oxygen and two hydrogen atoms that are connected by covalent bonds. Water is a liquid at standard ambient temperature and pressure, but it often co-exists on Earth with its solid state, ice; and gaseous state, steam (water vapor).</property>
+    <property title="Smiles">O</property>
   </propertyList>
 </molecule>

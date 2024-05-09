@@ -51,5 +51,6 @@
     <property title="Description">Bromobenzene is an aryl bromide and the simplest of the bromobenzenes, consisting of a benzene ring substituted with one bromine atom. Its chemical formula is C6H5Br. It is a colourless liquid although older samples can appear yellow. It is a reagent in organic synthesis. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromobenzene</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">c1ccc(cc1)Br</property>
   </propertyList>
 </ns0:molecule>

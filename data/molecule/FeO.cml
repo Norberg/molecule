@@ -22,5 +22,6 @@
     <property title="Description">Iron(II) oxide or ferrous oxide is the inorganic compound with the formula FeO. Its mineral form is known as w&#xFC;stite. One of several iron oxides, it is a black-colored powder that is sometimes confused with rust, the latter of which consists of hydrated iron(III) oxide (ferric oxide). Iron(II) oxide also refers to a family of related non-stoichiometric compounds, which are typically iron deficient with compositions ranging from Fe0.84O to Fe0.95O.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(II)_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Fe]=O</property>
   </propertyList>
 </ns0:molecule>

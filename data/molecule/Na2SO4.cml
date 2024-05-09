@@ -32,5 +32,6 @@
     <property title="Description">Sodium sulfate is the sodium salt of sulfuric acid. When anhydrous, it is a white crystalline solid of formula Na&lt;sub&gt;2&lt;/sub&gt;SO&lt;sub&gt;4&lt;/sub&gt; known as the mineral thenardite; the decahydrate Na&lt;sub&gt;2&lt;/sub&gt;SO&lt;sub&gt;4&lt;/sub&gt;&#xB7;10H&lt;sub&gt;2&lt;/sub&gt;O is found naturally as the mineral mirabilite, and in processed form has been known as Glauber's salt or, historically, sal mirabilis since the 17th century. Another solid is the heptahydrate, which transforms to mirabilite when cooled. With an annual production of 6 million tonnes, it is a major commodity chemical product.</property>
     <property title="Name">Sodium sulfate</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=S(=O)([O-][Na+])[O-][Na+]</property>
   </propertyList>
 </ns0:molecule>

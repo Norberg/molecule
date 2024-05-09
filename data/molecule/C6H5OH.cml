@@ -55,5 +55,6 @@
 Phenol was first extracted from coal tar, but today is produced on a large scale (about 7 million tonnes a year) from petroleum-derived feedstocks. It is an important industrial commodity as a precursor to many materials and useful compounds. It is primarily used to synthesize plastics and related materials.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phenol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Oc1ccccc1</property>
   </propertyList>
 </ns0:molecule>

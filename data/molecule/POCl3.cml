@@ -45,5 +45,6 @@ formation (&#x394;fH&#x29B5;298)
 	&#x2212;597.1 kJ&#xB7;mol&#x2212;1 (liquid), &#x2212;558.5 kJ&#xB7;mol&#x2212;1 (gas) </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Phosphoryl_chloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=P(Cl)(Cl)Cl</property>
   </propertyList>
 </ns0:molecule>

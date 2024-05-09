@@ -43,5 +43,6 @@
 Sulfuric acid is a diprotic acid and shows different properties depending upon its concentration. Its corrosiveness on other materials, like metals, living tissues or even stones, can be mainly ascribed to its strong acidic nature and, if concentrated, strong dehydrating and oxidizing property.</property>
     <property title="Name">Sulfuric acid</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">OS(=O)(=O)O</property>
   </propertyList>
 </ns0:molecule>

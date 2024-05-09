@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="O" id="a3" x2="0.866025" y2="1.5"/>
-    <atom elementType="O" id="a1" x2="1.732051" y2="-0.0"/>
-    <atom elementType="O" id="a4" x2="-0.0" y2="-0.0"/>
-    <atom elementType="S" id="a2" x2="0.866025" y2="0.5"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="O"/>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="S"/>
   </ns0:atomArray>
   <ns0:bondArray>
     <bond atomRefs2="a1 a2" order="2"/>
@@ -29,5 +29,6 @@ Sulfur trioxide will cause serious burns on both inhalation and ingestion since 
 </property>
     <property title="Name">Sulfur trioxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=S(=O)=O</property>
   </propertyList>
 </ns0:molecule>

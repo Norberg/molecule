@@ -31,5 +31,6 @@
 </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Formamide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=CN</property>
   </propertyList>
 </ns0:molecule>

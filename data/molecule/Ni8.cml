@@ -37,5 +37,6 @@
     <property title="Description">Raney nickel also called spongy nickel, is a fine-grained solid composed mostly of nickel derived from a nickel&#x2013;aluminium alloy.  Several grades are known, of which most are gray solids. Some are pyrophoric, but most are used as air-stable slurries. Raney nickel is used as a reagent and as a catalyst in organic chemistry. It was developed in 1926 by American engineer Murray Raney for the hydrogenation of vegetable oils.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Raney_nickel</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ni]1[Ni]2[Ni]3[Ni][Ni][Ni]3[Ni]2[Ni]1</property>
   </propertyList>
 </ns0:molecule>

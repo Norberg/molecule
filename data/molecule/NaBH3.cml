@@ -31,5 +31,6 @@
 The compound was discovered in the 1940s by H. I. Schlesinger, who led a team seeking volatile uranium compounds. Results of this wartime research were declassified and published in 1953. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_borohydride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Na+].[BH4-]</property>
   </propertyList>
 </ns0:molecule>

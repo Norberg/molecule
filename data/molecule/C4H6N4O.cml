@@ -48,6 +48,6 @@
     <property title="Name">5-Aminoimidazole-4-carboxamide</property>
     <property title="DescriptionAttribution">Simon Norberg</property>
     <property title="DescriptionLicense">GPLv3</property>
-    <property title="Description"/>
+    <property title="Smiles">c1nc(c([nH]1)C(=O)N)N</property>
   </propertyList>
 </ns0:molecule>

@@ -24,5 +24,6 @@
     <property title="Description">Sulfur dioxide (IUPAC-recommended spelling) or sulphur dioxide (traditional Commonwealth English) is the chemical compound with the formula SO2. It is a toxic gas responsible for the odor of burnt matches. It is released naturally by volcanic activity and is produced as a by-product of copper extraction and the burning of sulfur-bearing fossil fuels. It was known to alchemists as "volatile spirit of sulfur" since at least 16th century.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sulfur_dioxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=S=O</property>
   </propertyList>
 </ns0:molecule>

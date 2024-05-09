@@ -28,5 +28,6 @@
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nickel</property>
     <property title="Radius">1.63</property>
+    <property title="Smiles">[Ni]</property>
   </propertyList>
 </ns0:molecule>

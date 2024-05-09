@@ -36,5 +36,6 @@
     <property title="Description">2-Chloroethanol (also called ethylene chlorohydrin or glycol chlorohydrin) is an organic chemical compound with the chemical formula HOCH2CH2Cl and the simplest beta-halohydrin (chlorohydrin). This colorless liquid has a pleasant ether-like odor. It is miscible with water. The molecule is bifunctional, consisting of both an alkyl chloride and an alcohol functional group.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/2-Chloroethanol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">OCCCl</property>
   </propertyList>
 </ns0:molecule>

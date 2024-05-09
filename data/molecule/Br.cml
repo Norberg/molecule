@@ -20,5 +20,6 @@
     <property title="Description">Bromine is a chemical element; it has symbol Br and atomic number 35. It is a volatile red-brown liquid at room temperature that evaporates readily to form a similarly coloured vapour. Its properties are intermediate between those of chlorine and iodine. Isolated independently by two chemists, Carl Jacob L&#xF6;wig (in 1825) and Antoine J&#xE9;r&#xF4;me Balard (in 1826), its name was derived from the Ancient Greek &#x3B2;&#x3C1;&#x1FF6;&#x3BC;&#x3BF;&#x3C2; (bromos) meaning "stench", referring to its sharp and pungent smell. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Bromine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Br</property>
   </propertyList>
 </ns0:molecule>

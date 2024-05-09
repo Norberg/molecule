@@ -22,5 +22,6 @@
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
     <property title="Description">Oxygen is a chemical element with symbol O and atomic number 8. It is a member of the chalcogen group on the periodic table and is a highly reactive nonmetallic element and oxidizing agent that readily forms compounds (notably oxides) with most elements. By mass, oxygen is the third-most abundant element in the universe, after hydrogen and helium. At STP, two atoms of the element bind to form dioxygen, a diatomic gas that is colorless, odorless, and tasteless, with the formula O&lt;sub&gt;2&lt;/sub&gt;. Oxygen was discovered independently by Carl Wilhelm Scheele, in Uppsala, in 1773 or earlier, and Joseph Priestley in Wiltshire, in 1774, but Priestley is often given priority because his work was published first. The name oxygen was coined in 1777 by Antoine Lavoisier, whose experiments with oxygen helped to discredit the then-popular phlogiston theory of combustion and corrosion.</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Oxygen</property>
+    <property title="Smiles">O=O</property>
   </propertyList>
 </ns0:molecule>

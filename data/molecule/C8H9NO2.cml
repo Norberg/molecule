@@ -61,5 +61,6 @@
 At a standard dose, paracetamol slightly decreases body temperature; it is inferior to ibuprofen in that respect, and the benefits of its use for fever are unclear, particularly in the context of fever of viral origins. Paracetamol may relieve pain in acute mild migraine but only slightly in episodic tension headache.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Paracetamol</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CC(=O)Nc1ccc(O)cc1</property>
   </propertyList>
 </ns0:molecule>

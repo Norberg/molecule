@@ -34,5 +34,6 @@
 The mineral form of this compound, shcherbinaite, is extremely rare, almost always found among fumaroles. A mineral trihydrate, V2O5&#xB7;3H2O, is also known under the name of navajoite. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Vanadium(V)_oxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=[V](=O)O[V](=O)=O</property>
   </propertyList>
 </ns0:molecule>

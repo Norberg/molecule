@@ -30,5 +30,6 @@
     <property title="Description">Ammonium chloride is an inorganic chemical compound with the chemical formula NH4Cl, also written as [NH4]Cl. It is an ammonium salt of hydrogen chloride. It consists of ammonium cations NH4+ and chloride anions Cl&#x2212;. It is a white crystalline salt that is highly soluble in water. Solutions of ammonium chloride are mildly acidic. In its naturally occurring mineralogic form, it is known as sal ammoniac. The mineral is commonly formed on burning coal dumps from condensation of coal-derived gases. It is also found around some types of volcanic vents. It is mainly used as fertilizer and a flavouring agent in some types of liquorice. It is a product of the reaction of hydrochloric acid and ammonia.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Ammonium_chloride</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[NH4+][Cl-]</property>
   </propertyList>
 </ns0:molecule>

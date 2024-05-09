@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
   <ns0:atomArray>
-    <atom elementType="Fe" formalCharge="3" id="a1" x2="1.0" y2="0.0"/>
+    <atom x2="1.0" y2="0.0" formalCharge="3" id="a1" elementType="Fe"/>
   </ns0:atomArray>
   <propertyList title="states">
     <propertyList title="Aqueous">
@@ -17,5 +17,6 @@
     <property title="Radius">1.39</property>
     <property title="Name">Ferric - Iron(III)</property>
     <property title="Weight">56.0</property>
+    <property title="Smiles">[Fe+3]</property>
   </propertyList>
 </ns0:molecule>

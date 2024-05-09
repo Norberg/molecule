@@ -24,5 +24,6 @@
     <property title="Description">Hypochlorous acid is an inorganic compound with the chemical formula ClOH, also written as HClO, HOCl, or ClHO. Its structure is H&#x2212;O&#x2212;Cl. It is an acid that forms when chlorine dissolves in water, and itself partially dissociates, forming hypochlorite anion, ClO&#x2212;. HClO and ClO&#x2212; are oxidizers, and the primary disinfection agents of chlorine solutions. HClO cannot be isolated from these solutions due to rapid equilibration with its precursor, chlorine. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hypochlorous_acid</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">ClO</property>
   </propertyList>
 </ns0:molecule>

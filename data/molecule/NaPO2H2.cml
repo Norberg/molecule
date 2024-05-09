@@ -31,5 +31,6 @@
 Sodium hypophosphite should be kept in a cool, dry place, isolated from oxidizing materials. It decomposes into phosphine which is irritating to the respiratory tract and disodium phosphate. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sodium_hypophosphite</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[O-][PH2]=O.[Na+]</property>
   </propertyList>
 </ns0:molecule>

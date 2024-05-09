@@ -54,5 +54,6 @@
     <property title="Description">Methyl tert-butyl ether (MTBE), also known as tert-butyl methyl ether, is an organic compound with a structural formula (CH3)&lt;sub&gt;3&lt;/sub&gt;COCH3. MTBE is a volatile, flammable, and colorless liquid that is sparingly soluble in water. Primarily used as a fuel additive, MTBE is blended into gasoline to increase its octane rating and knock resistance, and reduce unwanted emissions.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Methyl_tert-butyl_ether</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O(C(C)(C)C)C</property>
   </propertyList>
 </ns0:molecule>

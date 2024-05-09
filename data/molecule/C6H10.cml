@@ -61,5 +61,6 @@
 Cyclohexene is produced by the partial hydrogenation of benzene, a process developed by the Asahi Chemical company. The main product of the process is cyclohexane because cyclohexene is more easily hydrogenated than benzene. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Cyclohexene</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C1CCC=CC1</property>
   </propertyList>
 </ns0:molecule>

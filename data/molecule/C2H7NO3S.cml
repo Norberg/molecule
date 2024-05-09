@@ -48,5 +48,6 @@
 Taurine is named after Latin taurus (cognate to Ancient Greek &#x3C4;&#x3B1;&#x1FE6;&#x3C1;&#x3BF;&#x3C2;, ta&#xFB;ros) meaning bull or ox, as it was first isolated from ox bile in 1827 by German scientists Friedrich Tiedemann and Leopold Gmelin. It was discovered in human bile in 1846 by Edmund Ronalds.</property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Taurine</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=S(=O)(CCN)O</property>
   </propertyList>
 </ns0:molecule>
