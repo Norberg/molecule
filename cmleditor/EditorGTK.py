@@ -144,8 +144,10 @@ class EditorGTK:
         if self.molecule.is_atom:
             self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
             self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
+        self.molecule.property["Smiles"] = self.widget("txtSmiles").get_text()
         self.molecule.write(self.filename)
         CachedCml.evictFromCache(self.formula)
+        self.preview_molecule()
         self.updateReactions(self.formula)
 
     def on_btnNext_clicked(self, widget):
@@ -198,6 +200,7 @@ class EditorGTK:
         self.widget("textbufferDescription").set_text(
                 molecule.property.get("Description", ""))
 
+        self.widget("txtSmiles").set_text(molecule.property.get("Smiles", ""))
         if self.molecule.is_atom:
             self.setAtomSettings()
         else:
