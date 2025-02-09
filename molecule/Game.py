@@ -24,6 +24,7 @@ from molecule import Universe
 from molecule import Config
 from molecule.Levels import Levels
 from molecule import Gui
+from molecule.server.Server import Server
 #FIXME: Commit missing file
 #from molecule import pymunk_debug
 
@@ -43,6 +44,7 @@ class Game(pyglet.window.Window):
         self.init_pyglet()
         self.DEBUG_GRAPHICS = False
         self.level = None
+        self.server = Server()
         self.start()
 
     def create_config(self):
@@ -64,6 +66,8 @@ class Game(pyglet.window.Window):
         self.levels = Levels("data/levels", Config.current.level, window=self)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
         self.reset_level()
+        self.server.start()
+        
 
     def init_pyglet(self):
         gl.glLineWidth(4)
