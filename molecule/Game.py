@@ -24,7 +24,8 @@ from molecule import Universe
 from molecule import Config
 from molecule.Levels import Levels
 from molecule import Gui
-from molecule import pymunk_debug
+#FIXME: Commit missing file
+#from molecule import pymunk_debug
 
 class Game(pyglet.window.Window):
     def __init__(self):
