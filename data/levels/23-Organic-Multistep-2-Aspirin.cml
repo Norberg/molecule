@@ -17,6 +17,6 @@
   <victoryCondition>
     <molecule title="C9H8O4"/>
   </victoryCondition>
-  <objective text="Create Aspirin C9H8O4 by performing an addition and an elemination reaction"/>
+  <objective text="Create Aspirin C9H8O4 by performing a series of organic reactions"/>
   <hint text="Noop"/>
 </level>

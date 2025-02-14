@@ -200,7 +200,7 @@ class Level(Cml):
 
         self.objective = self.parseText(self.OBJECTIVE)
         self.hint = self.parseText(self.HINT)
-
+        self.reactions_hint = self.parseReaction(self.treefind(self.HINT))
         inventory_list_tag = self.treefind(self.INVENTORY_LIST)
         if inventory_list_tag is not None:
             self.inventory = self.parseMoleculeList(inventory_list_tag)

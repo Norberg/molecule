@@ -39,5 +39,6 @@
     <property title="Description">Calcium hydroxide (traditionally called slaked lime) is an inorganic compound with the chemical formula Ca(OH)2. It is a colorless crystal or white powder and is produced when quicklime (calcium oxide) is mixed with water. It has many names including hydrated lime, caustic lime, builders' lime, slaked lime, cal, and pickling lime. Calcium hydroxide is used in many applications, including food preparation, where it has been identified as E number E526. Limewater, also called milk of lime, is the common name for a saturated solution of calcium hydroxide. </property>
     <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_hydroxide</property>
     <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[OH-].[Ca+2].[OH-]</property>
   </propertyList>
 </ns0:molecule>

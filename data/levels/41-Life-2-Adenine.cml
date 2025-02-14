@@ -17,6 +17,6 @@
     <molecule title="C5H5N5"/>
     <molecule title="C5H5N5"/>
   </victoryCondition>
-  <objective text="Let make Adenine C5H5N5 one of 4 building blocks of DNA"/>
+  <objective text="Let make Guanine C5H5N5 one of 4 building blocks of DNA"/>
   <hint text="Noop"/>
 </level>
