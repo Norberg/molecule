@@ -7,9 +7,19 @@ from libcml import Cml
 import cml2img
 #import utils.rdkit_render as rdkit_render
 
+def getMolecule(filename):
+    molecule = Cml.Molecule()
+    molecule.parse(filename)
+    formula = filename.split("/")[-1].split(".cml")[0]
+    return {
+        "formula": formula,
+        "property": molecule.property,
+        "isAtom": molecule.is_atom
+    }
 
 router = APIRouter()
 known_molecules = [filename.split("/")[-1].split(".cml")[0] for filename in glob.glob("data/molecule/*")]
+moleculeList = [getMolecule(filename) for filename in glob.glob("data/molecule/*")]
 
 @router.get("/state")
 async def get_game_state():
@@ -17,8 +27,7 @@ async def get_game_state():
 
 @router.get("/molecule")
 async def getMolecules():
-    return [getMolecule(filename) for filename in glob.glob("data/molecule/*")]
-
+    return [molecule for molecule in moleculeList if not molecule["isAtom"]]
 
 @router.get("/molecule/{formula}/image")
 async def getMoleculeImage(formula):
@@ -34,14 +43,19 @@ async def getMoleculeSkeletal(formula):
     path = "img/skeletal/molecule/" + formula + ".png"
     return FileResponse(path)
 
-def getMolecule(filename):
-    molecule = Cml.Molecule()
-    molecule.parse(filename)
-    formula = filename.split("/")[-1].split(".cml")[0]
-    return {"formula": formula, "property": molecule.property}
+@router.get("/atom")
+async def getAtoms():
+    return [molecule for molecule in moleculeList if molecule["isAtom"]]
+
+@router.get("/atom/{symbol}/image")
+async def getAtomImage(symbol):
+    symbol = stripAtomSymbol(symbol.lower())
+    path = "img/atom-" + symbol + ".png"
+    return FileResponse(path)
 
 def validateFormula(formula):
     if not formula in known_molecules:
         raise HTTPException(status_code=404, detail="Formula not found")
 
-    
+def stripAtomSymbol(symbol):
+    return ''.join(filter(str.isalpha, symbol))[:3]
