@@ -9,6 +9,7 @@ import cml2img
 
 
 router = APIRouter()
+known_molecules = [filename.split("/")[-1].split(".cml")[0] for filename in glob.glob("data/molecule/*")]
 
 @router.get("/state")
 async def get_game_state():
@@ -29,14 +30,18 @@ async def getMoleculeImage(formula):
 
 @router.get("/molecule/{formula}/skeletal")
 async def getMoleculeSkeletal(formula):
-    rdkit_render.render_individual_molecule(formula, None, "preview-skeletal.png")
-    return FileResponse("preview-skeletal.png")
-
+    validateFormula(formula)
+    path = "img/skeletal/molecule/" + formula + ".png"
+    return FileResponse(path)
 
 def getMolecule(filename):
     molecule = Cml.Molecule()
     molecule.parse(filename)
     formula = filename.split("/")[-1].split(".cml")[0]
     return {"formula": formula, "property": molecule.property}
+
+def validateFormula(formula):
+    if not formula in known_molecules:
+        raise HTTPException(status_code=404, detail="Formula not found")
 
     

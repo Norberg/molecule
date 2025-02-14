@@ -28,7 +28,7 @@ def render_all_reactions():
             reactants = reaction.reactants
             products = list_without_state(reaction.products)
             #render_reaction_image(reactants, products, "molecule/theme/skeletal/reaction/" + "_".join(reactants) + "_to_" + "_".join(products) + ".png")
-            render_reaction_image([], products, "molecule/theme/skeletal/reaction/UNKNOWN_to_" + "_".join(products) + ".png")
+            render_reaction_image([], products, "img/skeletal/reaction/UNKNOWN_to_" + "_".join(products) + ".png")
 
 def render_all_molecules():
     for filename in os.listdir("data/molecule"):
@@ -41,7 +41,7 @@ def render_all_molecules():
                 print(f"Failed to fetch SMILES for {formula}")
                 continue
             img = render_molecule(smiles)
-            img.save(f"molecule/theme/skeletal/molecule/{formula}.png", format='PNG')
+            img.save(f"img/skeletal/molecule/{formula}.png", format='PNG')
 
 def render_molecule(molecule: str, size: tuple = (300, 300)):
     ps = Chem.SmilesParserParams()
