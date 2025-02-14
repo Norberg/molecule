@@ -1,8 +1,9 @@
 import uvicorn
+import threading
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from molecule.server.routes import router
-import threading
 
 class Server:
     def __init__(self):
