@@ -25,8 +25,7 @@ from molecule import Config
 from molecule.Levels import Levels
 from molecule import Gui
 from molecule.server.Server import Server
-#FIXME: Commit missing file
-#from molecule import pymunk_debug
+from molecule import pymunk_debug
 
 class Game(pyglet.window.Window):
     def __init__(self):
