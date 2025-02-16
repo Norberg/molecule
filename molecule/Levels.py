@@ -182,7 +182,7 @@ class Level:
             reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
             return
         for molecule in reactingMolecules:
-            molecule.delete()
+            self.delete_molecule(molecule)
         self.create_elements(reaction.products, position)
 
     def element_collision(self, arbiter, space, data):
@@ -276,7 +276,7 @@ class Level:
             for effect in self.get_effect_supporting("put"):
                 if effect.clicked((x,y)):
                     if effect.put_element(molecule):
-                        molecule.delete()
+                        self.delete_molecule(molecule)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         x,y = self.limit_pos_to_screen(x,y)
@@ -313,6 +313,10 @@ class Level:
             element.update()
         for area in self.areas:
             area.update()
+
+    def delete_molecule(self, molecule):
+        self.elements.remove(molecule)
+        molecule.delete()
 
     def delete(self):
         self.window.remove_handlers(self)
