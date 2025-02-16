@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 import glob
 import subprocess
+from molecule.Levels import Level
 
 from libcml import Cml
 import cml2img
-#import utils.rdkit_render as rdkit_render
+from molecule import Skeletal
 
 def getMolecule(filename):
     molecule = Cml.Molecule()
@@ -32,8 +33,6 @@ async def getMolecules():
 @router.get("/molecule/{formula}/image")
 async def getMoleculeImage(formula):
     state_formula = formula+"(aq)"
-    #cml2img.convert_cml2ipng(state_formula, "preview.png")
-    ## run cmd like python cml2img.py -f "H2O(aq)" -o preview.png
     subprocess.run(["python", "cml2img.py", "-f", state_formula, "-o", "preview.png"])
     return FileResponse("preview.png")
 
@@ -53,9 +52,37 @@ async def getAtomImage(symbol):
     path = "img/atom-" + symbol + ".png"
     return FileResponse(path)
 
+@router.get("/level/current")
+async def getCurrentLevel(request: Request):
+    current_level: Level = request.app.state.server.level
+    return {"points": current_level.get_points(),
+             "time": current_level.get_time(),
+             "hint" : current_level.cml.hint,
+             "reactionHint": reactionHint(current_level.cml.reactions_hint),
+             "reactingElements" : reactingElements(current_level.elements)
+            }
+
+@router.get("/reaction/image/{filename}")
+async def getReactionImage(filename):
+    path = Skeletal.REACTION_DIR + filename
+    return FileResponse(path)
+
 def validateFormula(formula):
     if not formula in known_molecules:
         raise HTTPException(status_code=404, detail="Formula not found")
 
 def stripAtomSymbol(symbol):
     return ''.join(filter(str.isalpha, symbol))[:3]
+
+def reactingElements(elements):
+    return [element.formula for element in elements]
+
+def reactionHint(reactions):
+    response = []
+    for reaction in reactions:
+        response.append({
+            "reactants": reaction.reactants, 
+            "products": reaction.products,
+            "reactionPath": Skeletal.reactionFileName(reaction),
+            "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
+    return response

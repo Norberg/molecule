@@ -102,6 +102,7 @@ class Game(pyglet.window.Window):
         self.batch = level.batch
         self.level = level
         self.space = level.space
+        self.server.switch_level(level)
 
     def reset_level(self):
         level = self.levels.get_current_level()

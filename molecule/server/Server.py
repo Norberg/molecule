@@ -9,6 +9,7 @@ class Server:
     def __init__(self):
         self.app = FastAPI()
         self.app.include_router(router)
+        self.app.state.server = self
         
         # Add CORS middleware
         self.app.add_middleware(
@@ -22,3 +23,6 @@ class Server:
     def start(self):
         server_thread = threading.Thread(target=uvicorn.run, args=(self.app,), kwargs={"host": "127.0.0.1", "port": 8000})
         server_thread.start()
+
+    def switch_level(self, level):
+        self.level = level

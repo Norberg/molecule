@@ -18,6 +18,7 @@ from libreact.Reaction import Reaction, list_without_state
 from libreact.Reaction import verify as Reaction_verify
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
+from molecule import Skeletal
 
 
 def render_all_reactions():
@@ -27,8 +28,9 @@ def render_all_reactions():
         for reaction in reactor.reactions:
             reactants = reaction.reactants
             products = list_without_state(reaction.products)
-            #render_reaction_image(reactants, products, "molecule/theme/skeletal/reaction/" + "_".join(reactants) + "_to_" + "_".join(products) + ".png")
-            render_reaction_image([], products, "img/skeletal/reaction/UNKNOWN_to_" + "_".join(products) + ".png")
+            render_reaction_image(reactants, products, Skeletal.reactionPath(reaction))
+            render_reaction_image([], products, Skeletal.reactionUnknownProductPath(reaction))
+
 
 def render_all_molecules():
     for filename in os.listdir("data/molecule"):

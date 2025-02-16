@@ -29,6 +29,7 @@
   </victoryCondition>
   <objective text="Let make Guanine C5H5N5O one of 4 building blocks of DNA"/>
   <hint text="Noop">
+  <reactions>
       <reaction>
       <reactantList>
         <molecule title="C4H6N4O"/>
@@ -42,5 +43,6 @@
         <molecule title="NH4+(aq)"/>
       </productList>
     </reaction>
+  </reactions>
   </hint>
 </level>

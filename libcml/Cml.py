@@ -118,6 +118,7 @@ class Cml:
         if element is None:
             element = self.tree.find(self.NS + xpath)
         return element
+    
     def parseReaction(self, reactionTag):
         reaction = Reaction()
         reaction.title = reactionTag.get("title")
@@ -200,10 +201,19 @@ class Level(Cml):
 
         self.objective = self.parseText(self.OBJECTIVE)
         self.hint = self.parseText(self.HINT)
-        self.reactions_hint = self.parseReaction(self.treefind(self.HINT))
+        self.reactions_hint = self.parseReactionHints(self.treefind(self.HINT+ "/reactions"))
         inventory_list_tag = self.treefind(self.INVENTORY_LIST)
         if inventory_list_tag is not None:
             self.inventory = self.parseMoleculeList(inventory_list_tag)
+
+    def parseReactionHints(self, hint_tag):
+        if hint_tag is None:
+            return []
+        hints = []
+        for hint in hint_tag:
+            r = self.parseReaction(hint)
+            hints.append(r)
+        return hints
 
     def parseEffectList(self, effect_list_tag):
         for effect_tag in effect_list_tag:
@@ -254,6 +264,7 @@ class Reactions(Cml):
         reactionsTag = self.tree.getroot()
         for reaction in self.reactions:
             self.writeReaction(reaction, reactionsTag)
+
 
 
 class Molecule(Cml):
