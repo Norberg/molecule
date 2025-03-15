@@ -7,6 +7,7 @@ from molecule.Levels import Level
 from libcml import Cml
 import cml2img
 from molecule import Skeletal
+from libreact.Reaction import list_without_state
 
 def getMolecule(filename):
     molecule = Cml.Molecule()
@@ -57,9 +58,11 @@ async def getCurrentLevel(request: Request):
     current_level: Level = request.app.state.server.level
     return {"points": current_level.get_points(),
              "time": current_level.get_time(),
+             "victoryCondition": current_level.cml.victory_condition,
              "hint" : current_level.cml.hint,
              "reactionHint": reactionHint(current_level.cml.reactions_hint),
-             "reactingElements" : reactingElements(current_level.elements)
+             "reactingElements" : reactingElements(current_level.elements),
+             "reactionLog"  : reactionHint(current_level.reaction_log)
             }
 
 @router.get("/reaction/image/{filename}")
@@ -81,8 +84,10 @@ def reactionHint(reactions):
     response = []
     for reaction in reactions:
         response.append({
-            "reactants": reaction.reactants, 
+            "reactants": list_without_state(reaction.reactants), 
             "products": reaction.products,
             "reactionPath": Skeletal.reactionFileName(reaction),
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response
+
+

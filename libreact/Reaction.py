@@ -137,6 +137,8 @@ def split_state(molecule):
     return formula, state
 
 def remove_state(molecule):
+    if not molecule.endswith(")"):
+        return molecule
     return split_state(molecule)[0]
 
 def verify(elements):

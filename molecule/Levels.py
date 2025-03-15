@@ -77,6 +77,7 @@ class Level:
         self.batch = pyglet.graphics.Batch()
         self.start_time = time.time()
         self.points = 0
+        self.reaction_log = []
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -176,7 +177,7 @@ class Level:
                 return
         else:
             reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
-
+        self.add_to_reaction_log(reaction.cml)
         if len(reactingMolecules) < 1:
             print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} without any reacting molecules")
             reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
@@ -184,6 +185,12 @@ class Level:
         for molecule in reactingMolecules:
             self.delete_molecule(molecule)
         self.create_elements(reaction.products, position)
+
+    def add_to_reaction_log(self, reaction):
+        self.points += 1
+        #print all params in the reaction
+        print(f"self.add_to_reaction_log(): {reaction.reactants} -> {reaction.products}")
+        self.reaction_log.append(reaction)
 
     def element_collision(self, arbiter, space, data):
         """ Called if two elements collides"""

@@ -19,7 +19,7 @@ from libcml import Cml
 REACTION_DIR = "img/skeletal/reaction/"
 
 def reactionFileName(reaction : Cml.Reaction):
-    reactants = reaction.reactants
+    reactants = list_without_state(reaction.reactants)
     products = list_without_state(reaction.products)
     return "_".join(reactants) + "_to_" + "_".join(products) + ".png"
 
