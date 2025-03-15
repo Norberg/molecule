@@ -20,6 +20,9 @@ from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
 from molecule import Skeletal
 
+import cairo
+import numpy as np
+
 
 def render_all_reactions():
         cml = Cml.Reactions()
@@ -64,6 +67,56 @@ def fetch_smiles(formula):
     molecule.parse(f"data/molecule/{formula}.cml")
     return molecule.property.get("Smiles", "")
 
+def crop_white_sides_cairo(surface, tolerance=240, margin=20):
+    """
+    Crop white margins from the left and right sides of a cairo ImageSurface, 
+    but preserve a fixed margin (20px by default) on each side.
+    """
+    width = surface.get_width()
+    height = surface.get_height()
+    stride = surface.get_stride()
+
+    buf = surface.get_data()
+    arr = np.frombuffer(buf, np.uint8).reshape(height, stride // 4, 4)
+    arr = arr[:, :width, :]
+
+    # Due to little-endian, ARGB is stored as BGRA in memory.
+    b = arr[:, :, 0]
+    g = arr[:, :, 1]
+    r = arr[:, :, 2]
+    # Create mask for pixels that are white (based on the tolerance)
+    white_mask = (r >= tolerance) & (g >= tolerance) & (b >= tolerance)
+
+    # Determine which columns are completely white
+    col_white = white_mask.all(axis=0)
+    non_white = np.where(~col_white)[0]
+    if non_white.size == 0:
+        return surface
+    # Find the exact non-white boundaries
+    left = int(non_white[0])
+    right = int(non_white[-1] + 1)  # Include the last non-white column
+
+    # Expand the crop boundaries keeping a fixed margin, ensuring they don't exceed image dimensions
+    new_left = max(0, left - margin)
+    new_right = min(width, right + margin)
+    new_width = new_right - new_left
+
+    # Create a new surface with the adjusted dimensions
+    new_surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, new_width, height)
+    ctx = cairo.Context(new_surface)
+    # Offset drawing by new_left to maintain the white margin at the left side
+    ctx.set_source_surface(surface, -new_left, 0)
+    ctx.paint()
+    return new_surface
+
+def process_png_with_cairo(png_path, tolerance=240):
+    """
+    Load the saved PNG as a cairo ImageSurface, crop its white sides, and overwrite the file.
+    """
+    surface = cairo.ImageSurface.create_from_png(png_path)
+    cropped = crop_white_sides_cairo(surface, tolerance)
+    cropped.write_to_png(png_path)
+
 def render_individual_molecule(formula, smiles, output):
     if formula:
         molecule = fetch_smiles(formula)
@@ -78,6 +131,7 @@ def render_individual_molecule(formula, smiles, output):
         return
     if output:
         img.save(output, format='PNG')
+        process_png_with_cairo(output)  # Post-processing: crop white margins using Cairo
     else:
         img.show()
 
@@ -104,6 +158,7 @@ def render_reaction_image(reactants, products, output,  requirements = []):
 
     if output:
         img.save(output, format='PNG')
+        process_png_with_cairo(output)  # Crop white margins from the reaction image
     else:
         img.show()
 
