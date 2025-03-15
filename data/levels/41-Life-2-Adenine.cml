@@ -3,20 +3,44 @@
   <moleculeList>
   </moleculeList>
   <inventoryList>
-    <molecule title="C4H4N4(s)"/>
-    <molecule title="C4H4N4(s)"/>
-    <molecule title="C4H4N4(s)"/>
-    <molecule title="HCN(g)"/>
-    <molecule title="HCN(g)"/>
-    <molecule title="HCN(g)"/>
+    <molecule title="C4H4N4(s)" />
+    <molecule title="C4H4N4(s)" />
+    <molecule title="C4H4N4(s)" />
+    <molecule title="HCN(g)" />
+    <molecule title="HCN(g)" />
+    <molecule title="HCN(g)" />
   </inventoryList>
   <effectList>
-      <effect title="UvLight" x2="200" y2="550"/>
+    <effect title="UvLight" x2="200" y2="550" />
   </effectList>
   <victoryCondition>
-    <molecule title="C5H5N5"/>
-    <molecule title="C5H5N5"/>
+    <molecule title="C5H5N5" />
+    <molecule title="C5H5N5" />
   </victoryCondition>
-  <objective text="Let make Guanine C5H5N5 one of 4 building blocks of DNA"/>
-  <hint text="Noop"/>
+  <objective text="Let make Guanine C5H5N5 one of 4 building blocks of DNA" />
+  <hint text="Noop">
+    <reactions>
+      <reaction
+        title="Diaminomaleonitrileitrile reacts with uv light to form aminoimidazole-5-carbonitrile (AICN)">
+        <requirementList>
+          <requirement type="UV light" molar_energy="100" />
+        </requirementList>
+        <reactantList>
+          <molecule title="C4H4N4" />
+        </reactantList>
+        <productList>
+          <molecule title="C3H2N2CNNH2(s)" />
+        </productList>
+      </reaction>
+      <reaction title="Aminoimidazole-5-carbonitrile reacts hydrogen cyanide to form Adenine">
+        <reactantList>
+          <molecule title="C3H2N2CNNH2" />
+          <molecule title="HCN" />
+        </reactantList>
+        <productList>
+          <molecule title="C5H5N5(s)" />
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
