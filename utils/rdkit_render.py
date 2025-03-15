@@ -28,8 +28,9 @@ def render_all_reactions():
         for reaction in reactor.reactions:
             reactants = reaction.reactants
             products = list_without_state(reaction.products)
-            render_reaction_image(reactants, products, Skeletal.reactionPath(reaction))
-            render_reaction_image([], products, Skeletal.reactionUnknownProductPath(reaction))
+            requirements = reaction.requirements
+            render_reaction_image(reactants, products, Skeletal.reactionPath(reaction), requirements)
+            render_reaction_image([], products, Skeletal.reactionUnknownProductPath(reaction), requirements)
 
 
 def render_all_molecules():
@@ -80,11 +81,19 @@ def render_individual_molecule(formula, smiles, output):
     else:
         img.show()
 
-def render_reaction_image(reactants, products, output):
+def render_reaction_image(reactants, products, output,  requirements = []):
     reactant_smiles = [fetch_smiles(formula) for formula in reactants]
     product_smiles = [fetch_smiles(formula) for formula in products]
 
     catalyst_smiles = list(set(reactant_smiles) & set(product_smiles))
+
+
+    if any(req.type == Cml.Requirement.EnergyType.UV_LIGHT for req in requirements):
+        catalyst_smiles = ["[U].[V]"]
+    elif len(requirements) > 0:
+        print(f"Unhandled requirements: {requirements}")
+        catalyst_smiles = ["[U].[V]"]
+
     reactant_smiles = [smiles for smiles in reactant_smiles if smiles not in catalyst_smiles]
     product_smiles = [smiles for smiles in product_smiles if smiles not in catalyst_smiles]
 
