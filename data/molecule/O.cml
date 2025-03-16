@@ -20,6 +20,6 @@
     <property title="Name">Oxygen</property>
     <property title="Weight">16.0</property>
     <property title="DescriptionAttribution">http://en.wikipedia.org/wiki/Oxygen</property>
-    <property title="Smiles">O</property>
+    <property title="Smiles">[O]</property>
   </propertyList>
 </ns0:molecule>
