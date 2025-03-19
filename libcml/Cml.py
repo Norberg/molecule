@@ -78,10 +78,15 @@ class State:
 
 
 class Reaction:
-    def __init__(self,reactants = None,products = None, title = None, requirements=[]):
+    def __init__(self,reactants = None,products = None, title = None, description = None, tags = [], requirements=[]):
         self.reactants = reactants
         self.products = products
         self.title = title
+        if description is None:
+            self.description = title
+        else:
+            self.description = description
+        self.tags = tags
         self.requirements = requirements
 
 class Effect:
@@ -129,6 +134,10 @@ class Cml:
                 reaction.reactants = self.parseMoleculeList(part)
             elif part.tag.endswith("requirementList"):
                 reaction.requirements = self.parseRequirements(part)
+            elif part.tag.endswith("description"):
+                reaction.description = part.text
+            elif part.tag.endswith("tagList"):
+                reaction.tags = [tag.text for tag in part]
         return reaction
 
     def parseMoleculeList(self, moleculesTag):

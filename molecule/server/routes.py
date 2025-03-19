@@ -86,6 +86,8 @@ def reactionHint(reactions):
         response.append({
             "reactants": list_without_state(reaction.reactants), 
             "products": list_without_state(reaction.products),
+            "description": reaction.description,
+            "tags": reaction.tags,
             "reactionPath": Skeletal.reactionFileName(reaction),
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response

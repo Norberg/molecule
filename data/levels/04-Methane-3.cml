@@ -17,6 +17,6 @@
     <molecule title="H2O"/>
     <molecule title="H2O"/>
   </victoryCondition>
-  <objective text="Create a CO2 and 2 H20 molecules"/>
+  <objective text="Create a CO2 and 2 H2O molecules"/>
   <hint text="CH4 + 2 O2 + Heat => CO2 + 2 H2O"/>
 </level>

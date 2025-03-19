@@ -465,7 +465,7 @@
     </reactantList>
     <productList>
       <molecule title="NH4Cl(aq)"/>
-      <nolecule title="NaHCO3(s)"/>
+      <molecule title="NaHCO3(s)"/>
     </productList>
   </reaction>
   <reaction title="Perperation of Sodium carbonate by drying and heating Sodium bicarbonate">
@@ -538,7 +538,7 @@
       <molecule title="H2O(l)"/>
     </productList>
   </reaction>
-  <reaction title="1st step of Mannheim process to create sodium bisulfate from sodium sulfate and sulfuric acid">
+  <reaction>
     <reactantList>
       <molecule title="NaCl"/>
       <molecule title="H2SO4"/>
@@ -547,8 +547,16 @@
       <molecule title="NaHSO4(s)"/>
       <molecule title="HCl(g)"/>
     </productList>
+    <description>
+      This reaction is the first step of the Mannheim process, which involves the reaction of sodium chloride (NaCl) with sulfuric acid (H2SO4) to produce sodium bisulfate (NaHSO4) and hydrogen chloride (HCl). 
+      The Mannheim process is commonly used in the production of sodium sulfate and hydrochloric acid.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Double displacement reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="2nd step of Mannheim process to create sodium sulfate from sodium bisulfate and sodium chloride">
+  <reaction>
     <reactantList>
       <molecule title="NaHSO4"/>
       <molecule title="NaCl"/>
@@ -557,8 +565,15 @@
       <molecule title="Na2SO4(s)"/>
       <molecule title="HCl(g)"/>
     </productList>
+    <description>
+      This reaction is the second step of the Mannheim process, which involves the reaction of sodium bisulfate (NaHSO4) with sodium chloride (NaCl) to produce sodium sulfate (Na2SO4) and hydrogen chloride (HCl). 
+      The Mannheim process is commonly used in the production of sodium sulfate and hydrochloric acid.
+    </description>
+    <tags>
+      <tag>Double displacement reaction</tag>
+    </tags>
   </reaction>
-  <reaction title="Reduce Sodium sulfate to Sodium sulfide with Carbon">
+  <reaction>
     <reactantList>
       <molecule title="Na2SO4"/>
       <molecule title="C"/>
@@ -569,8 +584,14 @@
       <molecule title="CO2(g)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <description>
+      This reaction involves the reduction of sodium sulfate (Na2SO4) with carbon (C) to produce sodium sulfide (Na2S) and carbon dioxide (CO2).
+    </description>
+    <tags>
+      <tag>Reduction reaction</tag>
+    </tags>
   </reaction>
-  <reaction title="Produce sodium carbonate and calcium sulfide from sodium sulfide and calcium carbonate">
+  <reaction>
     <reactantList>
       <molecule title="Na2S"/>
       <molecule title="CaCO3"/>
@@ -579,6 +600,12 @@
       <molecule title="Na2CO3(s)"/>
       <molecule title="CaS(s)"/>
     </productList>
+    <description>
+      This reaction involves the production of sodium carbonate (Na2CO3) and calcium sulfide (CaS) from sodium sulfide (Na2S) and calcium carbonate (CaCO3).
+    </description>
+    <tags>
+      <tag>Double displacement reaction</tag>
+    </tags>
   </reaction>
   <reaction title="Sulfur dioxide to sulpfur trioxide with Vandium trioxide catalyst">
     <reactantList>

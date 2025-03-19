@@ -286,10 +286,9 @@ class TestCML(unittest.TestCase):
     def testParseLevelWithReactionHint(self):
         level = Cml.Level()
         level.parse("data/levels/42-Life-3-Guanine.cml")
-        self.assertEqual(len(level.reactions_hint), 1)
-        self.assertEqual(level.reactions_hint[0].title, None)
-        self.assertEqual(level.reactions_hint[0].reactants, ['C4H6N4O', 'HCN', 'NH3', 'NH3'])
-        self.assertEqual(level.reactions_hint[0].products, ['C5H5N5O(s)', 'NH4+(aq)', 'NH4+(aq)'])
+        self.assertEqual(len(level.reactions_hint), 3)
+        self.assertEqual(level.reactions_hint[2].reactants, ['C4H6N4O', 'HCN', 'NH3', 'NH3'])
+        self.assertEqual(level.reactions_hint[2].products, ['C5H5N5O(s)', 'NH4+(aq)', 'NH4+(aq)'])
 
     def testAllMolecules(self):
         for filename in glob.glob("data/molecule/*"):

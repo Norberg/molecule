@@ -19,5 +19,20 @@
     <molecule title="H2"/>
   </victoryCondition>
   <objective text="Create a CO and 3 H2 molecules"/>
-  <hint text="H2O + CH4 + Heat => CO + 3H2"/>
+  <hint text="H2O + CH4 + Heat => CO + 3H2">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CH4"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="CO(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
