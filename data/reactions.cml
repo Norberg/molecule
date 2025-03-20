@@ -548,8 +548,9 @@
       <molecule title="HCl(g)"/>
     </productList>
     <description>
-      This reaction is the first step of the Mannheim process, which involves the reaction of sodium chloride (NaCl) with sulfuric acid (H2SO4) to produce sodium bisulfate (NaHSO4) and hydrogen chloride (HCl). 
-      The Mannheim process is commonly used in the production of sodium sulfate and hydrochloric acid.
+      This reaction is the first step of the Mannheim process, an industrial method used for the production of sodium sulfate and hydrochloric acid. 
+      In this step, sodium chloride (NaCl) reacts with concentrated sulfuric acid (H2SO4), resulting in the formation of sodium bisulfate (NaHSO4) as a solid and hydrogen chloride (HCl) as a gaseous byproduct. 
+      The reaction is highly exothermic and typically performed at elevated temperatures.
     </description>
     <tagList>
       <tag>Acid-base reaction</tag>
@@ -566,12 +567,12 @@
       <molecule title="HCl(g)"/>
     </productList>
     <description>
-      This reaction is the second step of the Mannheim process, which involves the reaction of sodium bisulfate (NaHSO4) with sodium chloride (NaCl) to produce sodium sulfate (Na2SO4) and hydrogen chloride (HCl). 
-      The Mannheim process is commonly used in the production of sodium sulfate and hydrochloric acid.
+      This reaction is the second step of the Mannheim process, where sodium bisulfate (NaHSO4) reacts with additional sodium chloride (NaCl) to produce sodium sulfate (Na2SO4) as a solid and hydrogen chloride (HCl) as a gaseous product. 
+      The reaction is conducted at high temperatures and is essential for the large-scale production of sodium sulfate, which is widely used in detergents and glass manufacturing.
     </description>
-    <tags>
+    <tagList>
       <tag>Double displacement reaction</tag>
-    </tags>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -585,11 +586,12 @@
       <molecule title="CO2(g)"/>
     </productList>
     <description>
-      This reaction involves the reduction of sodium sulfate (Na2SO4) with carbon (C) to produce sodium sulfide (Na2S) and carbon dioxide (CO2).
+      In this reaction, sodium sulfate (Na2SO4) is reduced by carbon (C) to produce sodium sulfide (Na2S) as a solid product and carbon dioxide (CO2) as a gaseous byproduct. 
+      This reduction process takes place in a furnace and is commonly used in the production of sodium sulfide, an important chemical in the paper and textile industries.
     </description>
-    <tags>
-      <tag>Reduction reaction</tag>
-    </tags>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -601,11 +603,13 @@
       <molecule title="CaS(s)"/>
     </productList>
     <description>
-      This reaction involves the production of sodium carbonate (Na2CO3) and calcium sulfide (CaS) from sodium sulfide (Na2S) and calcium carbonate (CaCO3).
+      This reaction involves the formation of sodium carbonate (Na2CO3) and calcium sulfide (CaS) from sodium sulfide (Na2S) and calcium carbonate (CaCO3). 
+      The process is commonly used in the production of soda ash (Na2CO3), which is widely utilized in glass manufacturing, chemical processing, and water treatment.
     </description>
-    <tags>
+    <tagList>
       <tag>Double displacement reaction</tag>
-    </tags>
+      <tag>Precipitation reaction</tag>
+    </tagList>
   </reaction>
   <reaction title="Sulfur dioxide to sulpfur trioxide with Vandium trioxide catalyst">
     <reactantList>
