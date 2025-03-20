@@ -322,8 +322,12 @@ class Level:
             area.update()
 
     def delete_molecule(self, molecule):
-        self.elements.remove(molecule)
+        if molecule in self.elements:
+            self.elements.remove(molecule)
+        else:
+            print(f"Warning: Attempted to delete a molecule not in the list: {molecule}")
         molecule.delete()
+
 
     def delete(self):
         self.window.remove_handlers(self)
