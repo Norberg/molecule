@@ -439,7 +439,8 @@
       <molecule title="CH3OH2+(l)"/>
     </productList>
   </reaction>
-  <reaction title="Water and carbon dioxide reacts to form Carbonic acid">
+
+  <reaction>
     <reactantList>
       <molecule title="H2O"/>
       <molecule title="CO2"/>
@@ -447,18 +448,41 @@
     <productList>
       <molecule title="H2CO3(aq)"/>
     </productList>
+    <description>
+      In this reaction, water (H2O) reacts with carbon dioxide (CO2) to form carbonic acid (H2CO3), a weak acid in aqueous solution. 
+      This reaction is reversible and plays a significant role in the carbon cycle and acid-base balance in natural waters and blood. 
+      The formation of carbonic acid is especially important in buffering systems, such as in oceans and biological fluids. 
+      It is also an initial step in processes like the carbonation of beverages.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+      <tag>Equilibrium reaction</tag>
+      <tag>Acid-base reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Preperation of Ammonium bicarbonate with Carbonic acid and amonia">
-  <reactantList>
-    <molecule title="H2CO3"/>
-    <molecule title="NH4OH"/>
-  </reactantList>
-  <productList>
-    <molecule title="NH4HCO3(aq)"/>
-    <molecule title="H2O(l)"/>
-  </productList>
+
+  <reaction>
+    <reactantList>
+      <molecule title="H2CO3"/>
+      <molecule title="NH4OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4HCO3(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      In this reaction, carbonic acid (H2CO3) reacts with ammonium hydroxide (NH4OH) to form ammonium bicarbonate (NH4HCO3) and water (H2O). 
+      This is an acid-base neutralization reaction where the weak acid reacts with the weak base. 
+      Ammonium bicarbonate is commonly used in baking powders and fertilizers. 
+      The reaction proceeds readily in aqueous solution and is typically reversible under certain conditions.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Neutralization reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Ammonium bicarbonate reacts with sodium chloride to form Ammonium chloride and Sodium bicarbonate">
+
+  <reaction>
     <reactantList>
       <molecule title="NH4HCO3"/>
       <molecule title="NaCl"/>
@@ -467,8 +491,19 @@
       <molecule title="NH4Cl(aq)"/>
       <molecule title="NaHCO3(s)"/>
     </productList>
+    <description>
+      Ammonium bicarbonate (NH4HCO3) reacts with sodium chloride (NaCl) to form ammonium chloride (NH4Cl) in solution and solid sodium bicarbonate (NaHCO3). 
+      This is a type of double displacement reaction. 
+      It is one of the steps in processes where sodium bicarbonate is recovered. 
+      Sodium bicarbonate is used in baking, fire extinguishers, and as an antacid.
+    </description>
+    <tagList>
+      <tag>Double displacement reaction</tag>
+      <tag>Ion exchange reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Perperation of Sodium carbonate by drying and heating Sodium bicarbonate">
+
+  <reaction>
     <reactantList>
       <molecule title="NaHCO3"/>
       <molecule title="NaHCO3"/>
@@ -478,8 +513,18 @@
       <molecule title="H2O(g)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <description>
+      When sodium bicarbonate (NaHCO3) is heated, it decomposes to form sodium carbonate (Na2CO3), water vapor (H2O), and carbon dioxide (CO2). 
+      This is a thermal decomposition reaction and is used in the production of soda ash. 
+      The decomposition typically starts around 80–100°C. 
+      This reaction is also used in cooking and cleaning applications where CO2 release is needed.
+    </description>
+    <tagList>
+      <tag>Decomposition reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Preperation of Calcium oxide by heating Calcium carbonate">
+
+  <reaction>
     <reactantList>
       <molecule title="CaCO3"/>
     </reactantList>
@@ -487,8 +532,18 @@
       <molecule title="CaO(s)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <description>
+      Heating calcium carbonate (CaCO3) leads to its decomposition into calcium oxide (CaO), also known as quicklime, and carbon dioxide (CO2). 
+      This is a common thermal decomposition reaction in lime production. 
+      The reaction usually occurs at temperatures above 800°C. 
+      Quicklime is used in cement, metallurgy, and environmental applications.
+    </description>
+    <tagList>
+      <tag>Decomposition reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Preperation of slacked lime by adding water to Calcium oxide">
+
+  <reaction>
     <reactantList>
       <molecule title="CaO"/>
       <molecule title="H2O"/>
@@ -496,8 +551,18 @@
     <productList>
       <molecule title="CaO2H2(s)"/>
     </productList>
+    <description>
+      When calcium oxide (CaO) is combined with water (H2O), it forms calcium hydroxide (Ca(OH)2), commonly known as slaked lime. 
+      This exothermic reaction is widely used in construction and water treatment. 
+      The reaction releases a large amount of heat and forms a paste or slurry. 
+      Slaked lime is a key ingredient in whitewash, mortar, and chemical manufacturing.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Decomposition of Ammonium hydroxide to Ammonia and water by heating">
+
+  <reaction>
     <reactantList>
       <molecule title="NH4OH"/>
     </reactantList>
@@ -505,8 +570,18 @@
       <molecule title="NH3(g)"/>
       <molecule title="H2O(l)"/>
     </productList>
+    <description>
+      Ammonium hydroxide (NH4OH) decomposes upon heating to form ammonia gas (NH3) and liquid water (H2O). 
+      This is a typical example of a decomposition reaction involving a weak base. 
+      The reaction is reversible and depends on temperature and concentration. 
+      It is relevant in industrial processes where ammonia recovery is required.
+    </description>
+    <tagList>
+      <tag>Decomposition reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Preperation of Ammonium hydroxide by adding Ammonia to water">
+
+  <reaction>
     <reactantList>
       <molecule title="NH3"/>
       <molecule title="H2O"/>
@@ -514,8 +589,19 @@
     <productList>
       <molecule title="NH4OH(aq)"/>
     </productList>
+    <description>
+      Ammonia gas (NH3) dissolves in water (H2O) to form ammonium hydroxide (NH4OH), a weak base in aqueous solution. 
+      This is a reversible combination reaction. 
+      The extent of formation depends on temperature and pH. 
+      This solution is commonly used as a household cleaner and industrial reagent.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+      <tag>Equilibrium reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Drying of solved Sodium carbonate to form Sodium carbonate">
+
+  <reaction>
     <reactantList>
       <molecule title="Na+"/>
       <molecule title="Na+"/>
@@ -524,8 +610,18 @@
     <productList>
       <molecule title="Na2CO3(s)"/>
     </productList>
+    <description>
+      In this process, dissolved sodium ions (Na⁺) and carbonate ions (CO₃²⁻) combine upon evaporation of water to form solid sodium carbonate (Na2CO3). 
+      This is a precipitation reaction from solution. 
+      It is an important step in the recovery of sodium carbonate from brines. 
+      Crystallization conditions can be controlled to obtain desired purity and particle size.
+    </description>
+    <tagList>
+      <tag>Precipitation reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Regenerate Ammonia from Ammonium chloride with calcium oxide">
+
+  <reaction>
     <reactantList>
       <molecule title="NH4Cl"/>
       <molecule title="NH4Cl"/>
@@ -537,7 +633,18 @@
       <molecule title="CaCl2(s)"/>
       <molecule title="H2O(l)"/>
     </productList>
+    <description>
+      Ammonium chloride (NH4Cl) reacts with calcium oxide (CaO) to regenerate ammonia gas (NH3), along with calcium chloride (CaCl2) and water (H2O). 
+      This is a double displacement reaction involving acid-base neutralization. 
+      The reaction is used in processes where ammonia needs to be recovered or recycled. 
+      Calcium chloride is a useful byproduct with applications in deicing and dust control.
+    </description>
+    <tagList>
+      <tag>Double displacement reaction</tag>
+      <tag>Acid-base reaction</tag>
+    </tagList>
   </reaction>
+
   <reaction>
     <reactantList>
       <molecule title="NaCl"/>

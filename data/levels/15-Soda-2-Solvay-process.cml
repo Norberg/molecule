@@ -23,6 +23,82 @@
     <molecule title="Na2CO3"/>
     <molecule title="CaCl2"/>
   </victoryCondition>
-  <objective text="Create Sodium Carbonate Na2CO3 and Calcium cloride CaCl2 in the Solvay process &lt;br&gt; Take care to not disolve the created Sodium Carbonate in water again."/>
-  <hint text="Noop"/>
+  <objective
+    text="Create Sodium Carbonate Na2CO3 and Calcium cloride CaCl2 in the Solvay process &lt;br&gt; Take care to not disolve the created Sodium Carbonate in water again."/>
+  <hint text="">
+    <reactions>
+      <reaction title="Preperation of Ammonium hydroxide by adding Ammonia to water">
+        <reactantList>
+          <molecule title="NH3"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="NH4OH(aq)"/>
+        </productList>
+      </reaction>
+      <reaction title="Preperation of Calcium oxide by heating Calcium carbonate">
+        <reactantList>
+          <molecule title="CaCO3"/>
+        </reactantList>
+        <productList>
+          <molecule title="CaO(s)"/>
+          <molecule title="CO2(g)"/>
+        </productList>
+      </reaction>
+      <reaction title="Water and carbon dioxide reacts to form Carbonic acid">
+        <reactantList>
+          <molecule title="H2O"/>
+          <molecule title="CO2"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2CO3(aq)"/>
+        </productList>
+      </reaction>
+      <reaction title="Preperation of Ammonium bicarbonate with Carbonic acid and amonia">
+        <reactantList>
+          <molecule title="H2CO3"/>
+          <molecule title="NH4OH"/>
+        </reactantList>
+        <productList>
+          <molecule title="NH4HCO3(aq)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction
+        title="Ammonium bicarbonate reacts with sodium chloride to form Ammonium chloride and Sodium bicarbonate">
+        <reactantList>
+          <molecule title="NH4HCO3"/>
+          <molecule title="NaCl"/>
+        </reactantList>
+        <productList>
+          <molecule title="NH4Cl(aq)"/>
+          <molecule title="NaHCO3(s)"/>
+        </productList>
+      </reaction>
+      <reaction title="Perperation of Sodium carbonate by drying and heating Sodium bicarbonate">
+        <reactantList>
+          <molecule title="NaHCO3"/>
+          <molecule title="NaHCO3"/>
+        </reactantList>
+        <productList>
+          <molecule title="Na2CO3(s)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="CO2(g)"/>
+        </productList>
+      </reaction>
+      <reaction title="Regenerate Ammonia from Ammonium chloride with calcium oxide">
+        <reactantList>
+          <molecule title="NH4Cl"/>
+          <molecule title="NH4Cl"/>
+          <molecule title="CaO"/>
+        </reactantList>
+        <productList>
+          <molecule title="NH3(g)"/>
+          <molecule title="NH3(g)"/>
+          <molecule title="CaCl2(s)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
