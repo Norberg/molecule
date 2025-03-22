@@ -148,8 +148,8 @@ def render_reaction_image(reactants, products, output,  requirements = []):
         print(f"Unhandled requirements: {requirements}")
         catalyst_smiles = ["[U].[V]"]
 
-    reactant_smiles = [smiles for smiles in reactant_smiles if smiles not in catalyst_smiles]
-    product_smiles = [smiles for smiles in product_smiles if smiles not in catalyst_smiles]
+    reactant_smiles = ['(' + smiles + ')' for smiles in reactant_smiles if smiles not in catalyst_smiles]
+    product_smiles = ['(' + smiles + ')' for smiles in product_smiles if smiles not in catalyst_smiles]
 
     if len(reactant_smiles) == 0:
         reactant_smiles = ["*"]
