@@ -13,11 +13,11 @@
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
-    <molecule title="O2(g)"/> 
-    <molecule title="O2(g)"/> 
     <molecule title="O2(g)"/>
-    <molecule title="O2(g)"/> 
-    <molecule title="O2(g)"/> 
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
   </inventoryList>
   <effectList>
     <effect title="Furnace" value="2000" x2="400" y2="600"/>
@@ -26,6 +26,59 @@
     <molecule title="HNO3"/>
     <molecule title="HNO3"/>
   </victoryCondition>
-  <objective text="Create Nitric acid HNO3 with the oswald process&lt;br&gt; Take care to not react any ammonia with water"/>
-  <hint text="Noop"/>
+  <objective
+    text="Create Nitric acid HNO3 with the oswald process&lt;br&gt; Take care to not react any ammonia with water"/>
+  <hint text="Noop">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="NO(g)"/>
+          <molecule title="NO(g)"/>
+          <molecule title="NO(g)"/>
+          <molecule title="NO(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="NO"/>
+          <molecule title="NO"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="NO2(g)"/>
+          <molecule title="NO2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="NO2"/>
+          <molecule title="NO2"/>
+          <molecule title="NO2"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="HNO3(aq)"/>
+          <molecule title="HNO3(aq)"/>
+          <molecule title="NO(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

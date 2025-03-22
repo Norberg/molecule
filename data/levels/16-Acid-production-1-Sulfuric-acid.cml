@@ -16,7 +16,7 @@
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
-    <molecule title="O2(g)"/> 
+    <molecule title="O2(g)"/>
     <molecule title="H2O(l)"/>
     <molecule title="H2O(l)"/>
     <molecule title="H2O(l)"/>
@@ -30,6 +30,52 @@
     <molecule title="H2SO4"/>
     <molecule title="H2SO4"/>
   </victoryCondition>
-  <objective text="Sulfuric acid H2SO4 is a very important commodity chemical&lt;br&gt; Let's create some with the Wet sulfuric acid process &lt;br&gt; Vanadium(V) oxide is used as catalyst, as a catalyst it will be recreated during the reaction"/>
-  <hint text="Noop"/>
+  <objective
+    text="Sulfuric acid H2SO4 is a very important commodity chemical&lt;br&gt; Let's create some with the Wet sulfuric acid process &lt;br&gt; Vanadium(V) oxide is used as catalyst, as a catalyst it will be recreated during the reaction"/>
+  <hint text="Noop">
+    <reactions>
+      <reaction title="Burning sulfur to form sulfur dioxide">
+        <reactantList>
+          <molecule title="S"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="SO2(g)"/>
+        </productList>
+      </reaction>
+      <reaction title="Sulfur dioxide to sulpfur trioxide with Vandium trioxide catalyst">
+        <reactantList>
+          <molecule title="SO2"/>
+          <molecule title="V2O5"/>
+        </reactantList>
+        <productList>
+          <molecule title="SO3(g)"/>
+          <molecule title="VO2(s)"/>
+          <molecule title="VO2(s)"/>
+        </productList>
+      </reaction>
+      <reaction title="Sulfur trioxide reacts with water to form sulfuric acid">
+        <reactantList>
+          <molecule title="SO3"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2SO4(l)"/>
+        </productList>
+      </reaction>
+      <reaction title="Vandium dioxide reacts with oxygen to form Vandium trioxide">
+        <reactantList>
+          <molecule title="VO2"/>
+          <molecule title="VO2"/>
+          <molecule title="VO2"/>
+          <molecule title="VO2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="V2O5(s)"/>
+          <molecule title="V2O5(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

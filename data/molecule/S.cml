@@ -26,5 +26,10 @@
     <property title="Name">Sulphur</property>
     <property title="Weight">32.0</property>
     <property title="Smiles">S</property>
+    <property title="Description">Sulphur a chemical element; it has symbol S and atomic number 16. It is abundant, multivalent and nonmetallic. Under normal conditions, sulfur atoms form cyclic octatomic molecules with the chemical formula S8. Elemental sulfur is a bright yellow, crystalline solid at room temperature.
+
+Sulfur is the tenth most abundant element by mass in the universe and the fifth most common on Earth. Though sometimes found in pure, native form, sulfur on Earth usually occurs as sulfide and sulfate minerals. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Sulfur</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>
