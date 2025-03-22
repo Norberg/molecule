@@ -1,17 +1,31 @@
 <?xml version="1.0"?>
 <level>
-  <moleculeList>
+    <moleculeList>
     <molecule title="C2H4(g)"/>
+  </moleculeList>
+  <inventoryList>
     <molecule title="HCl(g)"/>
     <molecule title="HCl(g)"/>
     <molecule title="Cl2(g)"/>
     <molecule title="Cl2(g)"/>
     <molecule title="CH4(g)"/>
-  </moleculeList>
+  </inventoryList>
   <effectList/>
   <victoryCondition>
     <molecule title="C2H5Cl"/>
   </victoryCondition>
   <objective text="Create C2H5Cl by performing an Addition reaction"/>
-  <hint text="C2H4 + HCl => C2H5Cl"/>
+  <hint text="">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C2H4"/>
+          <molecule title="HCl"/>
+        </reactantList>
+        <productList>
+          <molecule title="C2H5Cl(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

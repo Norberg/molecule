@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" spinMultiplicity="2">
+  <ns0:atomArray>
+    <atom x2="-0.0" y2="1.0" id="a1" elementType="Fe"/>
+    <atom x2="0.866025" y2="1.5" id="a2" elementType="Br"/>
+    <atom x2="-0.866025" y2="1.5" id="a3" elementType="Br"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="Br"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Iron(III) bromide</property>
+    <property title="Description">Iron(III) bromide is the chemical compound with the formula FeBr3.  Also known as ferric bromide, this red-brown odorless compound is used as a Lewis acid catalyst in the halogenation of aromatic compounds. It dissolves in water to give acidic solutions.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(III)_bromide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Fe](Br)(Br)Br</property>
+  </propertyList>
+</ns0:molecule>

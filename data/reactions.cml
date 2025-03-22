@@ -101,7 +101,7 @@
       <molecule title="H2O(g)"/>
     </productList>
   </reaction>
-  
+
   <reaction>
     <reactantList>
       <molecule title="SO3"/>
@@ -312,6 +312,7 @@
       <molecule title="P4O10(s)"/>
     </productList>
   </reaction>
+  
   <reaction>
     <reactantList>
       <molecule title="C2H4"/>
@@ -320,7 +321,18 @@
     <productList>
       <molecule title="C2H5Br(g)"/>
     </productList>
+    <description>
+      Ethene (C2H4), an alkene, reacts with hydrogen bromide (HBr) to form bromoethane (C2H5Br) in an electrophilic addition reaction. 
+      This is a typical addition reaction where the π-bond of the alkene is broken to allow the addition of a hydrogen atom and a bromine atom. 
+      The reaction proceeds via a carbocation intermediate and follows Markovnikov's rule. 
+      It is commonly used in organic synthesis for functionalizing alkenes.
+    </description>
+    <tagList>
+      <tag>Addition reaction</tag>
+      <tag>Electrophilic addition</tag>
+    </tagList>
   </reaction>
+
   <reaction>
     <reactantList>
       <molecule title="C2H4"/>
@@ -329,17 +341,41 @@
     <productList>
       <molecule title="C2H5Cl(g)"/>
     </productList>
+    <description>
+      Ethene (C2H4) reacts with hydrogen chloride (HCl) to form chloroethane (C2H5Cl) through an electrophilic addition mechanism. 
+      The double bond in ethene is broken and replaced by a single bond with added hydrogen and chlorine atoms. 
+      The reaction proceeds via a carbocation intermediate and typically follows Markovnikov’s rule. 
+      This process is fundamental in the production of alkyl halides.
+    </description>
+    <tagList>
+      <tag>Addition reaction</tag>
+      <tag>Electrophilic addition</tag>
+    </tagList>
   </reaction>
+
   <reaction>
     <reactantList>
       <molecule title="C6H6"/>
       <molecule title="Br2"/>
+      <molecule title="FeBr3"/>
     </reactantList>
     <productList>
       <molecule title="C6H5Br(g)"/>
       <molecule title="HBr(g)"/>
+      <molecule title="FeBr3(s)"/>
     </productList>
+    <description>
+      Benzene (C6H6) reacts with bromine (Br2) in the presence of a catalyst like FeBr3 to form bromobenzene (C6H5Br) and hydrogen bromide (HBr). 
+      This is an example of electrophilic aromatic substitution where one hydrogen on the benzene ring is replaced by a bromine atom. 
+      The aromatic ring remains intact during the reaction, preserving its resonance stability. 
+      This type of reaction is widely used to introduce functional groups into aromatic compounds.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Aromatic substitution</tag>
+    </tagList>
   </reaction>
+
   <reaction title="Nitration of phenol to 4-nitrophenol">
     <reactantList>
       <molecule title="C6H5OH"/>
