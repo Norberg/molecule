@@ -1035,7 +1035,7 @@
     </tagList>
   </reaction>
 
-  <reaction title="Hydrogen cyanide reacts to form iminoacetonitrile">
+ <reaction>
     <reactantList>
       <molecule title="HCN"/>
       <molecule title="HCN"/>
@@ -1043,8 +1043,19 @@
     <productList>
       <molecule title="C2H2N2(g)"/>
     </productList>
+    <description>
+      Two molecules of hydrogen cyanide (HCN) react to form iminoacetonitrile (C2H2N2), an important prebiotic intermediate. 
+      This is a condensation reaction involving nucleophilic attack by one HCN molecule on another. 
+      Iminoacetonitrile plays a key role in further cyanide-based polymerizations. 
+      These types of reactions are studied in origin-of-life chemistry for nucleotide base formation.
+    </description>
+    <tagList>
+      <tag>Condensation reaction</tag>
+      <tag>Nucleophilic addition</tag>
+    </tagList>
   </reaction>
-  <reaction title="Iminoacetonitrile reacts with hydrogen cyanide to form Aminomalononitrile">
+
+  <reaction>
     <reactantList>
       <molecule title="C2H2N2"/>
       <molecule title="HCN"/>
@@ -1052,8 +1063,19 @@
     <productList>
       <molecule title="C3H3N3(s)"/>
     </productList>
+    <description>
+      Iminoacetonitrile (C2H2N2) reacts with hydrogen cyanide (HCN) to form aminomalononitrile (C3H3N3). 
+      This reaction further builds a nitrile-rich carbon-nitrogen chain. 
+      Aminomalononitrile is a reactive precursor to more complex nitrogenous heterocycles. 
+      Such reactions are part of synthetic pathways toward purine bases.
+    </description>
+    <tagList>
+      <tag>Addition reaction</tag>
+      <tag>Chain growth reaction</tag>
+    </tagList>
   </reaction>
-  <reaction title="Aminomalononitrile reacts with hydrogen cyanide to form Diaminomaleonitrileitrile">
+
+  <reaction>
     <reactantList>
       <molecule title="C3H3N3"/>
       <molecule title="HCN"/>
@@ -1061,10 +1083,21 @@
     <productList>
       <molecule title="C4H4N4(s)"/>
     </productList>
+    <description>
+      Aminomalononitrile (C3H3N3) reacts with another molecule of hydrogen cyanide (HCN) to yield diaminomaleonitrile (C4H4N4). 
+      This step adds further nitrogen functionality to the carbon framework. 
+      Diaminomaleonitrile is a tetramer of HCN and a key intermediate in purine biosynthesis models. 
+      It is also photoactive and can undergo ring closure under UV irradiation.
+    </description>
+    <tagList>
+      <tag>Polymerization reaction</tag>
+      <tag>Nitrile addition</tag>
+    </tagList>
   </reaction>
-  <reaction title="Diaminomaleonitrileitrile reacts with uv light to form aminoimidazole-5-carbonitrile (AICN)">
+
+  <reaction>
     <requirementList>
-        <requirement type="UV light" molar_energy = "100"/>
+      <requirement type="UV light" molar_energy="100"/>
     </requirementList>
     <reactantList>
       <molecule title="C4H4N4"/>
@@ -1072,8 +1105,19 @@
     <productList>
       <molecule title="C3H2N2CNNH2(s)"/>
     </productList>
+    <description>
+      Diaminomaleonitrile (C4H4N4) undergoes a photochemical rearrangement under UV light to form aminoimidazole-5-carbonitrile (AICN). 
+      This reaction involves cyclization and formation of an imidazole ring. 
+      AICN is a direct precursor to adenine and guanine synthesis in prebiotic chemistry. 
+      The energy from UV light facilitates bond reorganization essential for heterocyclic ring formation.
+    </description>
+    <tagList>
+      <tag>Photochemical reaction</tag>
+      <tag>Cyclization</tag>
+    </tagList>
   </reaction>
-  <reaction title="Aminoimidazole-5-carbonitrile reacts hydrogen cyanide to form Adenine">
+
+  <reaction>
     <reactantList>
       <molecule title="C3H2N2CNNH2"/>
       <molecule title="HCN"/>
@@ -1081,8 +1125,19 @@
     <productList>
       <molecule title="C5H5N5(s)"/>
     </productList>
+    <description>
+      Aminoimidazole-5-carbonitrile (AICN) reacts with hydrogen cyanide (HCN) to form adenine (C5H5N5). 
+      This is a cyclization and condensation reaction leading to a purine base. 
+      Adenine is one of the four nucleobases found in DNA and RNA. 
+      The reaction demonstrates how simple precursors can yield complex biological molecules under prebiotic conditions.
+    </description>
+    <tagList>
+      <tag>Condensation reaction</tag>
+      <tag>Cyclization</tag>
+    </tagList>
   </reaction>
-  <reaction title="Aminoimidazole-5-carbonitrile reacts with water to 5-Aminoimidazole-4-carboxamide">
+
+  <reaction>
     <reactantList>
       <molecule title="C3H2N2CNNH2"/>
       <molecule title="H2O"/>
@@ -1090,8 +1145,19 @@
     <productList>
       <molecule title="C4H6N4O(s)"/>
     </productList>
+    <description>
+      Aminoimidazole-5-carbonitrile (AICN) reacts with water (H2O) to form 5-aminoimidazole-4-carboxamide (AICA). 
+      This is a hydrolysis reaction where the nitrile group is converted into an amide. 
+      AICA is an important intermediate in purine nucleotide biosynthesis. 
+      The reaction mimics enzymatic pathways seen in living organisms.
+    </description>
+    <tagList>
+      <tag>Hydrolysis reaction</tag>
+      <tag>Amide formation</tag>
+    </tagList>
   </reaction>
-  <reaction title="5-Aminoimidazole-4-carboxamide reacts hydrogen cyanide to form Guanine solved in ammonia">
+
+  <reaction>
     <reactantList>
       <molecule title="C4H6N4O"/>
       <molecule title="HCN"/>
@@ -1103,5 +1169,16 @@
       <molecule title="NH4+(aq)"/>
       <molecule title="NH4+(aq)"/>
     </productList>
+    <description>
+      5-Aminoimidazole-4-carboxamide (AICA) reacts with hydrogen cyanide (HCN) and ammonia (NH3) to produce guanine (C5H5N5O) and ammonium ions (NH4⁺). 
+      This multicomponent reaction leads to the formation of a second purine nucleobase. 
+      Guanine is essential in nucleic acid structure and base pairing. 
+      The presence of excess ammonia facilitates amination steps in the reaction.
+    </description>
+    <tagList>
+      <tag>Multicomponent reaction</tag>
+      <tag>Amination reaction</tag>
+    </tagList>
   </reaction>
+
 </reactions>

@@ -18,7 +18,7 @@
   <objective text="Diaminomaleonitrile is speculated to be an organic chemical present in prebiotic conditions. And can be use to synthesis basic builing blocks for life\n Lets create one, C4H4N4"/>
   <hint text="Noop">
     <reactions>
-    <reaction title="Hydrogen cyanide reacts to form iminoacetonitrile">
+    <reaction>
       <reactantList>
         <molecule title="HCN"/>
         <molecule title="HCN"/>
@@ -27,7 +27,7 @@
         <molecule title="C2H2N2(g)"/>
       </productList>
     </reaction>
-    <reaction title="Iminoacetonitrile reacts with hydrogen cyanide to form Aminomalononitrile">
+    <reaction>
       <reactantList>
         <molecule title="C2H2N2"/>
         <molecule title="HCN"/>
@@ -36,7 +36,7 @@
         <molecule title="C3H3N3(s)"/>
       </productList>
     </reaction>
-    <reaction title="Aminomalononitrile reacts with hydrogen cyanide to form Diaminomaleonitrileitrile">
+    <reaction>
       <reactantList>
         <molecule title="C3H3N3"/>
         <molecule title="HCN"/>
