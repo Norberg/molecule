@@ -6,17 +6,19 @@
     <molecule title="C6H6(g)"/>
     <molecule title="Br2(g)"/>
     <molecule title="HCl(g)"/>
-    <molecule title="Cl2(g)"/>
+    <molecule
+      title="Cl2(g)"/>
     <molecule title="CH4(g)"/>
     <molecule title="KOH(s)"/>
-    <molecule title="C6H5OH(g)"/>
+    <molecule
+      title="C6H5OH(g)"/>
     <molecule title="HNO3(g)"/>
     <molecule title="H2(g)"/>
     <molecule title="H2(g)"/>
-    <molecule title="H2(g)"/>
+    <molecule
+      title="H2(g)"/>
     <molecule title="Ni8(s)"/>
-    <molecule title="C4H6O3(l)"/>>
-  </inventoryList>
+    <molecule title="C4H6O3(l)"/>> </inventoryList>
   <effectList>
     <effect title="Fire" value="900" x2="200" y2="550"/>
   </effectList>
@@ -24,5 +26,40 @@
     <molecule title="C8H9NO2"/>
   </victoryCondition>
   <objective text="Create Paracetamol C8H9NO2 by performing a series of organic reactions"/>
-  <hint text="Noop"/>
+  <hint text="Noop">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H5OH"/>
+          <molecule title="HNO3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H5NO3(s)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H5NO3"/>
+          <molecule title="H2"/>
+          <molecule title="Ni8"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H7NO(s)"/>
+          <molecule title="O2(g)"/>
+          <molecule title="Ni8(s)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H7NO"/>
+          <molecule title="C4H6O3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C8H9NO2(g)"/>
+          <molecule title="CH3COOH(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

@@ -18,5 +18,47 @@
     <molecule title="C9H8O4"/>
   </victoryCondition>
   <objective text="Create Aspirin C9H8O4 by performing a series of organic reactions"/>
-  <hint text="Noop"/>
-</level>
+ <hint text="Noop">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H5OH"/>
+          <molecule title="Na+"/>
+          <molecule title="OH-"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H5NaO(s)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H5NaO"/>
+          <molecule title="CO2"/>
+        </reactantList>
+        <productList>
+          <molecule title="C7H5NaO3(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C7H5NaO3"/>
+          <molecule title="H+"/>
+        </reactantList>
+        <productList>
+          <molecule title="C7H6O3(aq)"/>
+          <molecule title="Na(s)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C7H6O3"/>
+          <molecule title="C4H6O3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C9H8O4(s)"/>
+          <molecule title="CH3COOH(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint></level>
