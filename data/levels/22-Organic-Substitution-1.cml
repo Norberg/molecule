@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+    <molecule title="C6H6(g)"/>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="HCl(g)"/>
+    <molecule title="Br(g)"/>
+    <molecule title="Br2(g)"/>
+    <molecule title="FeBr3(s)"/>
+  </inventoryList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="C6H5Br"/>
+  </victoryCondition>
+  <objective text="Create C6H5Br by performing an Substitution reaction"/>
+  <hint text="">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H6"/>
+          <molecule title="Br2"/>
+          <molecule title="FeBr3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H5Br(g)"/>
+          <molecule title="HBr(g)"/>
+          <molecule title="FeBr3(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

@@ -322,9 +322,12 @@
       <molecule title="C2H5Br(g)"/>
     </productList>
     <description>
-      Ethene (C2H4), an alkene, reacts with hydrogen bromide (HBr) to form bromoethane (C2H5Br) in an electrophilic addition reaction. 
-      This is a typical addition reaction where the π-bond of the alkene is broken to allow the addition of a hydrogen atom and a bromine atom. 
-      The reaction proceeds via a carbocation intermediate and follows Markovnikov's rule. 
+      Ethene (C2H4), an alkene, reacts with hydrogen bromide (HBr) to form bromoethane (C2H5Br) in
+      an electrophilic addition reaction.
+      Ethene acts as a nucleophile and attacks the electrophilic hydrogen atom in HBr.
+      This is a typical addition reaction where the π-bond of the alkene is broken to allow the
+      addition of a hydrogen atom and a bromine atom.
+      The reaction proceeds via a carbocation intermediate and follows Markovnikov's rule.
       It is commonly used in organic synthesis for functionalizing alkenes.
     </description>
     <tagList>
@@ -342,9 +345,12 @@
       <molecule title="C2H5Cl(g)"/>
     </productList>
     <description>
-      Ethene (C2H4) reacts with hydrogen chloride (HCl) to form chloroethane (C2H5Cl) through an electrophilic addition mechanism. 
-      The double bond in ethene is broken and replaced by a single bond with added hydrogen and chlorine atoms. 
-      The reaction proceeds via a carbocation intermediate and typically follows Markovnikov’s rule. 
+      Ethene (C2H4) reacts with hydrogen chloride (HCl) to form chloroethane (C2H5Cl) through an
+      electrophilic addition mechanism.
+      Ethene acts as a nucleophile and attacks the electrophilic hydrogen atom in HCl.
+      The double bond in ethene is broken and replaced by a single bond with added hydrogen and
+      chlorine atoms.
+      The reaction proceeds via a carbocation intermediate and typically follows Markovnikov’s rule.
       This process is fundamental in the production of alkyl halides.
     </description>
     <tagList>
@@ -365,14 +371,42 @@
       <molecule title="FeBr3(s)"/>
     </productList>
     <description>
-      Benzene (C6H6) reacts with bromine (Br2) in the presence of a catalyst like FeBr3 to form bromobenzene (C6H5Br) and hydrogen bromide (HBr). 
-      This is an example of electrophilic aromatic substitution where one hydrogen on the benzene ring is replaced by a bromine atom. 
-      The aromatic ring remains intact during the reaction, preserving its resonance stability. 
+      Benzene (C6H6) reacts with bromine (Br2) in the presence of a catalyst like FeBr3 to form
+      bromobenzene (C6H5Br) and hydrogen bromide (HBr).
+      In this reaction benzene acts as a nucleophile and attacks the electrophilic bromine atom.
+      This is an example of electrophilic aromatic substitution where one hydrogen on the benzene
+      ring is replaced by a bromine atom.
+      The aromatic ring remains intact during the reaction, preserving its resonance stability.
       This type of reaction is widely used to introduce functional groups into aromatic compounds.
     </description>
     <tagList>
       <tag>Electrophilic substitution</tag>
       <tag>Aromatic substitution</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="OH-"/>
+      <molecule title="CH3Br"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3OH(l)"/>
+      <molecule title="Br-(aq)"/>
+    </productList>
+    <description>
+      Hydroxide ion (OH-) reacts with methyl bromide (CH3Br) to form methanol (CH3OH) and bromide
+      ion (Br-).
+      This is an example of a nucleophilic substitution reaction where the hydroxide ion acts as a
+      nucleophile, attacking the electrophilic carbon in the methyl bromide.
+      The reaction is typically carried out in a polar solvent like water.
+      Nucleophilic substitution reactions are common in organic chemistry for replacing functional
+      groups.
+    </description>
+    <tagList>
+      <tag>Nucleophilic substitution</tag>
+      <tag>Sn2 reaction</tag>
+      <tag>Alkyl halide reaction</tag>
     </tagList>
   </reaction>
 
