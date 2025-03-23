@@ -10,17 +10,37 @@
     <molecule title="Cl2(g)"/>
     <molecule title="Cl2(g)"/>
   </inventoryList>
-  <effectList/>
+  <effectList>
+    <effect title="WaterBeaker" x2="600" y2="480"/>
+  </effectList>
   <victoryCondition>
     <molecule title="C2H5Br"/>
   </victoryCondition>
   <objective text="Create C2H5Br by performing an Addition reaction"/>
   <hint text="">
     <reactions>
+        <reaction>
+        <reactantList>
+          <molecule title="HBr"/>
+        </reactantList>
+        <productList>
+          <molecule title="H+(aq)"/>
+          <molecule title="Br-(aq)"/>
+        </productList>
+      </reaction>
       <reaction>
         <reactantList>
           <molecule title="C2H4"/>
-          <molecule title="HBr"/>
+          <molecule title="H+"/>
+        </reactantList>
+        <productList>
+          <molecule title="C2H5+(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C2H5+"/>
+          <molecule title="Br-"/>
         </reactantList>
         <productList>
           <molecule title="C2H5Br(g)"/>

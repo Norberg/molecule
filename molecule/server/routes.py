@@ -83,11 +83,18 @@ def reactingElements(elements):
 def reactionHint(reactions):
     response = []
     for reaction in reactions:
+        description = reaction.description
+        tags = reaction.tags
+
+        if len(reaction.reactants) == 1 and description == None:
+            description = "Dissociates in aqueous solution to form ions"
+            tags = ["Acid dissociation", "Ionization"]
+
         response.append({
             "reactants": list_without_state(reaction.reactants), 
             "products": list_without_state(reaction.products),
-            "description": reaction.description,
-            "tags": reaction.tags,
+            "description": description,
+            "tags": tags,
             "reactionPath": Skeletal.reactionFileName(reaction),
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response

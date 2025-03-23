@@ -316,23 +316,41 @@
   <reaction>
     <reactantList>
       <molecule title="C2H4"/>
-      <molecule title="HBr"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5+(aq)"/>
+    </productList>
+    <description>
+      Ethene (C2H4), acting as a nucleophile due to its electron-rich π-bond, attacks the
+      electrophilic hydrogen ion (H⁺).
+      This electrophilic addition step breaks the double bond and results in the formation of a
+      carbocation intermediate (C2H5⁺) on the more substituted carbon, following Markovnikov's rule.
+      In this step, ethene is the nucleophile and H⁺ is the electrophile.
+    </description>
+    <tagList>
+      <tag>Electrophilic addition</tag>
+      <tag>Carbocation formation</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C2H5+"/>
+      <molecule title="Br-"/>
     </reactantList>
     <productList>
       <molecule title="C2H5Br(g)"/>
     </productList>
     <description>
-      Ethene (C2H4), an alkene, reacts with hydrogen bromide (HBr) to form bromoethane (C2H5Br) in
-      an electrophilic addition reaction.
-      Ethene acts as a nucleophile and attacks the electrophilic hydrogen atom in HBr.
-      This is a typical addition reaction where the π-bond of the alkene is broken to allow the
-      addition of a hydrogen atom and a bromine atom.
-      The reaction proceeds via a carbocation intermediate and follows Markovnikov's rule.
-      It is commonly used in organic synthesis for functionalizing alkenes.
+      In this final step, the bromide ion (Br⁻), which acts as a nucleophile, attacks the positively
+      charged carbocation (C2H5⁺), which serves as the electrophile.
+      This nucleophilic substitution results in the formation of the final product, bromoethane
+      (C2H5Br).
     </description>
     <tagList>
-      <tag>Addition reaction</tag>
-      <tag>Electrophilic addition</tag>
+      <tag>Nucleophilic attack</tag>
+      <tag>Alkyl halide reaction</tag>
     </tagList>
   </reaction>
 

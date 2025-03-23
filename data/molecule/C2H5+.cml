@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="1">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="1" id="a2" elementType="C"/>
+    <atom x2="1.535" y2="-0.926647" id="a3" elementType="H"/>
+    <atom x2="1.535" y2="0.926647" id="a4" elementType="H"/>
+    <atom x2="2.07" y2="-0.0" id="a5" elementType="H"/>
+    <atom x2="-0.535" y2="0.926647" id="a6" elementType="H"/>
+    <atom x2="-0.535" y2="-0.926647" id="a7" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a2 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">50.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">120.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Ethyl carbocation</property>
+    <property title="Description"> The ethyl carbocation is a reactive organic intermediate with the formula C&#x2082;H&#x2085;&#x207A;. It consists of a positively charged carbon atom bonded to a methyl group (CH&#x2083;) and two hydrogen atoms. The positive charge is located on the primary carbon, making it a primary carbocation, which is relatively unstable compared to secondary or tertiary carbocations. Ethyl carbocations typically arise as intermediates in electrophilic addition reactions involving alkenes, such as when ethene reacts with a proton (H&#x207A;). Due to their high reactivity, carbocations like C&#x2082;H&#x2085;&#x207A; are short-lived and rapidly react with nucleophiles, such as halide ions. The ethyl carbocation plays an important role in understanding reaction mechanisms in organic chemistry, particularly in illustrating how regioselectivity and stability affect product formation. Its instability also makes it useful in studying rearrangements or shifts in more complex systems.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[CH3][CH2+]</property>
+  </propertyList>
+</ns0:molecule>

@@ -24,6 +24,14 @@
         <scalar units="units:molar_energy">219.2</scalar>
       </property>
     </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">52.5</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">120.0</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Name">Ethylene</property>
