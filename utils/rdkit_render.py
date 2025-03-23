@@ -49,6 +49,22 @@ def render_all_molecules():
             img = render_molecule(smiles)
             img.save(f"img/skeletal/molecule/{formula}.png", format='PNG')
 
+def render_all_ions():
+    for filename in os.listdir("data/molecule"):
+        if filename.endswith(".cml"):
+            formula = filename.split(".")[0]
+            molecule = Cml.Molecule()
+            molecule.parse(f"data/molecule/{formula}.cml")
+            aqueus = molecule.get_state("aq")
+            if aqueus is None:
+                continue
+            ions = aqueus.ions
+            if ions is None:
+                continue
+            ionReaction = Cml.Reaction(reactants=[formula], products=ions)
+            render_reaction_image([formula], ions, Skeletal.reactionPath(ionReaction))
+            render_reaction_image([], ions, Skeletal.reactionUnknownProductPath(ionReaction))
+
 def render_molecule(molecule: str, size: tuple = (300, 300)):
     ps = Chem.SmilesParserParams()
     ps.removeHs = False
@@ -196,6 +212,7 @@ def main():
     if args.render_all:
         render_all_reactions()
         render_all_molecules()
+        render_all_ions()
     elif args.reactants or args.products:
         render_reaction_image(args.reactants, args.products, args.output)
     elif args.reaction:
