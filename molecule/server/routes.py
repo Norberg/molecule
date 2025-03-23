@@ -87,8 +87,7 @@ def reactionHint(reactions):
         tags = reaction.tags
 
         if len(reaction.reactants) == 1 and description == None:
-            description = "Dissociates in aqueous solution to form ions"
-            tags = ["Acid dissociation", "Ionization"]
+            description, tags = handleIons(reaction)
 
         response.append({
             "reactants": list_without_state(reaction.reactants), 
@@ -98,5 +97,16 @@ def reactionHint(reactions):
             "reactionPath": Skeletal.reactionFileName(reaction),
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response
+
+def handleIons(reaction):
+    reactant = reaction.reactants[0]
+    ionStrings = " and ".join(list_without_state(reaction.products))
+    description = f"{reactant} dissociates in an aqueous solution to form the ions {ionStrings}."
+    tags = []
+    if "H+(aq)" in reaction.products:
+        tags = ["Acid dissociation"]
+        description += "This reaction releases a proton (H⁺) in an aqueous solution, forming a conjugate base"
+    tags.append("Ionization")
+    return description,tags
 
 
