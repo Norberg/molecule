@@ -194,15 +194,30 @@ class Level:
 
     def element_collision(self, arbiter, space, data):
         """ Called if two elements collides"""
-        a,b = arbiter.shapes
-        reacting_areas = list(self.get_affecting_areas(a.body.position))
-        #FIXME: this point query return more than just elements. something is wrong with the filter
-        pointQuery = space.point_query(a.body.position, 100, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
-        collisions = [point.shape for point in pointQuery]
-        reaction = self.react(collisions, reacting_areas)
-        if reaction != None:
-            self.perform_reaction(reaction, collisions, a.body.position)
-            
+        a, b = arbiter.shapes
+        pos = a.body.position
+        reacting_areas = list(self.get_affecting_areas(pos))
+
+        def perform_query(distance):
+            query = space.point_query(pos, distance, shape_filter=pymunk.ShapeFilter(categories=CollisionTypes.ELEMENT))
+            colls = [point.shape for point in query]
+            reaction = self.react(colls, reacting_areas)
+            return colls, reaction
+
+        collisions, reaction = perform_query(100)
+        if reaction is not None:
+            self.perform_reaction(reaction, collisions, pos)
+            return
+
+        # If we have many collideing molecule we increase the search area to make sure we
+        # find all elements if its a big reaction
+        collidingMolecules = [molecule.state_formula for molecule in self.get_colliding_molecules(collisions)]
+        bigReactionThreshold = 8
+        if a.molecule != b.molecule and len(collidingMolecules) >= bigReactionThreshold:
+            collisions, reaction = perform_query(300)
+            if reaction is not None and len(reaction.reactants) >= bigReactionThreshold:
+                self.perform_reaction(reaction, collisions, pos)
+
     def effect_reaction(self, arbiter, space, data):
         """ Called if an element touches a effect """
         a,b = arbiter.shapes
