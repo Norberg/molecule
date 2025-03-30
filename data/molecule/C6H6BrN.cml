@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-1.5" id="a1" elementType="N"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a4" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a5" elementType="C"/>
+    <atom x2="-0.0" y2="1.0" id="a6" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a7" elementType="Br"/>
+    <atom x2="0.0" y2="0.0" id="a8" elementType="C"/>
+    <atom x2="-1.718627" y2="-1.99225" id="a9" elementType="H"/>
+    <atom x2="-0.013423" y2="-1.99225" id="a10" elementType="H"/>
+    <atom x2="-2.625789" y2="-0.516" id="a11" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a12" elementType="H"/>
+    <atom x2="-0.866025" y2="2.532" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a14" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="2"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a6 a8" order="1"/>
+    <bond atomRefs2="a2 a8" order="2"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a1 a10" order="1"/>
+    <bond atomRefs2="a3 a11" order="1"/>
+    <bond atomRefs2="a4 a12" order="1"/>
+    <bond atomRefs2="a5 a13" order="1"/>
+    <bond atomRefs2="a8 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">3-Bromoaniline</property>
+    <property title="Description"> 3-Bromoaniline is an aromatic organic compound composed of a benzene ring substituted with a bromine atom at the third position and an amino group at the first position. It appears as a light brown to amber solid and has limited solubility in water but dissolves well in organic solvents. The presence of both electron-donating (amino) and electron-withdrawing (bromo) groups gives it unique reactivity, often used as an intermediate in pharmaceuticals, dyes, and agrochemicals. The bromine atom at the meta position relative to the amino group affects its reactivity in electrophilic aromatic substitution reactions. Unlike its isomers (2- or 4-bromoaniline), 3-bromoaniline is less reactive toward further substitution due to reduced resonance stabilization. It is also used in cross-coupling reactions such as Suzuki and Buchwald-Hartwig amination. Care should be taken in handling, as aniline derivatives can be toxic and potentially carcinogenic.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">Nc1cccc(Br)c1</property>
+  </propertyList>
+</ns0:molecule>

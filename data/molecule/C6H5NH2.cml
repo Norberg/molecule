@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-1.5" id="a1" elementType="N"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a4" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a5" elementType="C"/>
+    <atom x2="-0.0" y2="1.0" id="a6" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a7" elementType="C"/>
+    <atom x2="-1.718627" y2="-1.99225" id="a8" elementType="H"/>
+    <atom x2="-0.013423" y2="-1.99225" id="a9" elementType="H"/>
+    <atom x2="-2.625789" y2="-0.516" id="a10" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a11" elementType="H"/>
+    <atom x2="-0.866025" y2="2.532" id="a12" elementType="H"/>
+    <atom x2="0.893738" y2="1.516" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a14" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="2"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a2 a7" order="2"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a3 a10" order="1"/>
+    <bond atomRefs2="a4 a11" order="1"/>
+    <bond atomRefs2="a5 a12" order="1"/>
+    <bond atomRefs2="a6 a13" order="1"/>
+    <bond atomRefs2="a7 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Aniline</property>
+    <property title="Description">Aniline (from Portuguese  anil&#xA0;'indigo shrub', and -ine indicating a derived substance) is an organic compound with the formula C6H5NH2. Consisting of a phenyl group (&#x2212;C6H5) attached to an amino group (&#x2212;NH2), aniline is the simplest aromatic amine. It is an industrially significant commodity chemical, as well as a versatile starting material for fine chemical synthesis. Its main use is in the manufacture of precursors to polyurethane, dyes, and other industrial chemicals. Like most volatile amines, it has the odor of rotten fish. It ignites readily, burning with a smoky flame characteristic of aromatic compounds. It is toxic to humans.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Aniline</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Nc1ccccc1</property>
+  </propertyList>
+</ns0:molecule>

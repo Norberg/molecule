@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-0.5" id="a1" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a3" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a4" elementType="C"/>
+    <atom x2="-0.0" y2="1.0" id="a5" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a6" elementType="C"/>
+    <atom x2="-0.866025" y2="2.5" formalCharge="1" id="a7" elementType="N"/>
+    <atom x2="-0.0" y2="3.0" id="a8" elementType="O"/>
+    <atom x2="-1.732051" y2="3.0" formalCharge="-1" id="a9" elementType="O"/>
+    <atom x2="-0.866025" y2="-1.532" id="a10" elementType="H"/>
+    <atom x2="-2.625789" y2="-0.516" id="a11" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a12" elementType="H"/>
+    <atom x2="0.893738" y2="1.516" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a14" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a1 a6" order="2"/>
+    <bond atomRefs2="a4 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a7 a9" order="1"/>
+    <bond atomRefs2="a1 a10" order="1"/>
+    <bond atomRefs2="a2 a11" order="1"/>
+    <bond atomRefs2="a3 a12" order="1"/>
+    <bond atomRefs2="a5 a13" order="1"/>
+    <bond atomRefs2="a6 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Nitrobenzene</property>
+    <property title="Description">Nitrobenzene is an aromatic nitro compound and the simplest of the nitrobenzenes, with the chemical formula C6H5NO2.  It is a water-insoluble pale yellow oil with an almond-like odor.  It freezes to give greenish-yellow crystals.  It is produced on a large scale from benzene as a precursor to aniline.  In the laboratory, it is occasionally used as a solvent, especially for electrophilic reagents. As confirmed by X-ray crystallography, nitrobenzene is a planar molecule.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Nitrobenzene</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">c1ccc(cc1)[N+](=O)[O-]</property>
+  </propertyList>
+</ns0:molecule>

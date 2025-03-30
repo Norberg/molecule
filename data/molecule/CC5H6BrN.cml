@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.866025" y2="-1.5" id="a1" elementType="Br"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-1.732051" y2="-0.0" id="a3" elementType="C"/>
+    <atom x2="-1.732051" y2="1.0" id="a4" elementType="C"/>
+    <atom x2="-0.866025" y2="1.5" id="a5" elementType="C"/>
+    <atom x2="-0.866025" y2="2.5" id="a6" elementType="N"/>
+    <atom x2="-0.0" y2="1.0" id="a7" elementType="C"/>
+    <atom x2="0.0" y2="0.0" id="a8" elementType="C"/>
+    <atom x2="-2.625789" y2="-0.516" id="a9" elementType="H"/>
+    <atom x2="-2.625789" y2="1.516" id="a10" elementType="H"/>
+    <atom x2="-0.013423" y2="2.99225" id="a11" elementType="H"/>
+    <atom x2="-1.718627" y2="2.99225" id="a12" elementType="H"/>
+    <atom x2="0.893738" y2="1.516" id="a13" elementType="H"/>
+    <atom x2="0.893738" y2="-0.516" id="a14" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="2"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a2 a8" order="2"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+    <bond atomRefs2="a4 a10" order="1"/>
+    <bond atomRefs2="a6 a11" order="1"/>
+    <bond atomRefs2="a6 a12" order="1"/>
+    <bond atomRefs2="a7 a13" order="1"/>
+    <bond atomRefs2="a8 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">4-Bromoaniline</property>
+    <property title="Description">4-Bromoaniline is a compound where an aniline molecule is substituted with a bromine atom on the para position. Commercially available, this compound may be used as a building block, e.g. in the preparation of monobrominated biphenyl via the Gomberg&#x2013;Bachmann reaction.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/4-Bromoaniline</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Brc1ccc(N)cc1</property>
+  </propertyList>
+</ns0:molecule>
