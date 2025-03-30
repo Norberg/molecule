@@ -47,6 +47,7 @@ class EditorGTK:
         self.widget("fcbOpen").set_current_folder("data/molecule")
         self.builder.connect_signals(self)
         self.folder = "data/molecule/"
+        self.last_selected_temp = None
         self.init_twStates()
         self.init_twReactions()
         self.init_reactions()
@@ -261,22 +262,20 @@ class EditorGTK:
                     reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
 
-    def findReactingTemperatures(self, reactants, expected_products, trace = False):
+    def findReactingTemperatures(self, reactants, expected_products, trace=False, selected_temp=None):
         if trace:
             print("\nFinding reacting temperatures for:", reactants, expected_products)
-        tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
-        result = None
+        # only use the specific temperature if one is chosen
+        temps = [selected_temp] if selected_temp is not None else [0, 50, 298, 773, 1000, 2000, 4000, 8000]
         reactions = dict()
-        for temp in tempranges:
+        for temp in temps:
             result = self.reactor.react(reactants, temp, trace=trace)
             if result is not None and expected_products == result.products:
                 reaction = ReactionInfo(result)
                 if reactions.get(reaction.key) is None:
-                    reactions[reaction.key] = ReactionInfo(result)
+                    reactions[reaction.key] = reaction
                 reactions[reaction.key].temperatures.append(temp)
         return reactions
-
-
 
     def setAtomSettings(self):
         self.txtAtomWeight.set_sensitive(True)
@@ -337,13 +336,65 @@ class EditorGTK:
                 model.remove(iter)
 
     def on_twReactions_key_press_event(self, widget, userdata):
-        #if pressed t/T trace the reaction
-        if Gdk.keyval_name(userdata.keyval) == "t" or Gdk.keyval_name(userdata.keyval) == "T":
-            model, iter = self.widget("twReactions").get_selection().get_selected()
-            if iter:
-                reactants = split_formated_elements(model[iter][0])
-                products = split_formated_elements(model[iter][1])
-                self.findReactingTemperatures(reactants, products, trace = True)
+        # if pressed t/T trace the reaction with temperature selection
+        if Gdk.keyval_name(userdata.keyval) in ["t", "T"]:
+            model, tree_iter = self.widget("twReactions").get_selection().get_selected()
+            if tree_iter:
+                reactants = split_formated_elements(model[tree_iter][0])
+                products = split_formated_elements(model[tree_iter][1])
+                # ask user which temperature to trace for
+                selected_temp = self.choose_temperature_dialog()
+                # Call findReactingTemperatures with selected_temp if defined,
+                # otherwise use all temperatures.
+                self.findReactingTemperatures(reactants, products, trace=True, selected_temp=selected_temp)
+
+    def choose_temperature_dialog(self):
+        tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
+        dialog = Gtk.Dialog(title="Choose temperatur (K)", parent=self.widget("winMain"), flags=0)
+        dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
+        
+        # Define a key press handler to respond to t/T key presses.
+        def on_dialog_key_press(widget, event):
+            if Gdk.keyval_name(event.keyval) in ["t", "T"]:
+                widget.response(Gtk.ResponseType.OK)
+                return True
+            return False
+
+        dialog.connect("key-press-event", on_dialog_key_press)
+        
+        # Create a combo box with an option for "All temperatures" and each defined temperature.
+        combo = Gtk.ComboBoxText()
+        combo.append_text("All temperatures")
+        for temp in tempranges:
+            combo.append_text(str(temp))
+        # Preselect the last used temperature if available.
+        if self.last_selected_temp is not None:
+            try:
+                index = tempranges.index(self.last_selected_temp) + 1  # offset because of "All temperatures"
+                combo.set_active(index)
+            except ValueError:
+                combo.set_active(0)
+        else:
+            combo.set_active(0)
+        
+        box = dialog.get_content_area()
+        box.add(combo)
+        dialog.show_all()
+
+        response = dialog.run()
+        selected_value = None
+        if response == Gtk.ResponseType.OK:
+            text = combo.get_active_text()
+            if text != "All temperatures":
+                try:
+                    selected_value = int(text)
+                except ValueError:
+                    selected_value = None
+            # Save selected temperature (or None) for future use
+            self.last_selected_temp = selected_value
+        dialog.destroy()
+        return selected_value
 
     def on_twReactions_row_activated(self, widget, path, column):
         """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
