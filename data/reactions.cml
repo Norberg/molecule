@@ -444,6 +444,7 @@
       Nitrated phenols are important intermediates in dyes and pharmaceutical synthesis.
     </description>
     <tagList>
+      <tag>Electrophilic aromatic substitution</tag>
       <tag>Electrophilic substitution</tag>
       <tag>Aromatic substitution</tag>
     </tagList>
@@ -1323,6 +1324,30 @@
   </tagList>
 </reaction>
 
-
-
+  <reaction>
+    <reactantList>
+      <molecule title="C4H9Br"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H10O(l)"/>
+      <molecule title="HBr(g)"/>
+    </productList>
+    <description>
+      Tert-butyl bromide C4H9Br, a tertiary alkyl halide, reacts with water (H2O) in a
+      nucleophilic substitution reaction to form tert-butyl alcohol C4H10O and hydrobromic acid
+      (HBr).
+      The reaction proceeds via an SN1 mechanism, where the first step is the slow loss of the
+      bromide ion (Br-) to form a stable tertiary carbocation intermediate.
+      In the second step, water acts as a nucleophile and attacks the carbocation, followed by
+      deprotonation to give the final alcohol product.
+      SN1 reactions are common with tertiary halides due to carbocation stabilization through
+      hyperconjugation and inductive effects.
+    </description>
+    <tagList>
+      <tag>Nucleophilic substitution</tag>
+      <tag>SN1 reaction</tag>
+      <tag>Alcohol synthesis</tag>
+    </tagList>
+  </reaction>
 </reactions>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="HCl(g)"/>
+    <molecule title="Br(g)"/>
+    <molecule title="C4H9Br(l)"/>
+    <molecule title="H2O(l)"/>
+  </inventoryList>
+  <effectList/>
+  <victoryCondition>
+    <molecule title="C4H10O"/>
+  </victoryCondition>
+  <objective text="Create C4H10O in a Sn1 substitiution reaction"/>
+  <hint text="">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C4H9Br"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H10O(l)"/>
+          <molecule title="HBr(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

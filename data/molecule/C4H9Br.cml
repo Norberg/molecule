@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.866025" y2="-1.5" id="a1" elementType="C"/>
+    <atom x2="0.0" y2="-1.0" id="a2" elementType="C"/>
+    <atom x2="-1.0" y2="-1.0" id="a3" elementType="C"/>
+    <atom x2="-0.5" y2="-1.866025" id="a4" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a5" elementType="Br"/>
+    <atom x2="0.866025" y2="-2.57" id="a6" elementType="H"/>
+    <atom x2="1.792673" y2="-0.965" id="a7" elementType="H"/>
+    <atom x2="1.792673" y2="-2.035" id="a8" elementType="H"/>
+    <atom x2="-1.535" y2="-0.073353" id="a9" elementType="H"/>
+    <atom x2="-1.535" y2="-1.926647" id="a10" elementType="H"/>
+    <atom x2="-2.07" y2="-1.0" id="a11" elementType="H"/>
+    <atom x2="-1.57" y2="-1.866025" id="a12" elementType="H"/>
+    <atom x2="0.035" y2="-2.792673" id="a13" elementType="H"/>
+    <atom x2="-1.035" y2="-2.792673" id="a14" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+    <bond atomRefs2="a3 a9" order="1"/>
+    <bond atomRefs2="a3 a10" order="1"/>
+    <bond atomRefs2="a3 a11" order="1"/>
+    <bond atomRefs2="a4 a12" order="1"/>
+    <bond atomRefs2="a4 a13" order="1"/>
+    <bond atomRefs2="a4 a14" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Liquid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-118.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">300.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">tert-Butyl bromide</property>
+    <property title="Description">tert-Butyl bromide (also referred to as 2-bromo-2-methylpropane) is an organic compound with the formula Me3CBr (Me = methyl). The molecule features a tert-butyl group attached to a bromide substituent. This organobromine compound is used as a standard reagent in synthetic organic chemistry. It is a colorless liquid.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Tert-Butyl_bromide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">CC(C)(C)Br</property>
+  </propertyList>
+</ns0:molecule>
