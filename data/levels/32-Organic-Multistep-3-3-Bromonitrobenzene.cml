@@ -31,7 +31,7 @@
   </inventoryList>
 
   <effectList>
-    <effect title="HotplateBeaker" x2="700" y2="600" value="1200"/>
+    <effect title="InertSolventBeaker" x2="700" y2="500"/>
   </effectList>
 
   <victoryCondition>
