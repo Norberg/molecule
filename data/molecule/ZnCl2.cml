@@ -18,6 +18,14 @@
         <scalar units="units:molar_energy">0.8</scalar>
       </property>
     </propertyList>
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-490.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.8</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Name">Zinc chloride</property>

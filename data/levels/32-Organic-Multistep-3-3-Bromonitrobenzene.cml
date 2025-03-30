@@ -5,7 +5,7 @@
 
   <inventoryList>
     <molecule title="C6H6(l)"/>
-    <molecule title="HNO3(aq)"/>
+    <molecule title="HNO3(l)"/>
     <molecule title="H2SO4(l)"/>
     <molecule title="Br2(l)"/>
     <molecule title="FeBr3(s)"/>
@@ -16,18 +16,18 @@
     <molecule title="Zn(s)"/>
     <molecule title="Zn(s)"/>
     <molecule title="Zn(s)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
-    <molecule title="HCl(aq)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="HCl(g)"/>
   </inventoryList>
 
   <effectList>

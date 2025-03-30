@@ -1303,9 +1303,9 @@
     <molecule title="C6H6BrN(s)"/>
     <molecule title="H2O(l)"/>
     <molecule title="H2O(l)"/>
-    <molecule title="ZnCl2(aq)"/>
-    <molecule title="ZnCl2(aq)"/>
-    <molecule title="ZnCl2(aq)"/>
+    <molecule title="ZnCl2(s)"/>
+    <molecule title="ZnCl2(s)"/>
+    <molecule title="ZnCl2(s)"/>
   </productList>
   <description>
     3-Bromonitrobenzene (C6H4BrNO2) is reduced to 3-bromoaniline (C6H6BrN) using zinc (Zn) and
