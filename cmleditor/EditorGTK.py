@@ -447,6 +447,7 @@ class EditorGTK:
         self.widget("fcbOpen").set_filename(path)
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
         self.txtMoleculeName.set_text(wiki.name)
+        self.widget("txtSmiles").set_text(smiles)
         self.setLicense("CC BY-SA 3.0")
         self.widget("txtAttribution").set_text(url)
 
