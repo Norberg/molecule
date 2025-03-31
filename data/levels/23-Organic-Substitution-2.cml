@@ -15,15 +15,17 @@
   </victoryCondition>
   <objective text="Create CH3OH and Br- by performing an Substitution reaction"/>
   <hint text="">
-    <reaction>
-      <reactantList>
-        <molecule title="OH-"/>
-        <molecule title="CH3Br"/>
-      </reactantList>
-      <productList>
-        <molecule title="CH3OH(l)"/>
-        <molecule title="Br-(g)"/>
-      </productList>
-    </reaction>
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="OH-"/>
+          <molecule title="CH3Br"/>
+        </reactantList>
+        <productList>
+          <molecule title="CH3OH(l)"/>
+          <molecule title="Br-(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
   </hint>
 </level>
