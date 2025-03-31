@@ -7,8 +7,12 @@
     <molecule title="Br(g)"/>
     <molecule title="C4H9Br(l)"/>
     <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
   </inventoryList>
-  <effectList/>
+  <effectList>
+    <effect title="WaterBeaker" x2="600" y2="480"/>
+  </effectList>
   <victoryCondition>
     <molecule title="C4H10O"/>
   </victoryCondition>
@@ -18,11 +22,42 @@
       <reaction>
         <reactantList>
           <molecule title="C4H9Br"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H9+(l)"/>
+          <molecule title="Br-(aq)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="C4H9+"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H11O+(l)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="C4H11O+"/>
           <molecule title="H2O"/>
         </reactantList>
         <productList>
           <molecule title="C4H10O(l)"/>
+          <molecule title="H3O+(aq)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="H3O+"/>
+          <molecule title="Br-"/>
+        </reactantList>
+        <productList>
           <molecule title="HBr(g)"/>
+          <molecule title="H2O(l)"/>
         </productList>
       </reaction>
     </reactions>

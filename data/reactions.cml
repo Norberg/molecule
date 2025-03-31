@@ -1236,14 +1236,14 @@
 
 <reaction>
   <reactantList>
-    <molecule title="C6H6"/>
-    <molecule title="HNO3"/>
-    <molecule title="H2SO4"/>
+      <molecule title="C6H6"/>
+      <molecule title="HNO3"/>
+      <molecule title="H2SO4"/>
   </reactantList>
   <productList>
-    <molecule title="C6H5NO2(l)"/>
-    <molecule title="H2O(l)"/>
-    <molecule title="H2SO4(l)"/>
+      <molecule title="C6H5NO2(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2SO4(l)"/>
   </productList>
   <description>
     Benzene (C6H6) reacts with nitric acid (HNO3) in the presence of sulfuric acid (H2SO4) as a
@@ -1262,14 +1262,14 @@
 
 <reaction>
   <reactantList>
-    <molecule title="C6H5NO2"/>
-    <molecule title="Br2"/>
-    <molecule title="FeBr3"/>
+      <molecule title="C6H5NO2"/>
+      <molecule title="Br2"/>
+      <molecule title="FeBr3"/>
   </reactantList>
   <productList>
-    <molecule title="C6H4BrNO2(l)"/>
-    <molecule title="HBr(g)"/>
-    <molecule title="FeBr3(s)"/>
+      <molecule title="C6H4BrNO2(l)"/>
+      <molecule title="HBr(g)"/>
+      <molecule title="FeBr3(s)"/>
   </productList>
   <description>
     Nitrobenzene (C6H5NO2) undergoes bromination with bromine (Br2) in the presence of iron(III)
@@ -1289,24 +1289,24 @@
 
 <reaction>
   <reactantList>
-    <molecule title="C6H4BrNO2"/>
-    <molecule title="Zn"/>
-    <molecule title="Zn"/>
-    <molecule title="Zn"/>
-    <molecule title="HCl"/>
-    <molecule title="HCl"/>
-    <molecule title="HCl"/>
-    <molecule title="HCl"/>
-    <molecule title="HCl"/>
-    <molecule title="HCl"/>
+      <molecule title="C6H4BrNO2"/>
+      <molecule title="Zn"/>
+      <molecule title="Zn"/>
+      <molecule title="Zn"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
   </reactantList>
   <productList>
-    <molecule title="C6H6BrN(s)"/>
-    <molecule title="H2O(l)"/>
-    <molecule title="H2O(l)"/>
-    <molecule title="ZnCl2(s)"/>
-    <molecule title="ZnCl2(s)"/>
-    <molecule title="ZnCl2(s)"/>
+      <molecule title="C6H6BrN(s)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="ZnCl2(s)"/>
+      <molecule title="ZnCl2(s)"/>
+      <molecule title="ZnCl2(s)"/>
   </productList>
   <description>
     3-Bromonitrobenzene (C6H4BrNO2) is reduced to 3-bromoaniline (C6H6BrN) using zinc (Zn) and
@@ -1326,28 +1326,60 @@
 
   <reaction>
     <reactantList>
-      <molecule title="C4H9Br"/>
+      <molecule title="C4H9+"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H11O+(l)"/>
+    </productList>
+    <description>
+      In the second step, water (H2O) acts as a nucleophile and attacks the positively charged
+      tertiary carbocation (C4H9+).
+      This forms a protonated alcohol intermediate (C4H9OH2+), also known as an oxonium ion.
+    </description>
+    <tagList>
+      <tag>Nucleophilic attack</tag>
+      <tag>SN1 reaction</tag>
+      <tag>Oxonium intermediate</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C4H11O+"/>
       <molecule title="H2O"/>
     </reactantList>
     <productList>
       <molecule title="C4H10O(l)"/>
-      <molecule title="HBr(g)"/>
+      <molecule title="H3O+(aq)"/>
     </productList>
     <description>
-      Tert-butyl bromide C4H9Br, a tertiary alkyl halide, reacts with water (H2O) in a
-      nucleophilic substitution reaction to form tert-butyl alcohol C4H10O and hydrobromic acid
-      (HBr).
-      The reaction proceeds via an SN1 mechanism, where the first step is the slow loss of the
-      bromide ion (Br-) to form a stable tertiary carbocation intermediate.
-      In the second step, water acts as a nucleophile and attacks the carbocation, followed by
-      deprotonation to give the final alcohol product.
-      SN1 reactions are common with tertiary halides due to carbocation stabilization through
-      hyperconjugation and inductive effects.
+      In the final step, the oxonium ion (C4H11O+) reacts with water (H2O) to yield tert-butyl alcohol (C4H10O) and hydronium ion (H3O+).
+      This deprotonation step regenerates the catalyst (H3O+), which can continue to promote further SN1 reactions.
     </description>
     <tagList>
-      <tag>Nucleophilic substitution</tag>
+      <tag>Deprotonation</tag>
       <tag>SN1 reaction</tag>
-      <tag>Alcohol synthesis</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="H3O+"/>
+      <molecule title="Br-"/>
+    </reactantList>
+    <productList>
+      <molecule title="HBr(g)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      In this acid-base reaction, the hydronium ion (H3O+) reacts with bromide ion (Br-) to form hydrogen bromide (HBr) gas and water (H2O).
+      This reaction is a proton transfer process that occurs in aqueous solution.
+      The formation of HBr gas is a key step in the synthesis of tert-butyl bromide.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Proton recombination</tag>
     </tagList>
   </reaction>
 </reactions>

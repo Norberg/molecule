@@ -36,10 +36,10 @@
   <propertyList title="states">
     <propertyList title="Liquid">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">-330.0</scalar>
+        <scalar units="units:molar_energy">-630.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">300.0</scalar>
+        <scalar units="units:molar_energy">350.0</scalar>
       </property>
     </propertyList>
   </propertyList>

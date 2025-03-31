@@ -40,8 +40,10 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Name">C&lt;sub&gt;4&lt;sub&gt;H&lt;sub&gt;9&lt;/sub&gt;&lt;sup&gt;+&lt;/sup&gt;</property>
+    <property title="Name">Tert-butyl carbocation</property>
     <property title="DescriptionLicense">GPLv3</property>
     <property title="Smiles">C[C+](C)C</property>
+    <property title="Description"> The tert-butyl carbocation is a positively charged intermediate where the central carbon is bonded to three methyl groups. It is a highly stabilized carbocation due to extensive hyperconjugation and inductive effects from the surrounding alkyl groups. This stability makes tert-butyl carbocation one of the most common examples used in discussions of SN1 mechanisms. It forms in the rate-determining step of the reaction when the bromide ion leaves tert-butyl bromide. Its planar structure and strong electrophilic character make it susceptible to attack by nucleophiles like water. Despite its stability compared to other carbocations, it is very short-lived and exists transiently in solution. The formation of such a stable intermediate is why SN1 reactions are favored for tertiary alkyl halides. It represents the defining step of the unimolecular nucleophilic substitution pathway.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
   </propertyList>
 </ns0:molecule>

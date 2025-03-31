@@ -12,7 +12,14 @@
     <bond atomRefs2="a1 a4" order="1"/>
   </ns0:bondArray>
   <propertyList title="states">
-    <propertyList title="Aqueous"/>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">111.0</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Name">Hydronium cation</property>
