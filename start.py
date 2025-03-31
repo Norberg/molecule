@@ -20,6 +20,9 @@ import pyglet
 
 from molecule import Config
 
+import faulthandler
+faulthandler.enable()
+
 class CliInterface:
     @staticmethod
     def handle_cmd_options():
