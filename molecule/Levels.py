@@ -188,8 +188,6 @@ class Level:
 
     def add_to_reaction_log(self, reaction):
         self.points += 1
-        #print all params in the reaction
-        print(f"self.add_to_reaction_log(): {reaction.reactants} -> {reaction.products}")
         self.reaction_log.append(reaction)
 
     def element_collision(self, arbiter, space, data):
