@@ -234,7 +234,7 @@ def _reaction_to_image(reaction, reactionCondition):
     # Process agents by grouping duplicate templates.
     agent_count = reaction.GetNumAgentTemplates()
     if agent_count > 0:
-        scale_factor = 4
+        scale_factor = 2
         image_size = (subImgSize[0] // scale_factor, subImgSize[1] // scale_factor)
         agent_images = _groupTemplates(agent_count, reaction.GetAgentTemplate, image_size)
     else:
