@@ -1382,4 +1382,114 @@
       <tag>Proton recombination</tag>
     </tagList>
   </reaction>
+
+  <reaction>
+  <reactantList>
+      <molecule title="CH3CHCH3C2H4CH3"/>
+      <molecule title="Pt4Al4O5"/>
+  </reactantList>
+  <productList>
+      <molecule title="C6H14(g)"/>
+      <molecule title="Pt4Al4O5(s)"/>
+  </productList>
+  <description>
+    2-Methylpentane is first isomerized to n-hexane in the presence of a platinum-on-alumina catalyst. 
+    This step rearranges the branched structure into a linear alkane, making it more amenable to cyclization. 
+    The isomerization step is catalyzed under moderate temperature and pressure conditions typical of reforming units. 
+    This transformation facilitates the next steps in the production of aromatic compounds like benzene.
+  </description>
+  <tagList>
+    <tag>Isomerization</tag>
+    <tag>Catalytic reforming</tag>
+  </tagList>
+</reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C6H14"/>
+      <molecule title="Pt4Al4O5"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H12(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="Pt4Al4O5(s)"/>
+    </productList>
+    <description>
+      n-Hexane is a straight-chain alkane composed of six carbon atoms and fourteen hydrogen atoms.
+      It is a colorless liquid with a mild gasoline-like odor and is commonly used as a non-polar
+      solvent. The compound is relatively inert but undergoes transformation in catalytic reforming.
+      Under platinum on alumina (Pt/Al2O3) catalysis, n-hexane undergoes isomerization and partial
+      dehydrogenation to form cyclohexane. This step prepares the molecule for subsequent
+      aromatization. Cyclohexane is a six-membered cyclic alkane known for its conformational
+      stability. It is a common intermediate in petrochemical processes. One molecule of hydrogen
+      gas is released during this conversion.
+    </description>
+    <tagList>
+      <tag>Isomerization</tag>
+      <tag>Dehydrogenation</tag>
+      <tag>Catalytic reforming</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C6H12"/>
+      <molecule title="Pt4Al4O5"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H6(l)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="Pt4Al4O5(s)"/>
+    </productList>
+    <description>
+      Cyclohexane is a cyclic alkane that can be converted into benzene via full dehydrogenation. In
+      the presence of a platinum-alumina catalyst and high temperatures, three hydrogen molecules
+      are removed from the ring structure. Benzene, the resulting product, is a highly stable
+      aromatic hydrocarbon with delocalized π-electrons. It is a fundamental building block in the
+      chemical industry and a key component of the BTX aromatic fraction. The transformation
+      increases molecular stability due to aromatic resonance. Benzene is a colorless liquid with a
+      sweet odor and is known for its volatility and toxicity. The enthalpy change reflects the
+      endothermic nature of the process. This step finalizes the aromatization pathway in catalytic
+      reforming.
+    </description>
+    <tagList>
+      <tag>Dehydrogenation</tag>
+      <tag>Aromatization</tag>
+      <tag>Catalytic reforming</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C7H8"/>
+      <molecule title="H2"/>
+      <molecule title="Pt4Al4O5"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H6(g)"/>
+      <molecule title="CH4(g)"/>
+      <molecule title="Pt4Al4O5(s)"/>
+    </productList>
+    <description>
+      Toluene (C7H8) is a common industrial precursor for benzene production through
+      hydrodealkylation. In this process, toluene reacts with hydrogen gas at elevated temperatures
+      (typically 500–650°C) over a platinum-alumina catalyst.
+      The methyl group on toluene is removed as methane (CH4), while the aromatic ring remains
+      intact, forming benzene (C6H6).
+      This reaction is highly selective and widely applied in refineries to boost benzene output
+      from methylated aromatics. Hydrodealkylation is efficient and compatible with the BTX
+      separation process, enhancing petrochemical feedstock utility. The Pt/Al2O3 catalyst promotes
+      C–C bond cleavage in the side chain without disrupting aromatic stability. Methane generated
+      as a byproduct can be used as a fuel gas within the plant, contributing to energy recovery.
+      This method complements catalytic reforming for flexible benzene production depending on
+      feedstock availability.
+    </description>
+    <tagList>
+      <tag>Hydrodealkylation</tag>
+      <tag>Aromatic conversion</tag>
+      <tag>Catalytic reforming</tag>
+    </tagList>
+  </reaction>
 </reactions>

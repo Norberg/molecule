@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.464102" y2="-1.0" id="a1" elementType="C"/>
+    <atom x2="3.464102" y2="-0.0" id="a2" elementType="C"/>
+    <atom x2="2.598076" y2="0.5" id="a3" elementType="C"/>
+    <atom x2="1.732051" y2="-0.0" id="a4" elementType="C"/>
+    <atom x2="0.866025" y2="0.5" id="a5" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a6" elementType="C"/>
+    <atom x2="2.537454" y2="-1.535" id="a7" elementType="H"/>
+    <atom x2="4.390749" y2="-1.535" id="a8" elementType="H"/>
+    <atom x2="3.464102" y2="-2.07" id="a9" elementType="H"/>
+    <atom x2="4.390749" y2="0.535" id="a10" elementType="H"/>
+    <atom x2="3.464102" y2="1.07" id="a11" elementType="H"/>
+    <atom x2="2.598076" y2="1.57" id="a12" elementType="H"/>
+    <atom x2="1.671429" y2="1.035" id="a13" elementType="H"/>
+    <atom x2="1.732051" y2="-1.07" id="a14" elementType="H"/>
+    <atom x2="0.805404" y2="-0.535" id="a15" elementType="H"/>
+    <atom x2="0.866025" y2="1.57" id="a16" elementType="H"/>
+    <atom x2="-0.060622" y2="1.035" id="a17" elementType="H"/>
+    <atom x2="-0.926647" y2="0.535" id="a18" elementType="H"/>
+    <atom x2="0.0" y2="-1.07" id="a19" elementType="H"/>
+    <atom x2="-0.926647" y2="-0.535" id="a20" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a2 a10" order="1"/>
+    <bond atomRefs2="a2 a11" order="1"/>
+    <bond atomRefs2="a3 a12" order="1"/>
+    <bond atomRefs2="a3 a13" order="1"/>
+    <bond atomRefs2="a4 a14" order="1"/>
+    <bond atomRefs2="a4 a15" order="1"/>
+    <bond atomRefs2="a5 a16" order="1"/>
+    <bond atomRefs2="a5 a17" order="1"/>
+    <bond atomRefs2="a6 a18" order="1"/>
+    <bond atomRefs2="a6 a19" order="1"/>
+    <bond atomRefs2="a6 a20" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-198.7</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">361.5</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">n-Hexane</property>
+    <property title="Description">n-Hexane is a straight-chain alkane composed of six carbon atoms and fourteen hydrogen atoms. It is a colorless liquid with a mild gasoline-like odor and is commonly used as a non-polar solvent. The compound is relatively inert but undergoes transformation in catalytic reforming. Under platinum on alumina (Pt/Al2O3) catalysis, n-hexane undergoes isomerization and partial dehydrogenation to form cyclohexane. This step prepares the molecule for subsequent aromatization. Cyclohexane is a six-membered cyclic alkane known for its conformational stability. It is a common intermediate in petrochemical processes. One molecule of hydrogen gas is released during this conversion.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">CCCCCC</property>
+  </propertyList>
+</ns0:molecule>

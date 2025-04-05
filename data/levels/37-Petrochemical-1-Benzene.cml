@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<level zoom="1.0">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="CH3CHCH3C2H4CH3(g)"/>
+    <molecule title="C6H14(g)"/>
+    <molecule title="C7H8(g)"/>
+    <molecule title="Pt4Al4O5(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Fire" value="900" x2="200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C6H6"/>
+    <molecule title="C6H6"/>
+    <molecule title="C6H6"/>
+  </victoryCondition>
+  <objective text="Create Benzene C6H6 from 3 different feedstocks common in nafta"/>
+  <hint text="Noop">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CH3CHCH3C2H4CH3"/>
+          <molecule title="Pt4Al4O5"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H14(g)"/>
+          <molecule title="Pt4Al4O5(s)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="C6H14"/>
+          <molecule title="Pt4Al4O5"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H12(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="Pt4Al4O5(s)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="C6H12"/>
+          <molecule title="Pt4Al4O5"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H6(l)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="Pt4Al4O5(s)"/>
+        </productList>
+      </reaction>
+
+      <reaction>
+        <reactantList>
+          <molecule title="C7H8"/>
+          <molecule title="H2"/>
+          <molecule title="Pt4Al4O5"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H6(g)"/>
+          <molecule title="CH4(g)"/>
+          <molecule title="Pt4Al4O5(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

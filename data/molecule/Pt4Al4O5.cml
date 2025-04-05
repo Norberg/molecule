@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="6.928201" y2="0.0" id="a1" elementType="O"/>
+    <atom x2="6.062178" y2="0.5" id="a2" elementType="Al"/>
+    <atom x2="6.062178" y2="1.5" id="a3" elementType="Pt"/>
+    <atom x2="5.196152" y2="0.0" id="a4" elementType="O"/>
+    <atom x2="4.330127" y2="0.5" id="a5" elementType="Al"/>
+    <atom x2="4.330127" y2="1.5" id="a6" elementType="Pt"/>
+    <atom x2="3.464102" y2="0.0" id="a7" elementType="O"/>
+    <atom x2="2.598076" y2="0.5" id="a8" elementType="Al"/>
+    <atom x2="2.598076" y2="1.5" id="a9" elementType="Pt"/>
+    <atom x2="1.732051" y2="0.0" id="a10" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a11" elementType="Al"/>
+    <atom x2="0.866025" y2="1.5" id="a12" elementType="Pt"/>
+    <atom x2="-0.0" y2="0.0" id="a13" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="1"/>
+    <bond atomRefs2="a8 a9" order="1"/>
+    <bond atomRefs2="a8 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="1"/>
+    <bond atomRefs2="a11 a12" order="1"/>
+    <bond atomRefs2="a11 a13" order="2"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Platinum on alumina</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">O=[Al]([Pt])O[Al]([Pt])O[Al]([Pt])O[Al]([Pt])=O</property>
+    <property title="Description">Platinum on alumina (Pt/Al&#x2082;O&#x2083;) is a widely used heterogeneous catalyst in industrial and environmental processes. It consists of finely dispersed platinum nanoparticles supported on a porous aluminum oxide (Al&#x2082;O&#x2083;) substrate. The alumina provides a high surface area and thermal stability, while platinum offers excellent catalytic activity, particularly for redox and hydrogenation reactions. This combination is commonly used in catalytic reforming, automotive catalytic converters, and fuel cells. The platinum atoms interact with reactant molecules at the surface, facilitating bond breaking and formation with high selectivity. The strong metal-support interaction (SMSI) between Pt and Al&#x2082;O&#x2083; also helps enhance catalyst durability and resistance to sintering. The structure allows reactants to adsorb onto the platinum surface while the alumina framework helps disperse heat and stabilize the system. Pt/Al&#x2082;O&#x2083; remains one of the most effective and versatile catalyst systems in both petrochemical and environmental applications.</property>
+  </propertyList>
+</ns0:molecule>
