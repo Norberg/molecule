@@ -105,11 +105,21 @@ class Molecule:
 
     def create_atoms(self):
         self.atoms = dict()
+        self._pending_h_atoms = []
         for atom in self.cml.atoms.values():
             x, y = self.pos
             pos = (x + atom.x * ATOM_SPACE, y + atom.y * ATOM_SPACE)
+            if atom.elementType == "H":
+                # Skapa H-atomer senare, när vi vet vad de binder till
+                self._pending_h_atoms.append((atom, pos))
+            else:
+                new = Atom(atom.elementType, atom.formalCharge,
+                           self.space, self.batch, self, pos)
+                self.atoms[atom.id] = new
+        # Skapa H-atomer med placeholder (utan body)
+        for atom, pos in self._pending_h_atoms:
             new = Atom(atom.elementType, atom.formalCharge,
-                       self.space, self.batch, self, pos)
+                       self.space, self.batch, self, pos, defer_body=True)
             self.atoms[atom.id] = new
         self.create_bonds()
 
@@ -118,6 +128,24 @@ class Molecule:
         for cml_bond in self.cml.bonds:
             atomA = self.atoms[cml_bond.atomA.id]
             atomB = self.atoms[cml_bond.atomB.id]
+            # Om en av atomerna är H och den andra inte är H, koppla H till samma body som den andra
+            bond_scale = 1
+            if atomA.symbol == "H" and atomB.symbol != "H" and atomA.body is None:
+                # Räkna ut offset för H relativt body
+                offset = (
+                    (cml_bond.atomA.x - cml_bond.atomB.x) * ATOM_SPACE * bond_scale,
+                    (cml_bond.atomA.y - cml_bond.atomB.y) * ATOM_SPACE * bond_scale
+                )
+                atomA.attach_to_body(atomB.body, offset)
+            elif atomB.symbol == "H" and atomA.symbol != "H" and atomB.body is None:
+                offset = (
+                    (cml_bond.atomB.x - cml_bond.atomA.x) * ATOM_SPACE * bond_scale,
+                    (cml_bond.atomB.y - cml_bond.atomA.y) * ATOM_SPACE * bond_scale
+                )
+                atomB.attach_to_body(atomA.body, offset)
+            
+            if atomA.body is atomB.body:
+                continue
             bond = Bond(cml_bond, atomA, atomB, self.space, self.batch)
             self.bonds.append(bond)
 
@@ -143,10 +171,24 @@ class Molecule:
             bond.delete()
         self.bonds = list()
 
+        # Samla alla unika bodies och shapes
+        bodies = set()
+        shapes = []
         for atom in self.atoms.values():
-            atom.delete()
+            if atom.shape is not None:
+                shapes.append(atom.shape)
+            if atom.body is not None:
+                bodies.add(atom.body)
+            # Ta bort sprites och annat visuellt
+            atom.delete_visuals_only()
+        # Ta bort alla shapes först
+        for shape in shapes:
+            self.space.remove(shape)
+        # Ta bort varje unik body en gång
+        for body in bodies:
+            self.space.remove(body)
         self.atoms = dict()
-    
+
     def is_deleted(self):
         return len(self.atoms) == 0
 
@@ -250,7 +292,7 @@ class Bond:
         self.vertex = None
 
 class Atom(pyglet.sprite.Sprite):
-    def __init__(self, symbol, charge, space, batch, molecule, pos):
+    def __init__(self, symbol, charge, space, batch, molecule, pos, defer_body=False):
         img = pyglet_util.load_image("atom-" + symbol.lower() + ".png")
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
@@ -263,13 +305,16 @@ class Atom(pyglet.sprite.Sprite):
         self.active = False
         self.create_electric_charge_sprite(charge, batch)
         self.create_state_sprite(batch)
-        self.init_chipmunk()
-        self.move(pos)
+        self.body = None
+        self.shape = None
+        if not defer_body:
+            self.init_chipmunk(pos)
+        # Annars: body initieras senare via attach_to_body
 
-    def init_chipmunk(self):
+    def init_chipmunk(self, pos):
         weight = self.cml.property["Weight"]
         radius = self.scale * SPRITE_RADIUS
-        body = pymunk.Body(weight,moment = pymunk.moment_for_circle(weight, 0, radius))
+        body = pymunk.Body(weight, moment=pymunk.moment_for_circle(weight, 0, radius))
         body.velocity_func = limit_velocity
         body.molecule = self.molecule
         shape = pymunk.Circle(body, radius)
@@ -278,9 +323,22 @@ class Atom(pyglet.sprite.Sprite):
         shape.filter = CollisionTypes.ELEMENT_FILTER
         shape.molecule = self.molecule
         self.space.add(body, shape)
-
         body.apply_impulse_at_local_point(self.create_force_vector())
+        body.position = pos
         self.body = body
+        self.shape = shape
+
+    def attach_to_body(self, other_body, offset=(0, 0)):
+        # Skapa endast en shape, men återanvänd body
+        weight = self.cml.property["Weight"]
+        radius = self.scale * SPRITE_RADIUS
+        shape = pymunk.Circle(other_body, radius, offset)
+        shape.elasticity = 0.95
+        shape.collision_type = CollisionTypes.ELEMENT
+        shape.filter = CollisionTypes.ELEMENT_FILTER
+        shape.molecule = self.molecule
+        self.space.add(shape)
+        self.body = other_body
         self.shape = shape
 
     def create_force_vector(self):
@@ -326,9 +384,20 @@ class Atom(pyglet.sprite.Sprite):
         self.body.position = pos
 
     def update(self):
-        x, y = self.body.position
+        # Om shape har offset, använd den för att räkna ut sprite-positionen
+        if hasattr(self.shape, "offset") and (self.shape.offset.x != 0 or self.shape.offset.y != 0):
+            # Räkna ut roterad offset
+            angle = self.body.angle
+            ox, oy = self.shape.offset
+            # Roterad offset
+            rx = ox * math.cos(angle) - oy * math.sin(angle)
+            ry = ox * math.sin(angle) + oy * math.cos(angle)
+            x = self.body.position.x + rx
+            y = self.body.position.y + ry
+        else:
+            x, y = self.body.position
         if math.isnan(x) or math.isnan(y):
-                print(f"Broken position with NaN! for {self.symbol} {self.body.position}")
+            print(f"Broken position with NaN! for {self.symbol} {self.body.position}")
         self.x = x - self.width/2
         self.y = y - self.height/2
         if self.electric_charge_sprite is not None:
@@ -345,6 +414,11 @@ class Atom(pyglet.sprite.Sprite):
     def delete(self):
         self.space.remove(self.shape)
         self.space.remove(self.body)
+        if self.electric_charge_sprite is not None:
+            self.electric_charge_sprite.delete()
+        super(Atom, self).delete()
+
+    def delete_visuals_only(self):
         if self.electric_charge_sprite is not None:
             self.electric_charge_sprite.delete()
         super(Atom, self).delete()
