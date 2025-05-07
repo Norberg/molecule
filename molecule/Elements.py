@@ -128,10 +128,8 @@ class Molecule:
         for cml_bond in self.cml.bonds:
             atomA = self.atoms[cml_bond.atomA.id]
             atomB = self.atoms[cml_bond.atomB.id]
-            # Om en av atomerna är H och den andra inte är H, koppla H till samma body som den andra
-            bond_scale = 1
+            bond_scale = 0.7
             if atomA.symbol == "H" and atomB.symbol != "H" and atomA.body is None:
-                # Räkna ut offset för H relativt body
                 offset = (
                     (cml_bond.atomA.x - cml_bond.atomB.x) * ATOM_SPACE * bond_scale,
                     (cml_bond.atomA.y - cml_bond.atomB.y) * ATOM_SPACE * bond_scale
@@ -143,10 +141,9 @@ class Molecule:
                     (cml_bond.atomB.y - cml_bond.atomA.y) * ATOM_SPACE * bond_scale
                 )
                 atomB.attach_to_body(atomA.body, offset)
-            
-            if atomA.body is atomB.body:
-                continue
-            bond = Bond(cml_bond, atomA, atomB, self.space, self.batch)
+            # Skapa ALLTID Bond-objektet, men flagga om joint ska göras
+            same_body = atomA.body is atomB.body
+            bond = Bond(cml_bond, atomA, atomB, self.space, self.batch, create_joints=not same_body)
             self.bonds.append(bond)
 
     def set_dragging(self, value):
@@ -194,7 +191,7 @@ class Molecule:
 
 
 class Bond:
-    def __init__(self, cml_bond, atomA, atomB, space, batch):
+    def __init__(self, cml_bond, atomA, atomB, space, batch, create_joints=True):
         self.joints = list()
         self.vertex = None
         self.cml_bond = cml_bond
@@ -203,24 +200,23 @@ class Bond:
         self.atomA = atomA
         self.atomB = atomB
 
-        bond_length = self.get_bond_lenght(cml_bond)
-        slide_joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
-                                        bond_length * 0.95  , bond_length)
-        slide_joint.max_force = 1 * 15000000
-        self.joints.append(slide_joint)
-        self.space.add(slide_joint)
+        if create_joints:
+            bond_length = self.get_bond_lenght(cml_bond)
+            slide_joint = pymunk.SlideJoint(atomA.body, atomB.body, (0,0), (0,0),
+                                            bond_length * 0.95  , bond_length)
+            slide_joint.max_force = 1 * 15000000
+            self.joints.append(slide_joint)
+            self.space.add(slide_joint)
 
-        if self.cml_bond.bonds > 0:
-            self.vertex = self.create_vertex()
+            if self.cml_bond.bonds > 0:
+                groove_joint_a = self.create_groove_joint(atomA, atomB)
+                groove_joint_b = self.create_groove_joint(atomB, atomA)
+                self.joints.append(groove_joint_a)
+                self.joints.append(groove_joint_b)
+                self.space.add(groove_joint_a)
+                self.space.add(groove_joint_b)
 
-            groove_joint_a = self.create_groove_joint(atomA, atomB)
-            groove_joint_b = self.create_groove_joint(atomB, atomA)
-
-            self.joints.append(groove_joint_a)
-            self.joints.append(groove_joint_b)
-
-            self.space.add(groove_joint_a)
-            self.space.add(groove_joint_b)
+        self.vertex = self.create_vertex()
 
     def create_groove_joint(self, bodyA, bodyB):
         relative_pos = bodyB.body.position - bodyA.body.position
@@ -263,8 +259,19 @@ class Bond:
         return k_x, k_y
 
     def create_vertex(self):
-        pv1 = self.joints[0].a.position
-        pv2 = self.joints[0].b.position
+        # Hämta faktiska positions för båda atomerna (inklusive offset)
+        def get_atom_screen_pos(atom):
+            x, y = atom.body.position
+            if hasattr(atom.shape, "offset") and (atom.shape.offset.x != 0 or atom.shape.offset.y != 0):
+                angle = atom.body.angle
+                ox, oy = atom.shape.offset
+                rx = ox * math.cos(angle) - oy * math.sin(angle)
+                ry = ox * math.sin(angle) + oy * math.cos(angle)
+                x += rx
+                y += ry
+            return Vec2d(x, y)
+        pv1 = get_atom_screen_pos(self.atomA)
+        pv2 = get_atom_screen_pos(self.atomB)
         bonds = self.cml_bond.bonds
         line = self.create_parallell_lines(pv1, pv2, bonds)
         color = (90,90,90)
@@ -277,9 +284,19 @@ class Bond:
 
     def update(self):
         if self.vertex is not None:
-            pv1 = self.joints[0].a.position
-            pv2 = self.joints[0].b.position
-            line = self.create_parallell_lines(pv1,pv2,self.cml_bond.bonds)
+            def get_atom_screen_pos(atom):
+                x, y = atom.body.position
+                if hasattr(atom.shape, "offset") and (atom.shape.offset.x != 0 or atom.shape.offset.y != 0):
+                    angle = atom.body.angle
+                    ox, oy = atom.shape.offset
+                    rx = ox * math.cos(angle) - oy * math.sin(angle)
+                    ry = ox * math.sin(angle) + oy * math.cos(angle)
+                    x += rx
+                    y += ry
+                return Vec2d(x, y)
+            pv1 = get_atom_screen_pos(self.atomA)
+            pv2 = get_atom_screen_pos(self.atomB)
+            line = self.create_parallell_lines(pv1, pv2, self.cml_bond.bonds)
             self.vertex.vertices = line
 
     def delete(self):
