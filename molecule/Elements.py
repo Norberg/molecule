@@ -106,17 +106,23 @@ class Molecule:
     def create_atoms(self):
         self.atoms = dict()
         self._pending_h_atoms = []
+        self._atom_positions = {}  # Store positions for each atom
+        
+        # Check if this is a large molecule (more than 10 atoms)
+        is_large_molecule = len(self.cml.atoms) > 10
+        
         for atom in self.cml.atoms.values():
             x, y = self.pos
             pos = (x + atom.x * ATOM_SPACE, y + atom.y * ATOM_SPACE)
-            if atom.elementType == "H":
-                # Skapa H-atomer senare, när vi vet vad de binder till
+            self._atom_positions[atom.id] = pos  # Store position
+            if atom.elementType == "H" and is_large_molecule:
+                # Create H atoms later, when we know what they bind to (only for large molecules)
                 self._pending_h_atoms.append((atom, pos))
             else:
                 new = Atom(atom.elementType, atom.formalCharge,
                            self.space, self.batch, self, pos)
                 self.atoms[atom.id] = new
-        # Skapa H-atomer med placeholder (utan body)
+        # Create H atoms with placeholder (without body) for large molecules
         for atom, pos in self._pending_h_atoms:
             new = Atom(atom.elementType, atom.formalCharge,
                        self.space, self.batch, self, pos, defer_body=True)
@@ -125,23 +131,41 @@ class Molecule:
 
     def create_bonds(self):
         self.bonds = list()
+        
+        # Check if this is a large molecule (more than 10 atoms)
+        is_large_molecule = len(self.cml.atoms) > 10
+        
+        if is_large_molecule:
+            # First, ensure all H atoms have received their bodies (only for large molecules)
+            for cml_bond in self.cml.bonds:
+                atomA = self.atoms[cml_bond.atomA.id]
+                atomB = self.atoms[cml_bond.atomB.id]
+                bond_scale = 0.7
+                if atomA.symbol == "H" and atomB.symbol != "H" and atomA.body is None:
+                    offset = (
+                        (cml_bond.atomA.x - cml_bond.atomB.x) * ATOM_SPACE * bond_scale,
+                        (cml_bond.atomA.y - cml_bond.atomB.y) * ATOM_SPACE * bond_scale
+                    )
+                    atomA.attach_to_body(atomB.body, offset)
+                elif atomB.symbol == "H" and atomA.symbol != "H" and atomB.body is None:
+                    offset = (
+                        (cml_bond.atomB.x - cml_bond.atomA.x) * ATOM_SPACE * bond_scale,
+                        (cml_bond.atomB.y - cml_bond.atomA.y) * ATOM_SPACE * bond_scale
+                    )
+                    atomB.attach_to_body(atomA.body, offset)
+            
+            # Ensure all atoms have bodies before creating bonds (only for large molecules)
+            for atom_id, atom in self.atoms.items():
+                if atom.body is None:
+                    # This atom needs a body - use stored position
+                    pos = self._atom_positions[atom_id]
+                    atom.init_chipmunk(pos)
+        
+        # Then create all Bond objects when all bodies are in place
         for cml_bond in self.cml.bonds:
             atomA = self.atoms[cml_bond.atomA.id]
             atomB = self.atoms[cml_bond.atomB.id]
-            bond_scale = 0.7
-            if atomA.symbol == "H" and atomB.symbol != "H" and atomA.body is None:
-                offset = (
-                    (cml_bond.atomA.x - cml_bond.atomB.x) * ATOM_SPACE * bond_scale,
-                    (cml_bond.atomA.y - cml_bond.atomB.y) * ATOM_SPACE * bond_scale
-                )
-                atomA.attach_to_body(atomB.body, offset)
-            elif atomB.symbol == "H" and atomA.symbol != "H" and atomB.body is None:
-                offset = (
-                    (cml_bond.atomB.x - cml_bond.atomA.x) * ATOM_SPACE * bond_scale,
-                    (cml_bond.atomB.y - cml_bond.atomA.y) * ATOM_SPACE * bond_scale
-                )
-                atomB.attach_to_body(atomA.body, offset)
-            # Skapa ALLTID Bond-objektet, men flagga om joint ska göras
+            # ALWAYS create Bond object, but flag whether joints should be created
             same_body = atomA.body is atomB.body
             bond = Bond(cml_bond, atomA, atomB, self.space, self.batch, create_joints=not same_body)
             self.bonds.append(bond)
@@ -168,7 +192,7 @@ class Molecule:
             bond.delete()
         self.bonds = list()
 
-        # Samla alla unika bodies och shapes
+        # Collect all unique bodies and shapes
         bodies = set()
         shapes = []
         for atom in self.atoms.values():
@@ -176,12 +200,12 @@ class Molecule:
                 shapes.append(atom.shape)
             if atom.body is not None:
                 bodies.add(atom.body)
-            # Ta bort sprites och annat visuellt
+            # Remove sprites and other visual elements
             atom.delete_visuals_only()
-        # Ta bort alla shapes först
+        # Remove all shapes first
         for shape in shapes:
             self.space.remove(shape)
-        # Ta bort varje unik body en gång
+        # Remove each unique body once
         for body in bodies:
             self.space.remove(body)
         self.atoms = dict()
@@ -216,7 +240,9 @@ class Bond:
                 self.space.add(groove_joint_a)
                 self.space.add(groove_joint_b)
 
-        self.vertex = self.create_vertex()
+        # Only create vertex if there are bonds to draw
+        if self.cml_bond.bonds > 0:
+            self.vertex = self.create_vertex()
 
     def create_groove_joint(self, bodyA, bodyB):
         relative_pos = bodyB.body.position - bodyA.body.position
@@ -259,7 +285,7 @@ class Bond:
         return k_x, k_y
 
     def create_vertex(self):
-        # Hämta faktiska positions för båda atomerna (inklusive offset)
+        # Get actual positions for both atoms (including offset)
         def get_atom_screen_pos(atom):
             x, y = atom.body.position
             if hasattr(atom.shape, "offset") and (atom.shape.offset.x != 0 or atom.shape.offset.y != 0):
@@ -326,7 +352,7 @@ class Atom(pyglet.sprite.Sprite):
         self.shape = None
         if not defer_body:
             self.init_chipmunk(pos)
-        # Annars: body initieras senare via attach_to_body
+        # Otherwise: body is initialized later via attach_to_body
 
     def init_chipmunk(self, pos):
         weight = self.cml.property["Weight"]
@@ -346,7 +372,7 @@ class Atom(pyglet.sprite.Sprite):
         self.shape = shape
 
     def attach_to_body(self, other_body, offset=(0, 0)):
-        # Skapa endast en shape, men återanvänd body
+        # Create only a shape, but reuse the body
         weight = self.cml.property["Weight"]
         radius = self.scale * SPRITE_RADIUS
         shape = pymunk.Circle(other_body, radius, offset)
@@ -401,12 +427,12 @@ class Atom(pyglet.sprite.Sprite):
         self.body.position = pos
 
     def update(self):
-        # Om shape har offset, använd den för att räkna ut sprite-positionen
+        # If shape has offset, use it to calculate sprite position
         if hasattr(self.shape, "offset") and (self.shape.offset.x != 0 or self.shape.offset.y != 0):
-            # Räkna ut roterad offset
+            # Calculate rotated offset
             angle = self.body.angle
             ox, oy = self.shape.offset
-            # Roterad offset
+            # Rotated offset
             rx = ox * math.cos(angle) - oy * math.sin(angle)
             ry = ox * math.sin(angle) + oy * math.cos(angle)
             x = self.body.position.x + rx
