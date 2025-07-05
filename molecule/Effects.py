@@ -519,14 +519,14 @@ class Inventory(Effect):
         gui_elements = list()
         #Update existing elements
         index = 0
-        for button in list(self.gui_container.content):
+        for button in list(self.gui_container.children):
             element = button.element
             count = self.content[button.element]
             if (element in self.content.keys() and
                 button.count != count):
                 new_btn = Gui.MoleculeButton(element, count, self.get_callback)
                 self.gui_container.remove(button)
-                offset =len(self.gui_container.content)
+                offset =len(self.gui_container.children)
                 self.gui_container.add(new_btn, offset - index)
             if element not in self.content.keys():
                 self.gui_container.remove(button)

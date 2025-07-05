@@ -47,13 +47,11 @@ class Game(pyglet.window.Window):
         self.start()
 
     def create_config(self):
-        display = pyglet.canvas.get_display();
-        screen = display.get_default_screen()
+        # In pyglet 2+, we can create a config directly without going through canvas
         try:
-            template = pyglet.gl.Config(sample_buffers=1,
-                                        samples=4,
-                                        double_buffer=True)
-            config = screen.get_best_config(template)
+            config = pyglet.gl.Config(sample_buffers=1,
+                                      samples=4,
+                                      double_buffer=True)
         except pyglet.window.NoSuchConfigException:
             print("Hardware does not support all features,",
                   "fallback to just the basic features")

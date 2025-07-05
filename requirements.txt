@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ############################################################
 # Core game + server runtime dependencies                  #
 # (Only direct deps; transitive ones are resolved by pip)  #
@@ -17,3 +18,22 @@ xmlschema==3.4.3          # CML validation
 
 # The editor & chemistry stack lives in requirements-cmleditor.txt2
 # rdkit / PyGObject / requests / bs4 kept out of core runtime
+=======
+annotated-types==0.7.0
+anyio==4.5.2
+certifi==2025.1.31
+cffi==1.17.1
+charset-normalizer==3.4.1
+click==8.1.8
+exceptiongroup==1.2.2
+fastapi==0.115.8
+pyglet>=2.0.0
+pymunk==6.6.0
+requests==2.32.3
+sniffio==1.3.1
+soupsieve==2.6
+starlette==0.44.0
+typing_extensions==4.12.2
+urllib3==2.2.3
+uvicorn==0.33.0
+>>>>>>> 4e52b12 (WIP: cursor try of pyglet2 migration)
