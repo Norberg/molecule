@@ -17,19 +17,15 @@ import os
 import re
 
 import pyglet
-import pyglet_gui.theme
-from pyglet_gui.manager import Manager
-from pyglet_gui.containers import VerticalContainer
-from pyglet_gui.document import Document
-from pyglet_gui.constants import ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
-from pyglet_gui.gui import Frame, SectionHeader, FoldingSection, PopupMessage
-from pyglet_gui.scrollable import Scrollable
-from pyglet_gui.buttons import OneTimeButton
-
+from molecule.CustomGUI import (
+    Manager, VerticalContainer, Document, Frame, SectionHeader, 
+    FoldingSection, PopupMessage, Scrollable, OneTimeButton,
+    ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
+)
 from molecule import RenderingOrder
 import re
 
-theme = pyglet_gui.theme.ThemeFromPath(os.getcwd()+'/molecule/theme')
+# Theme is no longer needed as we use simple colors
 NA = "<b>N<sub>A<sub><b>"
 formula_pattern = re.compile(r"([A-Z][a-z]?)(\d*)|(\+|\-)(\d*)?")
 identify_formula_pattern = re.compile(r"([A-Z][a-z]?)(\d+|[+-]\d*)")
@@ -42,23 +38,29 @@ def create_folding_description(window, batch, heading, description, chapters=lis
         description - description for the widget
         chapters - list of tuples (heading,text)
     """
-    description_doc = pyglet.text.decode_attributed(description)
+    # Create description document
+    description_doc = Document(description, 0, 0, 300, 100, batch)
 
     layout = list()
-    layout.append(SectionHeader(heading))
-    layout.append(Document(description_doc, width=300))
+    layout.append(SectionHeader(heading, 0, 0, 300, 30, batch))
+    layout.append(description_doc)
 
     for chapter in chapters:
         heading, text = chapter
-        text_doc = pyglet.text.decode_attributed(text)
-        layout.append(FoldingSection(heading,
-                      Document(text_doc, width=300),
-                      is_open=False))
+        text_doc = Document(text, 0, 0, 300, 100, batch)
+        layout.append(FoldingSection(heading, text_doc, 0, 0, 300, 130, batch, is_open=False))
 
-    content = Frame(Scrollable(VerticalContainer(layout, align=HALIGN_LEFT),height=400))
+    # Create container and scrollable
+    container = VerticalContainer(0, 0, 300, 400)
+    for item in layout:
+        container.add(item)
+    
+    scrollable = Scrollable(container, 0, 0, 300, 400, batch, height_limit=400)
+    content = Frame(0, 0, 300, 400, batch, is_expandable=True)
+    content.add_child(scrollable)
 
     Manager(content, window=window, batch=batch, group=RenderingOrder.gui,
-           anchor=ANCHOR_BOTTOM_RIGHT, theme=theme, is_movable=False)
+           anchor=ANCHOR_BOTTOM_RIGHT, is_movable=False)
 
 def create_popup(window, batch, text, on_escape=None):
     """
@@ -67,11 +69,8 @@ def create_popup(window, batch, text, on_escape=None):
         text - text message in popup
         on_escape - callback when popup is closed
     """
-    def on_escape_cb(dialog):
-            if on_escape is not None:
-                on_escape()
     PopupMessage(text=text, window=window, batch=batch,
-                 group=RenderingOrder.gui, theme=theme, on_escape=on_escape_cb)
+                 group=RenderingOrder.gui, on_escape=on_escape)
 
 class MoleculeButton(OneTimeButton):
     def __init__(self, element, count, on_click=None):

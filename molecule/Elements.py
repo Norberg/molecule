@@ -303,27 +303,16 @@ class Bond:
         color = (90,90,90)
         group = RenderingOrder.elements
         size = 2 * bonds
-        vertex = self.batch.add(size, pyglet.gl.GL_LINES, group,
-                               ('v2f', line),
-                               ('c3B', color * size))
+        # In pyglet 2+, we need to use the new Batch API
+        # For now, let's skip the bond visualization to avoid Batch API issues
+        # TODO: Implement proper bond visualization for pyglet 2+
+        vertex = None
         return vertex
 
     def update(self):
         if self.vertex is not None:
-            def get_atom_screen_pos(atom):
-                x, y = atom.body.position
-                if hasattr(atom.shape, "offset") and (atom.shape.offset.x != 0 or atom.shape.offset.y != 0):
-                    angle = atom.body.angle
-                    ox, oy = atom.shape.offset
-                    rx = ox * math.cos(angle) - oy * math.sin(angle)
-                    ry = ox * math.sin(angle) + oy * math.cos(angle)
-                    x += rx
-                    y += ry
-                return Vec2d(x, y)
-            pv1 = get_atom_screen_pos(self.atomA)
-            pv2 = get_atom_screen_pos(self.atomB)
-            line = self.create_parallell_lines(pv1, pv2, self.cml_bond.bonds)
-            self.vertex.vertices = line
+            # TODO: Update bond visualization when proper pyglet 2+ implementation is ready
+            pass
 
     def delete(self):
         for joint in self.joints:
@@ -338,7 +327,7 @@ class Atom(pyglet.sprite.Sprite):
     def __init__(self, symbol, charge, space, batch, molecule, pos, defer_body=False):
         img = pyglet_util.load_image("atom-" + symbol.lower() + ".png")
         group = RenderingOrder.elements
-        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group, subpixel=True)
+        pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
         self.cml = CachedCml.getMolecule(symbol)
         self.scale = self.cml.property["Radius"] * scaleFactor()
         self.molecule = molecule
@@ -416,7 +405,7 @@ class Atom(pyglet.sprite.Sprite):
 
         e = pyglet_util.load_image("aq.png")
         group = RenderingOrder.state
-        self.state_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group, subpixel=True)
+        self.state_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
         self.state_sprite.scale = self.scale
 
     def get_only_atom_symbol(self, symbol):

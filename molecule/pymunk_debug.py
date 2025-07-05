@@ -123,8 +123,8 @@ class DrawOptions(pymunk.SpaceDebugDrawOptions):
         outline_color: SpaceDebugColor,
         fill_color: SpaceDebugColor,
     ) -> None:
-        bg = pyglet.graphics.OrderedGroup(0)
-        fg = pyglet.graphics.OrderedGroup(1)
+        bg = pyglet.graphics.Group(0)
+        fg = pyglet.graphics.Group(1)
 
         color = fill_color.as_int()
         c = pyglet.shapes.Circle(

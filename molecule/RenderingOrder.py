@@ -15,9 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import pyglet
 
-background = pyglet.graphics.OrderedGroup(0)
-hud = pyglet.graphics.OrderedGroup(1)
-state = pyglet.graphics.OrderedGroup(2)
-elements = pyglet.graphics.OrderedGroup(3)
-charge = pyglet.graphics.OrderedGroup(4)
-gui = pyglet.graphics.OrderedGroup(5)
+# In pyglet 2+, OrderedGroup is replaced with Group
+background = pyglet.graphics.Group(0)
+hud = pyglet.graphics.Group(1)
+state = pyglet.graphics.Group(2)
+elements = pyglet.graphics.Group(3)
+charge = pyglet.graphics.Group(4)
+gui_background = pyglet.graphics.Group(5)  # GUI backgrounds render first
+gui = pyglet.graphics.Group(6)  # GUI text and elements render on top
