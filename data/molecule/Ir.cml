@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Ir"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">157.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">2.29</property>
+    <property title="Name">Iridium</property>
+    <property title="Weight">192.2</property>
+    <property title="Description">Iridium is a hard, brittle, and very dense transition metal belonging to the platinum group. It is one of the rarest elements in Earth's crust and is typically found in alluvial deposits or as a byproduct of nickel and platinum mining. Iridium is highly resistant to corrosion, even at high temperatures, making it ideal for extreme environments. Its atomic number is 77, and its symbol is Ir. Iridium is used in spark plugs, crucibles, electrical contacts, and as a hardening agent in platinum alloys. It has played a key role in science, notably in defining the international standard for the kilogram until 2019 via a platinum-iridium prototype. Iridium is also famously associated with the layer of clay marking the Cretaceous&#x2013;Paleogene extinction event, suggesting a massive asteroid impact.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[Ir]</property>
+  </propertyList>
+</ns0:molecule>
