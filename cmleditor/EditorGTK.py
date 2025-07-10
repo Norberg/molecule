@@ -455,7 +455,8 @@ class EditorGTK:
         print(answers)
         if answers is None:
             return
-        formula, smiles = answers
+        unicodeFormula, smiles = answers
+        formula = unicodeFormulaToAscii(unicodeFormula.strip())
         path = "data/molecule/%s.cml" % formula
         if os.path.isfile(path):
             res = YesNo("Molecule already exist, do you want to overwrite?")
@@ -470,7 +471,8 @@ class EditorGTK:
         MsgBox("Creating molecule...")
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
-        self.on_fcbOpen_file_set(self.widget("fcbOpen"))    
+        self.on_fcbOpen_file_set(self.widget("fcbOpen"))
+        self.widget("txtSmiles").set_text(smiles) 
     
     def on_btnNewMoleculeFromWiki_clicked(self, widget):
         answers = InputBox("Molecule", ["Wikipedia link:"])
@@ -654,3 +656,19 @@ def split_formated_elements(formated_elements):
             count, element = 1, parts[0]
         result.extend([element] * count)
     return result
+
+def unicodeFormulaToAscii(unicodeFormula):
+    """Convert possible unicode formula to an ascii formula"""
+    unicode_to_ascii = {
+        '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4',
+        '₅': '5', '₆': '6', '₇': '7', '₈': '8', '₉': '9',
+        '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4',
+        '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
+        '⁺': '+', '⁻': '-'}
+    ascii_formula = ""
+    for char in unicodeFormula:
+        if char in unicode_to_ascii:
+            ascii_formula += unicode_to_ascii[char]
+        else:
+            ascii_formula += char
+    return ascii_formula
