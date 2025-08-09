@@ -111,9 +111,11 @@
       <molecule title="H2SO4(l)"/>
     </productList>
     <description>
-      Sulfur trioxide (SO3) reacts violently with water (H2O) to form sulfuric acid (H2SO4), a highly exothermic process. 
-      This reaction is the final step in the contact process for sulfuric acid production. 
-      Due to the vigorous nature of the reaction, it is usually performed by absorbing SO3 into concentrated H2SO4 to form oleum first. 
+      Sulfur trioxide (SO3) reacts violently with water (H2O) to form sulfuric acid (H2SO4), a
+      highly exothermic process.
+      This reaction is the final step in the contact process for sulfuric acid production.
+      Due to the vigorous nature of the reaction, it is usually performed by absorbing SO3 into
+      concentrated H2SO4 to form oleum first.
       Sulfuric acid is one of the most widely used industrial chemicals in the world.
     </description>
     <tagList>
@@ -428,7 +430,7 @@
     </tagList>
   </reaction>
 
-   <reaction>
+  <reaction>
     <reactantList>
       <molecule title="C6H5OH"/>
       <molecule title="HNO3"/>
@@ -438,9 +440,12 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      Phenol (C6H5OH) reacts with nitric acid (HNO3) to form 4-nitrophenol (C6H5NO3) and water (H2O) in a nitration reaction. 
-      The hydroxyl group on phenol activates the aromatic ring toward electrophilic substitution, favoring substitution at the para position. 
-      This reaction is typically carried out under mild acidic conditions to control product formation. 
+      Phenol (C6H5OH) reacts with nitric acid (HNO3) to form 4-nitrophenol (C6H5NO3) and water (H2O)
+      in a nitration reaction.
+      The hydroxyl group on phenol activates the aromatic ring toward electrophilic substitution,
+      favoring substitution at the para position.
+      This reaction is typically carried out under mild acidic conditions to control product
+      formation.
       Nitrated phenols are important intermediates in dyes and pharmaceutical synthesis.
     </description>
     <tagList>
@@ -462,9 +467,10 @@
       <molecule title="Ni8(s)"/>
     </productList>
     <description>
-      4-Nitrophenol (C6H5NO3) is reduced to 4-aminophenol (C6H7NO) using hydrogen gas (H2) over a Raney nickel (Ni) catalyst. 
-      This catalytic hydrogenation reaction replaces the nitro group with an amino group. 
-      It is an important step in the synthesis of paracetamol (acetaminophen). 
+      4-Nitrophenol (C6H5NO3) is reduced to 4-aminophenol (C6H7NO) using hydrogen gas (H2) over a
+      Raney nickel (Ni) catalyst.
+      This catalytic hydrogenation reaction replaces the nitro group with an amino group.
+      It is an important step in the synthesis of paracetamol (acetaminophen).
       Raney nickel is reused after the reaction, making the process efficient and scalable.
     </description>
     <tagList>
@@ -483,9 +489,10 @@
       <molecule title="CH3COOH(l)"/>
     </productList>
     <description>
-      4-Aminophenol (C6H7NO) reacts with acetic anhydride (C4H6O3) to form paracetamol (C8H9NO2) and acetic acid (CH3COOH). 
-      This is an acetylation reaction involving the nucleophilic attack of the amine group. 
-      Paracetamol is a widely used analgesic and antipyretic drug. 
+      4-Aminophenol (C6H7NO) reacts with acetic anhydride (C4H6O3) to form paracetamol (C8H9NO2) and
+      acetic acid (CH3COOH).
+      This is an acetylation reaction involving the nucleophilic attack of the amine group.
+      Paracetamol is a widely used analgesic and antipyretic drug.
       The reaction is typically carried out under mild heating conditions.
     </description>
     <tagList>
@@ -505,9 +512,11 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      Phenol (C6H5OH) reacts with sodium hydroxide (NaOH) to form sodium phenoxide (C6H5NaO) and water. 
-      This is a neutralization reaction where the acidic hydrogen on the phenol is replaced by a sodium ion. 
-      Sodium phenoxide is a more reactive nucleophile than phenol. 
+      Phenol (C6H5OH) reacts with sodium hydroxide (NaOH) to form sodium phenoxide (C6H5NaO) and
+      water.
+      This is a neutralization reaction where the acidic hydrogen on the phenol is replaced by a
+      sodium ion.
+      Sodium phenoxide is a more reactive nucleophile than phenol.
       It is used in various electrophilic substitution and carboxylation reactions.
     </description>
     <tagList>
@@ -525,9 +534,10 @@
       <molecule title="C7H5NaO3(aq)"/>
     </productList>
     <description>
-      Sodium phenoxide (C6H5NaO) reacts with carbon dioxide (CO2) to form sodium salicylate (C7H5NaO3). 
-      This is a carboxylation reaction, known as the Kolbe-Schmitt reaction. 
-      The reaction requires high pressure and temperature to proceed efficiently. 
+      Sodium phenoxide (C6H5NaO) reacts with carbon dioxide (CO2) to form sodium salicylate
+      (C7H5NaO3).
+      This is a carboxylation reaction, known as the Kolbe-Schmitt reaction.
+      The reaction requires high pressure and temperature to proceed efficiently.
       Sodium salicylate is an intermediate in the synthesis of salicylic acid.
     </description>
     <tagList>
@@ -546,9 +556,10 @@
       <molecule title="Na(s)"/>
     </productList>
     <description>
-      Sodium salicylate (C7H5NaO3) reacts with an acid (H⁺) to form salicylic acid (C7H6O3) and sodium ion (Na⁺). 
-      This is an acid-base reaction where the sodium ion is replaced by a hydrogen ion. 
-      Salicylic acid is widely used in pharmaceutical and skincare products. 
+      Sodium salicylate (C7H5NaO3) reacts with an acid (H⁺) to form salicylic acid (C7H6O3) and
+      sodium ion (Na⁺).
+      This is an acid-base reaction where the sodium ion is replaced by a hydrogen ion.
+      Salicylic acid is widely used in pharmaceutical and skincare products.
       It is a precursor for the synthesis of aspirin.
     </description>
     <tagList>
@@ -567,9 +578,11 @@
       <molecule title="CH3COOH(l)"/>
     </productList>
     <description>
-      Salicylic acid (C7H6O3) reacts with acetic anhydride (C4H6O3) to produce acetylsalicylic acid (C9H8O4), commonly known as aspirin, and acetic acid (CH3COOH). 
-      This is an esterification reaction where the hydroxyl group on the aromatic ring is acetylated. 
-      The reaction is catalyzed by acid and typically carried out with gentle heating. 
+      Salicylic acid (C7H6O3) reacts with acetic anhydride (C4H6O3) to produce acetylsalicylic acid
+      (C9H8O4), commonly known as aspirin, and acetic acid (CH3COOH).
+      This is an esterification reaction where the hydroxyl group on the aromatic ring is
+      acetylated.
+      The reaction is catalyzed by acid and typically carried out with gentle heating.
       Aspirin is one of the most widely used analgesic and anti-inflammatory drugs.
     </description>
     <tagList>
@@ -578,7 +591,7 @@
     </tagList>
   </reaction>
 
-   <reaction>
+  <reaction>
     <reactantList>
       <molecule title="CH3OH"/>
       <molecule title="H2SO4"/>
@@ -588,9 +601,11 @@
       <molecule title="HSO4-(l)"/>
     </productList>
     <description>
-      Methanol (CH3OH) is protonated by sulfuric acid (H2SO4) to form the methyloxonium ion (CH3OH2⁺) and bisulfate ion (HSO4⁻). 
-      This is a proton transfer reaction that activates the alcohol for subsequent reactions. 
-      The methyloxonium ion is a more reactive electrophile, often used in acid-catalyzed transformations. 
+      Methanol (CH3OH) is protonated by sulfuric acid (H2SO4) to form the methyloxonium ion
+      (CH3OH2⁺) and bisulfate ion (HSO4⁻).
+      This is a proton transfer reaction that activates the alcohol for subsequent reactions.
+      The methyloxonium ion is a more reactive electrophile, often used in acid-catalyzed
+      transformations.
       This step is frequently seen in ether synthesis and electrophilic substitution mechanisms.
     </description>
     <tagList>
@@ -609,9 +624,10 @@
       <molecule title="CH3OH(l)"/>
     </productList>
     <description>
-      The methyloxonium ion (CH3OH2⁺) is deprotonated by isobutylene (C4H8), forming a tert-butyl carbocation (C4H9⁺) and regenerating methanol (CH3OH). 
-      This reaction initiates a chain of acid-catalyzed alkylation steps. 
-      The alkene acts as a base and abstracts a proton from the oxonium ion. 
+      The methyloxonium ion (CH3OH2⁺) is deprotonated by isobutylene (C4H8), forming a tert-butyl
+      carbocation (C4H9⁺) and regenerating methanol (CH3OH).
+      This reaction initiates a chain of acid-catalyzed alkylation steps.
+      The alkene acts as a base and abstracts a proton from the oxonium ion.
       It is part of the mechanism in the synthesis of methyl tert-butyl ether (MTBE).
     </description>
     <tagList>
@@ -629,9 +645,11 @@
       <molecule title="C5H13O+(l)"/>
     </productList>
     <description>
-      The tert-butyl carbocation (C4H9⁺) reacts with methanol (CH3OH) to form a protonated MTBE intermediate (C5H13O⁺). 
-      This is a nucleophilic substitution reaction where the oxygen of methanol attacks the carbocation. 
-      The resulting oxonium ion is a transient intermediate in ether formation. 
+      The tert-butyl carbocation (C4H9⁺) reacts with methanol (CH3OH) to form a protonated MTBE
+      intermediate (C5H13O⁺).
+      This is a nucleophilic substitution reaction where the oxygen of methanol attacks the
+      carbocation.
+      The resulting oxonium ion is a transient intermediate in ether formation.
       This step is crucial for constructing the ether bond in the production of MTBE.
     </description>
     <tagList>
@@ -650,9 +668,10 @@
       <molecule title="CH3OH2+(l)"/>
     </productList>
     <description>
-      The protonated MTBE intermediate (C5H13O⁺) reacts with methanol (CH3OH) to yield methyl tert-butyl ether (MTBE, C5H12O) and methyloxonium ion (CH3OH2⁺). 
-      This is the final step in the acid-catalyzed synthesis of MTBE. 
-      MTBE is an important gasoline additive used to increase the oxygen content of fuel. 
+      The protonated MTBE intermediate (C5H13O⁺) reacts with methanol (CH3OH) to yield methyl
+      tert-butyl ether (MTBE, C5H12O) and methyloxonium ion (CH3OH2⁺).
+      This is the final step in the acid-catalyzed synthesis of MTBE.
+      MTBE is an important gasoline additive used to increase the oxygen content of fuel.
       The reaction regenerates the catalyst, allowing the process to be continuous.
     </description>
     <tagList>
@@ -671,9 +690,12 @@
       <molecule title="H2CO3(aq)"/>
     </productList>
     <description>
-      In this reaction, water (H2O) reacts with carbon dioxide (CO2) to form carbonic acid (H2CO3), a weak acid in aqueous solution. 
-      This reaction is reversible and plays a significant role in the carbon cycle and acid-base balance in natural waters and blood. 
-      The formation of carbonic acid is especially important in buffering systems, such as in oceans and biological fluids. 
+      In this reaction, water (H2O) reacts with carbon dioxide (CO2) to form carbonic acid (H2CO3),
+      a weak acid in aqueous solution.
+      This reaction is reversible and plays a significant role in the carbon cycle and acid-base
+      balance in natural waters and blood.
+      The formation of carbonic acid is especially important in buffering systems, such as in oceans
+      and biological fluids.
       It is also an initial step in processes like the carbonation of beverages.
     </description>
     <tagList>
@@ -693,10 +715,12 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      In this reaction, carbonic acid (H2CO3) reacts with ammonium hydroxide (NH4OH) to form ammonium bicarbonate (NH4HCO3) and water (H2O). 
-      This is an acid-base neutralization reaction where the weak acid reacts with the weak base. 
-      Ammonium bicarbonate is commonly used in baking powders and fertilizers. 
-      The reaction proceeds readily in aqueous solution and is typically reversible under certain conditions.
+      In this reaction, carbonic acid (H2CO3) reacts with ammonium hydroxide (NH4OH) to form
+      ammonium bicarbonate (NH4HCO3) and water (H2O).
+      This is an acid-base neutralization reaction where the weak acid reacts with the weak base.
+      Ammonium bicarbonate is commonly used in baking powders and fertilizers.
+      The reaction proceeds readily in aqueous solution and is typically reversible under certain
+      conditions.
     </description>
     <tagList>
       <tag>Acid-base reaction</tag>
@@ -714,9 +738,10 @@
       <molecule title="NaHCO3(s)"/>
     </productList>
     <description>
-      Ammonium bicarbonate (NH4HCO3) reacts with sodium chloride (NaCl) to form ammonium chloride (NH4Cl) in solution and solid sodium bicarbonate (NaHCO3). 
-      This is a type of double displacement reaction. 
-      It is one of the steps in processes where sodium bicarbonate is recovered. 
+      Ammonium bicarbonate (NH4HCO3) reacts with sodium chloride (NaCl) to form ammonium chloride
+      (NH4Cl) in solution and solid sodium bicarbonate (NaHCO3).
+      This is a type of double displacement reaction.
+      It is one of the steps in processes where sodium bicarbonate is recovered.
       Sodium bicarbonate is used in baking, fire extinguishers, and as an antacid.
     </description>
     <tagList>
@@ -736,9 +761,10 @@
       <molecule title="CO2(g)"/>
     </productList>
     <description>
-      When sodium bicarbonate (NaHCO3) is heated, it decomposes to form sodium carbonate (Na2CO3), water vapor (H2O), and carbon dioxide (CO2). 
-      This is a thermal decomposition reaction and is used in the production of soda ash. 
-      The decomposition typically starts around 80–100°C. 
+      When sodium bicarbonate (NaHCO3) is heated, it decomposes to form sodium carbonate (Na2CO3),
+      water vapor (H2O), and carbon dioxide (CO2).
+      This is a thermal decomposition reaction and is used in the production of soda ash.
+      The decomposition typically starts around 80–100°C.
       This reaction is also used in cooking and cleaning applications where CO2 release is needed.
     </description>
     <tagList>
@@ -755,9 +781,10 @@
       <molecule title="CO2(g)"/>
     </productList>
     <description>
-      Heating calcium carbonate (CaCO3) leads to its decomposition into calcium oxide (CaO), also known as quicklime, and carbon dioxide (CO2). 
-      This is a common thermal decomposition reaction in lime production. 
-      The reaction usually occurs at temperatures above 800°C. 
+      Heating calcium carbonate (CaCO3) leads to its decomposition into calcium oxide (CaO), also
+      known as quicklime, and carbon dioxide (CO2).
+      This is a common thermal decomposition reaction in lime production.
+      The reaction usually occurs at temperatures above 800°C.
       Quicklime is used in cement, metallurgy, and environmental applications.
     </description>
     <tagList>
@@ -774,9 +801,10 @@
       <molecule title="CaO2H2(s)"/>
     </productList>
     <description>
-      When calcium oxide (CaO) is combined with water (H2O), it forms calcium hydroxide (Ca(OH)2), commonly known as slaked lime. 
-      This exothermic reaction is widely used in construction and water treatment. 
-      The reaction releases a large amount of heat and forms a paste or slurry. 
+      When calcium oxide (CaO) is combined with water (H2O), it forms calcium hydroxide (Ca(OH)2),
+      commonly known as slaked lime.
+      This exothermic reaction is widely used in construction and water treatment.
+      The reaction releases a large amount of heat and forms a paste or slurry.
       Slaked lime is a key ingredient in whitewash, mortar, and chemical manufacturing.
     </description>
     <tagList>
@@ -793,9 +821,10 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      Ammonium hydroxide (NH4OH) decomposes upon heating to form ammonia gas (NH3) and liquid water (H2O). 
-      This is a typical example of a decomposition reaction involving a weak base. 
-      The reaction is reversible and depends on temperature and concentration. 
+      Ammonium hydroxide (NH4OH) decomposes upon heating to form ammonia gas (NH3) and liquid water
+      (H2O).
+      This is a typical example of a decomposition reaction involving a weak base.
+      The reaction is reversible and depends on temperature and concentration.
       It is relevant in industrial processes where ammonia recovery is required.
     </description>
     <tagList>
@@ -812,9 +841,10 @@
       <molecule title="NH4OH(aq)"/>
     </productList>
     <description>
-      Ammonia gas (NH3) dissolves in water (H2O) to form ammonium hydroxide (NH4OH), a weak base in aqueous solution. 
-      This is a reversible combination reaction. 
-      The extent of formation depends on temperature and pH. 
+      Ammonia gas (NH3) dissolves in water (H2O) to form ammonium hydroxide (NH4OH), a weak base in
+      aqueous solution.
+      This is a reversible combination reaction.
+      The extent of formation depends on temperature and pH.
       This solution is commonly used as a household cleaner and industrial reagent.
     </description>
     <tagList>
@@ -833,9 +863,10 @@
       <molecule title="Na2CO3(s)"/>
     </productList>
     <description>
-      In this process, dissolved sodium ions (Na⁺) and carbonate ions (CO₃²⁻) combine upon evaporation of water to form solid sodium carbonate (Na2CO3). 
-      This is a precipitation reaction from solution. 
-      It is an important step in the recovery of sodium carbonate from brines. 
+      In this process, dissolved sodium ions (Na⁺) and carbonate ions (CO₃²⁻) combine upon
+      evaporation of water to form solid sodium carbonate (Na2CO3).
+      This is a precipitation reaction from solution.
+      It is an important step in the recovery of sodium carbonate from brines.
       Crystallization conditions can be controlled to obtain desired purity and particle size.
     </description>
     <tagList>
@@ -856,9 +887,10 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      Ammonium chloride (NH4Cl) reacts with calcium oxide (CaO) to regenerate ammonia gas (NH3), along with calcium chloride (CaCl2) and water (H2O). 
-      This is a double displacement reaction involving acid-base neutralization. 
-      The reaction is used in processes where ammonia needs to be recovered or recycled. 
+      Ammonium chloride (NH4Cl) reacts with calcium oxide (CaO) to regenerate ammonia gas (NH3),
+      along with calcium chloride (CaCl2) and water (H2O).
+      This is a double displacement reaction involving acid-base neutralization.
+      The reaction is used in processes where ammonia needs to be recovered or recycled.
       Calcium chloride is a useful byproduct with applications in deicing and dust control.
     </description>
     <tagList>
@@ -877,8 +909,11 @@
       <molecule title="HCl(g)"/>
     </productList>
     <description>
-      This reaction is the first step of the Mannheim process, an industrial method used for the production of sodium sulfate and hydrochloric acid. 
-      In this step, sodium chloride (NaCl) reacts with concentrated sulfuric acid (H2SO4), resulting in the formation of sodium bisulfate (NaHSO4) as a solid and hydrogen chloride (HCl) as a gaseous byproduct. 
+      This reaction is the first step of the Mannheim process, an industrial method used for the
+      production of sodium sulfate and hydrochloric acid.
+      In this step, sodium chloride (NaCl) reacts with concentrated sulfuric acid (H2SO4), resulting
+      in the formation of sodium bisulfate (NaHSO4) as a solid and hydrogen chloride (HCl) as a
+      gaseous byproduct.
       The reaction is highly exothermic and typically performed at elevated temperatures.
     </description>
     <tagList>
@@ -896,8 +931,11 @@
       <molecule title="HCl(g)"/>
     </productList>
     <description>
-      This reaction is the second step of the Mannheim process, where sodium bisulfate (NaHSO4) reacts with additional sodium chloride (NaCl) to produce sodium sulfate (Na2SO4) as a solid and hydrogen chloride (HCl) as a gaseous product. 
-      The reaction is conducted at high temperatures and is essential for the large-scale production of sodium sulfate, which is widely used in detergents and glass manufacturing.
+      This reaction is the second step of the Mannheim process, where sodium bisulfate (NaHSO4)
+      reacts with additional sodium chloride (NaCl) to produce sodium sulfate (Na2SO4) as a solid
+      and hydrogen chloride (HCl) as a gaseous product.
+      The reaction is conducted at high temperatures and is essential for the large-scale production
+      of sodium sulfate, which is widely used in detergents and glass manufacturing.
     </description>
     <tagList>
       <tag>Double displacement reaction</tag>
@@ -915,8 +953,10 @@
       <molecule title="CO2(g)"/>
     </productList>
     <description>
-      In this reaction, sodium sulfate (Na2SO4) is reduced by carbon (C) to produce sodium sulfide (Na2S) as a solid product and carbon dioxide (CO2) as a gaseous byproduct. 
-      This reduction process takes place in a furnace and is commonly used in the production of sodium sulfide, an important chemical in the paper and textile industries.
+      In this reaction, sodium sulfate (Na2SO4) is reduced by carbon (C) to produce sodium sulfide
+      (Na2S) as a solid product and carbon dioxide (CO2) as a gaseous byproduct.
+      This reduction process takes place in a furnace and is commonly used in the production of
+      sodium sulfide, an important chemical in the paper and textile industries.
     </description>
     <tagList>
       <tag>Redox reaction</tag>
@@ -932,15 +972,17 @@
       <molecule title="CaS(s)"/>
     </productList>
     <description>
-      This reaction involves the formation of sodium carbonate (Na2CO3) and calcium sulfide (CaS) from sodium sulfide (Na2S) and calcium carbonate (CaCO3). 
-      The process is commonly used in the production of soda ash (Na2CO3), which is widely utilized in glass manufacturing, chemical processing, and water treatment.
+      This reaction involves the formation of sodium carbonate (Na2CO3) and calcium sulfide (CaS)
+      from sodium sulfide (Na2S) and calcium carbonate (CaCO3).
+      The process is commonly used in the production of soda ash (Na2CO3), which is widely utilized
+      in glass manufacturing, chemical processing, and water treatment.
     </description>
     <tagList>
       <tag>Double displacement reaction</tag>
       <tag>Precipitation reaction</tag>
     </tagList>
   </reaction>
-    <reaction>
+  <reaction>
     <reactantList>
       <molecule title="SO2"/>
       <molecule title="V2O5"/>
@@ -951,9 +993,10 @@
       <molecule title="VO2(s)"/>
     </productList>
     <description>
-      Sulfur dioxide (SO2) reacts with vanadium(V) oxide (V2O5) to produce sulfur trioxide (SO3) and vanadium(IV) oxide (VO2). 
-      This is a redox reaction where vanadium acts as a catalyst and undergoes temporary reduction. 
-      The reaction is crucial in the contact process for industrial sulfuric acid production. 
+      Sulfur dioxide (SO2) reacts with vanadium(V) oxide (V2O5) to produce sulfur trioxide (SO3) and
+      vanadium(IV) oxide (VO2).
+      This is a redox reaction where vanadium acts as a catalyst and undergoes temporary reduction.
+      The reaction is crucial in the contact process for industrial sulfuric acid production.
       It demonstrates the role of transition metals as catalysts in oxidation processes.
     </description>
     <tagList>
@@ -975,9 +1018,9 @@
       <molecule title="V2O5(s)"/>
     </productList>
     <description>
-      Vanadium(IV) oxide (VO2) reacts with oxygen (O2) to regenerate vanadium(V) oxide (V2O5). 
-      This is an oxidation reaction that restores the catalyst in the contact process. 
-      It completes the catalytic cycle involving vanadium oxides. 
+      Vanadium(IV) oxide (VO2) reacts with oxygen (O2) to regenerate vanadium(V) oxide (V2O5).
+      This is an oxidation reaction that restores the catalyst in the contact process.
+      It completes the catalytic cycle involving vanadium oxides.
       The ability of vanadium to switch oxidation states is key to its catalytic role.
     </description>
     <tagList>
@@ -995,9 +1038,10 @@
       <molecule title="SO2(g)"/>
     </productList>
     <description>
-      Sulfur (S) burns in the presence of oxygen (O2) to form sulfur dioxide (SO2), a colorless and toxic gas. 
-      This is a direct combination reaction and also an oxidation reaction. 
-      It serves as the starting step in the production of sulfuric acid. 
+      Sulfur (S) burns in the presence of oxygen (O2) to form sulfur dioxide (SO2), a colorless and
+      toxic gas.
+      This is a direct combination reaction and also an oxidation reaction.
+      It serves as the starting step in the production of sulfuric acid.
       The reaction is exothermic and produces significant heat and fumes.
     </description>
     <tagList>
@@ -1031,9 +1075,10 @@
       <molecule title="H2O(g)"/>
     </productList>
     <description>
-      Ammonia (NH3) reacts with oxygen (O2) in a combustion reaction to produce nitric oxide (NO) and water vapor (H2O). 
-      This is a redox reaction and a key step in the Ostwald process for nitric acid production. 
-      Platinum or rhodium catalysts are typically used to enhance this high-temperature reaction. 
+      Ammonia (NH3) reacts with oxygen (O2) in a combustion reaction to produce nitric oxide (NO)
+      and water vapor (H2O).
+      This is a redox reaction and a key step in the Ostwald process for nitric acid production.
+      Platinum or rhodium catalysts are typically used to enhance this high-temperature reaction.
       The nitric oxide produced further reacts with oxygen to form nitrogen dioxide.
     </description>
     <tagList>
@@ -1053,9 +1098,10 @@
       <molecule title="NO2(g)"/>
     </productList>
     <description>
-      Nitric oxide (NO) reacts rapidly with oxygen (O2) to form nitrogen dioxide (NO2), a reddish-brown toxic gas. 
-      This is a combination reaction that continues the Ostwald process. 
-      NO2 is an important intermediate in nitric acid production. 
+      Nitric oxide (NO) reacts rapidly with oxygen (O2) to form nitrogen dioxide (NO2), a
+      reddish-brown toxic gas.
+      This is a combination reaction that continues the Ostwald process.
+      NO2 is an important intermediate in nitric acid production.
       The reaction is exothermic and occurs readily in the air.
     </description>
     <tagList>
@@ -1077,9 +1123,10 @@
       <molecule title="NO(g)"/>
     </productList>
     <description>
-      Nitrogen dioxide (NO2) reacts with water (H2O) to form nitric acid (HNO3) and nitric oxide (NO). 
-      This disproportionation reaction is part of the final stage in the Ostwald process. 
-      The nitric acid is then collected for use in fertilizers and explosives. 
+      Nitrogen dioxide (NO2) reacts with water (H2O) to form nitric acid (HNO3) and nitric oxide
+      (NO).
+      This disproportionation reaction is part of the final stage in the Ostwald process.
+      The nitric acid is then collected for use in fertilizers and explosives.
       The NO produced is recycled back into the earlier stages of the process.
     </description>
     <tagList>
@@ -1088,7 +1135,7 @@
     </tagList>
   </reaction>
 
- <reaction>
+  <reaction>
     <reactantList>
       <molecule title="HCN"/>
       <molecule title="HCN"/>
@@ -1097,10 +1144,12 @@
       <molecule title="C2H2N2(g)"/>
     </productList>
     <description>
-      Two molecules of hydrogen cyanide (HCN) react to form iminoacetonitrile (C2H2N2), an important prebiotic intermediate. 
-      This is a condensation reaction involving nucleophilic attack by one HCN molecule on another. 
-      Iminoacetonitrile plays a key role in further cyanide-based polymerizations. 
-      These types of reactions are studied in origin-of-life chemistry for nucleotide base formation.
+      Two molecules of hydrogen cyanide (HCN) react to form iminoacetonitrile (C2H2N2), an important
+      prebiotic intermediate.
+      This is a condensation reaction involving nucleophilic attack by one HCN molecule on another.
+      Iminoacetonitrile plays a key role in further cyanide-based polymerizations.
+      These types of reactions are studied in origin-of-life chemistry for nucleotide base
+      formation.
     </description>
     <tagList>
       <tag>Condensation reaction</tag>
@@ -1117,9 +1166,10 @@
       <molecule title="C3H3N3(s)"/>
     </productList>
     <description>
-      Iminoacetonitrile (C2H2N2) reacts with hydrogen cyanide (HCN) to form aminomalononitrile (C3H3N3). 
-      This reaction further builds a nitrile-rich carbon-nitrogen chain. 
-      Aminomalononitrile is a reactive precursor to more complex nitrogenous heterocycles. 
+      Iminoacetonitrile (C2H2N2) reacts with hydrogen cyanide (HCN) to form aminomalononitrile
+      (C3H3N3).
+      This reaction further builds a nitrile-rich carbon-nitrogen chain.
+      Aminomalononitrile is a reactive precursor to more complex nitrogenous heterocycles.
       Such reactions are part of synthetic pathways toward purine bases.
     </description>
     <tagList>
@@ -1137,9 +1187,10 @@
       <molecule title="C4H4N4(s)"/>
     </productList>
     <description>
-      Aminomalononitrile (C3H3N3) reacts with another molecule of hydrogen cyanide (HCN) to yield diaminomaleonitrile (C4H4N4). 
-      This step adds further nitrogen functionality to the carbon framework. 
-      Diaminomaleonitrile is a tetramer of HCN and a key intermediate in purine biosynthesis models. 
+      Aminomalononitrile (C3H3N3) reacts with another molecule of hydrogen cyanide (HCN) to yield
+      diaminomaleonitrile (C4H4N4).
+      This step adds further nitrogen functionality to the carbon framework.
+      Diaminomaleonitrile is a tetramer of HCN and a key intermediate in purine biosynthesis models.
       It is also photoactive and can undergo ring closure under UV irradiation.
     </description>
     <tagList>
@@ -1159,10 +1210,12 @@
       <molecule title="C3H2N2CNNH2(s)"/>
     </productList>
     <description>
-      Diaminomaleonitrile (C4H4N4) undergoes a photochemical rearrangement under UV light to form aminoimidazole-5-carbonitrile (AICN). 
-      This reaction involves cyclization and formation of an imidazole ring. 
-      AICN is a direct precursor to adenine and guanine synthesis in prebiotic chemistry. 
-      The energy from UV light facilitates bond reorganization essential for heterocyclic ring formation.
+      Diaminomaleonitrile (C4H4N4) undergoes a photochemical rearrangement under UV light to form
+      aminoimidazole-5-carbonitrile (AICN).
+      This reaction involves cyclization and formation of an imidazole ring.
+      AICN is a direct precursor to adenine and guanine synthesis in prebiotic chemistry.
+      The energy from UV light facilitates bond reorganization essential for heterocyclic ring
+      formation.
     </description>
     <tagList>
       <tag>Photochemical reaction</tag>
@@ -1179,10 +1232,12 @@
       <molecule title="C5H5N5(s)"/>
     </productList>
     <description>
-      Aminoimidazole-5-carbonitrile (AICN) reacts with hydrogen cyanide (HCN) to form adenine (C5H5N5). 
-      This is a cyclization and condensation reaction leading to a purine base. 
-      Adenine is one of the four nucleobases found in DNA and RNA. 
-      The reaction demonstrates how simple precursors can yield complex biological molecules under prebiotic conditions.
+      Aminoimidazole-5-carbonitrile (AICN) reacts with hydrogen cyanide (HCN) to form adenine
+      (C5H5N5).
+      This is a cyclization and condensation reaction leading to a purine base.
+      Adenine is one of the four nucleobases found in DNA and RNA.
+      The reaction demonstrates how simple precursors can yield complex biological molecules under
+      prebiotic conditions.
     </description>
     <tagList>
       <tag>Condensation reaction</tag>
@@ -1199,9 +1254,10 @@
       <molecule title="C4H6N4O(s)"/>
     </productList>
     <description>
-      Aminoimidazole-5-carbonitrile (AICN) reacts with water (H2O) to form 5-aminoimidazole-4-carboxamide (AICA). 
-      This is a hydrolysis reaction where the nitrile group is converted into an amide. 
-      AICA is an important intermediate in purine nucleotide biosynthesis. 
+      Aminoimidazole-5-carbonitrile (AICN) reacts with water (H2O) to form
+      5-aminoimidazole-4-carboxamide (AICA).
+      This is a hydrolysis reaction where the nitrile group is converted into an amide.
+      AICA is an important intermediate in purine nucleotide biosynthesis.
       The reaction mimics enzymatic pathways seen in living organisms.
     </description>
     <tagList>
@@ -1223,9 +1279,10 @@
       <molecule title="NH4+(aq)"/>
     </productList>
     <description>
-      5-Aminoimidazole-4-carboxamide (AICA) reacts with hydrogen cyanide (HCN) and ammonia (NH3) to produce guanine (C5H5N5O) and ammonium ions (NH4⁺). 
-      This multicomponent reaction leads to the formation of a second purine nucleobase. 
-      Guanine is essential in nucleic acid structure and base pairing. 
+      5-Aminoimidazole-4-carboxamide (AICA) reacts with hydrogen cyanide (HCN) and ammonia (NH3) to
+      produce guanine (C5H5N5O) and ammonium ions (NH4⁺).
+      This multicomponent reaction leads to the formation of a second purine nucleobase.
+      Guanine is essential in nucleic acid structure and base pairing.
       The presence of excess ammonia facilitates amination steps in the reaction.
     </description>
     <tagList>
@@ -1234,61 +1291,61 @@
     </tagList>
   </reaction>
 
-<reaction>
-  <reactantList>
+  <reaction>
+    <reactantList>
       <molecule title="C6H6"/>
       <molecule title="HNO3"/>
       <molecule title="H2SO4"/>
-  </reactantList>
-  <productList>
+    </reactantList>
+    <productList>
       <molecule title="C6H5NO2(l)"/>
       <molecule title="H2O(l)"/>
       <molecule title="H2SO4(l)"/>
-  </productList>
-  <description>
-    Benzene (C6H6) reacts with nitric acid (HNO3) in the presence of sulfuric acid (H2SO4) as a
-    catalyst to form nitrobenzene (C6H5NO2) and water (H2O).
-    The sulfuric acid is not consumed but serves to generate the nitronium ion (NO2+), the key
-    electrophile in this electrophilic aromatic substitution reaction.
-    The nitro group formed is a meta-directing group, which sets the stage for selective
-    bromination in the next step toward synthesizing 3-bromoaniline.
-  </description>
-  <tagList>
-    <tag>Electrophilic substitution</tag>
-    <tag>Aromatic nitration</tag>
-    <tag>Catalytic reaction</tag>
-  </tagList>
-</reaction>
+    </productList>
+    <description>
+      Benzene (C6H6) reacts with nitric acid (HNO3) in the presence of sulfuric acid (H2SO4) as a
+      catalyst to form nitrobenzene (C6H5NO2) and water (H2O).
+      The sulfuric acid is not consumed but serves to generate the nitronium ion (NO2+), the key
+      electrophile in this electrophilic aromatic substitution reaction.
+      The nitro group formed is a meta-directing group, which sets the stage for selective
+      bromination in the next step toward synthesizing 3-bromoaniline.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Aromatic nitration</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
 
-<reaction>
-  <reactantList>
+  <reaction>
+    <reactantList>
       <molecule title="C6H5NO2"/>
       <molecule title="Br2"/>
       <molecule title="FeBr3"/>
-  </reactantList>
-  <productList>
+    </reactantList>
+    <productList>
       <molecule title="C6H4BrNO2(l)"/>
       <molecule title="HBr(g)"/>
       <molecule title="FeBr3(s)"/>
-  </productList>
-  <description>
-    Nitrobenzene (C6H5NO2) undergoes bromination with bromine (Br2) in the presence of iron(III)
-    bromide (FeBr3) as a Lewis acid catalyst to form 3-bromonitrobenzene (C6H4BrNO2) and hydrogen
-    bromide (HBr).
-    The nitro group is strongly electron-withdrawing and directs substitution to the meta
-    position.
-    FeBr3 activates the bromine molecule to make the reaction proceed under milder conditions.
-    Since the catalyst is not consumed, it appears in both the reactants and products.
-  </description>
-  <tagList>
-    <tag>Electrophilic substitution</tag>
-    <tag>Catalytic reaction</tag>
-    <tag>Meta directing group</tag>
-  </tagList>
-</reaction>
+    </productList>
+    <description>
+      Nitrobenzene (C6H5NO2) undergoes bromination with bromine (Br2) in the presence of iron(III)
+      bromide (FeBr3) as a Lewis acid catalyst to form 3-bromonitrobenzene (C6H4BrNO2) and hydrogen
+      bromide (HBr).
+      The nitro group is strongly electron-withdrawing and directs substitution to the meta
+      position.
+      FeBr3 activates the bromine molecule to make the reaction proceed under milder conditions.
+      Since the catalyst is not consumed, it appears in both the reactants and products.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Catalytic reaction</tag>
+      <tag>Meta directing group</tag>
+    </tagList>
+  </reaction>
 
-<reaction>
-  <reactantList>
+  <reaction>
+    <reactantList>
       <molecule title="C6H4BrNO2"/>
       <molecule title="Zn"/>
       <molecule title="Zn"/>
@@ -1299,30 +1356,30 @@
       <molecule title="HCl"/>
       <molecule title="HCl"/>
       <molecule title="HCl"/>
-  </reactantList>
-  <productList>
+    </reactantList>
+    <productList>
       <molecule title="C6H6BrN(s)"/>
       <molecule title="H2O(l)"/>
       <molecule title="H2O(l)"/>
       <molecule title="ZnCl2(s)"/>
       <molecule title="ZnCl2(s)"/>
       <molecule title="ZnCl2(s)"/>
-  </productList>
-  <description>
-    3-Bromonitrobenzene (C6H4BrNO2) is reduced to 3-bromoaniline (C6H6BrN) using zinc (Zn) and
-    hydrochloric acid (HCl).
-    In this classic redox reaction, the nitro group is converted into an amino group.
-    Zinc donates electrons, and protons from HCl complete the reduction.
-    The byproducts include water (H2O) and zinc chloride (ZnCl2), formed in a 1:1 ratio with
-    consumed zinc.
-    This method is widely used in organic synthesis for reducing aromatic nitro groups under mild
-    conditions.
-  </description>
-  <tagList>
-    <tag>Reduction reaction</tag>
-    <tag>Redox reaction</tag>
-  </tagList>
-</reaction>
+    </productList>
+    <description>
+      3-Bromonitrobenzene (C6H4BrNO2) is reduced to 3-bromoaniline (C6H6BrN) using zinc (Zn) and
+      hydrochloric acid (HCl).
+      In this classic redox reaction, the nitro group is converted into an amino group.
+      Zinc donates electrons, and protons from HCl complete the reduction.
+      The byproducts include water (H2O) and zinc chloride (ZnCl2), formed in a 1:1 ratio with
+      consumed zinc.
+      This method is widely used in organic synthesis for reducing aromatic nitro groups under mild
+      conditions.
+    </description>
+    <tagList>
+      <tag>Reduction reaction</tag>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
 
   <reaction>
     <reactantList>
@@ -1354,8 +1411,10 @@
       <molecule title="H3O+(aq)"/>
     </productList>
     <description>
-      In the final step, the oxonium ion (C4H11O+) reacts with water (H2O) to yield tert-butyl alcohol (C4H10O) and hydronium ion (H3O+).
-      This deprotonation step regenerates the catalyst (H3O+), which can continue to promote further SN1 reactions.
+      In the final step, the oxonium ion (C4H11O+) reacts with water (H2O) to yield tert-butyl
+      alcohol (C4H10O) and hydronium ion (H3O+).
+      This deprotonation step regenerates the catalyst (H3O+), which can continue to promote further
+      SN1 reactions.
     </description>
     <tagList>
       <tag>Deprotonation</tag>
@@ -1373,7 +1432,8 @@
       <molecule title="H2O(l)"/>
     </productList>
     <description>
-      In this acid-base reaction, the hydronium ion (H3O+) reacts with bromide ion (Br-) to form hydrogen bromide (HBr) gas and water (H2O).
+      In this acid-base reaction, the hydronium ion (H3O+) reacts with bromide ion (Br-) to form
+      hydrogen bromide (HBr) gas and water (H2O).
       This reaction is a proton transfer process that occurs in aqueous solution.
       The formation of HBr gas is a key step in the synthesis of tert-butyl bromide.
     </description>
@@ -1384,25 +1444,29 @@
   </reaction>
 
   <reaction>
-  <reactantList>
+    <reactantList>
       <molecule title="CH3CHCH3C2H4CH3"/>
       <molecule title="Pt4Al4O5"/>
-  </reactantList>
-  <productList>
+    </reactantList>
+    <productList>
       <molecule title="C6H14(g)"/>
       <molecule title="Pt4Al4O5(s)"/>
-  </productList>
-  <description>
-    2-Methylpentane is first isomerized to n-hexane in the presence of a platinum-on-alumina catalyst. 
-    This step rearranges the branched structure into a linear alkane, making it more amenable to cyclization. 
-    The isomerization step is catalyzed under moderate temperature and pressure conditions typical of reforming units. 
-    This transformation facilitates the next steps in the production of aromatic compounds like benzene.
-  </description>
-  <tagList>
-    <tag>Isomerization</tag>
-    <tag>Catalytic reforming</tag>
-  </tagList>
-</reaction>
+    </productList>
+    <description>
+      2-Methylpentane is first isomerized to n-hexane in the presence of a platinum-on-alumina
+      catalyst.
+      This step rearranges the branched structure into a linear alkane, making it more amenable to
+      cyclization.
+      The isomerization step is catalyzed under moderate temperature and pressure conditions typical
+      of reforming units.
+      This transformation facilitates the next steps in the production of aromatic compounds like
+      benzene.
+    </description>
+    <tagList>
+      <tag>Isomerization</tag>
+      <tag>Catalytic reforming</tag>
+    </tagList>
+  </reaction>
 
   <reaction>
     <reactantList>
