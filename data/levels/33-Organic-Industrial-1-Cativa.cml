@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+
+  <inventoryList>
+    <!-- Provide exactly what is needed to run the Cativa cycle twice: 2 CH3OH + 2 CO; HI and catalyst are regenerated -->
+    <molecule title="CH3OH(l)"/>
+    <molecule title="CH3OH(l)"/>
+    <molecule title="CO(g)"/>
+    <molecule title="CO(g)"/>
+    <molecule title="HI(g)"/>
+    <molecule title="C2IrI2O2-(aq)"/>
+  </inventoryList>
+
+  <effectList>
+    <effect title="Cold" value="50" x2="1200" y2="350"/>
+    <effect title="Fire" value="2000" x2="200" y2="350"/>
+  </effectList>
+
+  <victoryCondition>
+    <molecule title="CH3COOH"/>
+    <molecule title="CH3COOH"/>
+  </victoryCondition>
+
+  <objective
+    text="Synthesize acetic acid (CH3COOH) from methanol via the Cativa process using an iridium catalyst."/>
+
+  <hint text="Follow the Cativa cycle: methyl iodide formation, oxidative addition, CO insertion, reductive elimination, hydrolysis.">
+    <reactions>
+
+  <!-- Step 1: Methanol + HI -> Methyl iodide -->
+      <reaction>
+        <reactantList>
+          <molecule title="CH3OH"/>
+          <molecule title="HI"/>
+        </reactantList>
+        <productList>
+          <molecule title="CH3I(aq)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+
+  <!-- Step 2: Oxidative addition -->
+      <reaction>
+        <reactantList>
+          <molecule title="C2IrI2O2-"/>
+          <molecule title="CH3I"/>
+        </reactantList>
+        <productList>
+          <molecule title="C3H3IrI3O2-(aq)"/>
+        </productList>
+      </reaction>
+
+  <!-- Step 3: CO insertion (migratory insertion) -->
+      <reaction>
+        <reactantList>
+          <molecule title="C3H3IrI3O2-"/>
+          <molecule title="CO"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H3IrI3O3-(aq)"/>
+        </productList>
+      </reaction>
+
+  <!-- Step 4: Reductive elimination (acetyl iodide release + catalyst regeneration) -->
+      <reaction>
+        <reactantList>
+          <molecule title="C4H3IrI3O3-"/>
+        </reactantList>
+        <productList>
+          <molecule title="C2IrI2O2-(aq)"/>
+          <molecule title="C2H3IO(aq)"/>
+        </productList>
+      </reaction>
+
+  <!-- Step 5: Hydrolysis to acetic acid -->
+      <reaction>
+        <reactantList>
+          <molecule title="C2H3IO"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="CH3COOH(aq)"/>
+          <molecule title="HI(g)"/>
+        </productList>
+      </reaction>
+
+    </reactions>
+  </hint>
+</level>

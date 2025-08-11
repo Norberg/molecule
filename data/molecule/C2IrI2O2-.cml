@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="-1">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" formalCharge="-1" id="a1" elementType="Ir"/>
+    <atom x2="1.0" y2="-1.0" id="a2" elementType="C"/>
+    <atom x2="1.0" y2="-2.0" id="a3" elementType="O"/>
+    <atom x2="2.0" y2="-0.0" id="a4" elementType="C"/>
+    <atom x2="3.0" y2="-0.0" id="a5" elementType="O"/>
+    <atom x2="1.0" y2="1.0" id="a6" elementType="I"/>
+    <atom x2="0.0" y2="0.0" id="a7" elementType="I"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="3"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="3"/>
+    <bond atomRefs2="a1 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-70.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">157.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[Ir-](I)(I)(C#O)C#O</property>
+    <property title="Name">Diiodocarbonyliridate(I) anion</property>
+    <property title="Description">The diiodocarbonyliridate(I) anion is a square-planar coordination complex containing an iridium center in the +1 oxidation state. It is coordinated by two carbonyl (CO) ligands and two iodide ions. The CO ligands act as strong field, neutral ligands, donating electron density through the carbon atom. The iodide ions serve as monodentate anionic ligands, completing the four-coordinate square planar geometry typical for d&#x2078; metal centers like Ir(I). This complex is notable for its stability and spectroscopic properties, particularly in infrared (IR) due to the metal&#x2013;carbonyl bonding. Compounds of this type are often studied in organometallic and catalytic chemistry due to their reactivity and potential as catalyst precursors.</property>
+  </propertyList>
+</ns0:molecule>

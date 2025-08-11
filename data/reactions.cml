@@ -1556,4 +1556,119 @@
       <tag>Catalytic reforming</tag>
     </tagList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH3OH"/>
+      <molecule title="HI"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3I(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Methanol reacts with hydrogen iodide to produce methyl iodide and water. This step generates
+      the methylating agent required for the catalytic cycle. The reaction is typically conducted in
+      situ to maintain a steady supply of methyl iodide. Efficient conversion is crucial for the
+      overall productivity of the Cativa process. Water produced is managed to maintain optimal
+      reaction conditions. This step initiates the carbonylation sequence leading to acetic acid.
+    </description>
+    <tagList>
+      <tag>Methylation</tag>
+      <tag>Precursor Formation</tag>
+      <tag>In Situ Generation</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C2IrI2O2-"/>
+      <molecule title="CH3I"/>
+    </reactantList>
+    <productList>
+      <molecule title="C3H3IrI3O2-(aq)"/>
+    </productList>
+    <description>
+      The active iridium(I) catalyst undergoes oxidative addition with methyl iodide to form a
+      methyl–iridium(III) intermediate. This step increases the oxidation state of iridium and
+      introduces a methyl group into the coordination sphere. The reaction is rapid and reversible
+      under process conditions. The resulting complex is pivotal for subsequent carbonylation steps.
+      Control of this step influences the efficiency and selectivity of the process. It exemplifies
+      the dynamic nature of organometallic catalysis in industrial applications.
+    </description>
+    <tagList>
+      <tag>Oxidative Addition</tag>
+      <tag>Organometallic Chemistry</tag>
+      <tag>Catalyst Activation</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C3H3IrI3O2-"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H3IrI3O3-(aq)"/>
+    </productList>
+    <description>
+      The methyl–iridium(III) complex undergoes migratory insertion of carbon monoxide, forming an
+      acetyl–iridium(III) intermediate. This step is the rate-determining phase of the catalytic
+      cycle. The insertion transforms the methyl ligand into an acetyl group, setting the stage for
+      acetic acid formation. Efficient CO insertion is facilitated by the electronic properties of
+      the iridium center. The process underscores the importance of ligand dynamics in catalysis.
+      Understanding this step is crucial for optimizing reaction conditions and catalyst design.
+    </description>
+    <tagList>
+      <tag>Carbonylation</tag>
+      <tag>Migratory Insertion</tag>
+      <tag>Rate-Determining Step</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C4H3IrI3O3-"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2IrI2O2-(aq)"/>
+      <molecule title="C2H3IO(aq)"/>
+    </productList>
+    <description>
+      The acetyl–iridium(III) complex undergoes reductive elimination to release acetyl iodide and
+      regenerate the active iridium(I) catalyst. This step completes the catalytic cycle, allowing
+      for continuous operation. Acetyl iodide formed is a key intermediate en route to acetic acid.
+      The efficiency of this elimination influences overall process throughput. The regeneration of
+      the catalyst ensures sustainability and cost-effectiveness. This transformation highlights the
+      elegance of transition metal-mediated catalysis.
+    </description>
+    <tagList>
+      <tag>Reductive Elimination</tag>
+      <tag>Catalyst Regeneration</tag>
+      <tag>Process Efficiency</tag>
+    </tagList>
+  </reaction>
+
+  <reaction>
+    <reactantList>
+      <molecule title="C2H3IO"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3COOH(aq)"/>
+      <molecule title="HI(g)"/>
+    </productList>
+    <description>
+      Acetyl iodide reacts with water to produce acetic acid and regenerate hydrogen iodide. This
+      hydrolysis step finalizes the conversion of methanol to acetic acid. The regenerated HI is
+      recycled to sustain the production of methyl iodide. Efficient hydrolysis is vital for high
+      acetic acid yields and catalyst turnover. The process exemplifies the integration of chemical
+      reactions in a closed-loop system. Managing water content is essential to maintain catalyst
+      stability and activity.
+    </description>
+    <tagList>
+      <tag>Hydrolysis</tag>
+      <tag>Product Formation</tag>
+      <tag>Reagent Recycling</tag>
+    </tagList>
+  </reaction>
 </reactions>

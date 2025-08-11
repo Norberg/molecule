@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.0" y2="-1.0" id="a1" elementType="Ir"/>
+    <atom x2="-0.866025" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="-0.866025" y2="-1.5" id="a3" elementType="C"/>
+    <atom x2="-1.732051" y2="-2.0" id="a4" elementType="O"/>
+    <atom x2="-0.0" y2="-2.0" id="a5" elementType="C"/>
+    <atom x2="0.0" y2="-3.0" id="a6" elementType="O"/>
+    <atom x2="0.866025" y2="-1.5" id="a7" elementType="C"/>
+    <atom x2="1.732051" y2="-2.0" id="a8" elementType="O"/>
+    <atom x2="0.866025" y2="-0.5" id="a9" elementType="I"/>
+    <atom x2="0.0" y2="-0.0" id="a10" elementType="I"/>
+    <atom x2="-0.866025" y2="0.57" id="a11" elementType="H"/>
+    <atom x2="-1.792673" y2="-1.035" id="a12" elementType="H"/>
+    <atom x2="-1.792673" y2="0.035" id="a13" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="3"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="3"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="3"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a1 a10" order="1"/>
+    <bond atomRefs2="a2 a11" order="1"/>
+    <bond atomRefs2="a2 a12" order="1"/>
+    <bond atomRefs2="a2 a13" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Methyltricarbonyl diiodoiridium(III) complex</property>
+    <property title="Description"> This neutral iridium(III) complex contains a methyl group, three carbonyl ligands, and two iodide ions. It is formed through ligand substitution from the previous intermediate, where one iodide ligand is replaced by an additional CO ligand. This increases the electrophilicity of the metal center, facilitating the migratory insertion of CO into the Ir&#x2013;CH&#x2083; bond. The resulting acetyl&#x2013;iridium complex is one step closer to acetic acid formation. The geometry remains pseudo-octahedral and supports fast ligand rearrangement. This molecule highlights the dynamic coordination chemistry of iridium in catalytic carbonylation.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[Ir](C)(C#O)(C#O)(C#O)(I)I</property>
+  </propertyList>
+</ns0:molecule>

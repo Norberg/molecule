@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="-1">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="1.0" formalCharge="-1" id="a1" elementType="Ir"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="C"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="C"/>
+    <atom x2="1.732051" y2="2.0" id="a4" elementType="O"/>
+    <atom x2="0.0" y2="2.0" id="a5" elementType="C"/>
+    <atom x2="0.0" y2="3.0" id="a6" elementType="O"/>
+    <atom x2="-0.866025" y2="1.5" id="a7" elementType="I"/>
+    <atom x2="-0.866025" y2="0.5" id="a8" elementType="I"/>
+    <atom x2="-0.0" y2="-0.0" id="a9" elementType="I"/>
+    <atom x2="0.866025" y2="-0.57" id="a10" elementType="H"/>
+    <atom x2="1.792673" y2="1.035" id="a11" elementType="H"/>
+    <atom x2="1.792673" y2="-0.035" id="a12" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="3"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="3"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a2 a10" order="1"/>
+    <bond atomRefs2="a2 a11" order="1"/>
+    <bond atomRefs2="a2 a12" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-130.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">300.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Methyltriiododicarbonyliridate(III) anion</property>
+    <property title="Description">This complex is a pivotal intermediate formed by the oxidative addition of methyl iodide to the iridium(I) catalyst [Ir(CO)&#x2082;I&#x2082;]&#x207B;. The iridium center is now in the +3 oxidation state and coordinates with a methyl group, two carbonyl ligands, and three iodide ions. It adopts an octahedral geometry, allowing for key ligand rearrangements in the catalytic cycle. The methyl group plays a central role, as it will eventually combine with carbon monoxide to form the acetyl intermediate. The electron-rich iridium(III) center remains reactive, enabling migratory insertion reactions. This species marks the transition from activation to transformation in the Cativa process.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[Ir-](C)(C#O)(C#O)(I)(I)I</property>
+  </propertyList>
+</ns0:molecule>

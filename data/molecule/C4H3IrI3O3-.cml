@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" formalCharge="-1">
+  <ns0:atomArray>
+    <atom x2="-0.587785" y2="0.809017" formalCharge="-1" id="a1" elementType="Ir"/>
+    <atom x2="0.363271" y2="1.118034" id="a2" elementType="C"/>
+    <atom x2="1.314328" y2="1.427051" id="a3" elementType="O"/>
+    <atom x2="-0.587785" y2="1.809017" id="a4" elementType="C"/>
+    <atom x2="0.27824" y2="2.309017" id="a5" elementType="O"/>
+    <atom x2="-1.453811" y2="2.309017" id="a6" elementType="C"/>
+    <atom x2="-1.538842" y2="1.118034" id="a7" elementType="I"/>
+    <atom x2="-1.175571" y2="0.0" id="a8" elementType="I"/>
+    <atom x2="-0.0" y2="-0.0" id="a9" elementType="I"/>
+    <atom x2="-1.453811" y2="3.379017" id="a10" elementType="H"/>
+    <atom x2="-2.380458" y2="1.774017" id="a11" elementType="H"/>
+    <atom x2="-2.380458" y2="2.844017" id="a12" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="3"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="2"/>
+    <bond atomRefs2="a4 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a1 a8" order="1"/>
+    <bond atomRefs2="a1 a9" order="1"/>
+    <bond atomRefs2="a6 a10" order="1"/>
+    <bond atomRefs2="a6 a11" order="1"/>
+    <bond atomRefs2="a6 a12" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-260.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">380.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Acetyltriiododicarbonyliridate(III) anion</property>
+    <property title="Description"> This anionic complex features an acetyl group resulting from the migratory insertion of CO into the Ir&#x2013;CH&#x2083; bond. Coordinated with two carbonyl ligands and three iodide ions, the iridium center maintains a +3 oxidation state. The complex is a key intermediate before the reductive elimination step that releases acetyl iodide. Its formation is essential for the continuation of the catalytic cycle. The stability of this species influences the overall efficiency of acetic acid production. Understanding its structure aids in optimizing catalyst performance.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">[Ir-](C#O)(C(=O)C)(I)(I)I</property>
+  </propertyList>
+</ns0:molecule>
