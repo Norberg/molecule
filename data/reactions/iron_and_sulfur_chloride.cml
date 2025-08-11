@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Iron oxide reduction sequence -->
+  <reaction>
+    <reactantList>
+      <molecule title="Fe2O3"/>
+      <molecule title="Fe2O3"/>
+      <molecule title="Fe2O3"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="Fe3O4(s)"/>
+      <molecule title="Fe3O4(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+    <description>
+      Iron(III) oxide (Fe2O3) is partially reduced by carbon monoxide (CO) to magnetite (Fe3O4) with
+      the release of carbon dioxide (CO2).
+      This step is part of the sequential reduction pathway in iron extraction.
+      It exemplifies a gas&#x2013;solid redox interaction in a blast furnace context.
+    </description>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Fe3O4"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="FeO(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="FeO"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="Fe(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <!-- Pidginon / silicothermic magnesium production (simplified) -->
+  <reaction>
+    <reactantList>
+      <molecule title="MgO"/>
+      <molecule title="MgO"/>
+      <molecule title="Si"/>
+    </reactantList>
+    <productList>
+      <molecule title="SiO2(s)"/>
+      <molecule title="Mg(g)"/>
+      <molecule title="Mg(g)"/>
+    </productList>
+  </reaction>
+  <!-- Sulfur chlorination and mustard precursor -->
+  <reaction>
+    <reactantList>
+      <molecule title="S8"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+      <molecule title="Cl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+      <molecule title="S2Cl2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="S2Cl2"/>
+      <molecule title="Cl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="SCl2(g)"/>
+      <molecule title="SCl2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="SCl2"/>
+      <molecule title="C2H4"/>
+      <molecule title="C2H4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H8Cl2S(g)"/>
+    </productList>
+  </reaction>
+</reactions>

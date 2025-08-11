@@ -37,7 +37,7 @@ def get_font(size=24):
 
 def render_all_reactions():
     cml = Cml.Reactions()
-    cml.parse("data/reactions.cml")
+    cml.parse("data/reactions")
     reactor = Reactor(cml.reactions)
     for reaction in reactor.reactions:
         reactants = reaction.reactants

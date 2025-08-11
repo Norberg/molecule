@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- MTBE synthesis pathway -->
+  <reaction>
+    <reactantList>
+      <molecule title="CH3OH"/>
+      <molecule title="H2SO4"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3OH2+(l)"/>
+      <molecule title="HSO4-(l)"/>
+    </productList>
+    <description>
+      Methanol (CH3OH) is protonated by sulfuric acid (H2SO4) to form the methyloxonium ion
+      (CH3OH2&#x207A;) and bisulfate ion (HSO4&#x207B;).
+      This is a proton transfer reaction that activates the alcohol for subsequent reactions.
+      The methyloxonium ion is a more reactive electrophile, often used in acid-catalyzed
+      transformations.
+      This step is frequently seen in ether synthesis and electrophilic substitution mechanisms.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Protonation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH3OH2+"/>
+      <molecule title="C4H8"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H9+(l)"/>
+      <molecule title="CH3OH(l)"/>
+    </productList>
+    <description>
+      The methyloxonium ion (CH3OH2&#x207A;) is deprotonated by isobutylene (C4H8), forming a tert-butyl
+      carbocation (C4H9&#x207A;) and regenerating methanol (CH3OH).
+      This reaction initiates a chain of acid-catalyzed alkylation steps.
+      The alkene acts as a base and abstracts a proton from the oxonium ion.
+      It is part of the mechanism in the synthesis of methyl tert-butyl ether (MTBE).
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Carbocation formation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C4H9+"/>
+      <molecule title="CH3OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="C5H13O+(l)"/>
+    </productList>
+    <description>
+      The tert-butyl carbocation (C4H9&#x207A;) reacts with methanol (CH3OH) to form a protonated MTBE
+      intermediate (C5H13O&#x207A;).
+      This is a nucleophilic substitution reaction where the oxygen of methanol attacks the
+      carbocation.
+      The resulting oxonium ion is a transient intermediate in ether formation.
+      This step is crucial for constructing the ether bond in the production of MTBE.
+    </description>
+    <tagList>
+      <tag>Nucleophilic substitution</tag>
+      <tag>Ether formation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C5H13O+"/>
+      <molecule title="CH3OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="C5H12O(g)"/>
+      <molecule title="CH3OH2+(l)"/>
+    </productList>
+    <description>
+      The protonated MTBE intermediate (C5H13O&#x207A;) reacts with methanol (CH3OH) to yield methyl
+      tert-butyl ether (MTBE, C5H12O) and methyloxonium ion (CH3OH2&#x207A;).
+      This is the final step in the acid-catalyzed synthesis of MTBE.
+      MTBE is an important gasoline additive used to increase the oxygen content of fuel.
+      The reaction regenerates the catalyst, allowing the process to be continuous.
+    </description>
+    <tagList>
+      <tag>Ether formation</tag>
+      <tag>Catalytic cycle</tag>
+    </tagList>
+  </reaction>
+</reactions>

@@ -31,7 +31,7 @@ class TestReact(unittest.TestCase):
 
     def setupRealReactor(self):
         cml = Cml.Reactions()
-        cml.parse("data/reactions.cml")
+        cml.parse("data/reactions")
         reactor = Reactor(cml.reactions)
         return reactor
 

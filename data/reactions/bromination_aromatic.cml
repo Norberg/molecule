@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Aromatic substitution and related -->
+  <reaction>
+    <reactantList>
+      <molecule title="C6H6"/>
+      <molecule title="Br2"/>
+      <molecule title="FeBr3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5Br(g)"/>
+      <molecule title="HBr(g)"/>
+      <molecule title="FeBr3(s)"/>
+    </productList>
+    <description>
+      Benzene (C6H6) reacts with bromine (Br2) in the presence of a catalyst like FeBr3 to form
+      bromobenzene (C6H5Br) and hydrogen bromide (HBr).
+      In this reaction benzene acts as a nucleophile and attacks the electrophilic bromine atom.
+      This is an example of electrophilic aromatic substitution where one hydrogen on the benzene
+      ring is replaced by a bromine atom.
+      The aromatic ring remains intact during the reaction, preserving its resonance stability.
+      This type of reaction is widely used to introduce functional groups into aromatic compounds.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Aromatic substitution</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H6"/>
+      <molecule title="HNO3"/>
+      <molecule title="H2SO4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5NO2(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2SO4(l)"/>
+    </productList>
+    <description>
+      Benzene (C6H6) reacts with nitric acid (HNO3) in the presence of sulfuric acid (H2SO4) as a
+      catalyst to form nitrobenzene (C6H5NO2) and water (H2O).
+      The sulfuric acid is not consumed but serves to generate the nitronium ion (NO2+), the key
+      electrophile in this electrophilic aromatic substitution reaction.
+      The nitro group formed is a meta-directing group, which sets the stage for selective
+      bromination in the next step toward synthesizing 3-bromoaniline.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Aromatic nitration</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5NO2"/>
+      <molecule title="Br2"/>
+      <molecule title="FeBr3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H4BrNO2(l)"/>
+      <molecule title="HBr(g)"/>
+      <molecule title="FeBr3(s)"/>
+    </productList>
+    <description>
+      Nitrobenzene (C6H5NO2) undergoes bromination with bromine (Br2) in the presence of iron(III)
+      bromide (FeBr3) as a Lewis acid catalyst to form 3-bromonitrobenzene (C6H4BrNO2) and hydrogen
+      bromide (HBr).
+      The nitro group is strongly electron-withdrawing and directs substitution to the meta
+      position.
+      FeBr3 activates the bromine molecule to make the reaction proceed under milder conditions.
+      Since the catalyst is not consumed, it appears in both the reactants and products.
+    </description>
+    <tagList>
+      <tag>Electrophilic substitution</tag>
+      <tag>Catalytic reaction</tag>
+      <tag>Meta directing group</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H4BrNO2"/>
+      <molecule title="Zn"/>
+      <molecule title="Zn"/>
+      <molecule title="Zn"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H6BrN(s)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="ZnCl2(s)"/>
+      <molecule title="ZnCl2(s)"/>
+      <molecule title="ZnCl2(s)"/>
+    </productList>
+    <description>
+      3-Bromonitrobenzene (C6H4BrNO2) is reduced to 3-bromoaniline (C6H6BrN) using zinc (Zn) and
+      hydrochloric acid (HCl).
+      In this classic redox reaction, the nitro group is converted into an amino group.
+      Zinc donates electrons, and protons from HCl complete the reduction.
+      The byproducts include water (H2O) and zinc chloride (ZnCl2), formed in a 1:1 ratio with
+      consumed zinc.
+      This method is widely used in organic synthesis for reducing aromatic nitro groups under mild
+      conditions.
+    </description>
+    <tagList>
+      <tag>Reduction reaction</tag>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

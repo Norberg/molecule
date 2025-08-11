@@ -1,0 +1,422 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Basic inorganic & elemental reactions (subset) -->
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="OH-(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="O"/>
+    </reactantList>
+    <productList>
+      <molecule title="O2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="O"/>
+      <molecule title="H2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H+"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H+"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4+(aq)"/>
+      <molecule title="OH-(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CaCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaO(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CaO"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaO2H2(s)"/>
+    </productList>
+  </reaction>
+  <!-- Added remaining migrated reactions -->
+  <!-- Start appended -->
+  <!-- Combustion / synthesis -->
+  <!-- CH4 partial oxidation -->
+  <reaction>
+    <reactantList>
+      <molecule title="CH4"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH4N2O(s)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="N"/>
+      <molecule title="N"/>
+    </reactantList>
+    <productList>
+      <molecule title="N2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2"/>
+      <molecule title="H2"/>
+      <molecule title="H2"/>
+      <molecule title="N2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="NH3(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H6O"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Ca+2"/>
+      <molecule title="CO3-2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaCO3(s)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="HOCl"/>
+      <molecule title="C2H4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5ClO(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO(g)"/>
+      <molecule title="CO(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CO"/>
+      <molecule title="CO"/>
+    </reactantList>
+    <productList>
+      <molecule title="C(s)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="P4"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="P4O10(s)"/>
+    </productList>
+  </reaction>
+  <!-- Carbocation / addition / substitution cluster -->
+  <reaction>
+    <reactantList>
+      <molecule title="C2H4"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5+(aq)"/>
+    </productList>
+    <description>
+      Ethene (C2H4), acting as a nucleophile due to its electron-rich &#x3C0;-bond, attacks the
+      electrophilic hydrogen ion (H&#x207A;).
+      This electrophilic addition step breaks the double bond and results in the formation of a
+      carbocation intermediate (C2H5&#x207A;) on the more substituted carbon, following Markovnikov's rule.
+      In this step, ethene is the nucleophile and H&#x207A; is the electrophile.
+    </description>
+    <tagList>
+      <tag>Electrophilic addition</tag>
+      <tag>Carbocation formation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H5+"/>
+      <molecule title="Br-"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5Br(g)"/>
+    </productList>
+    <description>
+      In this final step, the bromide ion (Br&#x207B;), which acts as a nucleophile, attacks the positively
+      charged carbocation (C2H5&#x207A;), which serves as the electrophile.
+      This nucleophilic substitution results in the formation of the final product, bromoethane
+      (C2H5Br).
+    </description>
+    <tagList>
+      <tag>Nucleophilic attack</tag>
+      <tag>Alkyl halide reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C2H4"/>
+      <molecule title="HCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5Cl(g)"/>
+    </productList>
+    <description>
+      Ethene (C2H4) reacts with hydrogen chloride (HCl) to form chloroethane (C2H5Cl) through an
+      electrophilic addition mechanism.
+      Ethene acts as a nucleophile and attacks the electrophilic hydrogen atom in HCl.
+      The double bond in ethene is broken and replaced by a single bond with added hydrogen and
+      chlorine atoms.
+      The reaction proceeds via a carbocation intermediate and typically follows Markovnikov&#x2019;s rule.
+      This process is fundamental in the production of alkyl halides.
+    </description>
+    <tagList>
+      <tag>Addition reaction</tag>
+      <tag>Electrophilic addition</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="OH-"/>
+      <molecule title="CH3Br"/>
+    </reactantList>
+    <productList>
+      <molecule title="CH3OH(l)"/>
+      <molecule title="Br-(aq)"/>
+    </productList>
+    <description>
+      Hydroxide ion (OH-) reacts with methyl bromide (CH3Br) to form methanol (CH3OH) and bromide
+      ion (Br-).
+      This is an example of a nucleophilic substitution reaction where the hydroxide ion acts as a
+      nucleophile, attacking the electrophilic carbon in the methyl bromide.
+      The reaction is typically carried out in a polar solvent like water.
+      Nucleophilic substitution reactions are common in organic chemistry for replacing functional
+      groups.
+    </description>
+    <tagList>
+      <tag>Nucleophilic substitution</tag>
+      <tag>SN2 reaction</tag>
+      <tag>Alkyl halide reaction</tag>
+    </tagList>
+  </reaction>
+  <!-- Acid/base / carbonate system -->
+  <reaction>
+    <reactantList>
+      <molecule title="H2O"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2CO3(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2CO3"/>
+      <molecule title="NH4OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4HCO3(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH4HCO3"/>
+      <molecule title="NaCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4Cl(aq)"/>
+      <molecule title="NaHCO3(s)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NaHCO3"/>
+      <molecule title="NaHCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH4OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4OH(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Na+"/>
+      <molecule title="Na+"/>
+      <molecule title="CO3-2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH4Cl"/>
+      <molecule title="NH4Cl"/>
+      <molecule title="CaO"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="NH3(g)"/>
+      <molecule title="CaCl2(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <!-- Tert-butanol formation sequence -->
+  <reaction>
+    <reactantList>
+      <molecule title="C4H9+"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H11O+(l)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C4H11O+"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H10O(l)"/>
+      <molecule title="H3O+(aq)"/>
+    </productList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H3O+"/>
+      <molecule title="Br-"/>
+    </reactantList>
+    <productList>
+      <molecule title="HBr(g)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
+  <!-- End appended -->
+</reactions>

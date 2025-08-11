@@ -23,12 +23,13 @@ import time
 
 def setupRealReactor():
     cml = Cml.Reactions()
-    cml.parse("data/reactions.cml")
+    cml.parse("data/reactions")
     reactor = Reactor(cml.reactions)
     return reactor
 
 def performance_test(times):
-    for x in xrange(times):
+    reactor = setupRealReactor()
+    for x in range(times):
         reaction = reactor.react(["CH4(g)", "H2O(g)"], K=1000)
         if not reaction.products == ["CO(g)", "H2(g)", "H2(g)", "H2(g)"]:
             raise Exception("Test did not return expected value, got", reaction.products)

@@ -54,9 +54,9 @@ class EditorGTK:
         self.handle_command_arguments()
 
     def init_reactions(self):
-        cml = Cml.Reactions()
-        cml.parse("data/reactions.cml")
-        self.reactor = Reactor(cml.reactions)
+            cml = Cml.Reactions()
+            cml.parse("data/reactions")
+            self.reactor = Reactor(cml.reactions)
 
     def init_twReactions(self):
         twReactions = self.widget("twReactions")

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Ostwald process -->
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="NO(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+    <description>
+      Ammonia (NH3) reacts with oxygen (O2) in a combustion reaction to produce nitric oxide (NO)
+      and water vapor (H2O).
+      This is a redox reaction and a key step in the Ostwald process for nitric acid production.
+      Platinum or rhodium catalysts are typically used to enhance this high-temperature reaction.
+      The nitric oxide produced further reacts with oxygen to form nitrogen dioxide.
+    </description>
+    <tagList>
+      <tag>Redox reaction</tag>
+      <tag>Combustion reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NO"/>
+      <molecule title="NO"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="NO2(g)"/>
+      <molecule title="NO2(g)"/>
+    </productList>
+    <description>
+      Nitric oxide (NO) reacts rapidly with oxygen (O2) to form nitrogen dioxide (NO2), a
+      reddish-brown toxic gas.
+      This is a combination reaction that continues the Ostwald process.
+      NO2 is an important intermediate in nitric acid production.
+      The reaction is exothermic and occurs readily in the air.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+      <tag>Oxidation reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NO2"/>
+      <molecule title="NO2"/>
+      <molecule title="NO2"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="HNO3(aq)"/>
+      <molecule title="HNO3(aq)"/>
+      <molecule title="NO(g)"/>
+    </productList>
+    <description>
+      Nitrogen dioxide (NO2) reacts with water (H2O) to form nitric acid (HNO3) and nitric oxide
+      (NO).
+      This disproportionation reaction is part of the final stage in the Ostwald process.
+      The nitric acid is then collected for use in fertilizers and explosives.
+      The NO produced is recycled back into the earlier stages of the process.
+    </description>
+    <tagList>
+      <tag>Disproportionation reaction</tag>
+      <tag>Acid-base reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

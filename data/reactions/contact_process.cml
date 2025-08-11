@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Contact process (sulfuric acid) -->
+  <reaction>
+    <reactantList>
+      <molecule title="S"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="SO2(g)"/>
+    </productList>
+    <description>
+      Sulfur (S) burns in the presence of oxygen (O2) to form sulfur dioxide (SO2), a colorless and
+      toxic gas.
+      This is a direct combination reaction and also an oxidation reaction.
+      It serves as the starting step in the production of sulfuric acid.
+      The reaction is exothermic and produces significant heat and fumes.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+      <tag>Oxidation reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="SO2"/>
+      <molecule title="V2O5"/>
+    </reactantList>
+    <productList>
+      <molecule title="SO3(g)"/>
+      <molecule title="VO2(s)"/>
+      <molecule title="VO2(s)"/>
+    </productList>
+    <description>
+      Sulfur dioxide (SO2) reacts with vanadium(V) oxide (V2O5) to produce sulfur trioxide (SO3) and
+      vanadium(IV) oxide (VO2).
+      This is a redox reaction where vanadium acts as a catalyst and undergoes temporary reduction.
+      The reaction is crucial in the contact process for industrial sulfuric acid production.
+      It demonstrates the role of transition metals as catalysts in oxidation processes.
+    </description>
+    <tagList>
+      <tag>Redox reaction</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="VO2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="V2O5(s)"/>
+      <molecule title="V2O5(s)"/>
+    </productList>
+    <description>
+      Vanadium(IV) oxide (VO2) reacts with oxygen (O2) to regenerate vanadium(V) oxide (V2O5).
+      This is an oxidation reaction that restores the catalyst in the contact process.
+      It completes the catalytic cycle involving vanadium oxides.
+      The ability of vanadium to switch oxidation states is key to its catalytic role.
+    </description>
+    <tagList>
+      <tag>Oxidation reaction</tag>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="SO3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2SO4(l)"/>
+    </productList>
+    <description>
+      Sulfur trioxide (SO3) reacts violently with water (H2O) to form sulfuric acid (H2SO4), a
+      highly exothermic process.
+      This reaction is the final step in the contact process for sulfuric acid production.
+      Due to the vigorous nature of the reaction, it is usually performed by absorbing SO3 into
+      concentrated H2SO4 to form oleum first.
+      Sulfuric acid is one of the most widely used industrial chemicals in the world.
+    </description>
+    <tagList>
+      <tag>Combination reaction</tag>
+      <tag>Acid-base reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

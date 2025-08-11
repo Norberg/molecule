@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Paracetamol synthesis subset -->
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5OH"/>
+      <molecule title="HNO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5NO3(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Phenol (C6H5OH) reacts with nitric acid (HNO3) to form 4-nitrophenol (C6H5NO3) and water (H2O)
+      in a nitration reaction.
+      The hydroxyl group on phenol activates the aromatic ring toward electrophilic substitution,
+      favoring substitution at the para position.
+      This reaction is typically carried out under mild acidic conditions to control product
+      formation.
+      Nitrated phenols are important intermediates in dyes and pharmaceutical synthesis.
+    </description>
+    <tagList>
+      <tag>Electrophilic aromatic substitution</tag>
+      <tag>Electrophilic substitution</tag>
+      <tag>Aromatic substitution</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5NO3"/>
+      <molecule title="H2"/>
+      <molecule title="Ni8"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H7NO(s)"/>
+      <molecule title="O2(g)"/>
+      <molecule title="Ni8(s)"/>
+    </productList>
+    <description>
+      4-Nitrophenol (C6H5NO3) is reduced to 4-aminophenol (C6H7NO) using hydrogen gas (H2) over a
+      Raney nickel (Ni) catalyst.
+      This catalytic hydrogenation reaction replaces the nitro group with an amino group.
+      It is an important step in the synthesis of paracetamol (acetaminophen).
+      Raney nickel is reused after the reaction, making the process efficient and scalable.
+    </description>
+    <tagList>
+      <tag>Reduction reaction</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H7NO"/>
+      <molecule title="C4H6O3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C8H9NO2(g)"/>
+      <molecule title="CH3COOH(l)"/>
+    </productList>
+    <description>
+      4-Aminophenol (C6H7NO) reacts with acetic anhydride (C4H6O3) to form paracetamol (C8H9NO2) and
+      acetic acid (CH3COOH).
+      This is an acetylation reaction involving the nucleophilic attack of the amine group.
+      Paracetamol is a widely used analgesic and antipyretic drug.
+      The reaction is typically carried out under mild heating conditions.
+    </description>
+    <tagList>
+      <tag>Acetylation reaction</tag>
+      <tag>Nucleophilic substitution</tag>
+    </tagList>
+  </reaction>
+</reactions>

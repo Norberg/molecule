@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Aspirin / Kolbe-Schmitt related subset -->
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5OH"/>
+      <molecule title="Na+"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5NaO(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Phenol (C6H5OH) reacts with sodium hydroxide (NaOH) to form sodium phenoxide (C6H5NaO) and
+      water.
+      This is a neutralization reaction where the acidic hydrogen on the phenol is replaced by a
+      sodium ion.
+      Sodium phenoxide is a more reactive nucleophile than phenol.
+      It is used in various electrophilic substitution and carboxylation reactions.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Neutralization reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5NaO"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="C7H5NaO3(aq)"/>
+    </productList>
+    <description>
+      Sodium phenoxide (C6H5NaO) reacts with carbon dioxide (CO2) to form sodium salicylate
+      (C7H5NaO3).
+      This is a carboxylation reaction, known as the Kolbe-Schmitt reaction.
+      The reaction requires high pressure and temperature to proceed efficiently.
+      Sodium salicylate is an intermediate in the synthesis of salicylic acid.
+    </description>
+    <tagList>
+      <tag>Carboxylation reaction</tag>
+      <tag>Substitution reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C7H5NaO3"/>
+      <molecule title="H+"/>
+    </reactantList>
+    <productList>
+      <molecule title="C7H6O3(aq)"/>
+      <molecule title="Na(s)"/>
+    </productList>
+    <description>
+      Sodium salicylate (C7H5NaO3) reacts with an acid (H&#x207A;) to form salicylic acid (C7H6O3) and
+      sodium ion (Na&#x207A;).
+      This is an acid-base reaction where the sodium ion is replaced by a hydrogen ion.
+      Salicylic acid is widely used in pharmaceutical and skincare products.
+      It is a precursor for the synthesis of aspirin.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Precipitation reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C7H6O3"/>
+      <molecule title="C4H6O3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C9H8O4(s)"/>
+      <molecule title="CH3COOH(l)"/>
+    </productList>
+    <description>
+      Salicylic acid (C7H6O3) reacts with acetic anhydride (C4H6O3) to produce acetylsalicylic acid
+      (C9H8O4), commonly known as aspirin, and acetic acid (CH3COOH).
+      This is an esterification reaction where the hydroxyl group on the aromatic ring is
+      acetylated.
+      The reaction is catalyzed by acid and typically carried out with gentle heating.
+      Aspirin is one of the most widely used analgesic and anti-inflammatory drugs.
+    </description>
+    <tagList>
+      <tag>Esterification reaction</tag>
+      <tag>Acetylation reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

@@ -24,9 +24,9 @@ from libcml import Cml
 class Universe:
     """Universe contains all fundamental particles and laws needed to get the universe to spin"""
     def __init__(self):
-        self.moelcules = dict()
+        self.moelcules = {}
         cml = Cml.Reactions()
-        cml.parse("data/reactions.cml")
+        cml.parse("data/reactions")
         self.reactor = Reactor(cml.reactions)
 
     def react(self, reactants, effects):

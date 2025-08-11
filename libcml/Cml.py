@@ -249,8 +249,22 @@ class Reactions(Cml):
         self.reactions = list()
 
     def parse(self, filename):
-        self.tree = etree.parse(filename)
-        self.parseReactions(self.tree.getroot())
+        import os
+        self.reactions = []  # reset
+        if os.path.isdir(filename):
+            # load every .cml file in directory (non-recursive) and merge
+            files = sorted([f for f in os.listdir(filename) if f.endswith('.cml')])
+            for f in files:
+                path = os.path.join(filename, f)
+                try:
+                    tree = etree.parse(path)
+                except Exception as e:
+                    # skip unreadable file
+                    continue
+                self.parseReactions(tree.getroot())
+        else:
+            self.tree = etree.parse(filename)
+            self.parseReactions(self.tree.getroot())
 
 
     def parseReactions(self, reactions):

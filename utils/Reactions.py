@@ -23,7 +23,7 @@ import time
 
 def setupRealReactor():
     cml = Cml.Reactions()
-    cml.parse("data/reactions.cml")
+    cml.parse("data/reactions")
     reactor = Reactor(cml.reactions)
     return reactor
 
