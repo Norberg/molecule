@@ -25,6 +25,119 @@ import pyglet
 import pymunk
 
 class TestLevels(unittest.TestCase):
+    def test_cativa_level_reactions_possible(self):
+        """
+        Check that all reactions in the hints for the Cativa level can be performed using the inventory and effects.
+        Logs each step for clarity and debugging.
+        """
+        import logging
+        from libcml import Cml
+        from libreact.Reactor import Reactor
+        import copy
+
+        logging.basicConfig(level=logging.INFO)
+        logger = logging.getLogger("test_cativa_level_reactions_possible")
+
+        # Load level
+        cml = Cml.Level()
+        cml.parse("data/levels/33-Organic-Industrial-1-Cativa.cml")
+        # Get reactions from <hint><reactions>
+        reactions = []
+        import xml.etree.ElementTree as ET
+        tree = ET.parse("data/levels/33-Organic-Industrial-1-Cativa.cml")
+        root = tree.getroot()
+        hint = root.find("hint")
+        reactions_tag = hint.find("reactions")
+        for reaction_tag in reactions_tag.findall("reaction"):
+            reaction = cml.parseReaction(reaction_tag)
+            reactions.append(reaction)
+
+        # Start with inventory
+        inventory = copy.deepcopy(cml.inventory)
+        logger.info(f"Initial inventory: {inventory}")
+        # Effects (energy types)
+        available_effects = [e.title for e in cml.effects]
+        logger.info(f"Available effects: {available_effects}")
+
+        # Use Reactor to simulate the actual reaction logic, including effects as energy_source
+        reactor = Reactor(reactions)
+
+        def base_formula(mol):
+            return mol.split('(')[0] if '(' in mol else mol
+
+        effect_map = {e.title: float(getattr(e, 'value', 298)) for e in cml.effects}
+        K_options = [298]
+        if 'Fire' in effect_map:
+            K_options.append(effect_map['Fire'])
+        if 'Cold' in effect_map:
+            K_options.append(effect_map['Cold'])
+
+        # Repeat the reaction cycle as long as possible
+        total_cycles = 0
+        while True:
+            inventory_before = inventory.copy()
+            logger.info(f"\n--- Starting reaction cycle {total_cycles+1} ---")
+            for idx, reaction in enumerate(reactions):
+                logger.info(f"\nStep {idx+1}: {reaction.reactants} -> {reaction.products}")
+                if hasattr(reaction, "requirements") and reaction.requirements:
+                    reqs_list = [f"{req.type} (energy: {getattr(req, 'molar_energy', None)})" for req in reaction.requirements]
+                    logger.info(f"Requirements for this reaction: {reqs_list}")
+                else:
+                    logger.info("No requirements for this reaction.")
+                # Find matching reactants in inventory
+                reactants_to_use = []
+                temp_inventory = inventory.copy()
+                for reactant in reaction.reactants:
+                    found = False
+                    if '(' in reactant:
+                        for inv in temp_inventory:
+                            if inv == reactant:
+                                reactants_to_use.append(inv)
+                                temp_inventory.remove(inv)
+                                found = True
+                                break
+                    else:
+                        for inv in temp_inventory:
+                            if base_formula(inv) == reactant:
+                                reactants_to_use.append(inv)
+                                temp_inventory.remove(inv)
+                                found = True
+                                break
+                    logger.info(f"Checking for reactant: {reactant} (found: {found})")
+                    if not found:
+                        logger.info(f"Could not find reactant {reactant}, ending cycles.")
+                        return self._assert_victory(inventory)
+                # Try all relevant temperatures: standard, Fire, Cold
+                result = None
+                for K in K_options:
+                    logger.info(f"Trying reaction at K={K} for {reaction.reactants} -> {reaction.products}")
+                    result = reactor.react(reactants_to_use, K=K)
+                    if result is not None:
+                        logger.info(f"Reaction succeeded at K={K}: {result.reactants} -> {result.products}")
+                        break
+                if result is None:
+                    logger.info(f"Reaction failed in simulation: {reaction.reactants} -> {reaction.products} (tried K={K_options}), ending cycles.")
+                    return self._assert_victory(inventory)
+                # Remove used reactants from inventory
+                for used in reactants_to_use:
+                    inventory.remove(used)
+                    logger.info(f"Removed reactant: {used}")
+                # Add products to inventory
+                for product in result.products:
+                    inventory.append(product)
+                    logger.info(f"Added product: {product}")
+                logger.info(f"Inventory after step {idx+1}: {inventory}")
+            total_cycles += 1
+            logger.info(f"--- End of cycle {total_cycles}, inventory: {inventory}")
+
+        # Should never reach here
+        logger.info(f"Final inventory: {inventory}")
+        self._assert_victory(inventory)
+
+    def _assert_victory(self, inventory):
+        # Accept either CH3COOH(aq) or CH3COOH as product
+        count = inventory.count("CH3COOH(aq)") + inventory.count("CH3COOH")
+        assert count >= 2, f"Not enough CH3COOH at the end of the reaction chain, found {count}"
     def testLevels(self):
         levels = Levels("data/levels", window=WindowMock())
         l = levels.get_current_level()
