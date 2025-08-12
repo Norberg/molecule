@@ -16,7 +16,6 @@
 import unittest
 
 from molecule import Gui
-from molecule import Gui
 
 class TestGui(unittest.TestCase):
     def test_formula_to_html(self):

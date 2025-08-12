@@ -87,7 +87,7 @@
           <molecule title="HCl"/>
         </reactantList>
         <productList>
-          <molecule title="C6H6BrN(l)"/>
+          <molecule title="C6H6BrN(s)"/>
           <molecule title="H2O(l)"/>
           <molecule title="H2O(l)"/>
           <molecule title="ZnCl2(aq)"/>

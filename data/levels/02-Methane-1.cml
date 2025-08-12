@@ -23,6 +23,16 @@
     <reactions>
       <reaction>
         <reactantList>
+          <molecule title="H+"/>
+          <molecule title="H+"/>
+          <molecule title="O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
           <molecule title="CH4"/>
           <molecule title="H2O"/>
         </reactantList>
