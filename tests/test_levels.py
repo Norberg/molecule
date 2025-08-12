@@ -20,7 +20,7 @@ import glob
 import os
 import copy
 
-from libcml.CachedCml import getMolecule as get_cml_molecule
+from libcml import CachedCml
 from libreact.Reaction import remove_state, list_without_state
 
 from libcml import Cml
@@ -113,7 +113,7 @@ class TestLevels(unittest.TestCase):
                             providers = []
                             for inv in temp_inventory:
                                 base = remove_state(inv)
-                                cml_mol = get_cml_molecule(base)
+                                cml_mol = CachedCml.getMolecule(base)
                                 state = cml_mol.get_state("aq")
                                 if state is None or not state.ions:
                                     continue
