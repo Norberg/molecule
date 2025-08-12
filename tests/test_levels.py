@@ -79,9 +79,6 @@ class TestLevels(unittest.TestCase):
                     energy_sources.append(Cml.Requirement.EnergyType.UV_LIGHT)
 
             reactor = Reactor(reactions)
-
-            print(f"\nTesting level: {level_path}")
-
             # Repeat the reaction cycle as long as possible
             successful_steps = set()  # Track steps that have succeeded at least once
             while True:
@@ -240,8 +237,6 @@ class TestLevels(unittest.TestCase):
             ]
             summary = "\n".join(summary_lines)
             assert False, f"Some levels did not meet victory condition:\n{summary}"
-        else:
-            print("All levels passed victory condition simulation.")
 
     def _missing_for_victory(self, inventory, cml):
         # Accept any state for each molecule in victory_condition
