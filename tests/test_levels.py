@@ -16,6 +16,12 @@
 import unittest
 import pyglet
 import pymunk
+import glob
+import os
+import copy
+
+from libcml.CachedCml import getMolecule as get_cml_molecule
+from libreact.Reaction import remove_state, list_without_state
 
 from libcml import Cml
 from libreact.Reactor import Reactor
@@ -32,12 +38,6 @@ class TestLevels(unittest.TestCase):
         and that the victory condition can be reached by repeating the reaction cycle as many times as possible.
         Only print detailed step-failure diagnostics if the level ultimately fails.
         """
-        import glob
-        import os
-        import copy
-        import xml.etree.ElementTree as ET
-        from libcml.CachedCml import getMolecule as get_cml_molecule
-
         level_files = sorted(glob.glob(os.path.join("data/levels", "*.cml")))
         failures = []
 
@@ -45,33 +45,20 @@ class TestLevels(unittest.TestCase):
             cml = Cml.Level()
             cml.parse(level_path)
 
-            # Parse reactions from <hint><reactions>
-            tree = ET.parse(level_path)
-            root = tree.getroot()
-            hint = root.find("hint")
-            if hint is None:
-                continue  # No hint, skip
-            reactions_tag = hint.find("reactions")
-            if reactions_tag is None:
-                continue  # No reactions, skip
-            reactions = []
-            for reaction_tag in reactions_tag.findall("reaction"):
-                reaction = cml.parseReaction(reaction_tag)
-                reactions.append(reaction)
+            # Use reactions parsed by Cml.Level (hint reactions)
+            reactions = getattr(cml, "reactions_hint", [])
             if not reactions:
-                continue  # No reactions, skip
+                continue  # No reactions in hint, skip
 
             # Prepare simulation inventory: moleculeList + inventoryList
             start_inventory = []
-            if getattr(cml, "molecules", None):
-                start_inventory.extend(cml.molecules)
-            if getattr(cml, "inventory", None):
-                start_inventory.extend(cml.inventory)
+            start_inventory.extend(cml.molecules)
+            start_inventory.extend(cml.inventory)
             inventory = copy.deepcopy(start_inventory)
 
             # Temperatures to try: default + any effects with a numeric value (e.g., Fire, Cold, HotplateBeaker)
             K_options = [298]
-            for e in getattr(cml, "effects", []):
+            for e in cml.effects:
                 try:
                     if e.value is not None:
                         K_options.append(float(e.value))
@@ -80,21 +67,18 @@ class TestLevels(unittest.TestCase):
             # de-duplicate while preserving order
             seen = set()
             K_options = [k for k in K_options if not (k in seen or seen.add(k))]
-            beaker_effects = {e.title for e in getattr(cml, 'effects', [])}
+            beaker_effects = {e.title for e in cml.effects}
             has_beaker_env = any(t in beaker_effects for t in [
                 'WaterBeaker', 'HotplateBeaker'
             ])
 
             # Energy sources (e.g., UV light) derived from effects
             energy_sources = []
-            for e in getattr(cml, 'effects', []):
-                if getattr(e, 'title', '') == 'UvLight':
+            for e in cml.effects:
+                if e.title == 'UvLight':
                     energy_sources.append(Cml.Requirement.EnergyType.UV_LIGHT)
 
             reactor = Reactor(reactions)
-
-            def base_formula(mol: str) -> str:
-                return mol.split("(")[0] if "(" in mol else mol
 
             print(f"\nTesting level: {level_path}")
 
@@ -113,20 +97,12 @@ class TestLevels(unittest.TestCase):
                     missing_list = []
                     for reactant in reaction.reactants:
                         found = False
-                        if "(" in reactant:
-                            for inv in temp_inventory:
-                                if inv == reactant:
-                                    reactants_to_use.append(inv)
-                                    temp_inventory.remove(inv)
-                                    found = True
-                                    break
-                        else:
-                            for inv in temp_inventory:
-                                if base_formula(inv) == reactant:
-                                    reactants_to_use.append(inv)
-                                    temp_inventory.remove(inv)
-                                    found = True
-                                    break
+                        for inv in temp_inventory:
+                            if remove_state(inv) == reactant:
+                                reactants_to_use.append(inv)
+                                temp_inventory.remove(inv)
+                                found = True
+                                break
                         if not found:
                             missing_list.append(reactant)
 
@@ -139,18 +115,15 @@ class TestLevels(unittest.TestCase):
                             # Build provider list from current inventory that have aqueous ions defined
                             providers = []
                             for inv in temp_inventory:
-                                base = base_formula(inv)
-                                try:
-                                    cml_mol = get_cml_molecule(base)
-                                except Exception:
-                                    continue
+                                base = remove_state(inv)
+                                cml_mol = get_cml_molecule(base)
                                 state = cml_mol.get_state("aq")
-                                if state is None or getattr(state, "ions", None) in (None, []):
+                                if state is None or not state.ions:
                                     continue
-                                ions_base = [base_formula(i) for i in state.ions]
+                                ions_base = [remove_state(i) for i in state.ions]
                                 providers.append({"source": inv, "base": base, "ions": state.ions, "ions_base": set(ions_base)})
 
-                            needed = [base_formula(m) for m in missing_list]
+                            needed = [remove_state(m) for m in missing_list]
                             needed_set = set(needed)
 
                             chosen_providers = []
@@ -199,7 +172,7 @@ class TestLevels(unittest.TestCase):
                         # Try phase-change if a beaker environment is available: convert reactants to aqueous state
                         if has_beaker_env:
                             def to_state(m: str, state: str) -> str:
-                                base = m.split('(')[0] if '(' in m else m
+                                base = remove_state(m)
                                 return f"{base}({state})"
                             converted_reactants = [to_state(m, 'aq') for m in reactants_to_use]
                             for K in K_options:
@@ -273,9 +246,10 @@ class TestLevels(unittest.TestCase):
     def _missing_for_victory(self, inventory, cml):
         # Accept any state for each molecule in victory_condition
         missing = []
+        inv_stateless = set(list_without_state(inventory))
         for mol in cml.victory_condition:
-            base = mol.split("(")[0] if "(" in mol else mol
-            found = any(inv.split("(")[0] == base for inv in inventory)
+            base = remove_state(mol)
+            found = base in inv_stateless
             if not found:
                 missing.append(mol)
         return missing
