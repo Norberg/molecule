@@ -36,21 +36,12 @@ class TestLevels(unittest.TestCase):
         import os
         import copy
         import xml.etree.ElementTree as ET
-
-        skip_levels = [
-            "data/levels/15-Soda-2-Solvay-process.cml",
-            "data/levels/17-Acid-production-2-Nitric-acid.cml",
-            "data/levels/31-Organic-Multistep-2-Aspirin.cml",
-        ]
+        from libcml.CachedCml import getMolecule as get_cml_molecule
 
         level_files = sorted(glob.glob(os.path.join("data/levels", "*.cml")))
         failures = []
 
         for level_path in level_files:
-            if level_path in skip_levels:
-                print(f"[SKIP] Level: {level_path}")
-                continue
-
             cml = Cml.Level()
             cml.parse(level_path)
 
@@ -78,19 +69,21 @@ class TestLevels(unittest.TestCase):
                 start_inventory.extend(cml.inventory)
             inventory = copy.deepcopy(start_inventory)
 
-            # Temperatures to try: default + effects
-            effect_map = {}
+            # Temperatures to try: default + any effects with a numeric value (e.g., Fire, Cold, HotplateBeaker)
+            K_options = [298]
             for e in getattr(cml, "effects", []):
                 try:
-                    effect_map[e.title] = float(e.value) if e.value is not None else 298
+                    if e.value is not None:
+                        K_options.append(float(e.value))
                 except Exception:
-                    effect_map[e.title] = 298
-            K_options = [298]
-            if "Fire" in effect_map:
-                K_options.append(effect_map["Fire"])
-            if "Cold" in effect_map:
-                K_options.append(effect_map["Cold"])
-            has_water_beaker = any(getattr(e, 'title', '') == 'WaterBeaker' for e in getattr(cml, 'effects', []))
+                    pass
+            # de-duplicate while preserving order
+            seen = set()
+            K_options = [k for k in K_options if not (k in seen or seen.add(k))]
+            beaker_effects = {e.title for e in getattr(cml, 'effects', [])}
+            has_beaker_env = any(t in beaker_effects for t in [
+                'WaterBeaker', 'HotplateBeaker'
+            ])
 
             # Energy sources (e.g., UV light) derived from effects
             energy_sources = []
@@ -117,7 +110,7 @@ class TestLevels(unittest.TestCase):
                     temp_inventory = inventory.copy()
 
                     # Find reactants in current inventory (state-aware)
-                    missing_reactant = None
+                    missing_list = []
                     for reactant in reaction.reactants:
                         found = False
                         if "(" in reactant:
@@ -135,21 +128,66 @@ class TestLevels(unittest.TestCase):
                                     found = True
                                     break
                         if not found:
-                            missing_reactant = reactant
-                            break
+                            missing_list.append(reactant)
 
                     # If some reactant is missing right now, skip this step (may be possible in a later cycle)
-                    if missing_reactant is not None:
-                        # Only complain if this step has never succeeded before
-                        if step_index not in successful_steps:
-                            cycle_step_failures.append({
-                                "step": step_index + 1,
-                                "reason": "missing-reactants",
-                                "reaction": {"reactants": reaction.reactants, "products": reaction.products},
-                                "missing_reactant": missing_reactant,
-                                "inventory": inventory.copy(),
-                            })
-                        continue
+                    providers_to_consume = []
+                    if missing_list:
+                        # Try to fulfill missing reactants via ionic dissolution if WaterBeaker is present
+                        fulfilled_via_ions = False
+                        if has_beaker_env:
+                            # Build provider list from current inventory that have aqueous ions defined
+                            providers = []
+                            for inv in temp_inventory:
+                                base = base_formula(inv)
+                                try:
+                                    cml_mol = get_cml_molecule(base)
+                                except Exception:
+                                    continue
+                                state = cml_mol.get_state("aq")
+                                if state is None or getattr(state, "ions", None) in (None, []):
+                                    continue
+                                ions_base = [base_formula(i) for i in state.ions]
+                                providers.append({"source": inv, "base": base, "ions": state.ions, "ions_base": set(ions_base)})
+
+                            needed = [base_formula(m) for m in missing_list]
+                            needed_set = set(needed)
+
+                            chosen_providers = []
+                            # Prefer a single provider that covers all
+                            one_cover = next((p for p in providers if needed_set.issubset(p["ions_base"])), None)
+                            if one_cover is not None:
+                                chosen_providers = [one_cover]
+                            else:
+                                # Greedy cover with multiple providers
+                                remaining = set(needed_set)
+                                for p in providers:
+                                    if remaining & p["ions_base"]:
+                                        chosen_providers.append(p)
+                                        remaining -= (remaining & p["ions_base"])
+                                    if not remaining:
+                                        break
+                                if remaining:
+                                    chosen_providers = []  # not possible
+
+                            if chosen_providers:
+                                # Add synthetic ions to reactants_to_use
+                                for miss in needed:
+                                    reactants_to_use.append(f"{miss}(aq)")
+                                providers_to_consume = [p["source"] for p in chosen_providers]
+                                fulfilled_via_ions = True
+
+                        if not fulfilled_via_ions:
+                            # Only complain if this step has never succeeded before
+                            if step_index not in successful_steps:
+                                cycle_step_failures.append({
+                                    "step": step_index + 1,
+                                    "reason": "missing-reactants",
+                                    "reaction": {"reactants": reaction.reactants, "products": reaction.products},
+                                    "missing_reactant": missing_list[0],
+                                    "inventory": inventory.copy(),
+                                })
+                            continue
 
                     # Try relevant temperatures
                     result = None
@@ -158,8 +196,8 @@ class TestLevels(unittest.TestCase):
                         if result is not None:
                             break
                     if result is None:
-                        # Try phase-change if WaterBeaker is available: convert reactants to aqueous state
-                        if has_water_beaker:
+                        # Try phase-change if a beaker environment is available: convert reactants to aqueous state
+                        if has_beaker_env:
                             def to_state(m: str, state: str) -> str:
                                 base = m.split('(')[0] if '(' in m else m
                                 return f"{base}({state})"
@@ -181,9 +219,14 @@ class TestLevels(unittest.TestCase):
                                 })
                             continue
 
-                    # Apply reaction: remove used reactants, add products
+                    # Apply reaction: remove used reactants that were real inventory items
                     for used in reactants_to_use:
-                        inventory.remove(used)
+                        if used in inventory:
+                            inventory.remove(used)
+                    # Also consume any providers used to supply ions
+                    for prov in providers_to_consume:
+                        if prov in inventory:
+                            inventory.remove(prov)
                     for product in result.products:
                         inventory.append(product)
                     performed_any = True
