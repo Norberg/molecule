@@ -88,8 +88,9 @@ class Reactor:
         if len(reactions) == 0:
             return None
 
-        free_energy, reaction = min(reactions)
- 
+        # Choose the reaction with the lowest free energy; break ties deterministically on energy only
+        free_energy, reaction = min(reactions, key=lambda t: t[0])
+
         if len(reactions) > 1 and trace:
             print("Multiple possible reactions:")
             for t in reactions:
@@ -98,7 +99,7 @@ class Reactor:
                 print("Reactants:", r.reactants,
                       "Products:", r.products,
                       "Energy:", energy)
-        
+
         if Reaction.isSpontaneous(free_energy):
             if trace:
                 print(f"\nfree_energy is {free_energy} for reaction at {K}K !")

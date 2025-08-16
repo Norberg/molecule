@@ -28,6 +28,18 @@
       <molecule title="H2O(l)"/>
     </productList>
   </reaction>
+  <!-- Bulk water formation using molecular oxygen -->
+  <reaction>
+    <reactantList>
+      <molecule title="H2"/>
+      <molecule title="H2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+  </reaction>
   <reaction>
     <reactantList>
       <molecule title="H+"/>

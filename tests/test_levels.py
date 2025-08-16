@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
+from collections import Counter
 import pyglet
 import pymunk
 import glob
@@ -50,6 +51,7 @@ class TestLevels(unittest.TestCase):
             if not reactions:
                 continue  # No reactions in hint, skip
 
+
             # Prepare simulation inventory: moleculeList + inventoryList
             start_inventory = []
             start_inventory.extend(cml.molecules)
@@ -78,9 +80,10 @@ class TestLevels(unittest.TestCase):
                 if e.title == 'UvLight':
                     energy_sources.append(Cml.Requirement.EnergyType.UV_LIGHT)
 
-            reactor = Reactor(reactions)
+            reactor = setupRealReactor()
             # Repeat the reaction cycle as long as possible
             successful_steps = set()  # Track steps that have succeeded at least once
+            victory_reached = False
             while True:
                 inventory_before = inventory.copy()
                 performed_any = False
@@ -141,9 +144,19 @@ class TestLevels(unittest.TestCase):
                                     chosen_providers = []  # not possible
 
                             if chosen_providers:
-                                # Add synthetic ions to reactants_to_use
+                                # Build mapping base->ion (with its original state) from chosen providers
+                                ion_map = {}
+                                for p in chosen_providers:
+                                    for ion in p["ions"]:
+                                        base_ion = remove_state(ion)
+                                        if base_ion not in ion_map:
+                                            ion_map[base_ion] = ion
+                                # Add ions matching needed bases; fallback to generic (aq) only if not found
                                 for miss in needed:
-                                    reactants_to_use.append(f"{miss}(aq)")
+                                    if miss in ion_map:
+                                        reactants_to_use.append(ion_map[miss])
+                                    else:
+                                        reactants_to_use.append(f"{miss}(aq)")
                                 providers_to_consume = [p["source"] for p in chosen_providers]
                                 fulfilled_via_ions = True
 
@@ -162,7 +175,11 @@ class TestLevels(unittest.TestCase):
                     # Try relevant temperatures
                     result = None
                     for K in K_options:
-                        result = reactor.react(reactants_to_use, K=K, energy_source=energy_sources)
+                        try:
+                            result = reactor.react(reactants_to_use, K=K, energy_source=energy_sources)
+                        except Exception as exc:
+                            print(f"[ERROR] Level {level_path} step {step_index+1} reactants {reactants_to_use} at {K}K raised: {exc}")
+                            raise
                         if result is not None:
                             break
                     if result is None:
@@ -173,7 +190,11 @@ class TestLevels(unittest.TestCase):
                                 return f"{base}({state})"
                             converted_reactants = [to_state(m, 'aq') for m in reactants_to_use]
                             for K in K_options:
-                                result = reactor.react(converted_reactants, K=K, energy_source=energy_sources)
+                                try:
+                                    result = reactor.react(converted_reactants, K=K, energy_source=energy_sources)
+                                except Exception as exc:
+                                    print(f"[ERROR] Level {level_path} step {step_index+1} converted reactants {converted_reactants} at {K}K raised: {exc}")
+                                    raise
                                 if result is not None:
                                     break
                         if result is None:
@@ -202,6 +223,14 @@ class TestLevels(unittest.TestCase):
                     performed_any = True
                     successful_steps.add(step_index)
 
+                    # Stop immediately if victory condition now satisfied
+                    if not self._missing_for_victory(inventory, cml):
+                        victory_reached = True
+                        break
+
+                if victory_reached:
+                    break
+
                 # If we made no progress, check victory and maybe log buffered failures
                 if not performed_any or inventory == inventory_before:
                     missing = self._missing_for_victory(inventory, cml)
@@ -229,7 +258,7 @@ class TestLevels(unittest.TestCase):
                         })
                     break
 
-        # After processing all levels, assert aggregated result
+    # After processing all levels, assert aggregated result
         if failures:
             summary_lines = [
                 f"{f['level']} -> Missing: {f['missing']} | Inventory: {f['inventory']} | Victory: {f['victory']}"
@@ -239,13 +268,14 @@ class TestLevels(unittest.TestCase):
             assert False, f"Some levels did not meet victory condition:\n{summary}"
 
     def _missing_for_victory(self, inventory, cml):
-        # Accept any state for each molecule in victory_condition
+        # Accept any state for each molecule in victory_condition, but enforce correct counts
         missing = []
-        inv_stateless = set(list_without_state(inventory))
+        inv_counts = Counter(list_without_state(inventory))
         for mol in cml.victory_condition:
             base = remove_state(mol)
-            found = base in inv_stateless
-            if not found:
+            if inv_counts.get(base, 0) > 0:
+                inv_counts[base] -= 1
+            else:
                 missing.append(mol)
         return missing
 
@@ -269,7 +299,7 @@ class TestLevels(unittest.TestCase):
         self.assertEqual(l.cml.molecules, expected)
         self.assertEqual(l.cml.victory_condition, ['CO', 'H2', 'H2', 'H2'])
         self.assertEqual(l.cml.objective, "Create a CO and 3 H2 molecules")
-        self.assertEqual(l.cml.hint, "H2O + CH4 + Heat => CO + 3H2")
+        self.assertEqual(l.cml.hint, "1) H+ + OH- => H2O; 2) CH4 + H2O + Heat => CO + 3H2")
         levels.current_level = 1000
         l = levels.next_level()
         self.assertEqual(l, None)
@@ -387,7 +417,12 @@ def setupSimpleReactor():
     r1 = Cml.Reaction(["H2SO4(l)", "NaCl(s)", "NaCl(s)"], ["HCl(g)", "HCl(g)", "Na2SO4(s)"])
     r2 = Cml.Reaction(["OH-", "H+"], ["H2O(l)"])
     return Reactor([r1, r2])
-
+    
+def setupRealReactor():
+    cml = Cml.Reactions()
+    cml.parse("data/reactions")
+    reactor = Reactor(cml.reactions)
+    return reactor
 
 def getLevel1():
     levels = Levels("data/levels", window=WindowMock())

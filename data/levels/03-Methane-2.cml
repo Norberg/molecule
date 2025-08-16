@@ -4,20 +4,72 @@
     <molecule title="H+(g)"/>
     <molecule title="O(g)"/>
     <molecule title="O(g)"/>
+    <molecule title="O(g)"/>
     <molecule title="H+(g)"/>
     <molecule title="OH-(aq)"/>
     <molecule title="CO2(g)"/>
     <molecule title="CH4(g)"/>
   </moleculeList>
   <effectList>
-    <effect title="Fire" value="700" x2="200" y2="550"/>
+  <effect title="Fire" value="900" x2="200" y2="550"/>
   </effectList>
   <victoryCondition>
-    <molecule title="CO"/>
+  <molecule title="CO"/>
     <molecule title="H2O"/>
     <molecule title="H2O"/>
     <molecule title="H2O"/>
   </victoryCondition>
   <objective text="Create a CO and 3 H2O molecules"/>
-  <hint text="unknown"/>
+  <hint text="1) H+ + OH- => H2O; 2) CH4 + H2O + Heat => CO + 3H2; 3) O + H2 => H2O (x3)">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="H+"/>
+          <molecule title="OH-"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="CH4"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="CO(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+          <molecule title="H2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="O"/>
+          <molecule title="H2"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="O"/>
+          <molecule title="H2"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="O"/>
+          <molecule title="H2"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
