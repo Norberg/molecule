@@ -9,14 +9,15 @@
         <scalar units="units:molar_energy">218.0</scalar>
       </property>
       <property title="entropy">
-        <scalar units="units:molar_energy">115.0</scalar>
+        <scalar units="units:molar_energy">114.0</scalar>
       </property>
     </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Radius">1.1</property>
-    <property title="Name">Hydrogen</property>
+    <property title="Name">Hydrogen atom</property>
     <property title="Weight">1.0</property>
-    <property title="Smiles">[HH]</property>
+    <property title="Description">Atomic hydrogen (H) is a neutral radical (one unpaired electron). It appears in photolysis, plasma and electric discharge conditions and participates in hydrogen abstraction and radical chain propagation relevant to prebiotic synthesis.</property>
+    <property title="Smiles">[H]</property>
   </propertyList>
 </ns0:molecule>

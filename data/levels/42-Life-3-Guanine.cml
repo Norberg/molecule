@@ -31,8 +31,7 @@
   <objective text="Let make Guanine C5H5N5O one of 4 building blocks of DNA" />
   <hint text="Noop">
     <reactions>
-      <reaction
-        title="Diaminomaleonitrileitrile reacts with uv light to form aminoimidazole-5-carbonitrile (AICN)">
+      <reaction>
         <requirementList>
           <requirement type="UV light" molar_energy="100" />
         </requirementList>
@@ -43,8 +42,7 @@
           <molecule title="C3H2N2CNNH2(s)" />
         </productList>
       </reaction>
-      <reaction
-        title="Aminoimidazole-5-carbonitrile reacts with water to 5-Aminoimidazole-4-carboxamide">
+      <reaction>
         <reactantList>
           <molecule title="C3H2N2CNNH2" />
           <molecule title="H2O" />

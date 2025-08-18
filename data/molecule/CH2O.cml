@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="C"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="O"/>
+    <atom x2="1.516" y2="-0.893738" id="a3" elementType="H"/>
+    <atom x2="1.516" y2="0.893738" id="a4" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-108.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">218.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Formaldehyde</property>
+    <property title="Description">Formaldehyde is an organic compound with the chemical formula CH2O and structure H2C=O. The compound is a pungent, colourless gas that polymerises spontaneously into paraformaldehyde. It is stored as aqueous solutions (formalin), which consists mainly of the hydrate CH2(OH)2. It is the simplest of the aldehydes (R&#x2212;CHO). As a precursor to many other materials and chemical compounds, in 2006 the global production of formaldehyde was estimated at 12&#xA0;million tons per year. It is mainly used in the production of industrial resins, e.g., for particle board and coatings.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Formaldehyde</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C=O</property>
+  </propertyList>
+</ns0:molecule>

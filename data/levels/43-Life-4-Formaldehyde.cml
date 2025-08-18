@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<level zoom="1.0">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <!-- Provide water and methane for two radical chains producing 2 CH2O -->
+    <molecule title="H2O(g)" />
+    <molecule title="H2O(g)" />
+    <molecule title="H2O(g)" />
+    <molecule title="H2O(g)" />
+    <molecule title="CH4(g)" />
+    <molecule title="CH4(g)" />
+  </inventoryList>
+  <effectList>
+    <effect title="UvLight" x2="200" y2="550" />
+  </effectList>
+  <victoryCondition>
+    <molecule title="CH2O" />
+    <molecule title="CH2O" />
+  </victoryCondition>
+  <objective text="Form Formaldehyde (CH2O) via a radical photochemical chain starting from methane and water (prebiotic Miller-Urey style)" />
+  <hint text="Noop">
+    <reactions>
+      <reaction>
+        <requirementList>
+            <requirement type="UV light" molar_energy="500" />
+        </requirementList>
+        <reactantList>
+          <molecule title="H2O" />
+        </reactantList>
+        <productList>
+          <molecule title="H(g)" />
+          <molecule title="OH(g)" />
+        </productList>
+        <tagList>
+          <tag>Photolysis</tag>
+          <tag>Radical initiation</tag>
+        </tagList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="CH4" />
+          <molecule title="OH" />
+        </reactantList>
+        <productList>
+          <molecule title="CH3(g)" />
+          <molecule title="H2O(l)" />
+        </productList>
+        <tagList>
+          <tag>Hydrogen abstraction</tag>
+          <tag>Radical propagation</tag>
+        </tagList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="CH3" />
+          <molecule title="OH" />
+        </reactantList>
+        <productList>
+          <molecule title="CH3OH(g)" />
+        </productList>
+        <tagList>
+          <tag>Radical recombination</tag>
+        </tagList>
+      </reaction>
+        <reaction>
+          <reactantList>
+            <molecule title="H" />
+            <molecule title="H" />
+          </reactantList>
+          <productList>
+            <molecule title="H2(g)" />
+          </productList>
+          <tagList>
+            <tag>Radical recombination</tag>
+          </tagList>
+        </reaction>
+      <reaction>
+        <requirementList>
+          <requirement type="UV light" molar_energy="100" />
+        </requirementList>
+        <reactantList>
+          <molecule title="CH3OH" />
+        </reactantList>
+        <productList>
+          <molecule title="CH2O(g)" />
+          <molecule title="H2(g)" />
+        </productList>
+        <tagList>
+          <tag>Photolysis</tag>
+          <tag>Dehydrogenation</tag>
+        </tagList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

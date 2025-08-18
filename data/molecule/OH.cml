@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.0" y2="0.0" id="a1" elementType="O"/>
+    <atom x2="1.0" y2="0.0" id="a2" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">39.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">183.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Hydroxyl radical</property>
+    <property title="Description">The hydroxyl radical (OH&#xB7;) is a neutral, highly reactive species with one unpaired electron. It is a powerful oxidant formed by photolysis, radiolysis or electric discharge (e.g., H2O + hv &#x2192; H&#xB7; + OH&#xB7;) and abstracts hydrogen from many organic molecules such as methane.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Hydroxyl_radical</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[OH]</property>
+  </propertyList>
+</ns0:molecule>
