@@ -18,6 +18,11 @@ import os
 import unittest
 import libcml.Cml as Cml
 from libcml import CachedCml
+import xml.etree.ElementTree as ET
+import xmlschema  # Antas vara installerat
+
+REACTIONS_SCHEMA_PATH = "data/reactions/reactions.xsd"
+_REACTIONS_SCHEMA = xmlschema.XMLSchema(REACTIONS_SCHEMA_PATH)
 
 class TestCML(unittest.TestCase):
 
@@ -327,6 +332,22 @@ class TestCML(unittest.TestCase):
         self.assertEqual(m.property["Description"],  "H20 is the base of all life.")
         self.assertEqual(m.property["Description-Attribution"],  "Wikipedia, CC-BY-SA")
         os.remove("tests/testWrite.cml")
+
+    def test_reactions_files_schema(self):
+        """Validate all reaction collection files using pre-installed xmlschema.
+
+        Ingen automatisk installation sker; om xmlschema saknas hoppas testet över.
+        """
+        schema = _REACTIONS_SCHEMA
+        errors = []
+        for filename in glob.glob("data/reactions/*.cml"):
+            try:
+                schema.validate(filename)
+            except Exception as e:
+                errors.append(f"{filename}: {e}")
+        if errors:
+            self.fail("\n".join(errors))
+
 
 if __name__ == '__main__':
     unittest.main()

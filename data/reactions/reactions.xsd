@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML Schema for reaction collection files used in Molecule project -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Custom simple types -->
+  <xs:simpleType name="ReactantTitleType">
+    <xs:restriction base="xs:string">
+      <!-- No parentheses allowed (disallows state suffix) -->
+      <xs:pattern value="[^()]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProductTitleType">
+    <xs:restriction base="xs:string">
+      <!-- Must end with a state suffix (g|l|s|aq) in parentheses -->
+  <xs:pattern value=".*\((g|l|s|aq)\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Root element -->
+  <xs:element name="reactions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="reaction" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <!-- Each child element may appear at most once, in any order. reactantList & productList required. -->
+            <xs:all>
+              <xs:element name="reactantList" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="molecule" maxOccurs="unbounded" minOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="title" type="ReactantTitleType" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="productList" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="molecule" maxOccurs="unbounded" minOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="title" type="ProductTitleType" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="requirementList" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="requirement" maxOccurs="unbounded" minOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="type" type="xs:string" use="required"/>
+                        <xs:attribute name="molar_energy" type="xs:double" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="description" type="xs:string" minOccurs="0"/>
+              <xs:element name="tagList" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="tag" type="xs:string" maxOccurs="unbounded" minOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="title" type="xs:string" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

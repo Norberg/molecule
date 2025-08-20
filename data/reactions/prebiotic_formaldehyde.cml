@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <reactions>
-  <!-- Prebiotic radical pathway to formaldehyde (global reactions) -->
+  <!-- Prebiotic radical pathway to formaldehyde (cleaned) -->
   <reaction>
     <requirementList>
       <requirement type="UV light" molar_energy="500"/>
@@ -12,8 +12,13 @@
       <molecule title="H(g)"/>
       <molecule title="OH(g)"/>
     </productList>
-    <description>Photolysis of water produces hydrogen atom and hydroxyl radical.</description>
-    <description>Solar UV photons dissociate water vapor, cleaving the O&#x2013;H bond to yield a hydrogen atom (H&#xB7;) and a hydroxyl radical (OH&#xB7;). This step serves as a primary radical initiation process in dilute, prebiotic gas mixtures. The generated OH&#xB7; is highly reactive and will abstract hydrogen from reduced carbon species. Concurrently, H&#xB7; participates in secondary radical recombination or abstraction steps downstream.</description>
+    <description>
+      Solar UV photons dissociate water vapor, cleaving the O–H bond to yield a hydrogen atom (H·)
+      and a hydroxyl radical (OH·). This step serves as a primary radical initiation process in
+      dilute, prebiotic gas mixtures. The generated OH· is highly reactive and will abstract
+      hydrogen from reduced carbon species. Concurrently, H· participates in secondary radical
+      recombination or abstraction steps downstream.
+    </description>
     <tagList>
       <tag>Photolysis</tag>
       <tag>Radical initiation</tag>
@@ -28,28 +33,16 @@
       <molecule title="CH3(g)"/>
       <molecule title="H2O(l)"/>
     </productList>
-    <description>Hydroxyl radical abstracts H from methane yielding methyl radical and water.</description>
-    <description>The hydroxyl radical (OH&#xB7;) abstracts a hydrogen atom from methane, producing water and a methyl radical (CH3&#xB7;). This hydrogen abstraction lowers the activation barrier for subsequent carbon&#x2013;oxygen bond formation. Formation of CH3&#xB7; increases the pool of carbon-centered radicals available for recombination. The water formed also helps buffer the radical chemistry without consuming oxidants.</description>
+    <description>
+      The hydroxyl radical (OH·) abstracts a hydrogen atom from methane, producing water and a
+      methyl radical (CH3·). This hydrogen abstraction lowers the activation barrier for subsequent
+      carbon–oxygen bond formation. Formation of CH3· increases the pool of carbon-centered radicals
+      available for recombination. The water formed also helps buffer the radical chemistry without
+      consuming oxidants.
+    </description>
     <tagList>
       <tag>Hydrogen abstraction</tag>
       <tag>Radical propagation</tag>
-    </tagList>
-  </reaction>
-  <reaction>
-    <requirementList>
-      <requirement type="UV light" molar_energy="500"/>
-    </requirementList>
-    <reactantList>
-      <molecule title="H2O"/>
-    </reactantList>
-    <productList>
-      <molecule title="H(g)"/>
-      <molecule title="OH(g)"/>
-    </productList>
-    <description>Second photolysis replenishes hydroxyl radical.</description>
-    <description>A subsequent photolysis event of water regenerates additional OH&#xB7; radicals, sustaining the radical chain. Continuous UV flux ensures that radical concentrations do not decay solely by recombination. This replenishment maintains oxidation potential in an otherwise reducing environment. The parallel production of H&#xB7; provides coupling pathways toward molecular hydrogen.</description>
-    <tagList>
-      <tag>Photolysis</tag>
     </tagList>
   </reaction>
   <reaction>
@@ -60,8 +53,13 @@
     <productList>
       <molecule title="CH3OH(g)"/>
     </productList>
-    <description>Methyl radical recombines with hydroxyl radical to form methanol.</description>
-    <description>The methyl radical (CH3&#xB7;) combines with hydroxyl (OH&#xB7;) to form methanol (CH3OH) in a termination-like recombination step. This reaction sequesters radical species into a stable organic oxygenate. Methanol formation represents an early oxygen incorporation into reduced carbon under photochemical control. The product becomes a substrate for further photolytic oxidation to formaldehyde.</description>
+    <description>
+      The methyl radical (CH3·) combines with hydroxyl (OH·) to form methanol (CH3OH) in a
+      termination-like recombination step. This reaction sequesters radical species into a stable
+      organic oxygenate. Methanol formation represents an early oxygen incorporation into reduced
+      carbon under photochemical control. The product becomes a substrate for further photolytic
+      oxidation to formaldehyde.
+    </description>
     <tagList>
       <tag>Radical recombination</tag>
     </tagList>
@@ -74,8 +72,12 @@
     <productList>
       <molecule title="H2(g)"/>
     </productList>
-    <description>Hydrogen atom recombination forming molecular hydrogen.</description>
-    <description>Two hydrogen atoms (H&#xB7;) collide and recombine on encountering each other, forming molecular hydrogen (H2). This step removes excess atomic hydrogen generated by photolysis and abstraction steps. Molecular hydrogen can diffuse or escape, subtly shifting redox balances. The recombination also limits chain-propagating radical concentrations.</description>
+    <description>
+      Two hydrogen atoms (H·) collide and recombine on encountering each other, forming molecular
+      hydrogen (H2). This step removes excess atomic hydrogen generated by photolysis and
+      abstraction steps. Molecular hydrogen can diffuse or escape, subtly shifting redox balances.
+      The recombination also limits chain-propagating radical concentrations.
+    </description>
     <tagList>
       <tag>Radical recombination</tag>
     </tagList>
@@ -91,8 +93,13 @@
       <molecule title="CH2O(g)"/>
       <molecule title="H2(g)"/>
     </productList>
-    <description>Photolysis of methanol forms formaldehyde and hydrogen.</description>
-    <description>UV photons cleave C&#x2013;H bonds in methanol, yielding formaldehyde (CH2O) and molecular hydrogen as dehydrogenation products. This photolytic dehydrogenation oxidizes the carbon center without requiring molecular oxygen. Formaldehyde is a key intermediate for prebiotic synthesis pathways such as sugar formation. Concurrent H2 production reflects net reductant loss to the gas phase.</description>
+    <description>
+      UV photons cleave C–H bonds in methanol, yielding formaldehyde (CH2O) and molecular hydrogen
+      as dehydrogenation products. This photolytic dehydrogenation oxidizes the carbon center
+      without requiring molecular oxygen. Formaldehyde is a key intermediate for prebiotic
+      synthesis pathways such as sugar formation. Concurrent H2 production reflects net reductant
+      loss to the gas phase.
+    </description>
     <tagList>
       <tag>Photolysis</tag>
       <tag>Dehydrogenation</tag>
