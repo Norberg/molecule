@@ -32,10 +32,6 @@
           <molecule title="H(g)" />
           <molecule title="OH(g)" />
         </productList>
-        <tagList>
-          <tag>Photolysis</tag>
-          <tag>Radical initiation</tag>
-        </tagList>
       </reaction>
       <reaction>
         <reactantList>
@@ -46,10 +42,6 @@
           <molecule title="CH3(g)" />
           <molecule title="H2O(l)" />
         </productList>
-        <tagList>
-          <tag>Hydrogen abstraction</tag>
-          <tag>Radical propagation</tag>
-        </tagList>
       </reaction>
       <reaction>
         <reactantList>
@@ -59,9 +51,6 @@
         <productList>
           <molecule title="CH3OH(g)" />
         </productList>
-        <tagList>
-          <tag>Radical recombination</tag>
-        </tagList>
       </reaction>
         <reaction>
           <reactantList>
@@ -71,9 +60,6 @@
           <productList>
             <molecule title="H2(g)" />
           </productList>
-          <tagList>
-            <tag>Radical recombination</tag>
-          </tagList>
         </reaction>
       <reaction>
         <requirementList>
@@ -86,10 +72,6 @@
           <molecule title="CH2O(g)" />
           <molecule title="H2(g)" />
         </productList>
-        <tagList>
-          <tag>Photolysis</tag>
-          <tag>Dehydrogenation</tag>
-        </tagList>
       </reaction>
     </reactions>
   </hint>

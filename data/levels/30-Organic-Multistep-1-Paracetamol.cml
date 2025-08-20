@@ -18,7 +18,8 @@
     <molecule
       title="H2(g)"/>
     <molecule title="Ni8(s)"/>
-    <molecule title="C4H6O3(l)"/>> </inventoryList>
+    <molecule title="C4H6O3(l)"/>
+  </inventoryList>
   <effectList>
     <effect title="Fire" value="900" x2="200" y2="550"/>
   </effectList>

@@ -61,19 +61,21 @@ class HorizontalHUD:
         self.height = height
         self.width = width
         progress_text = "<Progress:"
-        self.progress_doc = Document(progress_text, width = width/2)
-        objective_html = pyglet.text.decode_html(Gui.find_and_convert_formulas(level.objective))
-        objective_doc = Document(objective_html, width = width/2)
-        left_frame = Frame(VerticalContainer([objective_doc, None,
-            self.progress_doc]), is_expandable = True)
+        self.progress_doc = Document(progress_text, width=width/2)
+        # Fallback if objective is None
+        objective_str = level.objective if level.objective else ""
+        objective_html = pyglet.text.decode_html(Gui.find_and_convert_formulas(objective_str))
+        objective_doc = Document(objective_html, width=width/2)
+        left_frame = Frame(VerticalContainer([objective_doc, None, self.progress_doc]), is_expandable=True)
         self.left_container = VerticalContainer([left_frame])
-        victory_formula = level.victory_condition[0]
+        # Fallback if victory list empty
+        victory_formula = level.victory_condition[0] if level.victory_condition else "H2O"
         info_frame = self.create_info_frame(victory_formula)
         self.info_container = VerticalContainer([info_frame])
         container = HorizontalContainer([self.left_container, self.info_container])
         self.manager = Manager(container, window=window, batch=batch,
-                group=RenderingOrder.hud, anchor=ANCHOR_BOTTOM_LEFT,
-                theme=theme, is_movable=False)
+                               group=RenderingOrder.hud, anchor=ANCHOR_BOTTOM_LEFT,
+                               theme=theme, is_movable=False)
         self.window = window
         self.window.push_handlers(on_draw=self.on_draw)
         self.tick = 0

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML Schema for level definition files in the Molecule project -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Simple types for molecule titles -->
+  <!-- Titles that MUST have a state suffix in parentheses (g|l|s|aq) -->
+  <xs:simpleType name="StatefulMoleculeTitleType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value=".*\((g|l|s|aq)\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Titles without explicit state (used e.g. in victoryCondition or reactantList) -->
+  <xs:simpleType name="StatelessMoleculeTitleType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[^()]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Victory condition molecules may or may not include a state -->
+  <xs:simpleType name="VictoryMoleculeTitleType">
+    <xs:restriction base="xs:string">
+      <!-- Allow either bare formula or with state; be permissive -->
+      <xs:pattern value="[^()]+(\((g|l|s|aq)\))?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Reaction (for embedded hint reactions) -->
+  <xs:complexType name="ReactionType">
+    <xs:all>
+      <xs:element name="reactantList" minOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="molecule" maxOccurs="unbounded" minOccurs="1">
+              <xs:complexType>
+                <xs:attribute name="title" type="StatelessMoleculeTitleType" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="productList" minOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="molecule" maxOccurs="unbounded" minOccurs="1">
+              <xs:complexType>
+                <xs:attribute name="title" type="StatefulMoleculeTitleType" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="requirementList" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="requirement" maxOccurs="unbounded" minOccurs="1">
+              <xs:complexType>
+                <xs:attribute name="type" type="xs:string" use="required"/>
+                <xs:attribute name="molar_energy" type="xs:double" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="title" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="ReactionsListType">
+    <xs:sequence>
+      <xs:element name="reaction" type="ReactionType" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Effect definition -->
+  <xs:complexType name="EffectType">
+    <xs:sequence>
+      <!-- Optional internal molecule list (e.g. Mining effect spawns sources) -->
+      <xs:element name="molecule" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="title" type="StatefulMoleculeTitleType" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="title" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:double" use="optional"/>
+    <xs:attribute name="x2" type="xs:double" use="required"/>
+    <xs:attribute name="y2" type="xs:double" use="required"/>
+  </xs:complexType>
+
+  <!-- Root element -->
+  <xs:element name="level">
+    <xs:complexType>
+      <xs:sequence>
+        <!-- Initial molecules on the board (stateful) -->
+        <xs:element name="moleculeList" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="molecule" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="title" type="StatefulMoleculeTitleType" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- Optional inventory separate from starting molecules -->
+        <xs:element name="inventoryList" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="molecule" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="title" type="StatefulMoleculeTitleType" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- Effects that influence the level -->
+        <xs:element name="effectList" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="effect" type="EffectType" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- Victory condition target molecules (stateless or stateful) -->
+        <xs:element name="victoryCondition" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="molecule" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="title" type="VictoryMoleculeTitleType" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!-- Objective text -->
+        <xs:element name="objective" minOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="text" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <!-- Hint text with optional embedded reactions list -->
+        <xs:element name="hint" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="reactions" type="ReactionsListType" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="text" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="zoom" type="xs:double" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

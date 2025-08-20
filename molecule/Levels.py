@@ -46,9 +46,11 @@ class Levels:
             print("Starting on level %s" % self.levels[self.current_level])
 
     def init_levels(self):
-        filenames = glob.glob(self.path+"/*")
-        #files that contains # is disabled
-        self.levels = [name for name in filenames if not '#' in name]
+        # Only include real level definition files (.cml)
+        pattern = self.path + "/*.cml"
+        filenames = glob.glob(pattern)
+        # files that contains # are disabled
+        self.levels = [name for name in filenames if '#' not in name]
         self.levels.sort()
 
     def next_level(self):

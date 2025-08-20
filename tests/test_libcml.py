@@ -19,10 +19,12 @@ import unittest
 import libcml.Cml as Cml
 from libcml import CachedCml
 import xml.etree.ElementTree as ET
-import xmlschema  # Antas vara installerat
+import xmlschema  # Krävs för schema-validering
 
 REACTIONS_SCHEMA_PATH = "data/reactions/reactions.xsd"
+LEVELS_SCHEMA_PATH = "data/levels/levels.xsd"
 _REACTIONS_SCHEMA = xmlschema.XMLSchema(REACTIONS_SCHEMA_PATH)
+_LEVELS_SCHEMA = xmlschema.XMLSchema(LEVELS_SCHEMA_PATH)
 
 class TestCML(unittest.TestCase):
 
@@ -347,6 +349,19 @@ class TestCML(unittest.TestCase):
                 errors.append(f"{filename}: {e}")
         if errors:
             self.fail("\n".join(errors))
+
+    def test_levels_files_schema(self):
+        """Validate all level definition files using levels.xsd schema."""
+        schema = _LEVELS_SCHEMA
+        errors = {}
+        for filename in glob.glob("data/levels/*.cml"):
+            try:
+                schema.validate(filename)
+            except Exception as e:
+                errors[filename] = str(e)
+        if errors:
+            joined = "\n".join(f"{k}: {v}" for k,v in errors.items())
+            self.fail(joined)
 
 
 if __name__ == '__main__':
