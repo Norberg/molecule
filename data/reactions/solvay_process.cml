@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Solvay process reaction set -->
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4OH(aq)"/>
+    </productList>
+    <description>
+      Ammonia dissolves in water and establishes a weak equilibrium forming ammonium hydroxide (NH4OH).
+      Only a fraction of dissolved NH3 is protonated at any instant, but this representation captures the basic medium needed downstream.
+      Temperature and gas dissolution surface area influence how much NH4OH is effectively present.
+      This step primes the cycle by supplying the base that will capture CO2 as bicarbonate.
+      Efficient absorption minimizes ammonia loss to the gas phase.
+    </description>
+    <tagList>
+      <tag>Dissolution</tag>
+      <tag>Acid-base reaction</tag>
+      <tag>Equilibrium</tag>
+      <tag>Preparation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2O"/>
+      <molecule title="CO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2CO3(aq)"/>
+    </productList>
+    <description>
+      Carbon dioxide hydrates in water to form carbonic acid, a weak, partially dissociated species.
+      The equilibrium lies toward dissolved CO2 but sufficient H2CO3 forms for bicarbonate generation.
+      Lower temperatures improve CO2 solubility and thus apparent acid concentration.
+      Gentle handling limits gas escape and sustains carbonation efficiency.
+      This hydrated CO2 intermediate is essential for the subsequent ammonium bicarbonate formation.
+    </description>
+    <tagList>
+      <tag>Gas absorption</tag>
+      <tag>Dissolution</tag>
+      <tag>Acid formation</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2CO3"/>
+      <molecule title="NH4OH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4HCO3(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Carbonic acid neutralizes ammonium hydroxide forming ammonium bicarbonate in solution and water.
+      This captures CO2 in a soluble, transportable intermediate while retaining ammonia in the cycle.
+      Moderate temperatures prevent premature CO2 release and favor bicarbonate stability.
+      The step links the carbonation stage to selective sodium bicarbonate precipitation.
+      Managing concentration avoids over-dilution that would hinder downstream crystallization.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Intermediate formation</tag>
+      <tag>Carbon capture</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH4HCO3"/>
+      <molecule title="NaCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4Cl(aq)"/>
+      <molecule title="NaHCO3(s)"/>
+    </productList>
+    <description>
+      A double displacement occurs where sodium pairs with bicarbonate forming sparingly soluble sodium bicarbonate which precipitates.
+      Ammonium chloride stays dissolved enabling physical separation of the solid carbonate precursor.
+      Lower temperatures favor NaHCO3 crystallization and improve yield selectivity.
+      This separation step is central to concentrating carbonate units for conversion to soda ash.
+      Careful control prevents redissolution of freshly formed crystals.
+    </description>
+    <tagList>
+      <tag>Double displacement</tag>
+      <tag>Precipitation</tag>
+      <tag>Selective crystallization</tag>
+      <tag>Separation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NaHCO3"/>
+      <molecule title="NaHCO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na2CO3(s)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+    <description>
+      Heating sodium bicarbonate causes thermal decomposition releasing water vapor and carbon dioxide while yielding sodium carbonate.
+      The endothermic step concentrates carbonate into the stable soda ash product.
+      Recovered CO2 can be recycled upstream improving process efficiency and lowering emissions.
+      Effective drying before high heat enhances conversion and product purity.
+      This calcination finalizes the primary commercial output of the cycle.
+    </description>
+    <tagList>
+      <tag>Thermal decomposition</tag>
+      <tag>Product formation</tag>
+      <tag>Recycling</tag>
+      <tag>Endothermic</tag>
+      <tag>Calcination</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH4Cl"/>
+      <molecule title="NH4Cl"/>
+      <molecule title="CaO"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH3(g)"/>
+      <molecule title="NH3(g)"/>
+      <molecule title="CaCl2(s)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Calcium oxide reacts with ammonium chloride releasing ammonia gas that is recycled to the absorption stage.
+      Formation of calcium chloride and water drives regeneration and closes the ammonia loop.
+      Heat input accelerates ammonia liberation and drying of the salt mixture.
+      Efficient recovery reduces fresh ammonia demand and improves sustainability metrics.
+      This regeneration step is essential for the cyclical efficiency of the Solvay process.
+    </description>
+    <tagList>
+      <tag>Regeneration</tag>
+      <tag>Loop closure</tag>
+      <tag>Byproduct formation</tag>
+    </tagList>
+  </reaction>
+</reactions>

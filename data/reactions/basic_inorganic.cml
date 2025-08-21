@@ -100,6 +100,19 @@
       <molecule title="CaO(s)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <description>
+      Heating calcium carbonate (limestone) causes calcination, breaking it into calcium oxide (quicklime) and carbon dioxide gas.
+      The strongly endothermic step is foundational in lime production and serves as a CO2 supply in the Solvay cycle.
+      Furnace temperature, particle size, and residence time determine conversion efficiency and energy use.
+      Released CO2 may be captured for carbonation steps, improving material circularity.
+      Reactive CaO produced here also participates in ammonia regeneration routes.
+    </description>
+    <tagList>
+      <tag>Thermal decomposition</tag>
+      <tag>Calcination</tag>
+      <tag>CO2 source</tag>
+      <tag>Endothermic</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -319,87 +332,7 @@
     </tagList>
   </reaction>
   <!-- Acid/base / carbonate system -->
-  <reaction>
-    <reactantList>
-      <molecule title="H2O"/>
-      <molecule title="CO2"/>
-    </reactantList>
-    <productList>
-      <molecule title="H2CO3(aq)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="H2CO3"/>
-      <molecule title="NH4OH"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH4HCO3(aq)"/>
-      <molecule title="H2O(l)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="NH4HCO3"/>
-      <molecule title="NaCl"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH4Cl(aq)"/>
-      <molecule title="NaHCO3(s)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="NaHCO3"/>
-      <molecule title="NaHCO3"/>
-    </reactantList>
-    <productList>
-      <molecule title="Na2CO3(s)"/>
-      <molecule title="H2O(g)"/>
-      <molecule title="CO2(g)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="NH4OH"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH3(g)"/>
-      <molecule title="H2O(l)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="NH3"/>
-      <molecule title="H2O"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH4OH(aq)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="Na+"/>
-      <molecule title="Na+"/>
-      <molecule title="CO3-2"/>
-    </reactantList>
-    <productList>
-      <molecule title="Na2CO3(s)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
-      <molecule title="NH4Cl"/>
-      <molecule title="NH4Cl"/>
-      <molecule title="CaO"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH3(g)"/>
-      <molecule title="NH3(g)"/>
-      <molecule title="CaCl2(s)"/>
-      <molecule title="H2O(l)"/>
-    </productList>
-  </reaction>
+  <!-- Solvay-related reactions removed (now in solvay_process.cml) -->
   <!-- Tert-butanol formation sequence -->
   <reaction>
     <reactantList>
