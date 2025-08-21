@@ -223,9 +223,17 @@ class Level:
         a,b = arbiter.shapes
         molecule = a.molecule
         effect = b.effect
+        # First let the effect itself attempt a custom reaction (e.g. dissolution)
         reaction = effect.react(molecule)
-        collisions = [a]
-        if reaction != None:
+
+        # If the effect did not supply a reaction, attempt a normal reactor-based
+        # reaction with a single reactant + this effect (enables decomposition
+        # without requiring self-collision of the molecule's own atoms).
+        if reaction is None:
+            reaction = Universe.universe.react([molecule.state_formula], [effect])
+
+        collisions = [a]  # pass the single shape for perform_reaction bookkeeping
+        if reaction is not None:
             self.perform_reaction(reaction, collisions, b.body.position)
         return False
 
