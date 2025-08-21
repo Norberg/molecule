@@ -36,6 +36,8 @@ DEFAULT_SIZE = 32.0
 SPRITE_RADIUS = SPRITE_SIZE/2
 BOND_LENGTH_FACTOR = 1.4
 ATOM_SPACE = SPRITE_SIZE / 1.5
+# Cooldown (seconds) before a newly created molecule is allowed to react.
+REACTION_COOLDOWN = 1.0
 
 class Molecule:
     def __init__(self, formula_with_state, space, batch, pos=None, render_only=False):
@@ -129,7 +131,7 @@ class Molecule:
                 atom.shape.filter = CollisionTypes.ELEMENT_FILTER
 
     def can_react(self):
-        return self.creation_time + 2 < time.time() and not self.is_deleted()
+        return self.creation_time + REACTION_COOLDOWN < time.time() and not self.is_deleted()
 
     def update(self):
         for atom in self.atoms.values():
