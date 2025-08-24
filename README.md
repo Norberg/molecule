@@ -5,38 +5,53 @@ molecule
 
 Molecule - a chemical reaction puzzle game
 
-Dependencies:
+Dependencies
 -------
-### Game:
-* python 3.12
-* pyglet 1.5
-* pymunk 7.1
-* pyglet-gui 0.1
+We maintain two requirement files:
+* requirements.txt – core game + server runtime
+* requirements-cmleditor.txt – editor & chemistry features (rdkit, GTK bindings, etc.)
+
+Python: 3.12 recommended (3.11 should also work, lower versions untested recently).
+
+Core runtime (requirements.txt):
+* pyglet==1.5.16 (rendering)
+* pymunk==7.1.0 (physics)
+* pyglet-gui (UI widgets, installed from GitHub)
+* fastapi, uvicorn (local API server)
+* numpy (numeric helpers / chemistry utilities)
+* Pillow (image handling)
+* pycairo (SVG / Cairo based rendering pieces)
+* xmlschema (validating CML files)
+
+Editor & chemistry (requirements-cmleditor.txt):
+* PyGObject (GTK3 bindings for the CML editor)
+* rdkit (molecule and reaction generation/rendering)
+* (Optionally) you can repeat shared deps here or keep only the extra ones – but every pip-installable dependency for editor features is listed in one of the two files.
+
+System packages (Debian/Ubuntu example):
 ```
-sudo apt install build-essential libffi-dev libssl-dev zlib1g-dev \
-    libbz2-dev libreadline-dev libsqlite3-dev curl \
-    llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
-    liblzma-dev
+sudo apt update && sudo apt install -y \
+    build-essential libffi-dev libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev curl llvm libncursesw5-dev xz-utils \
+    tk-dev libxml2-dev libxmlsec1-dev liblzma-dev \
+    libgirepository1.0-dev libcairo2-dev gir1.2-gtk-3.0 \
+    openbabel
+```
+openbabel is only required for some optional molecule generation workflows.
+
+Create and activate a virtual environment (example with pyenv – optional):
+```
 curl https://pyenv.run | bash
 pyenv install 3.12
 pyenv virtualenv 3.12 venv-molecule
 pyenv activate venv-molecule
-pip install pyglet==1.5.16
-pip install pymunk==7.1.0
-pip install --upgrade pip setuptools wheel
-pip install git+https://github.com/jorgecarleitao/pyglet-gui.git
 ```
 
-### Cmleditor:
-* python 3
-* PyGObject
-* GTK+3
-* openbabel (optional, needed to create new molecules)
-* rdkit (optional, needed to create new molecules and reactions)
+Install Python dependencies:
 ```
-sudo apt install libgirepository1.0-dev openbabel libcairo2-dev
-pip install rdkit 
-pip install pygobject 
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+pip install -r requirements-cmleditor.txt   # if you want the editor & chemistry features
 ```
 
 
