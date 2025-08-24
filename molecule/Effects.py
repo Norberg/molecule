@@ -56,6 +56,7 @@ class Effect:
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
         space.add(shape, body)
 
     def clicked(self, pos):
@@ -166,6 +167,7 @@ class WaterBeaker(EffectSprite):
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
 
     def set_pos(self, pos):
         OFFSET_X, OFFSET_Y = 0,60
@@ -222,6 +224,7 @@ class InertSolventBeaker(EffectSprite):
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
 
     def set_pos(self, pos):
         OFFSET_X, OFFSET_Y = 0,60
@@ -269,6 +272,7 @@ class HotplateBeaker(EffectSprite):
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
 
     def set_pos(self, pos):
         OFFSET_X, OFFSET_Y = 0,-70
@@ -326,6 +330,7 @@ class Furnace(EffectSprite):
         self.shape.collision_type = CollisionTypes.EFFECT
         self.shape.sensor = True
         self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
 
     def set_pos(self, pos):
         OFFSET_X, OFFSET_Y = 5,-30

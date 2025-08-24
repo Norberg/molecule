@@ -113,13 +113,22 @@ class Level:
         self.mouse_body = pymunk.Body(body_type = pymunk.Body.KINEMATIC)
         #self.mouse_body = pymunk.Body(mass=0.1, moment=10)
 
-        self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.ELEMENT).post_solve=self.element_collision
+        # Pymunk >=7 uses on_collision instead of add_collision_handler. We attach
+        # a post_solve callback for element/element collisions that may trigger reactions.
+        self.space.on_collision(
+            CollisionTypes.ELEMENT,
+            CollisionTypes.ELEMENT,
+            post_solve=self.element_collision,
+        )
         # Dwell-time tracking for element/effect collisions (molecule_id,effect_id)->start_time
         self._effect_collision_times = {}
-        handler = self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.EFFECT)
-        handler.begin = self.effect_reaction       # start timing
-        handler.pre_solve = self.effect_reaction   # check dwell while overlapping
-        handler.separate = self.effect_reaction_separate
+        self.space.on_collision(
+            CollisionTypes.ELEMENT,
+            CollisionTypes.EFFECT,
+            begin=self.effect_reaction,      # start timing
+            pre_solve=self.effect_reaction,  # check dwell while overlapping
+            separate=self.effect_reaction_separate,
+        )
 
     def init_pyglet(self):
         self.window.set_handlers(self)
@@ -242,6 +251,10 @@ class Level:
         self._effect_collision_times.pop(key, None)
         # Custom effect reaction first
         reaction = effect.react(molecule)
+
+        # If the effect did not supply a reaction, attempt a normal reactor-based
+        # reaction with a single reactant + this effect (enables decomposition
+        # without requiring self-collision of the molecule's own atoms).
         if reaction is None:
             reaction = Universe.universe.react([molecule.state_formula], [effect])
         if reaction is not None:
@@ -297,18 +310,16 @@ class Level:
         if self.mouse_spring != None:
             self.handle_element_released(None, None, None, None)
         self.mouse_body.position = (x, y)
-        #TODO: Fix the ShapeFilter
-        clicked = self.space.point_query_nearest((x,y), 16, shape_filter = pymunk.ShapeFilter(categories = CollisionTypes.ELEMENT))
-        if (clicked != None and
-            clicked.shape.collision_type == CollisionTypes.ELEMENT and
-            clicked.shape.molecule.draggable):
-            clicked = clicked.shape
-            clicked.molecule.set_dragging(True)
-            rest_length = self.mouse_body.position.get_distance(clicked.body.position)
-            self.mouse_spring = pymunk.PivotJoint(self.mouse_body, clicked.body, (0,0), (0,0))
-            self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
-            self.space.add(self.mouse_spring)
-            self.hud.update_info_text(clicked.molecule.formula)
+        clicked = self.space.point_query_nearest((x,y), 16, shape_filter=CollisionTypes.ELEMENT_PICK_FILTER)
+        if (clicked is None or clicked.shape.collision_type != CollisionTypes.ELEMENT or not clicked.shape.molecule.draggable):
+            return
+        shape = clicked.shape
+        shape.molecule.set_dragging(True)
+        rest_length = self.mouse_body.position.get_distance(shape.body.position)
+        self.mouse_spring = pymunk.PivotJoint(self.mouse_body, shape.body, (0,0), (0,0))
+        self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
+        self.space.add(self.mouse_spring)
+        self.hud.update_info_text(shape.molecule.formula)
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.handle_element_released(x, y, button, modifiers)
