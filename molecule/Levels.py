@@ -114,7 +114,12 @@ class Level:
         #self.mouse_body = pymunk.Body(mass=0.1, moment=10)
 
         self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.ELEMENT).post_solve=self.element_collision
-        self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.EFFECT).begin=self.effect_reaction
+        # Dwell-time tracking for element/effect collisions (molecule_id,effect_id)->start_time
+        self._effect_collision_times = {}
+        handler = self.space.add_collision_handler(CollisionTypes.ELEMENT,CollisionTypes.EFFECT)
+        handler.begin = self.effect_reaction       # start timing
+        handler.pre_solve = self.effect_reaction   # check dwell while overlapping
+        handler.separate = self.effect_reaction_separate
 
     def init_pyglet(self):
         self.window.set_handlers(self)
@@ -219,23 +224,38 @@ class Level:
                 self.perform_reaction(reaction, collisions, pos)
 
     def effect_reaction(self, arbiter, space, data):
-        """ Called if an element touches a effect """
-        a,b = arbiter.shapes
+        """Called when an element touches an effect; only react after 1s continuous contact."""
+        a, b = arbiter.shapes
         molecule = a.molecule
         effect = b.effect
-        # First let the effect itself attempt a custom reaction (e.g. dissolution)
+        key = (id(molecule), id(effect))
+        now = time.time()
+        dwell_required = 1.0
+        # First contact: start timer
+        if key not in self._effect_collision_times:
+            self._effect_collision_times[key] = now
+            return True
+        # Check dwell time
+        if (now - self._effect_collision_times[key]) < dwell_required:
+            return True
+        # Enough time: remove key so it triggers only once
+        self._effect_collision_times.pop(key, None)
+        # Custom effect reaction first
         reaction = effect.react(molecule)
-
-        # If the effect did not supply a reaction, attempt a normal reactor-based
-        # reaction with a single reactant + this effect (enables decomposition
-        # without requiring self-collision of the molecule's own atoms).
         if reaction is None:
             reaction = Universe.universe.react([molecule.state_formula], [effect])
-
-        collisions = [a]  # pass the single shape for perform_reaction bookkeeping
         if reaction is not None:
-            self.perform_reaction(reaction, collisions, b.body.position)
-        return False
+            self.perform_reaction(reaction, [a], b.body.position)
+            return False
+        return True
+
+    def effect_reaction_separate(self, arbiter, space, data):
+        a, b = arbiter.shapes
+        molecule = getattr(a, 'molecule', None)
+        effect = getattr(b, 'effect', None)
+        if molecule is not None and effect is not None:
+            self._effect_collision_times.pop((id(molecule), id(effect)), None)
+        return True
 
     def get_affecting_areas(self, position):
         """Return all areas that have a affect on reactions in the area """
