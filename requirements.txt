@@ -5,7 +5,7 @@
 
 pyglet==1.5.16            # rendering
 pymunk==7.1.0             # physics
-pyglet-gui @ git+https://github.com/jorgecarleitao/pyglet-gui.git@20ec4b335c9af3698dfa8328894544d4d0417973
+pyglet-gui @ git+https://github.com/Norberg/pyglet-gui.git@8915ae3
 
 fastapi==0.115.8          # API server
 uvicorn==0.33.0           # ASGI server
