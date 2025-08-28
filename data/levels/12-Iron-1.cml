@@ -10,6 +10,9 @@
     <molecule title="C(s)"/>
     <molecule title="C(s)"/>
     <molecule title="C(s)"/>
+  <molecule title="Fe2O3(s)"/>
+  <molecule title="Fe2O3(s)"/>
+  <molecule title="Fe2O3(s)"/>
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>
@@ -30,5 +33,78 @@
     <molecule title="Fe"/>
   </victoryCondition>
   <objective text="Create 5 Elementary Fe "/>
-  <hint text="FeXOX + ?  => Fe"/>
+  <hint text="Sequential blast furnace style reduction: generate CO, stepwise reduce Fe2O3 to Fe.">
+    <reactions>
+      <!-- Burn carbon to make CO2 -->
+      <reaction>
+        <reactantList>
+          <molecule title="C" />
+          <molecule title="O2" />
+        </reactantList>
+        <productList>
+          <molecule title="CO2(g)" />
+        </productList>
+      </reaction>
+      <!-- Boudouard reaction: generate CO -->
+      <reaction>
+        <reactantList>
+          <molecule title="C" />
+          <molecule title="CO2" />
+        </reactantList>
+        <productList>
+          <molecule title="CO(g)" />
+          <molecule title="CO(g)" />
+        </productList>
+      </reaction>
+      <!-- Partial reduction Fe2O3 -> Fe3O4 -->
+      <reaction>
+        <reactantList>
+          <molecule title="Fe2O3" />
+          <molecule title="Fe2O3" />
+          <molecule title="Fe2O3" />
+          <molecule title="CO" />
+        </reactantList>
+        <productList>
+          <molecule title="Fe3O4(s)" />
+          <molecule title="Fe3O4(s)" />
+          <molecule title="CO2(g)" />
+        </productList>
+      </reaction>
+      <!-- Further reduction Fe3O4 -> FeO -->
+      <reaction>
+        <reactantList>
+          <molecule title="Fe3O4" />
+          <molecule title="CO" />
+        </reactantList>
+        <productList>
+          <molecule title="FeO(s)" />
+          <molecule title="FeO(s)" />
+          <molecule title="FeO(s)" />
+          <molecule title="CO2(g)" />
+        </productList>
+      </reaction>
+      <!-- Final reduction FeO -> Fe -->
+      <reaction>
+        <reactantList>
+          <molecule title="FeO" />
+          <molecule title="CO" />
+        </reactantList>
+        <productList>
+          <molecule title="Fe(s)" />
+          <molecule title="CO2(g)" />
+        </productList>
+      </reaction>
+      <!-- Recycle CO2 back to CO again (loop) -->
+      <reaction>
+        <reactantList>
+          <molecule title="C" />
+          <molecule title="CO2" />
+        </reactantList>
+        <productList>
+          <molecule title="CO(g)" />
+          <molecule title="CO(g)" />
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
