@@ -18,9 +18,9 @@
     <reactions>
       <reaction>
         <reactantList>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
           <molecule title="CO2"/>
-          <molecule title="NH3"/>
-          <molecule title="NH3"/>
         </reactantList>
         <productList>
           <molecule title="CH4N2O(s)"/>

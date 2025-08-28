@@ -27,8 +27,8 @@
       </reaction>
       <reaction>
         <reactantList>
-          <molecule title="H2"/>
           <molecule title="O"/>
+          <molecule title="H2"/>
         </reactantList>
         <productList>
           <molecule title="H2O(l)"/>

@@ -17,9 +17,9 @@
     <reactions>
       <reaction>
         <reactantList>
+          <molecule title="MgO"/>
+          <molecule title="MgO"/>
           <molecule title="Si"/>
-          <molecule title="MgO"/>
-          <molecule title="MgO"/>
         </reactantList>
         <productList>
           <molecule title="SiO2(s)"/>
