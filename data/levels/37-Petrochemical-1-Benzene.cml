@@ -17,7 +17,7 @@
     <molecule title="C6H6"/>
   </victoryCondition>
   <objective text="Create Benzene C6H6 from 3 different feedstocks common in nafta"/>
-  <hint text="Noop">
+  <hint text="Crack / dehydrogenate paraffin + reform cyclohexane + disproportion to benzene; catalyst is reused.">
     <reactions>
       <reaction>
         <reactantList>

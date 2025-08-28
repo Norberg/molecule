@@ -27,7 +27,7 @@
     <molecule title="C8H9NO2"/>
   </victoryCondition>
   <objective text="Create Paracetamol C8H9NO2 by performing a series of organic reactions"/>
-  <hint text="Noop">
+  <hint text="Nitrate phenol, reduce to aminophenol, then acetylate.">
     <reactions>
       <reaction>
         <reactantList>

@@ -18,7 +18,7 @@
     <molecule title="C9H8O4"/>
   </victoryCondition>
   <objective text="Create Aspirin C9H8O4 by performing a series of organic reactions"/>
- <hint text="Noop">
+ <hint text="Salicylate formation via Kolbe-like carboxylation, then acetylation.">
     <reactions>
       <reaction>
         <reactantList>

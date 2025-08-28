@@ -18,5 +18,32 @@
     <molecule title="P4O10"/>
   </victoryCondition>
   <objective text="Create a P4O10 molecule"/>
-  <hint text="Everything needs to be close! P4 + 5 O2 + Heat => P4O10"/>
+  <hint text="Form O2 from atomic oxygen, then fully oxidize P4 with 5 O2 near the furnace.">
+    <reactions>
+      <!-- Combine atomic oxygen to supply enough O2 -->
+      <reaction>
+        <reactantList>
+          <molecule title="O"/>
+          <molecule title="O"/>
+        </reactantList>
+        <productList>
+          <molecule title="O2(g)"/>
+        </productList>
+      </reaction>
+      <!-- Net oxidation to phosphorus pentoxide (dataset order: P4 then five O2) -->
+      <reaction>
+        <reactantList>
+          <molecule title="P4"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="P4O10(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

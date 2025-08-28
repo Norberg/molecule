@@ -17,7 +17,7 @@
     <molecule title="C2H5Br"/>
   </victoryCondition>
   <objective text="Create C2H5Br by performing an Addition reaction"/>
-  <hint text="">
+  <hint text="Protonate alkene, then capture by chloride or bromide as shown.">
     <reactions>
         <reaction>
         <reactantList>
