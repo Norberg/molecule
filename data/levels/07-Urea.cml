@@ -14,5 +14,19 @@
     <molecule title="CH4N2O"/>
   </victoryCondition>
   <objective text="Create a CH4N2O molecule"/>
-  <hint text="CO2 + 2 NH3 => CH4N2O + H2O"/>
+  <hint text="CO2 + 2 NH3 => CH4N2O + H2O">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CO2"/>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
+        </reactantList>
+        <productList>
+          <molecule title="CH4N2O(s)"/>
+          <molecule title="H2O(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

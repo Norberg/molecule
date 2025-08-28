@@ -9,6 +9,7 @@
     <molecule title="NaCl(s)"/>
     <molecule title="NaCl(s)"/>
     <molecule title="SO3(g)"/>
+  <molecule title="H2SO4(l)"/>
   </moleculeList>
   <effectList>
     <effect title="Fire" value="900" x2="200" y2="550"/>
@@ -18,5 +19,28 @@
     <molecule title="HCl"/>
   </victoryCondition>
   <objective text="Create a HCL and a Na2SO4 molecule"/>
-  <hint text="2 NaCl + H2SO4 => 2 HCL + Na2SO4"/>
+  <hint text="Mannheim: 1) NaCl + H2SO4 -> NaHSO4 + HCl  2) NaHSO4 + NaCl -> Na2SO4 + HCl">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="NaCl"/>
+          <molecule title="H2SO4"/>
+        </reactantList>
+        <productList>
+          <molecule title="NaHSO4(s)"/>
+          <molecule title="HCl(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="NaHSO4"/>
+          <molecule title="NaCl"/>
+        </reactantList>
+        <productList>
+          <molecule title="Na2SO4(s)"/>
+          <molecule title="HCl(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

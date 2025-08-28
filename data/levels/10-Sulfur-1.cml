@@ -15,5 +15,33 @@
     <molecule title="SCl2"/>
   </victoryCondition>
   <objective text="Create 2 SCl2"/>
-  <hint text="S8 + 4 Cl2  => 4 S2Cl2 \n S2Cl2 + Cl2 => 2SCl2"/>
+  <hint text="S8 + 4 Cl2  => 4 S2Cl2 \n S2Cl2 + Cl2 => 2SCl2">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="S8"/>
+          <molecule title="Cl2"/>
+          <molecule title="Cl2"/>
+          <molecule title="Cl2"/>
+          <molecule title="Cl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="S2Cl2(g)"/>
+          <molecule title="S2Cl2(g)"/>
+          <molecule title="S2Cl2(g)"/>
+          <molecule title="S2Cl2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="S2Cl2"/>
+          <molecule title="Cl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="SCl2(g)"/>
+          <molecule title="SCl2(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

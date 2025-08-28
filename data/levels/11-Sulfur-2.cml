@@ -12,5 +12,18 @@
     <molecule title="C4H8Cl2S"/>
   </victoryCondition>
   <objective text="Create Sulfur mustard"/>
-  <hint text="SCl2 + 2 C2H4  => C4H8Cl2S"/>
+  <hint text="SCl2 + 2 C2H4  => C4H8Cl2S">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="SCl2"/>
+          <molecule title="C2H4"/>
+          <molecule title="C2H4"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H8Cl2S(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

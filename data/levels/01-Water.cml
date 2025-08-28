@@ -14,5 +14,26 @@
     <molecule title="H2O"/>
   </victoryCondition>
   <objective text="Create a water molecule"/>
-  <hint text="H + H + O => H2O"/>
+  <hint text="H + H + O => H2O">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="H+"/>
+          <molecule title="H+"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="H2"/>
+          <molecule title="O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2O(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

@@ -8,6 +8,7 @@
     <molecule title="H+(g)"/>
     <molecule title="OH-(aq)"/>
     <molecule title="CH4(g)"/>
+  <molecule title="O2(g)"/>
   </moleculeList>
   <effectList>
     <effect title="Fire" value="700" x2="200" y2="550"/>
@@ -18,5 +19,20 @@
     <molecule title="H2O"/>
   </victoryCondition>
   <objective text="Create a CO2 and 2 H2O molecules"/>
-  <hint text="CH4 + 2 O2 + Heat => CO2 + 2 H2O"/>
+  <hint text="CH4 + 2 O2 + Heat => CO2 + 2 H2O">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CH4"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="CO2(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

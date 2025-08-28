@@ -13,5 +13,20 @@
     <molecule title="Mg"/>
   </victoryCondition>
   <objective text="Create 2 Mg"/>
-  <hint text="Si(s) + 2 MgO  => SiO2 + 2 Mg"/>
+  <hint text="Si(s) + 2 MgO  => SiO2 + 2 Mg">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="Si"/>
+          <molecule title="MgO"/>
+          <molecule title="MgO"/>
+        </reactantList>
+        <productList>
+          <molecule title="SiO2(s)"/>
+          <molecule title="Mg(g)"/>
+          <molecule title="Mg(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>
