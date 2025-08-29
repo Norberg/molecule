@@ -7,12 +7,12 @@
       <molecule title="H2O"/>
     </reactantList>
     <productList>
-      <molecule title="NH4OH(aq)"/>
+      <molecule title="NH4+(aq)"/>
+      <molecule title="OH-(aq)"/>
     </productList>
     <description>
-      Ammonia dissolves in water and establishes a weak equilibrium forming ammonium hydroxide (NH4OH).
+      Ammonia dissolves in water and establishes a weak equilibrium forming ammonium hydroxide (NH4+ and OH-).
       Only a fraction of dissolved NH3 is protonated at any instant, but this representation captures the basic medium needed downstream.
-      Temperature and gas dissolution surface area influence how much NH4OH is effectively present.
       This step primes the cycle by supplying the base that will capture CO2 as bicarbonate.
       Efficient absorption minimizes ammonia loss to the gas phase.
     </description>
@@ -20,7 +20,6 @@
       <tag>Dissolution</tag>
       <tag>Acid-base reaction</tag>
       <tag>Equilibrium</tag>
-      <tag>Preparation</tag>
     </tagList>
   </reaction>
   <reaction>
@@ -48,7 +47,8 @@
   <reaction>
     <reactantList>
       <molecule title="H2CO3"/>
-      <molecule title="NH4OH"/>
+      <molecule title="NH4+"/>
+      <molecule title="OH-"/>
     </reactantList>
     <productList>
       <molecule title="NH4HCO3(aq)"/>
@@ -63,7 +63,6 @@
     </description>
     <tagList>
       <tag>Acid-base reaction</tag>
-      <tag>Intermediate formation</tag>
       <tag>Carbon capture</tag>
       <tag>Equilibrium</tag>
     </tagList>

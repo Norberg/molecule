@@ -84,16 +84,6 @@
   </reaction>
   <reaction>
     <reactantList>
-      <molecule title="NH3"/>
-      <molecule title="H2O"/>
-    </reactantList>
-    <productList>
-      <molecule title="NH4+(aq)"/>
-      <molecule title="OH-(aq)"/>
-    </productList>
-  </reaction>
-  <reaction>
-    <reactantList>
       <molecule title="CaCO3"/>
     </reactantList>
     <productList>

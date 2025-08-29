@@ -16,7 +16,7 @@
   <propertyList title="states">
     <propertyList title="Aqueous">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">-132.0</scalar>
+        <scalar units="units:molar_energy">-166.0</scalar>
       </property>
       <property title="entropy">
         <scalar units="units:molar_energy">113.0</scalar>

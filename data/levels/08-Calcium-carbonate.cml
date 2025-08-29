@@ -20,5 +20,27 @@
     <molecule title="CaCO3"/>
   </victoryCondition>
   <objective text="Create a CaCO3"/>
-  <hint text="CaO2H2 + Na2CO3=> CaCO3 + 2 Na+ + 2 OH+"/>
+  <hint text="Dissociate the calcium hydroxide species to Ca2+ then combine with carbonate to precipitate CaCO3.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CaO2H2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Ca+2(aq)"/>
+          <molecule title="OH-(aq)"/>
+          <molecule title="OH-(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="Ca+2"/>
+          <molecule title="CO3-2"/>
+        </reactantList>
+        <productList>
+          <molecule title="CaCO3(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
 </level>

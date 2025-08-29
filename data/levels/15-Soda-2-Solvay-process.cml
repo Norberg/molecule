@@ -33,7 +33,8 @@
           <molecule title="H2O"/>
         </reactantList>
         <productList>
-          <molecule title="NH4OH(aq)"/>
+          <molecule title="NH4+(aq)"/>
+          <molecule title="OH-(aq)"/>
         </productList>
       </reaction>
       <reaction title="Preperation of Calcium oxide by heating Calcium carbonate">
@@ -57,7 +58,8 @@
       <reaction title="Preperation of Ammonium bicarbonate with Carbonic acid and amonia">
         <reactantList>
           <molecule title="H2CO3"/>
-          <molecule title="NH4OH"/>
+          <molecule title="NH4+"/>
+          <molecule title="OH-"/>
         </reactantList>
         <productList>
           <molecule title="NH4HCO3(aq)"/>
