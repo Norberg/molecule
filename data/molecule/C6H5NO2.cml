@@ -35,7 +35,8 @@
   <propertyList title="states">
     <propertyList title="Liquid">
       <property title="enthalpy">
-        <scalar units="units:molar_energy">0.0</scalar>
+        <!-- Adjusted to 92.3 to make nitration only exergonic at low temperature (cold effect). -->
+        <scalar units="units:molar_energy">92.3</scalar>
       </property>
       <property title="entropy">
         <scalar units="units:molar_energy">0.0</scalar>
