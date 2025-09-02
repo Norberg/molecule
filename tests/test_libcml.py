@@ -20,6 +20,8 @@ import libcml.Cml as Cml
 from libcml import CachedCml
 import xml.etree.ElementTree as ET
 import xmlschema  # Krävs för schema-validering
+from libreact import Reaction as ReactionUtils
+from collections import Counter
 
 REACTIONS_SCHEMA_PATH = "data/reactions/reactions.xsd"
 LEVELS_SCHEMA_PATH = "data/levels/levels.xsd"
@@ -323,6 +325,34 @@ class TestCML(unittest.TestCase):
                 atomMatrix[atoms_string] = filename
             except Exception as e:
                 self.fail("Failed to parse %s: %s" % (filename, e))
+
+    def test_molecule_filename_formula_matches_atom_array(self):
+        """Validate that atomArray matches the molecular formula portion of the filename."""
+        errors = []
+        for filename in glob.glob("data/molecule/*.cml"):
+            m = Cml.Molecule()
+            try:
+                m.parse(filename)
+            except Exception as e:
+                errors.append(f"Failed to parse {filename}: {e}")
+                continue
+            base = os.path.basename(filename)
+            if base.endswith('.cml'):
+                base = base[:-4]
+            # Use substring before first charge sign (+/-) to strip ionic charge notation
+            core = base
+            for idx, ch in enumerate(base):
+                if ch in '+-':
+                    core = base[:idx]
+                    break
+            if not core:  # hoppa över rena joner utan atominfo i namnet (teoretiskt)
+                continue
+            expected = ReactionUtils.getAtomCount([core])
+            actual = Counter(a.elementType for a in m.atoms.values())
+            if expected != actual:
+                errors.append(f"{filename}: formula counts {dict(expected)} != atomArray counts {dict(actual)}")
+        if errors:
+            self.fail("\n".join(errors))
 
     def testReadAndWriteDescription(self):
         m = Cml.Molecule()
