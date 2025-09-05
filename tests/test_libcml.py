@@ -19,9 +19,10 @@ import unittest
 import libcml.Cml as Cml
 from libcml import CachedCml
 import xml.etree.ElementTree as ET
-import xmlschema  # Krävs för schema-validering
+import xmlschema  # Required for schema validation
 from libreact import Reaction as ReactionUtils
 from collections import Counter
+import re
 
 REACTIONS_SCHEMA_PATH = "data/reactions/reactions.xsd"
 LEVELS_SCHEMA_PATH = "data/levels/levels.xsd"
@@ -345,7 +346,7 @@ class TestCML(unittest.TestCase):
                 if ch in '+-':
                     core = base[:idx]
                     break
-            if not core:  # hoppa över rena joner utan atominfo i namnet (teoretiskt)
+            if not core:  # skip pure ions with no atom info in name (theoretical edge case)
                 continue
             expected = ReactionUtils.getAtomCount([core])
             actual = Counter(a.elementType for a in m.atoms.values())
@@ -353,6 +354,76 @@ class TestCML(unittest.TestCase):
                 errors.append(f"{filename}: formula counts {dict(expected)} != atomArray counts {dict(actual)}")
         if errors:
             self.fail("\n".join(errors))
+    def _count_heavy_atoms(self, smiles: str) -> Counter:
+        """Count non-hydrogen (heavy) atom symbols in a SMILES string.
+
+        This is a lightweight parser good enough for dataset validation. It handles
+        bracketed atoms (e.g. "[NH4+]"), two-letter elements (Cl, Br) and aromatic
+        lower-case tokens (c, n, o, p, s, b). Hydrogens are ignored.
+        """
+        bracket_re = re.compile(r"\[([^\]]+)\]")
+        counts = Counter()
+
+        # count explicit bracketed atoms first
+        for inner in bracket_re.findall(smiles):
+            m = re.match(r'([A-Z][a-z]?|[a-z])', inner)
+            if not m:
+                continue
+            token = m.group(1)
+            if token.islower():
+                sym = token.upper()
+            else:
+                sym = token[0].upper() + (token[1:].lower() if len(token) > 1 else '')
+            if sym != 'H':
+                counts[sym] += 1
+
+        # remove bracket contents and scan the rest
+        stripped = bracket_re.sub('', smiles)
+        # prefer known two-letter elements to avoid mis-parsing sequences like 'Nc' or 'Oc'
+        two_letter = ["Cl", "Br", "Si", "Na", "Al", "Ca", "Fe", "Mg", "Pt", "Ir", "Cu", "Zn", "Ag", "Ni"]
+        pattern = r"(" + "|".join(two_letter) + r"|[A-Z]|[cnopsb])"
+        tokens = re.findall(pattern, stripped)
+        for t in tokens:
+            if t in two_letter:
+                sym = t
+            elif t.islower():
+                sym = t.upper()
+            else:
+                sym = t
+            if sym != 'H':
+                counts[sym] += 1
+        return counts
+
+    def test_smiles_heavy_atom_counts_match_formula(self):
+        """Ensure non-hydrogen atom counts derived from SMILES match formula in the filename.
+
+        Hydrogens are ignored because they are often implicit in SMILES.
+        """
+        for filename in glob.glob("data/molecule/*.cml"):
+            m = Cml.Molecule()
+            try:
+                m.parse(filename)
+            except Exception as exc:
+                self.fail(f"Failed to parse {filename}: {exc}")
+
+            smiles = m.property.get("Smiles")
+            if not smiles:
+                self.fail(f"{filename}: missing Smiles property")
+
+            base = os.path.basename(filename)[:-4] if filename.endswith('.cml') else os.path.basename(filename)
+            core = base
+            for pos, ch in enumerate(base):
+                if ch in '+-':
+                    core = base[:pos]
+                    break
+            if not core:
+                # skip odd filenames that contain only charge notation
+                continue
+
+            expected_full = ReactionUtils.getAtomCount([core])
+            expected = Counter({el: cnt for el, cnt in expected_full.items() if el != 'H'})
+            actual = self._count_heavy_atoms(smiles)
+            self.assertEqual(expected, actual, f"{filename}: heavy atoms from formula {dict(expected)} != from SMILES '{smiles}' {dict(actual)}")
 
     def testReadAndWriteDescription(self):
         m = Cml.Molecule()
@@ -368,7 +439,7 @@ class TestCML(unittest.TestCase):
     def test_reactions_files_schema(self):
         """Validate all reaction collection files using pre-installed xmlschema.
 
-        Ingen automatisk installation sker; om xmlschema saknas hoppas testet över.
+    No automatic installation; if xmlschema is missing this test would be skipped earlier.
         """
         schema = _REACTIONS_SCHEMA
         errors = []
