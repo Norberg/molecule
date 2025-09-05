@@ -202,6 +202,17 @@ class EditorGTK:
                 molecule.property.get("Description", ""))
 
         self.widget("txtSmiles").set_text(molecule.property.get("Smiles", ""))
+        # Ensure only one "changed" handler for SMILES entry (no hasattr usage)
+        smiles_entry = self.widget("txtSmiles")
+        try:
+            smiles_entry.disconnect_by_func(self.on_txtSmiles_changed)
+        except Exception:
+            pass
+        smiles_entry.connect("changed", self.on_txtSmiles_changed)
+        # Hide refresh button initially
+        btn_refresh = self.widget("btnRefreshSmiles")
+        if btn_refresh:
+            btn_refresh.set_visible(False)
         if self.molecule.is_atom:
             self.setAtomSettings()
         else:
@@ -505,6 +516,83 @@ class EditorGTK:
         self.widget("txtAttribution").set_text(url)
 
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
+
+    def on_txtSmiles_changed(self, entry):
+        """Show refresh button when SMILES is edited."""
+        btn_refresh = self.widget("btnRefreshSmiles")
+        if btn_refresh:
+            btn_refresh.set_visible(True)
+
+    def on_btnRefreshSmiles_clicked(self, widget):
+        """Regenerate current molecule's atom/bond arrays from updated SMILES using obabel.
+
+        Steps:
+        1. Take new SMILES from entry.
+        2. Run obabel to temporary cml file.
+        3. Parse temp into temp Molecule.
+        4. Copy atoms/bonds into current molecule (keep states & properties, including updated SMILES property).
+        5. Refresh GUI previews & hide refresh button.
+        """
+        smiles = self.widget("txtSmiles").get_text().strip()
+        if smiles == "":
+            MsgBox("SMILES field is empty.")
+            return
+        # Use current formula filename base (without extension) for identity; we only update structure.
+        tmp_path = "_tmp_refresh_smiles.cml"
+        result = subprocess.run(["obabel", f"-:{smiles}", "-h", "--gen2d", "-ocml", "-O", tmp_path], capture_output=True, text=True)
+        if ("0 molecule" in result.stderr) or result.returncode != 0 or not os.path.exists(tmp_path):
+            MsgBox("Could not create molecule from SMILES.\n" + result.stderr)
+            try:
+                os.remove(tmp_path)
+            except Exception:
+                pass
+            return
+        # Parse temporary molecule
+        tmp_mol = Cml.Molecule()
+        try:
+            tmp_mol.parse(tmp_path)
+        except Exception as e:
+            MsgBox(f"Error parsing temporary file: {e}")
+            return
+        # Replace atoms & bonds in existing molecule
+        self.molecule.atoms.clear()
+        for atom in tmp_mol.atoms.values():
+            # Need to clone atom to avoid referencing temp object if we delete tree later
+            new_atom = Cml.Atom(atom.id, atom.elementType, atom.formalCharge, atom.x, atom.y, getattr(atom, 'z', None))
+            self.molecule.atoms[new_atom.id] = new_atom
+        self.molecule.bonds.clear()
+        for bond in tmp_mol.bonds:
+            new_bond = Cml.Bond()
+            # map to existing atoms by id
+            new_bond.atomA = self.molecule.atoms[bond.atomA.id]
+            new_bond.atomB = self.molecule.atoms[bond.atomB.id]
+            new_bond.bonds = bond.bonds
+            self.molecule.bonds.append(new_bond)
+        # Update SMILES property
+        self.molecule.property["Smiles"] = smiles
+        # Persist to file so preview (which reads from disk) uses new structure
+        try:
+            self.molecule.write(self.filename)
+        except Exception as e:
+            MsgBox(f"Could not write file: {e}")
+            return
+        # Evict from cache so subsequent loads (preview / reaction images) pick up new structure
+        try:
+            CachedCml.evictFromCache(self.formula)
+        except Exception:
+            pass
+        # Update preview images
+        self.preview_molecule()
+        # Hide button again
+        btn_refresh = self.widget("btnRefreshSmiles")
+        if btn_refresh:
+            btn_refresh.set_visible(False)
+        # Remove temp file
+        try:
+            os.remove(tmp_path)
+        except Exception:
+            pass
+        MsgBox("Structure updated from SMILES.")
 
     def update_reaction_preview(self, reactants, products):
         reactants = list_without_state(reactants)
