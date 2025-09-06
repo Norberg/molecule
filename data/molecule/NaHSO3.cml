@@ -23,7 +23,7 @@
         <reaction>
           <productList>
             <molecule title="Na+(aq)"/>
-            <molecule title="HSO4-(aq)"/>
+            <molecule title="HSO3-(aq)"/>
           </productList>
         </reaction>
       </property>

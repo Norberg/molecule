@@ -18,6 +18,7 @@ import os
 import unittest
 import libcml.Cml as Cml
 from libcml import CachedCml
+from libreact.Reaction import split_state, getAtomCount
 import xml.etree.ElementTree as ET
 import xmlschema  # Required for schema validation
 from libreact import Reaction as ReactionUtils
@@ -379,7 +380,6 @@ class TestCML(unittest.TestCase):
 
         # remove bracket contents and scan the rest
         stripped = bracket_re.sub('', smiles)
-        # prefer known two-letter elements to avoid mis-parsing sequences like 'Nc' or 'Oc'
         two_letter = ["Cl", "Br", "Si", "Na", "Al", "Ca", "Fe", "Mg", "Pt", "Ir", "Cu", "Zn", "Ag", "Ni"]
         pattern = r"(" + "|".join(two_letter) + r"|[A-Z]|[cnopsb])"
         tokens = re.findall(pattern, stripped)
@@ -463,6 +463,46 @@ class TestCML(unittest.TestCase):
         if errors:
             joined = "\n".join(f"{k}: {v}" for k,v in errors.items())
             self.fail(joined)
+
+    def test_aqueous_state_ions_have_molecule_files(self):
+        errors = []
+        for mol_filename in glob.glob("data/molecule/*.cml"):
+            m = Cml.Molecule()
+            m.parse(mol_filename)  # allow exception to propagate normally (will fail the test)
+            aqueous = m.states.get("Aqueous")
+            if not aqueous or not aqueous.ions:
+                continue
+            # Gather ion formulas and verify state existence
+            ion_formulas = []
+            for ion_full in aqueous.ions:
+                try:
+                    formula, state = split_state(ion_full)
+                except Exception as e:
+                    errors.append(f"{mol_filename}: unable to split state for ion '{ion_full}': {e}")
+                    continue
+                # Load ion molecule
+                ion_path = os.path.join("data", "molecule", f"{formula}.cml")
+                if not os.path.isfile(ion_path):
+                    errors.append(f"{mol_filename}: missing ion file {ion_path} for '{ion_full}'")
+                    continue
+                ion_m = CachedCml.getMolecule(formula)
+                # Verify state exists on ion (state like aq, g, s, l expected)
+                if ion_m.get_state(state) is None:
+                    errors.append(f"{mol_filename}: ion '{ion_full}' references missing state '{state}' in {ion_path}")
+                ion_formulas.append(formula)
+            # Balance check (ignore charge/states, just atom counts)
+            # Parent base formula (drop any state if present in filename name)
+            parent_base = os.path.basename(mol_filename)[:-4]
+            # Some filenames may include overall charge, keep as is for counting (getAtomCount handles digits and element tokens)
+            try:
+                parent_counts = getAtomCount([parent_base])
+                ions_counts = getAtomCount(ion_formulas)
+                if parent_counts != ions_counts:
+                    errors.append(f"{mol_filename}: ion reaction not balanced parent {dict(parent_counts)} != ions sum {dict(ions_counts)} from {ion_formulas}")
+            except Exception as e:
+                errors.append(f"{mol_filename}: balancing error {e}")
+        if errors:
+            self.fail("\n".join(errors))
 
 
 if __name__ == '__main__':
