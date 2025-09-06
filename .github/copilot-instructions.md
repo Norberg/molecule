@@ -1,6 +1,7 @@
 # Copilot Instructions for the Molecule Project
 
 Concise guide for AI coding agents working in this repository. Focus on existing patterns; avoid inventing new architecture.
+The game and all code is written in English.
 
 ## Core Purpose
 A 2D chemistry puzzle game (pyglet + pymunk) where molecules react physically and chemically. Three main domains:
