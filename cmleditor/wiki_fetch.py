@@ -26,7 +26,9 @@ class ChemicalInfo:
     def extract_value(text):
         ''' extract the first numeric value from a string '''
         if text:
-            match = re.search(r'\d+\.\d+', text)
+            # Normalize Unicode minus (U+2212) to ASCII '-'
+            text = text.replace('\u2212', '-')
+            match = re.search(r'-?\d+(?:\.\d+)?', text)
             if match:
                 return match.group()
 
@@ -56,9 +58,23 @@ def extract_summary(soup):
     return summary
 
 def extract_wikipedia_info(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    
+    if "m.wikipedia.org" in url:
+        url = url.replace("m.wikipedia.org", "wikipedia.org")
+    headers = {
+        'User-Agent': 'Molecule (https://github.com/Norberg/molecule)'
+    }
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+    except Exception as e:
+        raise RuntimeError(f"Failed to fetch {url}: {e}") from e
+
+    if response.status_code != 200:
+        raise requests.HTTPError(f"HTTP {response.status_code} for {url}")
+
+    html = response.content
+
+    soup = BeautifulSoup(html, 'html.parser')
+
     info = ChemicalInfo(
         name = soup.find('h1').text.strip() if soup.find('h1') else None,
         summary = extract_summary(soup),
