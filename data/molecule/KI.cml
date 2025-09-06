@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" formalCharge="1" id="a1" elementType="K"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a2" elementType="I"/>
+  </ns0:atomArray>
+  <bondArray>
+    <bond atomRefs2="a1 a2" order="0"/>
+  </bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="K+(aq)"/>
+            <molecule title="I-(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Potassium iodide</property>
+    <property title="Description">Potassium iodide is a chemical compound, medication, and dietary supplement. It is a medication used for treating hyperthyroidism, in radiation emergencies, and for protecting the thyroid gland when certain types of radiopharmaceuticals are used. It is also used for treating skin sporotrichosis and phycomycosis. It is a supplement used by people with low dietary intake of iodine. It is administered orally.
+Common side effects include vomiting, diarrhea, abdominal pain, rash, and swelling of the salivary glands. Other side effects include allergic reactions, headache, goitre, and depression. While use during pregnancy may harm the baby, its use is still recommended in radiation emergencies. Potassium iodide has the chemical formula KI. Commercially it is made by mixing potassium hydroxide with iodine</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Potassium_iodide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[K+][I-]</property>
+  </propertyList>
+</ns0:molecule>

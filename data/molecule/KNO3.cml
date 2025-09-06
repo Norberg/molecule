@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="1.0" formalCharge="1" id="a1" elementType="K"/>
+    <atom x2="0.866025" y2="1.5" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="0.0" y2="1.0" formalCharge="1" id="a3" elementType="N"/>
+    <atom x2="-0.866025" y2="1.5" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a5" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="2"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-494.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-494.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="K+(aq)"/>
+            <molecule title="NO3-(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles">[K+][O-][N+]([O-])=O</property>
+    <property title="Name">Potassium nitrate</property>
+    <property title="Description">Potassium nitrate is a chemical compound with a sharp, salty, bitter taste and the chemical formula KNO3. It is a potassium salt of nitric acid. This salt consists of potassium cations K+ and nitrate anions NO&#x2212;3, and is therefore an alkali metal nitrate. It occurs in nature as a mineral, niter (or nitre outside the United States). It is a source of nitrogen, and nitrogen was named after niter. Potassium nitrate is one of several nitrogen-containing compounds collectively referred to as saltpetre (or saltpeter in the United States).</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Potassium_nitrate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

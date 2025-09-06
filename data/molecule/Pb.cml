@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Pb"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">64.8</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.80</property>
+    <property title="Name">Lead</property>
+    <property title="Weight">207.2</property>
+    <property title="Description">Lead is a chemical element; it has the symbol Pb (from Latin plumbum) and atomic number 82. It is a heavy metal that is denser than most common materials. Lead is soft and malleable, and also has a relatively low melting point. Freshly cut lead is silvery with a hint of blue; it tarnishes to a dull gray color when exposed to air. Lead has the highest atomic number of any stable element and three of its isotopes are endpoints of major nuclear decay chains of heavier elements. Lead is a neurotoxin that accumulates in soft tissues and bones; exposure can cause neurological disorders, especially in children.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Lead</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Pb]</property>
+  </propertyList>
+  <!-- Requested display color hex: 555960 (implementation in sprite/image asset e.g. img/atom-pb.png) -->
+</ns0:molecule>

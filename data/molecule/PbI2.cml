@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="I"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Pb"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="I"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-175.5</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">174.9</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Lead(II) iodide</property>
+    <property title="Description">Lead(II) iodide (or lead iodide) is a chemical compound with the formula PbI2. At room temperature, it is a bright yellow odorless crystalline solid, that becomes orange and red when heated. It was formerly called plumbous iodide.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Lead(II)_iodide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">I[Pb]I</property>
+  </propertyList>
+</ns0:molecule>

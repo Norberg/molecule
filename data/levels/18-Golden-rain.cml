@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<level zoom="0.6">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="PbNO3NO3(s)"/>
+    <molecule title="PbNO3NO3(s)"/>
+    <molecule title="PbNO3NO3(s)"/>
+    <molecule title="PbNO3NO3(s)"/>
+    <molecule title="PbNO3NO3(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+    <molecule title="KI(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="640" y2="480"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+  </victoryCondition>
+  <objective text="Form yellow lead(II) iodide: dissolve Pb(NO3)2 and KI then precipitate PbI2(s)."/>
+  <hint text="Ionic path: Pb(NO3)2(s) -> Pb+2 + 2 NO3- ; KI(s) -> K+ + I- ; Net: Pb+2 + 2 I- -> PbI2(s)">
+    <reactions>
+      <!-- Net ionic equation -->
+      <reaction>
+        <reactantList>
+          <molecule title="Pb+2"/>
+          <molecule title="I-"/>
+          <molecule title="I-"/>
+        </reactantList>
+        <productList>
+          <molecule title="PbI2(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

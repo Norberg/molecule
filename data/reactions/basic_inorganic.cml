@@ -354,4 +354,23 @@
     </productList>
   </reaction>
   <!-- End appended -->
+  <!-- Golden rain net ionic: Pb+2 + 2 I- -> PbI2(s) -->
+  <reaction>
+    <reactantList>
+      <molecule title="Pb+2"/>
+      <molecule title="I-"/>
+      <molecule title="I-"/>
+    </reactantList>
+    <productList>
+      <molecule title="PbI2(s)"/>
+    </productList>
+    <description>
+      Net ionic precipitation of lead(II) iodide. When aqueous Pb2+ meets iodide ions the very low solubility product (Ksp) of PbI2 drives immediate formation of bright yellow plate-like crystals ("Golden rain"). Heating can dissolve the precipitate; on cooling it recrystallizes, illustrating temperature&#x2011;dependent solubility and dynamic equilibrium. Spectator ions (K+, NO3-) are omitted from this net ionic form.
+    </description>
+    <tagList>
+      <tag>Precipitation</tag>
+      <tag>Net ionic</tag>
+      <tag>Golden rain</tag>
+    </tagList>
+  </reaction>
 </reactions>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom id="a1" elementType="I" x2="0.0" y2="0.0" formalCharge="-1"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-50.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">30.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Iodide ion</property>
+    <property title="Smiles">[I-]</property>
+  </propertyList>
+</ns0:molecule>
