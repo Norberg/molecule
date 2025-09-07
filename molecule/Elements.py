@@ -81,13 +81,10 @@ class Molecule:
     def state_formula(self):
         return self.formula + "(%s)" % self.current_state.short
 
-    def change_state(self, new_state):
-        """new_state: shortform of wanted state"""
-        if not self.try_change_state(new_state):
-            raise Exception("Tried to change: " + self.formula + " to non existing state:" + new_state)
-
     def try_change_state(self, new_state):
         """new_state: shortform of wanted state"""
+        if self.state.short == new_state:
+            return False
         state = self.cml.get_state(new_state)
         if state is None:
             return False
