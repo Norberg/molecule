@@ -155,6 +155,8 @@
         </xs:element>
       </xs:sequence>
       <xs:attribute name="zoom" type="xs:double" use="optional"/>
+  <!-- If true, aqueous (aq) molecules are not draggable in this level -->
+  <xs:attribute name="aqueousNotDraggable" type="xs:boolean" use="optional"/>
     </xs:complexType>
   </xs:element>
 

@@ -311,7 +311,10 @@ class Level:
             self.handle_element_released(None, None, None, None)
         self.mouse_body.position = (x, y)
         clicked = self.space.point_query_nearest((x,y), 16, shape_filter=CollisionTypes.ELEMENT_PICK_FILTER)
-        if (clicked is None or clicked.shape.collision_type != CollisionTypes.ELEMENT or not clicked.shape.molecule.draggable):
+        if (clicked is None or clicked.shape.collision_type != CollisionTypes.ELEMENT):
+            return
+        mol = clicked.shape.molecule
+        if self.cml.aqueous_not_draggable and mol.current_state.short == "aq":
             return
         shape = clicked.shape
         shape.molecule.set_dragging(True)

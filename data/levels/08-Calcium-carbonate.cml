@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<level>
+<level aqueousNotDraggable="true">
   <moleculeList>
     <molecule title="O2(g)"/>
     <molecule title="O2(g)"/>

@@ -194,10 +194,14 @@ class Level(Cml):
         self.hint = None
         self.zoom = 1.0
         self.inventory = []
+        self.aqueous_not_draggable = False
 
     def parse(self, filename):
         self.tree = etree.parse(filename)
         self.zoom = float(self.tree.getroot().attrib.get("zoom", self.zoom))
+        drag_attr = self.tree.getroot().attrib.get("aqueousNotDraggable")
+        if drag_attr is not None:
+            self.aqueous_not_draggable = drag_attr.lower() == "true"
 
         molecule_list_tag = self.treefind(self.MOLECULE_LIST)
         self.molecules = self.parseMoleculeList(molecule_list_tag)
