@@ -2,6 +2,7 @@
 
 Concise guide for AI coding agents working in this repository. Focus on existing patterns; avoid inventing new architecture.
 The game and all code is written in English.
+get_attr and has_attr is not used, and avoid defensive exception handling when not explicitly asked for. Also avoid keeping backwards compatibility when features are changed.
 
 ## Core Purpose
 A 2D chemistry puzzle game (pyglet + pymunk) where molecules react physically and chemically. Three main domains:
