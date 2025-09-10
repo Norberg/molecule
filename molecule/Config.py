@@ -22,5 +22,4 @@ class Config:
         self.width = 1650
         self.height = 1080
         self.zoom = 1.0
-        self.aqueous_not_draggable = False
 current = Config()
