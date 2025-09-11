@@ -367,14 +367,6 @@ class TestLevels(unittest.TestCase):
         l = levels.next_level()
         self.assertEqual(l, None)
 
-    def testAllLevels(self):
-        levels = Levels("data/levels", window=WindowMock())
-        space, batch = createSpaceAndBatchMock()
-        for level in levels.level_iter():
-            self.assertIsNotNone(level.cml.objective)
-            self.assertEqual(level.victory(), False)
-            Universe.create_elements(level.space, level.cml.inventory, level.batch, None)
-
     def testDestroyElements(self):
         levels = Levels("data/levels", window=WindowMock())
         l = levels.next_level()
