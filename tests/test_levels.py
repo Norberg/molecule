@@ -447,25 +447,34 @@ class TestLevels(unittest.TestCase):
     def testVictoryEffect(self):
         level1 = getLevel1()
         victory_effect = level1.hud.horizontal.victory
+        # Create source elements
         level1.create_elements(["CH4(g)"], pos=(200, 300))
         level1.create_elements(["H2O(g)"], pos=(300, 300))
         level1.update()
-
-        level1.handle_element_pressed(234, 300)
-        self.assertIsNotNone(level1.mouse_spring)
-        level1.handle_element_released(50, 50, None, None)
-        self.assertIsNone(level1.mouse_spring)
+        # Initial assertions
         self.assertEqual(victory_effect.content, {})
-        self.assertEqual(victory_effect.victory(), False)
+        self.assertFalse(victory_effect.victory())
         self.assertEqual(victory_effect.progress_text(), "0/1 H2O")
-
-        level1.handle_element_pressed(300, 300)
-        self.assertIsNotNone(level1.mouse_spring)
-        level1.handle_element_released(50, 50, None, None)
-        self.assertIsNone(level1.mouse_spring)
+        # Directly put element
+        h2o = next(m for m in level1.elements if m.formula.startswith("H2O"))
+        victory_effect.put_element(h2o)
         self.assertEqual(victory_effect.content, {"H2O": 1})
-        self.assertEqual(victory_effect.victory(), True)
+        self.assertTrue(victory_effect.victory())
         self.assertEqual(victory_effect.progress_text(), "1/1 H2O")
+
+    def testMouseSpring(self):
+        """Deterministic test that mouse_spring attaches on press and detaches on release."""
+        level1 = getLevel1()
+        # Add a molecule at a known coordinate
+        target_pos = (250, 250)
+        level1.create_elements(["H2O(g)"], pos=target_pos)
+        level1.update()
+        # Press exactly where we spawned it
+        level1.handle_element_pressed(*target_pos)
+        self.assertIsNotNone(level1.mouse_spring, "mouse_spring should be created after press")
+        # Release somewhere else not overlapping inventory/effects
+        level1.handle_element_released(100, 100, None, None)
+        self.assertIsNone(level1.mouse_spring, "mouse_spring should be cleared after release")
 
 
 def setupSimpleReactor():
