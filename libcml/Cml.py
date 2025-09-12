@@ -53,11 +53,13 @@ class Bond:
 
 class State:
     STATE_MAP = {"Aqueous":"aq", "Solid":"s", "Gas":"g", "Liquid":"l"}
-    def __init__(self, name=None, enthalpy=None, entropy=None, ions=None):
+    def __init__(self, name=None, enthalpy=None, entropy=None, ions=None, emitter=None):
         self.name = name
         self.enthalpy = enthalpy
         self.entropy = entropy
         self.ions = ions
+        # Optional visual emitter identifier (string referencing emitter registry name)
+        self.emitter = emitter
 
 
     def __str__(self):
@@ -416,7 +418,8 @@ class Molecule(Cml):
             return
         for state in states:
             name = state.attrib["title"]
-            new_state = State(name)
+            emitter = state.attrib.get("emitter")
+            new_state = State(name, emitter=emitter)
             self.states[name] = new_state
             for property in state:
                 title = property.attrib["title"]
@@ -499,8 +502,10 @@ class Molecule(Cml):
             states.attrib["title"] = "states"
 
         for state in self.states.values():
-            stateTag = etree.SubElement(states, "propertyList",
-                                        {"title":state.name})
+            attrib = {"title": state.name}
+            if state.emitter:
+                attrib["emitter"] = state.emitter
+            stateTag = etree.SubElement(states, "propertyList", attrib)
             self.writeEnthalpy(state, stateTag)
             self.writeEntropy(state, stateTag)
             self.writeIons(state.ions, stateTag)

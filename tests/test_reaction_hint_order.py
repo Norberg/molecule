@@ -21,7 +21,7 @@ class TestReactionHintOrder(unittest.TestCase):
         for path in level_files:
             lvl = Cml.Level()
             lvl.parse(path)
-            hints = getattr(lvl, "reactions_hint", [])
+            hints = lvl.reactions_hint
             if not hints:
                 continue
             for hint_rx in hints:

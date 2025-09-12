@@ -27,6 +27,7 @@ from molecule import Effects
 from molecule import Gui
 from molecule import pyglet_util
 from molecule import HUD
+from molecule.emitters import Emitters
 from libcml import Cml
 
 class Levels:
@@ -80,6 +81,10 @@ class Level:
         self.start_time = time.time()
         self.points = 0
         self.reaction_log = []
+        # Transient visual emitters (list of active emitter instances)
+        self.emitters = []
+        # Optional mapping overrides (formula/state -> emitter); typically rely on state emitter in CML.
+        self.creation_emitter_map = {}
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -200,7 +205,18 @@ class Level:
             return
         for molecule in reactingMolecules:
             self.delete_molecule(molecule)
-        self.create_elements(reaction.products, position)
+        new_elements = Universe.create_elements(self.space, reaction.products, self.batch, position)
+        self.elements.extend(new_elements)
+        print("Reaction products:", reaction.products)
+        for mol in new_elements:
+            base = mol.formula
+            # Prefer state-declared emitter; fallback to optional override map.
+            emitter_name = mol.current_state.emitter or self.creation_emitter_map.get(base) or self.creation_emitter_map.get(mol.state_formula)
+            if emitter_name:
+                print(f"Emitter trigger: product {mol.state_formula} -> {emitter_name} at {position}")
+                emitter = Emitters.spawn_emitter(emitter_name, self.batch, position)
+                if emitter:
+                    self.emitters.append(emitter)
 
     def add_to_reaction_log(self, reaction):
         self.points += 1
@@ -264,10 +280,9 @@ class Level:
 
     def effect_reaction_separate(self, arbiter, space, data):
         a, b = arbiter.shapes
-        molecule = getattr(a, 'molecule', None)
-        effect = getattr(b, 'effect', None)
-        if molecule is not None and effect is not None:
-            self._effect_collision_times.pop((id(molecule), id(effect)), None)
+        molecule = a.molecule
+        effect = b.effect
+        self._effect_collision_times.pop((id(molecule), id(effect)), None)
         return True
 
     def get_affecting_areas(self, position):
@@ -368,7 +383,8 @@ class Level:
             Gui.create_popup(self.window, self.batch, hint)
 
     def update(self):
-        self.space.step(1/120.0)
+        dt = 1/120.0
+        self.space.step(dt)
         if self.victory() and self.finished == False:
             Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.switch_level)
@@ -377,6 +393,14 @@ class Level:
             element.update()
         for area in self.areas:
             area.update()
+        # Update transient emitters
+        alive_emitters = []
+        for emitter in self.emitters:
+            if emitter.update(dt):
+                alive_emitters.append(emitter)
+            else:
+                emitter.delete()
+        self.emitters = alive_emitters
 
     def delete_molecule(self, molecule):
         if molecule in self.elements:

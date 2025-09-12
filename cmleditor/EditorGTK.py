@@ -34,6 +34,7 @@ from libreact.Reactor import Reactor
 import subprocess
 from cmleditor import wiki_fetch
 import utils.rdkit_render as rdkit_render
+from molecule.emitters.Emitters import list_emitters
 
 class EditorGTK:
 
@@ -80,44 +81,51 @@ class EditorGTK:
 
     def init_twStates(self):
         twStates = self.widget("twStates")
-        #set what data type twStates shulld contain
-        self.modelStates = Gtk.ListStore(str, str, str, str)
+        # Columns: State, Enthalpy, Entropy, Ions, Emitter
+        self.modelStates = Gtk.ListStore(str, str, str, str, str)
         twStates.set_model(self.modelStates)
         self.modelStateNames = Gtk.ListStore(str)
-        self.modelStateNames.append(["Solid"])
-        self.modelStateNames.append(["Aqueous"])
-        self.modelStateNames.append(["Gas"])
-        self.modelStateNames.append(["Liquid"])
+        for name in ("Solid", "Aqueous", "Gas", "Liquid"):
+            self.modelStateNames.append([name])
         cell = Gtk.CellRendererText()
         cmbStates = self.widget("cmbStates")
         cmbStates.set_model(self.modelStateNames)
         cmbStates.pack_start(cell, True)
         cmbStates.add_attribute(cell, "text", 0)
-        #init licenses
+        # Licenses combo shares renderer
         self.widget("cmbLicense").pack_start(cell, True)
         self.widget("cmbLicense").add_attribute(cell, "text", 0)
-        #create columns
+
+        # Editable numeric/text columns
         edit0 = Gtk.CellRendererText()
-        #edit0.set_property('editable', True)
-        #edit0.connect('edited', self.edited_string, (self.modelStates, 0))
-        edit1 = Gtk.CellRendererText()
-        edit1.set_property('editable', True)
+        edit1 = Gtk.CellRendererText();
+        edit1.set_property('editable', True);
         edit1.connect('edited', self.edited_float, (self.modelStates, 1))
-        edit2 = Gtk.CellRendererText()
-        edit2.set_property('editable', True)
+        edit2 = Gtk.CellRendererText();
+        edit2.set_property('editable', True);
         edit2.connect('edited', self.edited_float, (self.modelStates, 2))
-        edit3 = Gtk.CellRendererText()
-        edit3.set_property('editable', True)
+        edit3 = Gtk.CellRendererText();
+        edit3.set_property('editable', True);
         edit3.connect('edited', self.edited_ions, (self.modelStates, 3))
+        # Emitter column: dropdown of known emitters (+ blank option)
+        emitters_store = Gtk.ListStore(str)
+        emitters_store.append([""])  # allow clearing
+        for e in list_emitters():
+            emitters_store.append([e])
+        edit4 = Gtk.CellRendererCombo()
+        edit4.set_property('editable', True)
+        edit4.set_property('model', emitters_store)
+        edit4.set_property('text-column', 0)
+        edit4.set_property('has-entry', False)
+        edit4.connect('edited', self.edited_combo, (self.modelStates, 4))
 
         col1 = Gtk.TreeViewColumn("State", edit0, text=0)
         col2 = Gtk.TreeViewColumn("Enthalpy", edit1, text=1)
         col3 = Gtk.TreeViewColumn("Entropy", edit2, text=2)
         col4 = Gtk.TreeViewColumn("Ions", edit3, text=3)
-        twStates.append_column(col1)
-        twStates.append_column(col2)
-        twStates.append_column(col3)
-        twStates.append_column(col4)
+        col5 = Gtk.TreeViewColumn("Emitter", edit4, text=4)
+        for col in (col1, col2, col3, col4, col5):
+            twStates.append_column(col)
 
     def on_winMain_destroy(self, widget):
         Gtk.main_quit()
@@ -132,7 +140,8 @@ class EditorGTK:
             enthalpy = col[1] if col[1] != "" else None
             entropy = col[2] if col[2] != "" else None
             ions = col[3].split(',') if col[3] != "" else None
-            state = Cml.State(name, enthalpy, entropy, ions)
+            emitter = col[4] if col[4] != "" else None
+            state = Cml.State(name, enthalpy, entropy, ions, emitter)
             self.molecule.states[name] = state
         self.molecule.property["Name"] = self.txtMoleculeName.get_text()
         textbuffer = self.widget("textbufferDescription")
@@ -223,7 +232,7 @@ class EditorGTK:
 
         self.modelStates.clear()
         for state in molecule.states.values():
-            stateList = [state.name, state.enthalpy, state.entropy, state.ions_str]
+            stateList = [state.name, state.enthalpy, state.entropy, state.ions_str, state.emitter]
             stateList = [str(x) if x is not None else "" for x in stateList]
             self.modelStates.append(stateList)
 
@@ -316,6 +325,12 @@ class EditorGTK:
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
+    def edited_combo(self, cell, path, new_text, userdata):
+        # Same logic as edited_string but kept separate for clarity.
+        model, col_num = userdata
+        iter = model.get_iter(path)
+        model.set(iter, col_num, new_text)
+
     def edited_float(self, cell, path, new_text, userdata):
         if new_text != "":
             new_text = "%.1f" % float(new_text)
@@ -332,7 +347,7 @@ class EditorGTK:
         cmbStates = self.widget("cmbStates")
         new_state = get_active_text(cmbStates)
         if not self.state_already_added(new_state):
-            self.modelStates.append([new_state, "","", ""])
+            self.modelStates.append([new_state, "","", "", ""])  # emitter column empty by default
 
     def state_already_added(self, statename):
         for state in self.modelStates:
@@ -557,8 +572,8 @@ class EditorGTK:
         # Replace atoms & bonds in existing molecule
         self.molecule.atoms.clear()
         for atom in tmp_mol.atoms.values():
-            # Need to clone atom to avoid referencing temp object if we delete tree later
-            new_atom = Cml.Atom(atom.id, atom.elementType, atom.formalCharge, atom.x, atom.y, getattr(atom, 'z', None))
+            # Need to clone atom to avoid referencing temp object if we delete tree later.
+            new_atom = Cml.Atom(atom.id, atom.elementType, atom.formalCharge, atom.x, atom.y, atom.z)
             self.molecule.atoms[new_atom.id] = new_atom
         self.molecule.bonds.clear()
         for bond in tmp_mol.bonds:

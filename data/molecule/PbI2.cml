@@ -10,7 +10,7 @@
     <bond atomRefs2="a2 a3" order="1"/>
   </ns0:bondArray>
   <propertyList title="states">
-    <propertyList title="Solid">
+    <propertyList title="Solid" emitter="golden_rain">
       <property title="enthalpy">
         <scalar units="units:molar_energy">-175.5</scalar>
       </property>
