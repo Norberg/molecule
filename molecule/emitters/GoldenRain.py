@@ -56,7 +56,7 @@ class GoldenRainParticle:
         self.shape = None
 
 
-@register_emitter("golden_rain")
+@register_emitter("golden_rain", auto_spawn=True)
 class GoldenRainEmitter:
     def __init__(self, batch, position, particle_count=15):
         # Use a higher layer so particles are visible above beakers/effects

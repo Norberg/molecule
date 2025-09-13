@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Ba"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid" emitter="fireworks" emitterColor="#33FF66">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">60.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">210.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">220.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">2.68</property>
+    <property title="Name">Barium</property>
+    <property title="Weight">137.3</property>
+    <property title="Smiles">[Ba]</property>
+    <property title="Description">Barium metal producing a green flame color in fireworks.</property>
+  </propertyList>
+</ns0:molecule>

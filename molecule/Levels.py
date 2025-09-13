@@ -81,10 +81,7 @@ class Level:
         self.start_time = time.time()
         self.points = 0
         self.reaction_log = []
-        # Transient visual emitters (list of active emitter instances)
         self.emitters = []
-        # Optional mapping overrides (formula/state -> emitter); typically rely on state emitter in CML.
-        self.creation_emitter_map = {}
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -143,8 +140,21 @@ class Level:
                                           self.batch)
 
     def init_effects(self):
-        self.areas = Effects.create_effects(self.space, self.batch, self.cml.effects)
+        self.areas = Effects.create_effects(
+            self.space,
+            self.batch,
+            self.cml.effects,
+            emitters=self.emitters,
+            consume_molecule_cb=self.consume_molecule,
+        )
         self.areas.extend(self.hud.get_effects())
+
+    def consume_molecule(self, molecule):
+        """Callback from effects when a molecule is consumed, returnes true if used for victory condition"""
+        for area in self.areas:
+            if isinstance(area, Effects.VictoryInventory):
+                return area.put_element(molecule)
+        raise Exception("No VictoryInventory area to consume molecule into")
 
     def init_gui(self):
         self.hud = HUD.HUD(self.window, self.batch, self.space, self.cml, self.create_elements)
@@ -210,13 +220,14 @@ class Level:
         print("Reaction products:", reaction.products)
         for mol in new_elements:
             base = mol.formula
-            # Prefer state-declared emitter; fallback to optional override map.
-            emitter_name = mol.current_state.emitter or self.creation_emitter_map.get(base) or self.creation_emitter_map.get(mol.state_formula)
+            emitter_name = mol.current_state.emitter
             if emitter_name:
-                print(f"Emitter trigger: product {mol.state_formula} -> {emitter_name} at {position}")
-                emitter = Emitters.spawn_emitter(emitter_name, self.batch, position)
+                emitter = Emitters.spawn_reaction_emitter(emitter_name, self.batch, position)
                 if emitter:
+                    print(f"Emitter trigger: product {mol.state_formula} -> {emitter_name} at {position}")
                     self.emitters.append(emitter)
+                elif Config.current.DEBUG:
+                    print(f"Emitter suppressed (no reaction autospawn): {emitter_name} for {mol.state_formula}")
 
     def add_to_reaction_log(self, reaction):
         self.points += 1
@@ -393,14 +404,18 @@ class Level:
             element.update()
         for area in self.areas:
             area.update()
-        # Update transient emitters
+
+        self.update_emitters(dt)
+
+    def update_emitters(self, dt):
         alive_emitters = []
         for emitter in self.emitters:
             if emitter.update(dt):
                 alive_emitters.append(emitter)
             else:
                 emitter.delete()
-        self.emitters = alive_emitters
+        # Remove dead emitters without creating a new list
+        self.emitters[:] = alive_emitters
 
     def delete_molecule(self, molecule):
         if molecule in self.elements:

@@ -17,18 +17,28 @@ from importlib import import_module
 
 # Registry mapping emitter name to a callable factory
 _EMITTER_REGISTRY: Dict[str, Callable[..., object]] = {}
+# Separate policy map (explicit) instead of introspecting class attributes
+_EMITTER_POLICY: Dict[str, bool] = {}
 
 # Map emitter registry names to module paths providing their implementation.
 # Extend this as new emitters are added without forcing unconditional imports.
 _EMITTER_MODULES: Dict[str, str] = {
-    "golden_rain": "molecule.GoldenRain",
+    "golden_rain": "molecule.emitters.GoldenRain",
+    "fireworks": "molecule.emitters.Fireworks",
 }
 
 
-def register_emitter(name: str):
-    """Decorator to register an emitter class or factory under a given name."""
+def register_emitter(name: str, auto_spawn: bool = True):
+    """Decorator to register an emitter class/factory.
+
+    Parameters:
+      name: registry key used in CML/state definitions.
+      auto_spawn: whether this emitter should appear automatically when a
+                  reaction creates a molecule whose state references it.
+    """
     def decorator(factory: Callable[..., object]):
         _EMITTER_REGISTRY[name] = factory
+        _EMITTER_POLICY[name] = auto_spawn
         return factory
     return decorator
 
@@ -36,11 +46,8 @@ def register_emitter(name: str):
 def _lazy_import(name: str):
     module_path = _EMITTER_MODULES.get(name)
     if not module_path:
-        return
-    try:
-        import_module(module_path)
-    except Exception as e:
-        print(f"Warning: failed to lazy import emitter module '{module_path}' for '{name}': {e}")
+        raise ValueError(f"Emitter '{name}' not found")
+    import_module(module_path)
 
 
 def spawn_emitter(name: str, batch, position: Tuple[float, float], **kwargs):
@@ -67,3 +74,31 @@ def list_emitters():
     """
     names = set(_EMITTER_REGISTRY.keys()) | set(_EMITTER_MODULES.keys())
     return sorted(names)
+
+
+def should_autospawn(name: str) -> bool:
+    """Return True if an emitter is explicitly marked for auto-spawn.
+
+    Policy is declared when registering the emitter via ``register_emitter``.
+    We avoid runtime introspection (no getattr). Unknown emitters default to
+    False (cannot decide) until their module is imported, after which the
+    registered policy applies. This keeps design explicit and testable.
+    """
+    if name not in _EMITTER_REGISTRY:
+        try:
+            _lazy_import(name)
+        except Exception:
+            return False
+    return _EMITTER_POLICY.get(name, True)
+
+
+def spawn_reaction_emitter(name: str, batch, position: Tuple[float, float], **kwargs):
+    """Spawn an emitter as a consequence of a chemical reaction.
+
+    This centralises the auto-spawn policy so game logic (Levels) does not
+    need to know which emitters are gated. Returns the emitter instance or
+    None if spawning is disallowed or the emitter cannot be constructed.
+    """
+    if not should_autospawn(name):
+        return None
+    return spawn_emitter(name, batch, position, **kwargs)

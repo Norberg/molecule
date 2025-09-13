@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<level zoom="1.0" aqueousNotDraggable="true">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="Cu(s)"/>
+    <molecule title="Cu(s)"/>
+    <molecule title="Cu(s)"/>
+    <molecule title="Cu(s)"/>
+    <molecule title="Cu(s)"/>
+    <molecule title="Cu(s)"/>
+    <molecule title="SrCl2(s)"/>
+    <molecule title="SrCl2(s)"/>
+    <molecule title="BaCl2(s)"/>
+    <molecule title="BaCl2(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Fireworks" x2="640" y2="400"/>
+    <effect title="Fire" x2="900" y2="400" value = "1000"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+    <molecule title="Ba"/>
+    <molecule title="Ba"/>
+    <molecule title="Sr"/>
+    <molecule title="Sr"/>
+  </victoryCondition>
+  <objective text="Create red, green, blue fireworks colours."/>
+  <hint text="Decompose SrCl2 and BaCl2 to their metals over Fire">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="SrCl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Sr(s)"/>
+          <molecule title="Cl2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="BaCl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Ba(s)"/>
+          <molecule title="Cl2(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

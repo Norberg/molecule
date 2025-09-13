@@ -53,13 +53,15 @@ class Bond:
 
 class State:
     STATE_MAP = {"Aqueous":"aq", "Solid":"s", "Gas":"g", "Liquid":"l"}
-    def __init__(self, name=None, enthalpy=None, entropy=None, ions=None, emitter=None):
+    def __init__(self, name=None, enthalpy=None, entropy=None, ions=None, emitter=None, emitter_color=None):
         self.name = name
         self.enthalpy = enthalpy
         self.entropy = entropy
         self.ions = ions
         # Optional visual emitter identifier (string referencing emitter registry name)
         self.emitter = emitter
+        # Optional hex color (e.g. #FF00AA) used by certain emitters (e.g. fireworks)
+        self.emitter_color = emitter_color
 
 
     def __str__(self):
@@ -419,7 +421,8 @@ class Molecule(Cml):
         for state in states:
             name = state.attrib["title"]
             emitter = state.attrib.get("emitter")
-            new_state = State(name, emitter=emitter)
+            emitter_color = state.attrib.get("emitterColor") or state.attrib.get("emitter_color")
+            new_state = State(name, emitter=emitter, emitter_color=emitter_color)
             self.states[name] = new_state
             for property in state:
                 title = property.attrib["title"]
@@ -505,6 +508,8 @@ class Molecule(Cml):
             attrib = {"title": state.name}
             if state.emitter:
                 attrib["emitter"] = state.emitter
+            if state.emitter_color:
+                attrib["emitterColor"] = state.emitter_color
             stateTag = etree.SubElement(states, "propertyList", attrib)
             self.writeEnthalpy(state, stateTag)
             self.writeEntropy(state, stateTag)

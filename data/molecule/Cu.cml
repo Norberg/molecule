@@ -4,7 +4,7 @@
     <atom x2="1.0" y2="0.0" id="a1" elementType="Cu"/>
   </ns0:atomArray>
   <propertyList title="states">
-    <propertyList title="Solid">
+    <propertyList title="Solid" emitter="fireworks" emitterColor="#3399FF">
       <property title="enthalpy">
         <scalar units="units:molar_energy">0.0</scalar>
       </property>

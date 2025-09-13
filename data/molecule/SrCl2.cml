@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" formalCharge="-1" id="a1" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" formalCharge="2" id="a2" elementType="Sr"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a3" elementType="Cl"/>
+  </ns0:atomArray>
+  <bondArray>
+    <bond atomRefs2="a1 a2" order="0"/>
+    <bond atomRefs2="a3 a2" order="0"/>
+  </bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-100.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">120.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">3.0</property>
+    <property title="Name">Strontium chloride</property>
+    <property title="Weight">158.5</property>
+    <property title="Smiles">[Cl-][Sr+2][Cl-]</property>
+    <property title="Description">Precursor salt for generating red strontium sparks.</property>
+  </propertyList>
+</ns0:molecule>

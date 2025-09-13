@@ -16,6 +16,7 @@
 import glob
 import random
 import time
+import math
 import pyglet
 import pymunk
 from collections import OrderedDict
@@ -102,6 +103,8 @@ class Action(EffectSprite):
 class Temperature(EffectSprite):
     def __init__(self, space, batch, pos, img_path, name, temp):
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
+        if temp is None:
+            raise Exception("Temperature must be specified for effect: " + name)
         self.temp = temp
         self.supported_attributes.append("temp")
         self.supported_attributes.append("reaction")
@@ -339,6 +342,84 @@ class Furnace(EffectSprite):
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
+class Fireworks(EffectSprite):
+    """Fireworks ignition effect.
+
+    Behavior:
+      - After a molecule has dwelled 1s (handled in Level.effect_reaction timing)
+        the fuse is considered lit. We then start an internal timer (2s) after
+        which a fireworks emitter is spawned at the effect position using the
+        molecule state's optional emitter color (falling back to white).
+      - Non-reactive: doesn't alter chemistry (no reaction), purely visual.
+    """
+    FUSE_TIME = 1.0  # already enforced by dwell system, kept for clarity
+    ROCKET_TIME = 1.2  # shorter internal fuse for snappier feedback
+    def __init__(self, space, batch, pos, emitters_ref, consume_callback):
+        EffectSprite.__init__(self, space, batch, pos, "fireworks.png", "Fireworks")
+        self._active_fuse = None  # (molecule, start_time)
+        self._pending_launches = []  # list of (launch_time, color)
+        self.batch = batch
+        self.emitters_ref = emitters_ref  # direct list reference
+        self.consume_callback = consume_callback
+        self._pulse_dir = 1
+        self._last_pulse = time.time()
+        # Mark as put-capable so Level/Inventory can call put_element
+        self.supported_attributes.append("put")
+        self._pending_victory = None  # (molecule) to be added after explosion
+
+
+    def put_element(self, molecule):
+        # Only allow one active rocket at a time
+        if self._active_fuse is not None or self._pending_victory is not None:
+            return False
+        self._active_fuse = (molecule, time.time())
+        if Config.current.DEBUG:
+            print("Fireworks fuse lit for", molecule.formula)
+        return True
+
+    def update(self):
+        now = time.time()
+        # Promote active fuse to pending launch after ROCKET_TIME
+        if self._active_fuse is not None:
+            molecule, start = self._active_fuse
+            elapsed = now - start
+            if elapsed >= self.ROCKET_TIME:
+                color_hex = getattr(molecule.current_state, 'emitter_color', None)
+                # Spawn emitter, pass callback for explosion
+                from molecule.emitters import Emitters
+                emitter = Emitters.spawn_emitter(
+                    "fireworks", self.batch, self.shape.body.position,
+                    color=color_hex, consume_callback=self._on_explosion, molecule=molecule
+                )
+                if emitter is not None:
+                    self.emitters_ref.append(emitter)
+                self._active_fuse = None
+                self.opacity = 255
+                if Config.current.DEBUG:
+                    print("Fireworks launching rocket for", molecule.formula)
+            else:
+                # Strong pulse: sine based between 110 and 255
+                phase = (elapsed / self.ROCKET_TIME) * 3.14159  # 0..pi
+                opacity = int(110 + (255-110) * abs(math.sin(phase)))
+                self.opacity = opacity
+
+        # If explosion finished, add molecule to VictoryInventory
+        if self._pending_victory is not None:
+            molecule = self._pending_victory
+            # Find VictoryInventory effect and put molecule
+            for area in getattr(self, 'areas', []):
+                if hasattr(area, 'put_element') and 'victory' in getattr(area, 'supported_attributes', []):
+                    area.put_element(molecule)
+                    if Config.current.DEBUG:
+                        print("Fireworks: molecule added to VictoryInventory", molecule.formula)
+                    break
+            self._pending_victory = None
+
+    def _on_explosion(self, molecule):
+        # Called by emitter when explosion/fade is done
+        if self.consume_callback:
+            self.consume_callback(molecule)
+
 class Mining(Action):
     ACTION_TIME = 3
     FRAME_DURATION = 5
@@ -511,7 +592,7 @@ def pos_inside(pos, rec_pos, rec_width, rec_height):
 def between(a, b, B):
     return a >= b and a <= B
 
-def create_effects(space, batch, effects):
+def create_effects(space, batch, effects, emitters, consume_molecule_cb):
     new_effects = list()
     for effect in effects:
         x = effect.x2
@@ -542,6 +623,9 @@ def create_effects(space, batch, effects):
         elif effect.title == "UvLight":
             uv_light = UvLight(space, batch, (x, y))
             new_effects.append(uv_light)
+        elif effect.title == "Fireworks":
+            fireworks = Fireworks(space, batch, (x, y), emitters, consume_molecule_cb)
+            new_effects.append(fireworks)
         else:
             raise Exception("Effect not implemented:" + effect.title)
 

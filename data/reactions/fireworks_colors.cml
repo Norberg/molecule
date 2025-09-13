@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Fireworks color metal generation (simplified) -->
+  <reaction>
+    <reactantList>
+      <molecule title="SrCl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Sr(s)"/>
+      <molecule title="Cl2(g)"/>
+    </productList>
+    <description>Heating (or effect exposure) liberates metallic strontium (red firework color) and chlorine gas.</description>
+    <tagList>
+      <tag>Fireworks</tag>
+      <tag>Color</tag>
+      <tag>Decomposition</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="BaCl2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Ba(s)"/>
+      <molecule title="Cl2(g)"/>
+    </productList>
+    <description>Heating (or effect exposure) liberates metallic barium (green firework color) and chlorine gas.</description>
+    <tagList>
+      <tag>Fireworks</tag>
+      <tag>Color</tag>
+      <tag>Decomposition</tag>
+    </tagList>
+  </reaction>
+</reactions>
