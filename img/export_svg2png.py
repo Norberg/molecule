@@ -1,7 +1,7 @@
 import glob
 import subprocess
 
-to_skip = ["water-beaker", "hotplate"]
+to_skip = ["water-beaker", "hotplate","Bunzen_burner", "mining", "inert-solvent-beaker", "fire", "cold", "uv-light", "furnace"]
 
 custom_sizes = {
     "aq": {"width": 112, "height": 112},
