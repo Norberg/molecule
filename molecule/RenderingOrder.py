@@ -19,7 +19,9 @@ import pyglet
 background = pyglet.graphics.Group(0)
 hud = pyglet.graphics.Group(1)
 state = pyglet.graphics.Group(2)
-elements = pyglet.graphics.Group(3)
-charge = pyglet.graphics.Group(4)
-gui_background = pyglet.graphics.Group(5)  # GUI backgrounds render first
-gui = pyglet.graphics.Group(6)  # GUI text and elements render on top
+# Bonds should render beneath atom sprites so atoms draw on top.
+bonds = pyglet.graphics.Group(3)
+elements = pyglet.graphics.Group(4)
+charge = pyglet.graphics.Group(5)
+gui_background = pyglet.graphics.Group(6)  # GUI backgrounds render first
+gui = pyglet.graphics.Group(7)  # GUI text and elements render on top

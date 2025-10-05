@@ -502,7 +502,7 @@ def createCollisionsMock(*molecules):
 
 
 def createSpaceAndBatchMock():
-    return (SpaceMock(), BatchMock())
+    return (SpaceMock(), pyglet.graphics.Batch())
 
 
 class CollisionMock():
@@ -515,18 +515,6 @@ class CollisionMock():
 class SpaceMock():
     def add(*args):
         pass
-
-
-class BatchMock():
-    def add(*args):
-        return VerticeMock()
-
-
-class VerticeMock():
-    def __init__(self):
-        self.vertices = list()
-        self.colors = list()
-
 
 class WindowMock():
     def __init__(self):

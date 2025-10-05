@@ -19,6 +19,7 @@ import time
 
 import pyglet
 from pyglet import gl
+from pyglet import shapes
 from pymunk.vec2d import Vec2d
 import pymunk
 
@@ -117,6 +118,7 @@ class Molecule:
 
     def set_dragging(self, value):
         for atom in self.atoms.values():
+            
             if value:
                 atom.shape.filter = CollisionTypes.ELEMENT_FILTER_DRAGGING
             else:
@@ -217,32 +219,39 @@ class Bond:
     def create_vertex(self):
         pv1 = self.joints[0].a.position
         pv2 = self.joints[0].b.position
-        bonds = self.cml_bond.bonds
-        line = self.create_parallell_lines(pv1, pv2, bonds)
-        color = (90,90,90)
-        group = RenderingOrder.elements
-        size = 2 * bonds
-        # In pyglet 2+, we need to use the new Batch API
-        # For now, let's skip the bond visualization to avoid Batch API issues
-        # TODO: Implement proper bond visualization for pyglet 2+
-        vertex = None
-        return vertex
+        bonds = max(1, self.cml_bond.bonds)
+        coords = self.create_parallell_lines(pv1, pv2, bonds)
+        color = (90, 90, 90)
+        group = RenderingOrder.bonds
+        width = 4
+        lines = []
+        for i in range(0, len(coords), 4):
+            x1, y1, x2, y2 = coords[i:i+4]
+            lines.append(shapes.Line(x1, y1, x2, y2, thickness=width, color=color, batch=self.batch, group=group))
+        return lines
 
     def update(self):
-        if self.vertex is not None:
+        if self.vertex:
             pv1 = self.joints[0].a.position
             pv2 = self.joints[0].b.position
-            line = self.create_parallell_lines(pv1,pv2,self.cml_bond.bonds)
-            self.vertex.vertices = line
+            coords = self.create_parallell_lines(pv1, pv2, max(1, self.cml_bond.bonds))
+            for idx, ln in enumerate(self.vertex):
+                base = 4 * idx
+                if base + 3 < len(coords):
+                    x1, y1, x2, y2 = coords[base:base+4]
+                    ln.x = x1
+                    ln.y = y1
+                    ln.x2 = x2
+                    ln.y2 = y2
 
     def delete(self):
         for joint in self.joints:
             self.space.remove(joint)
         self.joints = list()
-
-        if self.vertex is not None:
-            self.vertex.delete()
-        self.vertex = None
+        if self.vertex:
+            for ln in self.vertex:
+                ln.delete()
+        self.vertex = []
 
 class Atom(pyglet.sprite.Sprite):
     def __init__(self, symbol, charge, space, batch, molecule, pos):
