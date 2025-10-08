@@ -260,18 +260,11 @@ class Frame(Widget):
                     color=self.border_color[:3],
                     batch=self.batch, group=RenderingOrder.gui_background
                 )
-            # --- DEBUG: Add a visible red border ---
-            self.debug_border = Rectangle(
-                self.x, self.y, self.width, self.height,
-                color=(255, 0, 0), batch=self.batch, group=RenderingOrder.gui
-            )
-            self.debug_border.opacity = 128
         else:
             self.bg_slices = []
             self.bg_sprite = None
             self.bg_rect = None
             self.border_rect = None
-            self.debug_border = None
         
     def add_child(self, child):
         """Add a child widget"""
@@ -291,8 +284,6 @@ class Frame(Widget):
             self.bg_rect.delete()
         if hasattr(self, 'border_rect') and self.border_rect is not None:
             self.border_rect.delete()
-        if hasattr(self, 'debug_border') and self.debug_border is not None:
-            self.debug_border.delete()
         super().delete()
 
     def get_padding(self):
@@ -373,56 +364,85 @@ class Button(Widget):
         self._create_button()
         
     def _create_button(self):
-        """Create the button visual elements"""
-        if self.batch:
-            # Try to use theme image first
-            btn_theme = theme.theme_data.get(self.button_type, theme.theme_data.get("button"))
-            img = None
-            frame = [6, 6, 6, 6]
-            padding = [8, 8, 8, 8]
-            if btn_theme and "up" in btn_theme and "image" in btn_theme["up"]:
-                img_name = btn_theme["up"]["image"]["source"]
-                img = theme.get_image(img_name)
-                frame = btn_theme["up"]["image"].get("frame", frame)
-                padding = btn_theme["up"]["image"].get("padding", padding)
-            if img:
-                self.bg_slices = draw_nine_patch(self.batch, RenderingOrder.gui_background, img, self.x, self.y, self.width, self.height, frame, padding)
-                self.bg_sprite = None
-                self.bg_rect = None
-            else:
-                self.bg_slices = []
-                self.bg_sprite = None
-                self.bg_rect = Rectangle(
-                    self.x, self.y, self.width, self.height,
-                    color=self.background_color[:3],
-                    batch=self.batch, group=RenderingOrder.gui_background
-                )
-            # Text label
-            self.label = Label(
-                self.text, x=self.x + self.width//2, y=self.y + self.height//2,
-                batch=self.batch, group=RenderingOrder.gui,
-                anchor_x='center', anchor_y='center',
-                font_size=12, color=(0, 0, 0, 255)
-            )
-        else:
+        """Create button visuals; prebuild up/down slices and toggle visibility."""
+        if not self.batch:
             self.bg_slices = []
             self.bg_sprite = None
             self.bg_rect = None
             self.label = None
+            return
+
+        btn_theme = theme.theme_data.get(self.button_type, theme.theme_data.get("button")) or {}
+        self._up_conf = (btn_theme.get("up") or {}).get("image")
+        self._down_conf = (btn_theme.get("down") or {}).get("image")
+        self._up_text_color = (btn_theme.get("up") or {}).get("text_color", [0,0,0,255])
+        self._down_text_color = (btn_theme.get("down") or {}).get("text_color", self._up_text_color)
+
+        def build_slices(conf):
+            if not conf:
+                return None
+            img = theme.get_image(conf.get("source", ""))
+            if not img:
+                return None
+            frame = conf.get("frame", [6,6,6,6])
+            padding = conf.get("padding", [8,8,8,8])
+            slices = draw_nine_patch(self.batch, RenderingOrder.gui_background, img, self.x, self.y, self.width, self.height, frame, padding)
+            return {'slices': slices, 'frame': frame, 'padding': padding}
+
+        self._up_slices = build_slices(self._up_conf)
+        self._down_slices = build_slices(self._down_conf)
+
+        self.bg_rect = None
+        if not self._up_slices:
+            # fallback flat rectangle
+            self.bg_rect = Rectangle(
+                self.x, self.y, self.width, self.height,
+                color=self.background_color[:3],
+                batch=self.batch, group=RenderingOrder.gui_background
+            )
+        # hide down state initially
+        if self._down_slices:
+            for s in self._down_slices['slices']:
+                s.visible = False
+        self.label = Label(
+            self.text, x=self.x + self.width//2, y=self.y + self.height//2,
+            batch=self.batch, group=RenderingOrder.gui,
+            anchor_x='center', anchor_y='center',
+            font_size=12, color=tuple(self._up_text_color)
+        )
         
     def on_mouse_press(self, x, y, button, modifiers):
-        """Handle mouse press on button"""
+        """Switch to down visuals if present."""
         self.pressed = True
-        # Change to pressed state
-        # TODO: Implement 9-slice for pressed state
+        if self._down_slices:
+            if self._up_slices:
+                for s in self._up_slices['slices']:
+                    s.visible = False
+            for s in self._down_slices['slices']:
+                s.visible = True
+            if self.label:
+                self.label.color = tuple(self._down_text_color)
+        elif self.bg_rect is not None:
+            if not hasattr(self, '_orig_color'):
+                self._orig_color = tuple(self.bg_rect.color)
+            r,g,b = self._orig_color
+            self.bg_rect.color = (max(0,int(r*0.7)), max(0,int(g*0.7)), max(0,int(b*0.7)))
         
     def on_mouse_release(self, x, y, button, modifiers):
-        """Handle mouse release on button"""
-        if self.pressed and self.contains_point(x, y):
-            if self.on_click:
-                self.on_click(self)
+        """Restore up visuals and fire click if inside."""
+        was_pressed = self.pressed
         self.pressed = False
-        # TODO: Restore to normal state for 9-slice
+        if self._down_slices and self._up_slices:
+            for s in self._down_slices['slices']:
+                s.visible = False
+            for s in self._up_slices['slices']:
+                s.visible = True
+            if self.label:
+                self.label.color = tuple(self._up_text_color)
+        elif self.bg_rect is not None and hasattr(self, '_orig_color'):
+            self.bg_rect.color = self._orig_color
+        if was_pressed and self.contains_point(x, y) and self.on_click:
+            self.on_click(self)
         
     def delete(self):
         """Clean up button"""
@@ -702,6 +722,12 @@ class PopupMessage(Widget):
         self.theme_obj = theme_obj
         self.on_escape = on_escape
         self._create_popup()
+        # Register event handlers (no ESC handling)
+        self.window.push_handlers(
+            on_mouse_press=self.on_mouse_press,
+            on_mouse_release=self.on_mouse_release
+        )
+        self._mouse_press_within = False
         
     def _create_popup(self):
         """Create the popup dialog"""
@@ -712,20 +738,32 @@ class PopupMessage(Widget):
                               background_color=(240, 240, 240, 255),
                               border_color=(100, 100, 100, 255))
             
-            # Text content
-            self.document = Document(self.text, self.x + 10, self.y + 50, 
-                                   self.width - 20, self.height - 100,
+            # Text content with nicer margins
+            margin_x = 24
+            top_margin = 20
+            bottom_space_for_button = 60
+            doc_height = self.height - top_margin - bottom_space_for_button
+            if doc_height < 40:
+                doc_height = 40
+            self.document = Document(self.text, self.x + margin_x, self.y + self.height - top_margin - doc_height, 
+                                   self.width - 2*margin_x, doc_height,
                                    self.batch, RenderingOrder.gui)
             
-            # Close button
-            def close_popup(button):
-                self.delete()
+            # Ok button (legacy behaviour: triggers on_escape callback)
+            def ok_popup(button):
+                # First invoke callback (no args expected) then delete popup
                 if self.on_escape:
-                    self.on_escape(self)
-                    
-            self.close_button = Button("Close", self.x + self.width//2 - 30, 
-                                     self.y + 10, 60, 30, self.batch, RenderingOrder.gui,
-                                     on_click=close_popup)
+                    try:
+                        self.on_escape()
+                    except TypeError:
+                        # Fallback if old signature expected popup
+                        self.on_escape(self)
+                self.delete()
+
+            button_width = 100
+            self.close_button = Button("Ok", self.x + (self.width - button_width)//2,
+                                     self.y + 16, button_width, 32, self.batch, RenderingOrder.gui,
+                                     on_click=ok_popup)
         else:
             self.frame = None
             self.document = None
@@ -739,7 +777,40 @@ class PopupMessage(Widget):
             self.document.delete()
         if self.close_button:
             self.close_button.delete()
+        # Remove our handlers (safe even if already removed)
+        try:
+            self.window.remove_handlers(self.on_mouse_press, self.on_mouse_release)
+        except Exception:
+            pass
         super().delete()
+
+    # --- Event Handling ---
+    def _inside_button(self, x, y):
+        return (self.close_button and
+                self.close_button.x <= x <= self.close_button.x + self.close_button.width and
+                self.close_button.y <= y <= self.close_button.y + self.close_button.height)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self._inside_button(x, y):
+            if hasattr(self.close_button, 'on_mouse_press'):
+                self.close_button.on_mouse_press(x, y, button, modifiers)
+            self._mouse_press_within = True
+            return True
+        # Swallow clicks inside popup so they don't leak to game
+        if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height:
+            return True
+        return False
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        if self._mouse_press_within and self._inside_button(x, y):
+            if hasattr(self.close_button, 'on_mouse_release'):
+                self.close_button.on_mouse_release(x, y, button, modifiers)
+            self._mouse_press_within = False
+            return True
+        self._mouse_press_within = False
+        return False
+
+    # ESC ska inte påverka popupen längre – ingen on_key_press
 
 
 class Manager:
