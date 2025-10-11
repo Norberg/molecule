@@ -160,6 +160,11 @@ class Widget:
         """Clean up widget resources"""
         pass
 
+    def shift(self, dx, dy):
+        """Default shift just moves coordinates; subclasses should override to move visuals."""
+        self.x += dx
+        self.y += dy
+
 
 def draw_nine_patch(batch, group, img, x, y, width, height, frame, padding):
     """
@@ -276,7 +281,7 @@ class Frame(Widget):
             child.delete()
         self.children.clear()
         # Clean up background elements
-        for s in getattr(self, 'bg_slices', []):
+        for s in self.bg_slices:
             s.delete()
         if hasattr(self, 'bg_sprite') and self.bg_sprite:
             self.bg_sprite.delete()
@@ -291,6 +296,33 @@ class Frame(Widget):
         if frame_theme and "image" in frame_theme:
             return frame_theme["image"].get("padding", [8, 8, 8, 8])
         return [8, 8, 8, 8]
+
+    # --- Position helpers -------------------------------------------------
+    def shift(self, dx, dy):
+        """Shift frame and all its visual primitives by (dx, dy)."""
+        self.x += dx
+        self.y += dy
+        # Rectangles (always defined or None)
+        if self.bg_rect is not None:
+            self.bg_rect.x += dx
+            self.bg_rect.y += dy
+        if self.border_rect is not None:
+            self.border_rect.x += dx
+            self.border_rect.y += dy
+        # 9-slice sprites
+        for s in self.bg_slices:
+            s.x += dx
+            s.y += dy
+        # Children
+        for c in self.children:
+            if c is None:
+                continue
+            if hasattr(c, 'shift'):
+                c.shift(dx, dy)
+            else:
+                c.x += dx
+                c.y += dy
+
 
 
 class Document(Widget):
@@ -348,6 +380,13 @@ class Document(Widget):
         if self.label:
             self.label.delete()
         super().delete()
+    
+    def shift(self, dx, dy):
+        self.x += dx
+        self.y += dy
+        if self.label:
+            self.label.x += dx
+            self.label.y += dy
 
 
 class Button(Widget):
@@ -448,7 +487,7 @@ class Button(Widget):
         """Clean up button"""
         if self.label:
             self.label.delete()
-        for s in getattr(self, 'bg_slices', []):
+        for s in self.bg_slices if hasattr(self, 'bg_slices') and self.bg_slices else []:
             s.delete()
         if hasattr(self, 'bg_sprite') and self.bg_sprite:
             self.bg_sprite.delete()
@@ -461,6 +500,24 @@ class Button(Widget):
         if btn_theme and "up" in btn_theme and "image" in btn_theme["up"]:
             return btn_theme["up"]["image"].get("padding", [8, 8, 8, 8])
         return [8, 8, 8, 8]
+    
+    def shift(self, dx, dy):
+        self.x += dx
+        self.y += dy
+        if self.label:
+            self.label.x += dx
+            self.label.y += dy
+        def shift_slices(conf):
+            if not conf:
+                return
+            for s in conf['slices']:
+                s.x += dx
+                s.y += dy
+        shift_slices(self._up_slices)
+        shift_slices(self._down_slices)
+        if self.bg_rect is not None:
+            self.bg_rect.x += dx
+            self.bg_rect.y += dy
 
 
 class OneTimeButton(Button):
@@ -552,6 +609,16 @@ class Container(Widget):
             if child:
                 print(f"  [Child {i}] x={child.x}, y={child.y}, w={child.width}, h={child.height}")
         super().delete()
+
+    def shift(self, dx, dy):
+        super().shift(dx, dy)
+        for child in self.children:
+            if child:
+                if hasattr(child, 'shift'):
+                    child.shift(dx, dy)
+                else:
+                    child.x += dx
+                    child.y += dy
 
 
 class VerticalContainer(Container):
@@ -832,22 +899,32 @@ class Manager:
     def update_position(self):
         """Position content based on anchor setting (public)"""
         window_width, window_height = self.window.get_size()
-        print(f"[Manager] Anchor: {self.anchor}")
-        print(f"[Manager] Window size: {window_width}x{window_height}")
-        print(f"[Manager] Content size: {self.content.width}x{self.content.height}")
+        old_x, old_y = self.content.x, self.content.y
+        # Determine target anchor position
         if self.anchor == 'bottom_left':
-            self.content.x = 10
-            self.content.y = 10
+            target_x = 10
+            target_y = 10
         elif self.anchor == 'bottom_right':
-            self.content.x = window_width - self.content.width - 10
-            self.content.y = 10
+            target_x = window_width - self.content.width - 10
+            target_y = 10
         elif self.anchor == 'top_right':
-            self.content.x = window_width - self.content.width - 10
-            self.content.y = window_height - self.content.height - 10
+            target_x = window_width - self.content.width - 10
+            target_y = window_height - self.content.height - 10
         elif self.anchor == 'top_left':
-            self.content.x = 10
-            self.content.y = window_height - self.content.height - 10
-        print(f"[Manager] Placing at: x={self.content.x}, y={self.content.y}")
+            target_x = 10
+            target_y = window_height - self.content.height - 10
+        else:  # default fall back
+            target_x = old_x
+            target_y = old_y
+
+        dx = target_x - old_x
+        dy = target_y - old_y
+        if dx == 0 and dy == 0:
+            return
+
+        # Content must implement shift now
+        self.content.shift(dx, dy)
+        print(f"[Manager] Anchor {self.anchor}: moved content by ({dx},{dy}) to x={self.content.x}, y={self.content.y}")
 
     def delete(self):
         """Clean up manager and content"""
