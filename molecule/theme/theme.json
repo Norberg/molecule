@@ -2,53 +2,143 @@
     "font": "Arial",
     "font_size": 12,
     "font_size_small": 10,
-    "gui_color": [255, 255, 255, 255],
-    "disabled_color": [160, 160, 160, 255],
-    "text_color": [0, 0, 0, 255],
-    "highlight_color": [255, 0, 0, 64],
-    "focus_color": [255, 255, 255, 64],
+    "gui_color": [
+        255,
+        255,
+        255,
+        255
+    ],
+    "disabled_color": [
+        160,
+        160,
+        160,
+        255
+    ],
+    "text_color": [
+        0,
+        0,
+        0,
+        255
+    ],
+    "highlight_color": [
+        255,
+        0,
+        0,
+        64
+    ],
+    "focus_color": [
+        255,
+        255,
+        255,
+        64
+    ],
     "button": {
         "down": {
             "highlight": {
                 "image": {
                     "source": "button-highlight.png",
-                    "frame": [8, 6, 2, 2],
-                    "padding": [18, 18, 8, 6]
+                    "frame": [
+                        8,
+                        6,
+                        2,
+                        2
+                    ],
+                    "padding": [
+                        18,
+                        18,
+                        8,
+                        6
+                    ]
                 }
             },
             "focus": {
                 "image": {
                     "source": "button-highlight.png",
-                    "frame": [8, 6, 2, 2],
-                    "padding": [18, 18, 8, 6]
+                    "frame": [
+                        8,
+                        6,
+                        2,
+                        2
+                    ],
+                    "padding": [
+                        18,
+                        18,
+                        8,
+                        6
+                    ]
                 }
             },
             "image": {
                 "source": "button-down.png",
-                "frame": [8, 6, 2, 2],
-                "padding": [18, 18, 8, 6]
+                "frame": [
+                    8,
+                    6,
+                    2,
+                    2
+                ],
+                "padding": [
+                    18,
+                    18,
+                    8,
+                    6
+                ]
             },
-            "text_color": [0, 0, 0, 255]
+            "text_color": [
+                0,
+                0,
+                0,
+                255
+            ]
         },
         "up": {
             "highlight": {
                 "image": {
                     "source": "button-highlight.png",
-                    "frame": [8, 6, 2, 2],
-                    "padding": [18, 18, 8, 6]
+                    "frame": [
+                        8,
+                        6,
+                        2,
+                        2
+                    ],
+                    "padding": [
+                        18,
+                        18,
+                        8,
+                        6
+                    ]
                 }
             },
             "focus": {
                 "image": {
                     "source": "button-highlight.png",
-                    "frame": [8, 6, 2, 2],
-                    "padding": [18, 18, 8, 6]
+                    "frame": [
+                        8,
+                        6,
+                        2,
+                        2
+                    ],
+                    "padding": [
+                        18,
+                        18,
+                        8,
+                        6
+                    ]
                 }
             },
             "image": {
                 "source": "button.png",
-                "frame": [6, 5, 6, 3],
-                "padding": [18, 18, 8, 6]
+                "frame": [
+                    6,
+                    5,
+                    6,
+                    3
+                ],
+                "padding": [
+                    18,
+                    18,
+                    8,
+                    6
+                ]
             }
         }
     },
@@ -56,16 +146,41 @@
         "down": {
             "image": {
                 "source": "red-button-down.png",
-                "frame": [8, 6, 2, 2],
-                "padding": [18, 18, 8, 6]
+                "frame": [
+                    8,
+                    6,
+                    2,
+                    2
+                ],
+                "padding": [
+                    18,
+                    18,
+                    8,
+                    6
+                ]
             },
-            "text_color": [0, 0, 0, 255]
+            "text_color": [
+                0,
+                0,
+                0,
+                255
+            ]
         },
         "up": {
             "image": {
                 "source": "green-button-up.png",
-                "frame": [6, 5, 6, 3],
-                "padding": [18, 18, 8, 6]
+                "frame": [
+                    6,
+                    5,
+                    6,
+                    3
+                ],
+                "padding": [
+                    18,
+                    18,
+                    8,
+                    6
+                ]
             }
         }
     },
@@ -95,73 +210,184 @@
         "knob": {
             "image": {
                 "source": "vscrollbar.png",
-                "region": [0, 0, 16, 16],
-                "frame": [0, 6, 16, 4],
-                "padding": [0, 0, 0, 0]
+                "region": [
+                    0,
+                    0,
+                    16,
+                    16
+                ],
+                "frame": [
+                    0,
+                    6,
+                    16,
+                    4
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             },
-            "offset": [0, 0]
+            "offset": [
+                0,
+                0
+            ]
         },
         "bar": {
             "image": {
                 "source": "vscrollbar.png",
-                "region": [0, 16, 16, 16]
+                "region": [
+                    0,
+                    16,
+                    16,
+                    16
+                ]
             },
-            "padding": [0, 0, 0, 0]
+            "padding": [
+                0,
+                0,
+                0,
+                0
+            ]
         }
     },
     "hscrollbar": {
         "bar": {
             "image": {
                 "source": "hscrollbar.png",
-                "region": [16, 0, 16, 16]
+                "region": [
+                    16,
+                    0,
+                    16,
+                    16
+                ]
             },
-            "padding": [0, 0, 0, 0]
+            "padding": [
+                0,
+                0,
+                0,
+                0
+            ]
         },
         "knob": {
             "image": {
                 "source": "hscrollbar.png",
-                "region": [64, 0, 16, 16],
-                "frame": [6, 0, 4, 16],
-                "padding": [0, 0, 0, 0]
+                "region": [
+                    64,
+                    0,
+                    16,
+                    16
+                ],
+                "frame": [
+                    6,
+                    0,
+                    4,
+                    16
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             },
-            "offset": [0, 0]
+            "offset": [
+                0,
+                0
+            ]
         }
     },
     "dropdown": {
         "pulldown": {
             "image": {
                 "source": "pulldown.png",
-                "frame": [3, 3, 10, 10],
-                "padding": [4, 4, 4, 4]
+                "frame": [
+                    3,
+                    3,
+                    10,
+                    10
+                ],
+                "padding": [
+                    4,
+                    4,
+                    4,
+                    4
+                ]
             }
         },
         "image": {
             "source": "dropdown.png",
-            "frame": [4, 8, 20, 5],
-            "padding": [6, 10, 6, 10]
+            "frame": [
+                4,
+                8,
+                20,
+                5
+            ],
+            "padding": [
+                6,
+                10,
+                6,
+                10
+            ]
         }
     },
     "frame": {
         "image": {
             "source": "panel.png",
-            "frame": [16, 16, 16, 16],
-            "padding": [16, 16, 16, 16]
+            "frame": [
+                16,
+                16,
+                16,
+                16
+            ],
+            "padding": [
+                8,
+                8,
+                4,
+                4
+            ]
         }
     },
     "frame-green": {
         "image": {
             "source": "green_panel.png",
-            "frame": [16, 16, 16, 16],
-            "padding": [16, 16, 16, 16]
+            "frame": [
+                16,
+                16,
+                16,
+                16
+            ],
+            "padding": [
+                4,
+                4,
+                4,
+                4
+            ]
         }
     },
     "section": {
         "right": {
             "image": {
                 "source": "line.png",
-                "region": [2, 0, 6, 4],
-                "frame": [0, 4, 4, 0],
-                "padding": [0, 0, 0, 6]
+                "region": [
+                    2,
+                    0,
+                    6,
+                    4
+                ],
+                "frame": [
+                    0,
+                    4,
+                    4,
+                    0
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    6
+                ]
             }
         },
         "font_size": 14,
@@ -178,17 +404,47 @@
         "left": {
             "image": {
                 "source": "line.png",
-                "region": [0, 0, 6, 4],
-                "frame": [2, 4, 4, 0],
-                "padding": [0, 0, 0, 6]
+                "region": [
+                    0,
+                    0,
+                    6,
+                    4
+                ],
+                "frame": [
+                    2,
+                    4,
+                    4,
+                    0
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    6
+                ]
             }
         },
         "center": {
             "image": {
                 "source": "line.png",
-                "region": [2, 0, 4, 4],
-                "frame": [0, 4, 4, 0],
-                "padding": [0, 0, 0, 6]
+                "region": [
+                    2,
+                    0,
+                    4,
+                    4
+                ],
+                "frame": [
+                    0,
+                    4,
+                    4,
+                    0
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    6
+                ]
             }
         }
     },
@@ -200,42 +456,112 @@
         },
         "image": {
             "source": "input.png",
-            "frame": [3, 3, 2, 2],
-            "padding": [3, 3, 2, 3]
+            "frame": [
+                3,
+                3,
+                2,
+                2
+            ],
+            "padding": [
+                3,
+                3,
+                2,
+                3
+            ]
         }
     },
     "titlebar": {
         "frame": {
             "image": {
                 "source": "titlepanel.png",
-                "region": [0, 0, 128, 32],
-                "frame": [16, 16, 96, 16],
-                "padding": [16, 16, 0, 16]
+                "region": [
+                    0,
+                    0,
+                    128,
+                    32
+                ],
+                "frame": [
+                    16,
+                    16,
+                    96,
+                    16
+                ],
+                "padding": [
+                    16,
+                    16,
+                    0,
+                    16
+                ]
             }
         },
         "right": {
             "image": {
                 "source": "titlepanel.png",
-                "region": [100, 32, 28, 48],
-                "frame": [0, 16, 0, 20],
-                "padding": [0, 0, 0, 0]
+                "region": [
+                    100,
+                    32,
+                    28,
+                    48
+                ],
+                "frame": [
+                    0,
+                    16,
+                    0,
+                    20
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             }
         },
         "font_size": 18,
         "center": {
             "image": {
                 "source": "titlepanel.png",
-                "region": [28, 32, 72, 48],
-                "frame": [24, 24, 16, 16],
-                "padding": [24, 24, 16, 24]
+                "region": [
+                    28,
+                    32,
+                    72,
+                    48
+                ],
+                "frame": [
+                    24,
+                    24,
+                    16,
+                    16
+                ],
+                "padding": [
+                    24,
+                    24,
+                    16,
+                    24
+                ]
             }
         },
         "left": {
             "image": {
                 "source": "titlepanel.png",
-                "region": [0, 32, 28, 48],
-                "frame": [16, 16, 12, 32],
-                "padding": [0, 0, 0, 0]
+                "region": [
+                    0,
+                    32,
+                    28,
+                    48
+                ],
+                "frame": [
+                    16,
+                    16,
+                    12,
+                    32
+                ],
+                "padding": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             }
         }
     },
@@ -244,20 +570,41 @@
             "image": {
                 "source": "slider-knob.png"
             },
-            "offset": [-5, -11]
+            "offset": [
+                -5,
+                -11
+            ]
         },
-        "padding": [8, 8, 8, 8],
+        "padding": [
+            8,
+            8,
+            8,
+            8
+        ],
         "step": {
             "image": {
                 "source": "slider-step.png"
             },
-            "offset": [-2, -8]
+            "offset": [
+                -2,
+                -8
+            ]
         },
         "bar": {
             "image": {
                 "source": "slider-bar.png",
-                "frame": [8, 8, 8, 0],
-                "padding": [8, 8, 8, 8]
+                "frame": [
+                    8,
+                    8,
+                    8,
+                    0
+                ],
+                "padding": [
+                    8,
+                    8,
+                    8,
+                    8
+                ]
             }
         }
     }
