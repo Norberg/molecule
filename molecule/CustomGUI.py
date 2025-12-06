@@ -84,7 +84,8 @@ class Theme:
         image_files = [
             "button.png", "button-down.png", "button-highlight.png",
             "panel.png", "green_panel.png", "titlepanel.png",
-            "green-button-up.png", "red-button-down.png"
+            "green-button-up.png", "red-button-down.png",
+            "vscrollbar.png", "hscrollbar.png"
         ]
         
         for img_file in image_files:
@@ -206,45 +207,71 @@ def draw_nine_patch(batch, group, img, x, y, width, height, frame, padding):
     """
     left, top, right, bottom = frame
     img_w, img_h = img.width, img.height
-    # Regions:
-    #  TL |  T  |  TR
-    #  L  |  C  |  R
-    #  BL |  B  |  BR
-    regions = {}
+    
+    # Calculate dimensions for all 9 regions
+    # Structure: (name, x_in_img, y_in_img, w_in_img, h_in_img, dest_x, dest_y, dest_w, dest_h)
+    
+    center_w = img_w - left - right
+    center_h = img_h - top - bottom
+    
+    # Definitions of source regions and destination geometries
+    # Note: pyglet image coordinates: (0,0) is bottom-left.
+    # get_region(x, y, width, height)
+    
+    # Rows in image (bottom to top):
+    # Bottom row (y=0, h=bottom): BL, B, BR
+    # Center row (y=bottom, h=center_h): L, C, R
+    # Top row (y=bottom+center_h, h=top): TL, T, TR
+    
+    # Destination layout (x,y is bottom-left of target area)
+    # Rows in destination (bottom to top):
+    # Bottom: y=y. h=bottom (fixed) or scaled? Usually corners are fixed size?
+    # Actually draw_nine_patch usually scales center and edges, keeps corners fixed.
+    # But if target size < corners, they might overlap or shrink.
+    # For now assume standard behavior: corners fixed size, edges stretched in one dim, center stretched in both.
+    
+    parts = []
+    
     # Corners
-    regions['tl'] = img.get_region(0, img_h - top, left, top)
-    regions['tr'] = img.get_region(img_w - right, img_h - top, right, top)
-    regions['bl'] = img.get_region(0, 0, left, bottom)
-    regions['br'] = img.get_region(img_w - right, 0, right, bottom)
+    parts.append(('bl', 0, 0, left, bottom, 
+                  x, y, left, bottom))
+    parts.append(('br', img_w - right, 0, right, bottom, 
+                  x + width - right, y, right, bottom))
+    parts.append(('tl', 0, img_h - top, left, top, 
+                  x, y + height - top, left, top))
+    parts.append(('tr', img_w - right, img_h - top, right, top, 
+                  x + width - right, y + height - top, right, top))
+                  
     # Edges
-    regions['t'] = img.get_region(left, img_h - top, img_w - left - right, top)
-    regions['b'] = img.get_region(left, 0, img_w - left - right, bottom)
-    regions['l'] = img.get_region(0, bottom, left, img_h - top - bottom)
-    regions['r'] = img.get_region(img_w - right, bottom, right, img_h - top - bottom)
+    parts.append(('b', left, 0, center_w, bottom, 
+                  x + left, y, width - left - right, bottom))
+    parts.append(('t', left, img_h - top, center_w, top, 
+                  x + left, y + height - top, width - left - right, top))
+    parts.append(('l', 0, bottom, left, center_h, 
+                  x, y + bottom, left, height - top - bottom))
+    parts.append(('r', img_w - right, bottom, right, center_h, 
+                  x + width - right, y + bottom, right, height - top - bottom))
+                  
     # Center
-    regions['c'] = img.get_region(left, bottom, img_w - left - right, img_h - top - bottom)
-    # Target sizes
-    w, h = width, height
-    # Place regions
+    parts.append(('c', left, bottom, center_w, center_h,
+                  x + left, y + bottom, width - left - right, height - top - bottom))
+                  
     sprites = []
-    # Corners
-    sprites.append(pyglet.sprite.Sprite(regions['tl'], x=x, y=y + h - top, batch=batch, group=group))
-    sprites.append(pyglet.sprite.Sprite(regions['tr'], x=x + w - right, y=y + h - top, batch=batch, group=group))
-    sprites.append(pyglet.sprite.Sprite(regions['bl'], x=x, y=y, batch=batch, group=group))
-    sprites.append(pyglet.sprite.Sprite(regions['br'], x=x + w - right, y=y, batch=batch, group=group))
-    # Edges
-    sprites.append(pyglet.sprite.Sprite(regions['t'], x=x + left, y=y + h - top, batch=batch, group=group))
-    sprites[-1].scale_x = (w - left - right) / regions['t'].width
-    sprites.append(pyglet.sprite.Sprite(regions['b'], x=x + left, y=y, batch=batch, group=group))
-    sprites[-1].scale_x = (w - left - right) / regions['b'].width
-    sprites.append(pyglet.sprite.Sprite(regions['l'], x=x, y=y + bottom, batch=batch, group=group))
-    sprites[-1].scale_y = (h - top - bottom) / regions['l'].height
-    sprites.append(pyglet.sprite.Sprite(regions['r'], x=x + w - right, y=y + bottom, batch=batch, group=group))
-    sprites[-1].scale_y = (h - top - bottom) / regions['r'].height
-    # Center
-    sprites.append(pyglet.sprite.Sprite(regions['c'], x=x + left, y=y + bottom, batch=batch, group=group))
-    sprites[-1].scale_x = (w - left - right) / regions['c'].width
-    sprites[-1].scale_y = (h - top - bottom) / regions['c'].height
+    for (name, sx, sy, sw, sh, dx, dy, dw, dh) in parts:
+        if sw <= 0 or sh <= 0 or dw <= 0 or dh <= 0:
+            continue
+            
+        region = img.get_region(sx, sy, sw, sh)
+        sprite = pyglet.sprite.Sprite(region, x=dx, y=dy, batch=batch, group=group)
+        
+        # Scale if destination size differs from source size
+        if dw != sw:
+            sprite.scale_x = dw / sw
+        if dh != sh:
+            sprite.scale_y = dh / sh
+            
+        sprites.append(sprite)
+            
     return sprites
 
 
@@ -881,78 +908,40 @@ class Scrollable(Widget):
         self.content = content
         self.height_limit = height_limit or height
         self.scroll_offset = 0
-        self.scrollbar_width = 10
+        self.scrollbar_width = 16 # updated to match probable theme width or keep 10? Theme region is 16.
         
         # Create scissor group for clipping
         if self.batch:
             self.scissor_group = ScissorGroup(x, y, width, height, parent=group)
-            # We need to assign this group to the content
-            # This is tricky because content might already have a group or create its own
-            # Ideally, we pass the group to content's constructor, but content is already created.
-            # We might need to recursively update content's group?
-            # Or just assume content uses the group we pass here?
-            # But content is passed as argument.
-            # Let's try to set the group on content if it supports it.
-            # Actually, widgets usually take group in __init__.
-            # If we want to clip, we must ensure content is drawn within this group.
-            # This might require content to be created *after* Scrollable, or we assume content
-            # can be reparented.
-            # For now, let's assume we can't easily change content's group if it's already set.
-            # But wait, Document creates Label. Label takes group.
-            # If we change Document.group, we need to recreate Label.
-            pass
         else:
             self.scissor_group = None
 
         self._setup_scrolling()
         
-        # Scrollbar visuals
-        self.scrollbar_bg = None
-        self.scrollbar_handle = None
-        if self.batch:
-            self.scrollbar_bg = Rectangle(x + width - self.scrollbar_width, y, 
-                                        self.scrollbar_width, height, 
-                                        color=(200, 200, 200, 255), 
-                                        batch=batch, group=group)
-            self.scrollbar_bg.visible = False
-            self.scrollbar_handle = Rectangle(x + width - self.scrollbar_width, y + height - 20, 
-                                            self.scrollbar_width, 20, 
-                                            color=(100, 100, 100, 255), 
-                                            batch=batch, group=group)
-            self.scrollbar_handle.visible = False
+        # Scrollbar visuals (lists of sprites or single rects)
+        self.scrollbar_bg_items = []
+        self.scrollbar_handle_items = []
 
     def _setup_scrolling(self):
         """Setup scrolling functionality"""
         if self.content:
-            # We need to force content to use our scissor group
-            # This is a hack: we delete and recreate content if possible, or just move it.
-            # But we can't easily recreate it.
-            # If content is a Document, we can perhaps update its group?
-            # Document has _create_label which uses self.group.
-            # So if we update self.content.group and call _create_label (or set_text), it might work.
             if self.scissor_group:
                 self.content.group = self.scissor_group
                 if hasattr(self.content, '_create_label'):
                     if hasattr(self.content, 'label') and self.content.label:
                         self.content.label.delete()
                     self.content._create_label()
-                elif hasattr(self.content, 'children'): # Container
-                    # This is harder for containers as they have children.
-                    # We'd need to propagate group change.
-                    # For now, let's assume content is Document.
+                elif hasattr(self.content, 'children'):
                     pass
 
             self.content.x = self.x
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
             self.content.width = self.width - self.scrollbar_width
             
-            # Limit content height if needed (not really used here, we use scroll_offset)
-            
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         if not self.contains_point(x, y):
             return False
             
-        # Calculate max scroll
         content_height = self.content.height if self.content else 0
         view_height = self.height
         
@@ -964,7 +953,6 @@ class Scrollable(Widget):
         scroll_speed = 20
         self.scroll_offset -= scroll_y * scroll_speed
         
-        # Clamp scroll
         if self.scroll_offset < 0:
             self.scroll_offset = 0
         if self.scroll_offset > max_scroll:
@@ -972,79 +960,101 @@ class Scrollable(Widget):
             
         self._update_positions()
         return True
+
+    def _create_scrollbar_part(self, part_name, x, y, width, height):
+        """Create scrollbar visual part (knob or bar)"""
+        if not self.batch:
+            return []
+            
+        items = []
+        # Try to load from theme
+        sb_theme = theme.theme_data.get("vscrollbar", {})
+        part_theme = sb_theme.get(part_name)
+        
+        if part_theme and "image" in part_theme:
+            img_conf = part_theme["image"]
+            img = theme.get_image(img_conf.get("source", ""))
+            if img:
+                region_rect = img_conf.get("region")
+                if region_rect:
+                    # Extract region from texture
+                    # region: [x, y, w, h]
+                    # Pyglet image regions are usually from bottom-left? 
+                    # theme.json structure implies [x, y, w, h] from top-left usually in texture atlases, 
+                    # but Pyglet is bottom-left origin.
+                    # Looking at draw_nine_patch usage in this file:
+                    # regions['tl'] = img.get_region(0, img_h - top, left, top)
+                    # It seems to assume standard GL coordinates (bottom-up).
+                    # But texture packing tools often use top-down.
+                    # Let's assume the helper handles it or the region coords are correct for pyglet.
+                    # Wait, theme.json just has "region": [0, 0, 16, 16].
+                    # Let's try finding the image directly if possible?
+                    # The get_image returns full image. 
+                    # We can use .get_region(x, y, width, height).
+                    # Assuming coords in theme.json are compatible with pyglet.image.AbstractImage.get_region
+                    img = img.get_region(*region_rect)
+                
+                frame = img_conf.get("frame", [0, 0, 0, 0])
+                padding = img_conf.get("padding", [0, 0, 0, 0])
+                
+                # Check if we should use draw_nine_patch
+                # If frame is all 0, it wraps center stretch.
+                # draw_nine_patch handles this fine (stretches center).
+                items = draw_nine_patch(self.batch, self.group, img, x, y, width, height, frame, padding)
+                return items
+
+        # Fallback to Rectangle
+        color = (200, 200, 200, 255) if part_name == "bar" else (100, 100, 100, 255)
+        rect = Rectangle(x, y, width, height, color=color, batch=self.batch, group=self.group)
+        return [rect]
         
     def _update_positions(self):
         if self.content:
-            # Update content width first
+            # Update content width first (keeping scrollbar width reserved)
             self.content.width = self.width - self.scrollbar_width
             
-            # Update content layout (height might change)
             if hasattr(self.content, 'layout'):
                 self.content.layout()
                 
-            # Content top should be at self.y + self.height + scroll_offset?
-            # No, usually:
-            # y = self.y + self.height - content_height + scroll_offset
-            # Let's try standard: content top aligned with view top when offset=0
-            # content.y = self.y + self.height - content.height + self.scroll_offset
-            
-            # Wait, Document draws from bottom-left (usually).
-            # If Document height is large, say 500, and view is 100.
-            # We want top of Document to be at top of View.
-            # Document.y is its bottom.
-            # So Document.y = View.top - Document.height
-            # View.top = self.y + self.height
-            # So Document.y = self.y + self.height - self.content.height
-            # With scroll, we move it up (positive offset).
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
             self.content.x = self.x
             
-            # Update scissor rect
             if self.scissor_group:
                 self.scissor_group.x = int(self.x)
                 self.scissor_group.y = int(self.y)
                 self.scissor_group.width = int(self.width)
                 self.scissor_group.height = int(self.height)
-            
-            # Update scrollbar
-            should_show_scrollbar = self.content.height > self.height
-            
-            if self.scrollbar_handle:
-                self.scrollbar_handle.visible = should_show_scrollbar
-                if should_show_scrollbar:
-                    ratio = self.height / self.content.height
-                    handle_height = max(20, self.height * ratio)
-                    max_scroll = self.content.height - self.height
-                    scroll_ratio = self.scroll_offset / max_scroll if max_scroll > 0 else 0
-                    
-                    # Invert logic: scroll_offset 0 means top.
-                    # Handle should be at top.
-                    track_height = self.height
-                    scrollable_track = track_height - handle_height
-                    handle_y = self.y + self.height - handle_height - (scrollable_track * scroll_ratio)
-                    
-                    self.scrollbar_handle.y = handle_y
-                    self.scrollbar_handle.height = handle_height
-                    self.scrollbar_handle.x = self.x + self.width - self.scrollbar_width
                 
-            if self.scrollbar_bg:
-                self.scrollbar_bg.visible = should_show_scrollbar
-                if should_show_scrollbar:
-                    self.scrollbar_bg.x = self.x + self.width - self.scrollbar_width
-                    self.scrollbar_bg.y = self.y
-                    self.scrollbar_bg.height = self.height
-
-            # Propagate shift to content
-            # Actually we set content.y directly.
-            # But content might need to update its internal sprites (Label).
-            if hasattr(self.content, 'shift'):
-                # We can't use shift because we set absolute position.
-                # We need a way to force update.
-                # Document.layout() does this!
-                pass
+            # Clear old visuals
+            for item in self.scrollbar_bg_items:
+                item.delete()
+            self.scrollbar_bg_items = []
             
-            if hasattr(self.content, 'layout'):
-                self.content.layout()
+            for item in self.scrollbar_handle_items:
+                item.delete()
+            self.scrollbar_handle_items = []
+            
+            # Create new visuals if needed
+            should_show_scrollbar = self.content.height > self.height
+            if should_show_scrollbar:
+                # Background (Bar)
+                self.scrollbar_bg_items = self._create_scrollbar_part("bar", 
+                    self.x + self.width - self.scrollbar_width, self.y,
+                    self.scrollbar_width, self.height)
+                
+                # Handle (Knob)
+                ratio = self.height / self.content.height
+                handle_height = max(20, self.height * ratio)
+                max_scroll = self.content.height - self.height
+                scroll_ratio = self.scroll_offset / max_scroll if max_scroll > 0 else 0
+                
+                track_height = self.height
+                scrollable_track = track_height - handle_height
+                handle_y = self.y + self.height - handle_height - (scrollable_track * scroll_ratio)
+                
+                self.scrollbar_handle_items = self._create_scrollbar_part("knob",
+                    self.x + self.width - self.scrollbar_width, handle_y,
+                    self.scrollbar_width, handle_height)
 
     def layout(self):
         """Layout content"""
@@ -1053,17 +1063,16 @@ class Scrollable(Widget):
     def shift(self, dx, dy):
         self.x += dx
         self.y += dy
-        # _update_positions will recreate the group with new coordinates
         self._update_positions()
         
     def delete(self):
         """Clean up scrollable"""
         if self.content:
             self.content.delete()
-        if self.scrollbar_bg:
-            self.scrollbar_bg.delete()
-        if self.scrollbar_handle:
-            self.scrollbar_handle.delete()
+        for item in self.scrollbar_bg_items:
+            item.delete()
+        for item in self.scrollbar_handle_items:
+            item.delete()
         super().delete()
 
 
