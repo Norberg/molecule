@@ -31,7 +31,8 @@ from libcml import CachedCml
 class HUD:
     def __init__(self, window, batch, space, level, create_elements_callback):
         height = 100
-        width = window.width - 300
+        # Vertical HUD is 180px wide. Leave 20px gap.
+        width = window.width - 200 
         self.horizontal = HorizontalHUD(window, batch, space, level, height, width)
         height = window.height - 40
         width = 180
@@ -58,31 +59,52 @@ class HorizontalHUD:
         self.level = level
         self.height = height
         self.width = width
+        
+        # Calculate widths
+        # Left side (Objective/Progress) doesn't need to be huge. 
+        # Let's give it a fixed width or a smaller percentage.
+        # Previous was 50/50.
+        # Let's try fixed width of 400px for left, rest for right.
+        left_width = 400
+        info_width = width - left_width - 10 # 10 for spacing
+        
         # Progress + objective (fallbacks for missing data)
         progress_text = "Progress:"
-        self.progress_doc = Document(progress_text, 0, 0, width//2, height, batch)
+        self.progress_doc = Document(progress_text, 0, 0, left_width, height, batch)
         objective_str = level.objective or ""
         objective_html = Gui.find_and_convert_formulas(objective_str)
-        objective_doc = Document(objective_html, 0, 0, width//2, height, batch)
+        objective_doc = Document(objective_html, 0, 0, left_width, height, batch)
 
         # Create left frame container
-        left_container = VerticalContainer(0, 0, width//2, height)
+        left_container = VerticalContainer(0, 0, left_width, height)
         left_container.add(objective_doc)
         left_container.add(None)  # Spacer
         left_container.add(self.progress_doc)
-        left_frame = Frame(0, 0, width//2, height, batch, is_expandable=True)
+        left_frame = Frame(0, 0, left_width, height, batch, is_expandable=True)
         left_frame.add_child(left_container)
 
-        self.left_container = VerticalContainer(0, 0, width//2, height)
+        self.left_container = VerticalContainer(0, 0, left_width, height)
         self.left_container.add(left_frame)
+
+        # Info text
+        self.info_doc = Document("", 0, 0, info_width, height, self.batch, 
+                               font_size=10, multiline=True, autosize_height=True)
+        
+        # Wrap in Scrollable
+        self.info_scroll = Scrollable(self.info_doc, 0, 0, info_width, height, 
+                                    self.batch, RenderingOrder.gui)
+
+        info_frame = Frame(0, 0, info_width, height, self.batch)
+        info_frame.add_child(self.info_scroll)
+        
+        self.info_container = VerticalContainer(0, 0, info_width, height)
+        self.info_container.add(info_frame)
 
         # Victory formula fallback (avoid index error)
         victory_formula = level.victory_condition[0] if level.victory_condition else "H2O"
-        info_frame = self.create_info_frame(victory_formula)
-        self.info_container = VerticalContainer(0, 0, width//2, height)
-        self.info_container.add(info_frame)
+        self.update_info_text(victory_formula) # Initialize with victory formula
 
-        container = HorizontalContainer(0, 0, width, height)
+        container = HorizontalContainer(0, 0, width, height, spacing=10)
         container.add(self.left_container)
         container.add(self.info_container)
 
@@ -106,23 +128,16 @@ class HorizontalHUD:
         return [self.victory]
 
     def update_info_text(self, formula):
-        info_frame = self.create_info_frame(formula)
-        for content in self.info_container.children:
-            self.info_container.remove(content)
-        self.info_container.add(info_frame)
-
-    def create_info_frame(self, formula):
         cml = CachedCml.getMolecule(formula)
         info_text = "<b>%s - %s</b><br> %s" % (
                 cml.property.get("Name", "Undefined"),
                 Gui.formula_to_html(formula),
                 Gui.find_and_convert_formulas(cml.property.get("Description", "No Description Available"))
                 )
-        info_doc = Document(info_text, 0, 0, self.width//2, self.height, self.batch,
-                is_fixed_size=True)
-        info_frame = Frame(0, 0, self.width//2, self.height, self.batch)
-        info_frame.add_child(info_doc)
-        return info_frame
+        self.info_doc.set_text(info_text)
+        # Force scrollable layout update
+        if hasattr(self, 'info_scroll'):
+            self.info_scroll.layout()
 
     def on_draw(self):
         self.tick += 1

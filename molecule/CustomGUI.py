@@ -23,7 +23,30 @@ import math
 import json
 import os
 from molecule import RenderingOrder
+from molecule import RenderingOrder
 from molecule import pyglet_util
+
+class ScissorGroup(Group):
+    """Group that sets GL scissor rect"""
+    def __init__(self, x, y, width, height, parent=None):
+        super().__init__(parent=parent)
+        self.x = int(x)
+        self.y = int(y)
+        self.width = int(width)
+        self.height = int(height)
+
+    def set_state(self):
+        gl.glEnable(gl.GL_SCISSOR_TEST)
+        gl.glScissor(self.x, self.y, self.width, self.height)
+
+    def unset_state(self):
+        gl.glDisable(gl.GL_SCISSOR_TEST)
+
+    def __eq__(self, other):
+        return self is other
+
+    def __hash__(self):
+        return id(self)
 
 
 class Theme:
@@ -165,6 +188,10 @@ class Widget:
         self.x += dx
         self.y += dy
 
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        """Handle mouse scroll events"""
+        return False
+
 
 def draw_nine_patch(batch, group, img, x, y, width, height, frame, padding):
     """
@@ -274,6 +301,63 @@ class Frame(Widget):
     def add_child(self, child):
         """Add a child widget"""
         self.children.append(child)
+        child.parent = self
+        
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        """Propagate scroll events to children"""
+        # Check if point is inside frame
+        if not self.contains_point(x, y):
+            return False
+            
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_scroll'):
+                if child.on_mouse_scroll(x, y, scroll_x, scroll_y):
+                    return True
+        return False
+
+    def layout(self):
+        """Layout children and update background"""
+        # Update background positions
+        if self.bg_rect is not None:
+            self.bg_rect.x = self.x
+            self.bg_rect.y = self.y
+            self.bg_rect.width = self.width
+            self.bg_rect.height = self.height
+        if self.border_rect is not None:
+            self.border_rect.x = self.x - 1
+            self.border_rect.y = self.y - 1
+            self.border_rect.width = self.width + 2
+            self.border_rect.height = self.height + 2
+        
+        # Update 9-slice sprites
+        if self.bg_slices:
+            # We need to re-generate or shift slices. 
+            # Since shift is relative, and we have absolute x,y, it's easier to re-create or calculate diff.
+            # But shift() method exists. 
+            # However, we don't know the previous x,y easily unless we store it.
+            # Better to just re-run draw_nine_patch logic or update sprite positions manually.
+            # Given the complexity of 9-patch resizing, let's try to update them if size hasn't changed, 
+            # or re-create if it has.
+            # For now, let's assume size is constant and just update position?
+            # No, Container might resize Frame.
+            # So we should probably recreate the background if size/pos changes.
+            # Or call _create_background() again?
+            # _create_background() cleans up old slices.
+            self._create_background()
+
+        pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
+        for child in self.children:
+            if child is None:
+                continue
+            child.x = self.x + pad_left
+            child.y = self.y + pad_bottom
+            # Only resize if not fixed size (if that attribute exists)
+            if not getattr(child, 'is_fixed_size', False):
+                child.width = self.width - pad_left - pad_right
+                child.height = self.height - pad_top - pad_bottom
+            
+            if hasattr(child, 'layout'):
+                child.layout()
         
     def delete(self):
         """Clean up frame and children"""
@@ -329,42 +413,52 @@ class Document(Widget):
     """A text document widget"""
     
     def __init__(self, text, x, y, width, height=None, batch=None, group=None, 
-                 font_size=12, color=None, multiline=True, is_fixed_size=False):
+                 font_size=12, color=None, multiline=True, is_fixed_size=False, autosize_height=False):
         super().__init__(x, y, width, height or 100, batch, group)
         self.text = text
         self.font_size = font_size
         self.color = color or theme.get_color("text_color")
         self.multiline = multiline
         self.is_fixed_size = is_fixed_size
+        self.autosize_height = autosize_height
         self._create_label()
         
     def _create_label(self):
         """Create the text label"""
         # Use padding if parent is Frame or has get_padding
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
-        if hasattr(self, 'parent') and hasattr(self.parent, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.parent.get_padding()
         x = self.x + pad_left
         y = self.y + self.height - pad_top
         width = self.width - pad_left - pad_right
         height = self.height - pad_top - pad_bottom
         if self.batch:
+            # Use self.group if set (e.g. by Scrollable), otherwise default to RenderingOrder.gui
+            group = self.group or RenderingOrder.gui
+            
             if isinstance(self.text, str) and '<' in self.text and '>' in self.text:
                 self.label = HTMLLabel(
                     self.text, x=x, y=y,
                     width=width, height=height,
-                    batch=self.batch, group=RenderingOrder.gui,
-                    anchor_x='left', anchor_y='top'
+                    batch=self.batch, group=group,
+                    anchor_x='left', anchor_y='top',
+                    multiline=self.multiline
                 )
             else:
                 self.label = Label(
                     self.text, x=x, y=y,
                     width=width, height=height,
-                    batch=self.batch, group=RenderingOrder.gui,
+                    batch=self.batch, group=group,
                     anchor_x='left', anchor_y='top',
                     font_size=self.font_size, color=self.color,
                     multiline=self.multiline
                 )
+            
+            if self.autosize_height:
+                self.height = self.label.content_height + pad_top + pad_bottom
+                # Re-position label because y depends on height
+                y = self.y + self.height - pad_top
+                self.label.y = y
+                self.label.height = self.height - pad_top - pad_bottom
         else:
             self.label = None
             
@@ -387,6 +481,22 @@ class Document(Widget):
         if self.label:
             self.label.x += dx
             self.label.y += dy
+
+    def layout(self):
+        """Update label position based on widget position"""
+        if self.label:
+            # Re-calculate position including padding
+            pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
+            
+            x = self.x + pad_left
+            y = self.y + self.height - pad_top
+            width = self.width - pad_left - pad_right
+            height = self.height - pad_top - pad_bottom
+            
+            self.label.x = x
+            self.label.y = y
+            self.label.width = width
+            self.label.height = height
 
 
 class Button(Widget):
@@ -519,6 +629,11 @@ class Button(Widget):
             self.bg_rect.x += dx
             self.bg_rect.y += dy
 
+    def layout(self):
+        """Update button visuals"""
+        # Re-create button to handle size/pos changes
+        self._create_button()
+
 
 class OneTimeButton(Button):
     """A button that can only be clicked once"""
@@ -565,6 +680,8 @@ class Container(Widget):
         
     def add(self, widget):
         """Add a widget to the container"""
+        if widget:
+            widget.parent = self
         self.children.append(widget)
         self._layout_children()
         
@@ -580,8 +697,6 @@ class Container(Widget):
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
-        elif hasattr(self, 'parent') and hasattr(self.parent, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.parent.get_padding()
         current_y = self.y + self.height - pad_top
         for child in self.children:
             if child is None:
@@ -620,6 +735,18 @@ class Container(Widget):
                     child.x += dx
                     child.y += dy
 
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        """Propagate scroll events to children"""
+        # Check if point is inside container
+        if not self.contains_point(x, y):
+            return False
+            
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_scroll'):
+                if child.on_mouse_scroll(x, y, scroll_x, scroll_y):
+                    return True
+        return False
+
 
 class VerticalContainer(Container):
     """A container that arranges widgets vertically"""
@@ -629,8 +756,6 @@ class VerticalContainer(Container):
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
-        elif hasattr(self, 'parent') and hasattr(self.parent, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.parent.get_padding()
         current_y = self.y + self.height - pad_top
         for child in self.children:
             if child is None:
@@ -658,13 +783,15 @@ class VerticalContainer(Container):
 class HorizontalContainer(Container):
     """A container that arranges widgets horizontally"""
     
+    def __init__(self, x, y, width, height, batch=None, group=None, spacing=0):
+        super().__init__(x, y, width, height, batch, group)
+        self.spacing = spacing
+
     def _layout_children(self):
         """Layout children horizontally from left to right"""
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
-        elif hasattr(self, 'parent') and hasattr(self.parent, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.parent.get_padding()
         current_x = self.x + pad_left
         for child in self.children:
             if child is None:
@@ -672,7 +799,7 @@ class HorizontalContainer(Container):
             child.x = current_x
             child.y = self.y + pad_bottom
             child.height = self.height - pad_top - pad_bottom
-            current_x += child.width
+            current_x += child.width + self.spacing
 
     def layout(self):
         self._layout_children()
@@ -752,22 +879,184 @@ class Scrollable(Widget):
         self.content = content
         self.height_limit = height_limit or height
         self.scroll_offset = 0
+        self.scrollbar_width = 10
+        
+        # Create scissor group for clipping
+        if self.batch:
+            self.scissor_group = ScissorGroup(x, y, width, height, parent=group)
+            # We need to assign this group to the content
+            # This is tricky because content might already have a group or create its own
+            # Ideally, we pass the group to content's constructor, but content is already created.
+            # We might need to recursively update content's group?
+            # Or just assume content uses the group we pass here?
+            # But content is passed as argument.
+            # Let's try to set the group on content if it supports it.
+            # Actually, widgets usually take group in __init__.
+            # If we want to clip, we must ensure content is drawn within this group.
+            # This might require content to be created *after* Scrollable, or we assume content
+            # can be reparented.
+            # For now, let's assume we can't easily change content's group if it's already set.
+            # But wait, Document creates Label. Label takes group.
+            # If we change Document.group, we need to recreate Label.
+            pass
+        else:
+            self.scissor_group = None
+
         self._setup_scrolling()
         
+        # Scrollbar visuals
+        self.scrollbar_bg = None
+        self.scrollbar_handle = None
+        if self.batch:
+            self.scrollbar_bg = Rectangle(x + width - self.scrollbar_width, y, 
+                                        self.scrollbar_width, height, 
+                                        color=(200, 200, 200, 255), 
+                                        batch=batch, group=group)
+            self.scrollbar_handle = Rectangle(x + width - self.scrollbar_width, y + height - 20, 
+                                            self.scrollbar_width, 20, 
+                                            color=(100, 100, 100, 255), 
+                                            batch=batch, group=group)
+
     def _setup_scrolling(self):
         """Setup scrolling functionality"""
         if self.content:
+            # We need to force content to use our scissor group
+            # This is a hack: we delete and recreate content if possible, or just move it.
+            # But we can't easily recreate it.
+            # If content is a Document, we can perhaps update its group?
+            # Document has _create_label which uses self.group.
+            # So if we update self.content.group and call _create_label (or set_text), it might work.
+            if self.scissor_group:
+                self.content.group = self.scissor_group
+                if hasattr(self.content, '_create_label'):
+                    if hasattr(self.content, 'label') and self.content.label:
+                        self.content.label.delete()
+                    self.content._create_label()
+                elif hasattr(self.content, 'children'): # Container
+                    # This is harder for containers as they have children.
+                    # We'd need to propagate group change.
+                    # For now, let's assume content is Document.
+                    pass
+
             self.content.x = self.x
-            self.content.y = self.y + self.scroll_offset
-            self.content.width = self.width
-            # Limit content height if needed
-            if self.content.height > self.height_limit:
-                self.content.height = self.height_limit
+            self.content.y = self.y + self.height - self.content.height + self.scroll_offset
+            self.content.width = self.width - self.scrollbar_width
+            
+            # Limit content height if needed (not really used here, we use scroll_offset)
+            
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        if not self.contains_point(x, y):
+            return False
+            
+        # Calculate max scroll
+        content_height = self.content.height if self.content else 0
+        view_height = self.height
+        
+        if content_height <= view_height:
+            return False
+            
+        max_scroll = content_height - view_height
+        
+        scroll_speed = 20
+        self.scroll_offset -= scroll_y * scroll_speed
+        
+        # Clamp scroll
+        if self.scroll_offset < 0:
+            self.scroll_offset = 0
+        if self.scroll_offset > max_scroll:
+            self.scroll_offset = max_scroll
+            
+        self._update_positions()
+        return True
+        
+    def _update_positions(self):
+        if self.content:
+            # Update content width first
+            self.content.width = self.width - self.scrollbar_width
+            
+            # Update content layout (height might change)
+            if hasattr(self.content, 'layout'):
+                self.content.layout()
                 
+            # Content top should be at self.y + self.height + scroll_offset?
+            # No, usually:
+            # y = self.y + self.height - content_height + scroll_offset
+            # Let's try standard: content top aligned with view top when offset=0
+            # content.y = self.y + self.height - content.height + self.scroll_offset
+            
+            # Wait, Document draws from bottom-left (usually).
+            # If Document height is large, say 500, and view is 100.
+            # We want top of Document to be at top of View.
+            # Document.y is its bottom.
+            # So Document.y = View.top - Document.height
+            # View.top = self.y + self.height
+            # So Document.y = self.y + self.height - self.content.height
+            # With scroll, we move it up (positive offset).
+            self.content.y = self.y + self.height - self.content.height + self.scroll_offset
+            self.content.x = self.x
+            
+            # Update scissor rect
+            if self.scissor_group:
+                self.scissor_group.x = int(self.x)
+                self.scissor_group.y = int(self.y)
+                self.scissor_group.width = int(self.width)
+                self.scissor_group.height = int(self.height)
+                
+            # Update scrollbar
+            if self.scrollbar_handle and self.content.height > self.height:
+                ratio = self.height / self.content.height
+                handle_height = max(20, self.height * ratio)
+                max_scroll = self.content.height - self.height
+                scroll_ratio = self.scroll_offset / max_scroll if max_scroll > 0 else 0
+                
+                # Scrollbar moves down as we scroll down (content moves up)
+                # handle_y = top - handle_height - (scrollable_area * scroll_ratio)
+                track_height = self.height
+                scrollable_track = track_height - handle_height
+                
+                # Invert logic: scroll_offset 0 means top.
+                # Handle should be at top.
+                handle_y = self.y + self.height - handle_height - (scrollable_track * scroll_ratio)
+                
+                self.scrollbar_handle.y = handle_y
+                self.scrollbar_handle.height = handle_height
+                self.scrollbar_handle.x = self.x + self.width - self.scrollbar_width
+                
+            if self.scrollbar_bg:
+                self.scrollbar_bg.x = self.x + self.width - self.scrollbar_width
+                self.scrollbar_bg.y = self.y
+                self.scrollbar_bg.height = self.height
+
+            # Propagate shift to content
+            # Actually we set content.y directly.
+            # But content might need to update its internal sprites (Label).
+            if hasattr(self.content, 'shift'):
+                # We can't use shift because we set absolute position.
+                # We need a way to force update.
+                # Document.layout() does this!
+                pass
+            
+            if hasattr(self.content, 'layout'):
+                self.content.layout()
+
+    def layout(self):
+        """Layout content"""
+        self._update_positions()
+        
+    def shift(self, dx, dy):
+        self.x += dx
+        self.y += dy
+        # _update_positions will recreate the group with new coordinates
+        self._update_positions()
+        
     def delete(self):
         """Clean up scrollable"""
         if self.content:
             self.content.delete()
+        if self.scrollbar_bg:
+            self.scrollbar_bg.delete()
+        if self.scrollbar_handle:
+            self.scrollbar_handle.delete()
         super().delete()
 
 
@@ -896,6 +1185,9 @@ class Manager:
             self.content.layout()
         self.update_position()
         
+        # Register for events
+        self.window.push_handlers(self)
+        
     def update_position(self):
         """Position content based on anchor setting (public)"""
         window_width, window_height = self.window.get_size()
@@ -926,8 +1218,15 @@ class Manager:
         self.content.shift(dx, dy)
         print(f"[Manager] Anchor {self.anchor}: moved content by ({dx},{dy}) to x={self.content.x}, y={self.content.y}")
 
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        """Handle mouse scroll events"""
+        if self.content and hasattr(self.content, 'on_mouse_scroll'):
+            return self.content.on_mouse_scroll(x, y, scroll_x, scroll_y)
+        return False
+
     def delete(self):
         """Clean up manager and content"""
+        self.window.remove_handlers(self)
         if self.content:
             self.content.delete()
 
