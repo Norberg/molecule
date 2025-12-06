@@ -112,6 +112,7 @@ class Theme:
 # Global theme instance
 theme = Theme()
 
+GUI_PADDING = 2
 
 class CustomGUI:
     """Custom GUI system to replace pyglet-gui functionality"""
@@ -1195,17 +1196,17 @@ class Manager:
         old_x, old_y = self.content.x, self.content.y
         # Determine target anchor position
         if self.anchor == 'bottom_left':
-            target_x = 10
-            target_y = 10
+            target_x = GUI_PADDING
+            target_y = GUI_PADDING
         elif self.anchor == 'bottom_right':
-            target_x = window_width - self.content.width - 10
-            target_y = 10
+            target_x = window_width - self.content.width - GUI_PADDING
+            target_y = GUI_PADDING
         elif self.anchor == 'top_right':
-            target_x = window_width - self.content.width - 10
-            target_y = window_height - self.content.height - 10
+            target_x = window_width - self.content.width - GUI_PADDING
+            target_y = window_height - self.content.height - GUI_PADDING
         elif self.anchor == 'top_left':
-            target_x = 10
-            target_y = window_height - self.content.height - 10
+            target_x = GUI_PADDING
+            target_y = window_height - self.content.height - GUI_PADDING
         else:  # default fall back
             target_x = old_x
             target_y = old_y

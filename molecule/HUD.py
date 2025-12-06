@@ -19,7 +19,7 @@ import pyglet
 from molecule.CustomGUI import (
     Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame, 
     SectionHeader, FoldingSection, PopupMessage, Scrollable, Button, OneTimeButton,
-    ANCHOR_BOTTOM_LEFT, HALIGN_LEFT, ANCHOR_TOP_RIGHT
+    ANCHOR_BOTTOM_LEFT, HALIGN_LEFT, ANCHOR_TOP_RIGHT, GUI_PADDING
 )
 from molecule import RenderingOrder
 from molecule import Effects
@@ -31,12 +31,18 @@ from libcml import CachedCml
 class HUD:
     def __init__(self, window, batch, space, level, create_elements_callback):
         height = 100
-        # Vertical HUD is 180px wide. Leave 20px gap.
-        width = window.width - 200 
-        self.horizontal = HorizontalHUD(window, batch, space, level, height, width)
-        height = window.height - 40
-        width = 180
-        self.vertical = VerticalHUD(window, batch, space, level, height, width, create_elements_callback)
+        
+        VERTICAL_HUD_WIDTH = 180
+        
+        # Calculate dimensions dynamically
+        # Horizontal HUD fills width minus the vertical HUD width and padding/gap
+        vertical_hud_total_width = VERTICAL_HUD_WIDTH + GUI_PADDING
+        horizontal_width = window.width - vertical_hud_total_width - GUI_PADDING
+        
+        self.horizontal = HorizontalHUD(window, batch, space, level, height, horizontal_width)
+        
+        vertical_height = window.height - (GUI_PADDING * 2)
+        self.vertical = VerticalHUD(window, batch, space, level, vertical_height, VERTICAL_HUD_WIDTH, create_elements_callback)
 
     def update_info_text(self, formula):
         self.horizontal.update_info_text(formula)
@@ -163,23 +169,22 @@ class VerticalHUD:
         self.batch = batch
         self.space = space
         self.level = level
-        status_text = '''
-Time: 0 sec
+        status_height = 100
+        status_text = '''Time: 0 sec
 Points: 0 points
-FPS: 00.00 FPS
-'''
-        self.status_doc = Document(status_text, 0, 0, width, height, batch)
-        status_frame = Frame(0, 0, width, height, batch)
+FPS: 00.00 FPS'''
+        self.status_doc = Document(status_text, 0, 0, width, status_height, batch)
+        status_frame = Frame(0, 0, width, status_height, batch)
         status_frame.add_child(self.status_doc)
         
         inv_text = "<h4>Inventory</h4>"
         inventory_header = Document(inv_text, 0, 0, width, 30, batch)
-        self.inventory_container = VerticalContainer(0, 0, width, height-30)
+        self.inventory_container = VerticalContainer(0, 0, width, height - status_height - 30)
 
-        container = VerticalContainer(0, 0, width, height)
+        container = VerticalContainer(0, 0, width, height - status_height)
         container.add(inventory_header)
         container.add(self.inventory_container)
-        self.inventory_frame = Frame(0, 0, width, height, batch)
+        self.inventory_frame = Frame(0, 0, width, height - status_height, batch)
         self.inventory_frame.add_child(container)
         
         container = VerticalContainer(0, 0, width, height)
@@ -218,11 +223,9 @@ FPS: 00.00 FPS
         points = self.window.level.get_points()
         # In pyglet 2+, get_fps() is no longer available
         # We'll use a simple counter or skip FPS display for now
-        status_text = '''
-Time: %d sec
+        status_text = '''Time: %d sec
 Points: %d points
-FPS: N/A
-''' % (level_time, points)
+FPS: N/A''' % (level_time, points)
         self.status_doc.set_text(status_text)
 
     def delete(self):
