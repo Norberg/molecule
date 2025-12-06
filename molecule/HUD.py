@@ -67,18 +67,20 @@ class HorizontalHUD:
         # Let's try fixed width of 400px for left, rest for right.
         left_width = 400
         info_width = width - left_width - 10 # 10 for spacing
+
+        progress_height = 50
         
         # Progress + objective (fallbacks for missing data)
         progress_text = "Progress:"
-        self.progress_doc = Document(progress_text, 0, 0, left_width, height, batch)
+        self.progress_doc = Document(progress_text, 0, 0, left_width, progress_height, batch)
         objective_str = level.objective or ""
         objective_html = Gui.find_and_convert_formulas(objective_str)
-        objective_doc = Document(objective_html, 0, 0, left_width, height, batch)
+        objective_doc = Document(objective_html, 0, 0, left_width, height-progress_height, batch)
 
         # Create left frame container
         left_container = VerticalContainer(0, 0, left_width, height)
         left_container.add(objective_doc)
-        left_container.add(None)  # Spacer
+        #left_container.add(None)  # Spacer
         left_container.add(self.progress_doc)
         left_frame = Frame(0, 0, left_width, height, batch, is_expandable=True)
         left_frame.add_child(left_container)

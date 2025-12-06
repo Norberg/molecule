@@ -703,7 +703,7 @@ class Container(Widget):
                 continue
             child.x = self.x + pad_left
             child.width = self.width - pad_left - pad_right
-            child.y = self.y + current_y - child.height
+            child.y = current_y - child.height
             current_y -= child.height
             
             # Handle horizontal alignment
@@ -762,7 +762,8 @@ class VerticalContainer(Container):
                 continue
             child.x = self.x + pad_left
             child.width = self.width - pad_left - pad_right
-            child.y = self.y + current_y - child.height
+            child.y = current_y - child.height
+            #child.y = self.y + current_y - child.height
             current_y -= child.height
             
             # Handle horizontal alignment
