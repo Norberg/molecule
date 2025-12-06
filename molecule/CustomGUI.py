@@ -914,10 +914,12 @@ class Scrollable(Widget):
                                         self.scrollbar_width, height, 
                                         color=(200, 200, 200, 255), 
                                         batch=batch, group=group)
+            self.scrollbar_bg.visible = False
             self.scrollbar_handle = Rectangle(x + width - self.scrollbar_width, y + height - 20, 
                                             self.scrollbar_width, 20, 
                                             color=(100, 100, 100, 255), 
                                             batch=batch, group=group)
+            self.scrollbar_handle.visible = False
 
     def _setup_scrolling(self):
         """Setup scrolling functionality"""
@@ -1003,31 +1005,34 @@ class Scrollable(Widget):
                 self.scissor_group.y = int(self.y)
                 self.scissor_group.width = int(self.width)
                 self.scissor_group.height = int(self.height)
-                
+            
             # Update scrollbar
-            if self.scrollbar_handle and self.content.height > self.height:
-                ratio = self.height / self.content.height
-                handle_height = max(20, self.height * ratio)
-                max_scroll = self.content.height - self.height
-                scroll_ratio = self.scroll_offset / max_scroll if max_scroll > 0 else 0
-                
-                # Scrollbar moves down as we scroll down (content moves up)
-                # handle_y = top - handle_height - (scrollable_area * scroll_ratio)
-                track_height = self.height
-                scrollable_track = track_height - handle_height
-                
-                # Invert logic: scroll_offset 0 means top.
-                # Handle should be at top.
-                handle_y = self.y + self.height - handle_height - (scrollable_track * scroll_ratio)
-                
-                self.scrollbar_handle.y = handle_y
-                self.scrollbar_handle.height = handle_height
-                self.scrollbar_handle.x = self.x + self.width - self.scrollbar_width
+            should_show_scrollbar = self.content.height > self.height
+            
+            if self.scrollbar_handle:
+                self.scrollbar_handle.visible = should_show_scrollbar
+                if should_show_scrollbar:
+                    ratio = self.height / self.content.height
+                    handle_height = max(20, self.height * ratio)
+                    max_scroll = self.content.height - self.height
+                    scroll_ratio = self.scroll_offset / max_scroll if max_scroll > 0 else 0
+                    
+                    # Invert logic: scroll_offset 0 means top.
+                    # Handle should be at top.
+                    track_height = self.height
+                    scrollable_track = track_height - handle_height
+                    handle_y = self.y + self.height - handle_height - (scrollable_track * scroll_ratio)
+                    
+                    self.scrollbar_handle.y = handle_y
+                    self.scrollbar_handle.height = handle_height
+                    self.scrollbar_handle.x = self.x + self.width - self.scrollbar_width
                 
             if self.scrollbar_bg:
-                self.scrollbar_bg.x = self.x + self.width - self.scrollbar_width
-                self.scrollbar_bg.y = self.y
-                self.scrollbar_bg.height = self.height
+                self.scrollbar_bg.visible = should_show_scrollbar
+                if should_show_scrollbar:
+                    self.scrollbar_bg.x = self.x + self.width - self.scrollbar_width
+                    self.scrollbar_bg.y = self.y
+                    self.scrollbar_bg.height = self.height
 
             # Propagate shift to content
             # Actually we set content.y directly.
