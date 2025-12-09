@@ -1013,11 +1013,11 @@ class Scrollable(Widget):
             # Update content width first (keeping scrollbar width reserved)
             self.content.width = self.width - self.scrollbar_width
             
-            if hasattr(self.content, 'layout'):
-                self.content.layout()
-                
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
             self.content.x = self.x
+
+            if hasattr(self.content, 'layout'):
+                self.content.layout()
             
             if self.scissor_group:
                 self.scissor_group.x = int(self.x)
