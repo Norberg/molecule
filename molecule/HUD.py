@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+import time
 
 import pyglet
 from molecule.CustomGUI import (
@@ -204,6 +205,11 @@ FPS: 00.00 FPS'''
         self.init_effects(space, level)
         self.manager.update_position()
 
+        # FPS Tracking
+        self.last_fps_time = time.time()
+        self.frame_count = 0
+        self.fps = 0.0
+
     def init_effects(self, space, level):
         pos = (self.inventory_frame.x + self.inventory_frame.width / 2,
                self.inventory_frame.y + self.inventory_frame.height / 2 - 400)
@@ -215,20 +221,20 @@ FPS: 00.00 FPS'''
         return [self.inventory_effect]
 
     def on_draw(self):
-        self.tick += 1
-        if self.tick > 30:
-            return
-        self.tick = 0
-        self.update_status()
+        self.frame_count += 1
+        current_time = time.time()
+        if current_time - self.last_fps_time >= 0.2: # Update every 0.2s
+            self.fps = self.frame_count / (current_time - self.last_fps_time)
+            self.frame_count = 0
+            self.last_fps_time = current_time
+            self.update_status()
 
     def update_status(self):
         level_time = self.window.level.get_time()
         points = self.window.level.get_points()
-        # In pyglet 2+, get_fps() is no longer available
-        # We'll use a simple counter or skip FPS display for now
         status_text = '''Time: %d sec
 Points: %d points
-FPS: N/A''' % (level_time, points)
+FPS: %.2f FPS''' % (level_time, points, self.fps)
         self.status_doc.set_text(status_text)
 
     def delete(self):
