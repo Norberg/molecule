@@ -26,10 +26,8 @@ from molecule import Effects
 from molecule import Gui
 from libcml import CachedCml
 
-# Theme is no longer needed as we use simple colors
-
 class HUD:
-    HEIGHT = 100
+    HEIGHT = 108 # 5 lines of text
     VERTICAL_HUD_WIDTH = 180
 
     def __init__(self, window, batch, space, level, create_elements_callback):
@@ -74,10 +72,10 @@ class HorizontalHUD:
         # Let's give it a fixed width or a smaller percentage.
         # Previous was 50/50.
         # Let's try fixed width of 400px for left, rest for right.
-        left_width = 400
-        info_width = width - left_width - 10 # 10 for spacing
+        left_width = 450
+        info_width = width - left_width# - 10 # 10 for spacing
 
-        progress_height = 50
+        progress_height = 30
         
         # Progress + objective (fallbacks for missing data)
         progress_text = "Progress:"
@@ -115,7 +113,7 @@ class HorizontalHUD:
         victory_formula = level.victory_condition[0] if level.victory_condition else "H2O"
         self.update_info_text(victory_formula) # Initialize with victory formula
 
-        container = HorizontalContainer(0, 0, width, height, spacing=10)
+        container = HorizontalContainer(0, 0, width, height, spacing=0)
         container.add(self.left_container)
         container.add(self.info_container)
 
@@ -160,7 +158,8 @@ class HorizontalHUD:
 
     def update_progress(self):
         progress_text = self.victory.progress_text()
-        self.progress_doc.set_text("Progress: " + progress_text)
+        formatted_text = "Progress: " + progress_text
+        self.progress_doc.set_text(Gui.find_and_convert_formulas(formatted_text))
 
     def delete(self):
         self.window.remove_handlers(on_draw=self.on_draw)
