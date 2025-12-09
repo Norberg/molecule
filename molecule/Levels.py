@@ -27,6 +27,7 @@ from molecule import Effects
 from molecule import Gui
 from molecule import pyglet_util
 from molecule import HUD
+from molecule.CustomGUI import GUI_PADDING
 from molecule.emitters import Emitters
 from libcml import Cml
 
@@ -97,8 +98,8 @@ class Level:
         game_area = self.window.get_size()
 
         max_x, max_y = map(sum, zip(game_area,(offset,offset)))
-        hud_x = max_x - 214
-        hud_y = offset - 134
+        hud_x = max_x - (HUD.HUD.VERTICAL_HUD_WIDTH + GUI_PADDING)
+        hud_y = offset - HUD.HUD.HEIGHT
         screen_boundaries = [
           pymunk.Segment(self.space.static_body, (-offset, -hud_y), (max_x, -hud_y), thickness),
           pymunk.Segment(self.space.static_body, (-offset, -offset), (-offset, max_y), thickness),

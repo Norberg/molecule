@@ -29,10 +29,13 @@ from libcml import CachedCml
 # Theme is no longer needed as we use simple colors
 
 class HUD:
+    HEIGHT = 100
+    VERTICAL_HUD_WIDTH = 180
+
     def __init__(self, window, batch, space, level, create_elements_callback):
-        height = 100
+        height = self.HEIGHT
         
-        VERTICAL_HUD_WIDTH = 180
+        VERTICAL_HUD_WIDTH = self.VERTICAL_HUD_WIDTH
         
         # Calculate dimensions dynamically
         # Horizontal HUD fills width minus the vertical HUD width and padding/gap
