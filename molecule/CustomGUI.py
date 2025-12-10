@@ -606,11 +606,11 @@ class Button(Widget):
         if self._down_slices:
             for s in self._down_slices['slices']:
                 s.visible = False
-        self.label = Label(
+        # Always use HTMLLabel for consistency in font rendering
+        self.label = HTMLLabel(
             self.text, x=self.x + self.width//2, y=self.y + self.height//2,
             batch=self.batch, group=RenderingOrder.gui,
-            anchor_x='center', anchor_y='center',
-            font_size=12, color=tuple(self._up_text_color)
+            anchor_x='center', anchor_y='center'
         )
         
     def on_mouse_press(self, x, y, button, modifiers):

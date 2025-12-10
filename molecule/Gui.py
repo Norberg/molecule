@@ -80,7 +80,7 @@ class MoleculeButton(OneTimeButton):
         OneTimeButton.__init__(self, self.text, batch=batch, group=group, on_click=on_click)
 
     def update_label(self):
-        label_text = "%d - %s" % (self.count, self.element)
+        label_text = "%d - %s" % (self.count, formula_to_html(self.element))
         if hasattr(self, 'label') and hasattr(self.label, 'text'):
             # Update existing Label object
             self.label.text = label_text
