@@ -81,12 +81,25 @@ class MoleculeButton(OneTimeButton):
 
     def update_label(self):
         label_text = "%d - %s" % (self.count, formula_to_html(self.element))
-        if hasattr(self, 'label') and hasattr(self.label, 'text'):
-            # Update existing Label object
-            self.label.text = label_text
-        else:
-            # Store text for initial creation
-            self.text = label_text
+        
+        # CRITICAL: Always update self.text because layout() might recreate the button
+        self.text = label_text
+        
+        if hasattr(self, 'label') and self.label:
+            # HTMLLabel doesn't update visually when .text is changed
+            # So we need to delete the old label and create a new one
+            old_x, old_y = self.label.x, self.label.y
+            old_batch = self.label.batch
+            old_group = self.label.group
+            self.label.delete()
+            # Recreate label with new text
+            from pyglet.text import HTMLLabel
+            from molecule import RenderingOrder
+            self.label = HTMLLabel(
+                label_text, x=old_x, y=old_y,
+                batch=old_batch, group=old_group,
+                anchor_x='center', anchor_y='center'
+            )
 
     def on_mouse_release(self, x, y, button, modifiers):
         """Handle mouse release - don't stay pressed for reusable buttons"""

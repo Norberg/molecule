@@ -487,25 +487,8 @@ class Inventory(Effect):
     def get_callback(self, button):
         self.create_element_callback(button.element, (button.x, button.y))
         self.remove_element(button.element)
-        # Update the button's count or remove it here if preferred.
-        # However, reload_gui is called on put, but not explicitly on get?
-        # Actually in original code:
-        # if button.count > 1: button.count -= 1; button.update_label()
-        # else: self.gui_container.remove(button)
-        # 
-        # But wait, remove_element updates self.content.
-        # If we rely on reload_gui() to sync UI with state, we should call it here too?
-        # Or keep local logic.
-        # The key is that reload_gui iterates over existing buttons and matched them with content.
-        # Let's trust reload_gui to handle it if we call it, OR keep local logic if it works.
-        # Original code did manual update. Let's try to delegate to reload_gui for consistency, 
-        # OR fix manual update.
-        # Manual update:
-        if button.element in self.content:
-            button.count = self.content[button.element]
-            button.update_label()
-        else:
-            self.gui_container.remove(button)
+        # Always sync UI with inventory state to avoid inconsistencies
+        self.reload_gui()
 
     def get_element(self, element, x, y):
         return None
