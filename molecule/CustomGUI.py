@@ -828,6 +828,10 @@ class Container(Widget):
 class VerticalContainer(Container):
     """A container that arranges widgets vertically"""
     
+    def __init__(self, x, y, width, height, batch=None, group=None, spacing=0):
+        super().__init__(x, y, width, height, batch, group)
+        self.spacing = spacing
+    
     def _layout_children(self):
         """Layout children vertically from top to bottom"""
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
@@ -835,7 +839,7 @@ class VerticalContainer(Container):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
         
         # Vertical spacing between children
-        spacing = getattr(self, 'spacing', 4)  # Default 4 pixels spacing
+        spacing = self.spacing
         
         current_y = self.y + self.height - pad_top
         for i, child in enumerate(self.children):

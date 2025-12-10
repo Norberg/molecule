@@ -183,7 +183,7 @@ FPS: 00.00 FPS'''
         
         inv_text = "<h4>Inventory</h4>"
         inventory_header = Document(inv_text, 0, 0, width, 30, batch)
-        self.inventory_container = VerticalContainer(0, 0, width, height - status_height - 30)
+        self.inventory_container = VerticalContainer(0, 0, width, height - status_height - 30, spacing=5)
 
         container = VerticalContainer(0, 0, width, height - status_height)
         container.add(inventory_header)
