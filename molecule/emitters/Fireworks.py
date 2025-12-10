@@ -167,7 +167,7 @@ class _EmberParticle:
         fade = 1.0 - (self.age / self.life)
         self.shape.opacity = int(240 * fade)
         if int(self.age * 20) % 4 == 0:  # subtle flicker
-            r,g,b = self.shape.color
+            r,g,b,a = self.shape.color
             self.shape.color = (r, max(0, int(g*0.97)), max(0, int(b*0.94)))
         return True
 
