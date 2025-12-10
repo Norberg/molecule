@@ -215,7 +215,7 @@ FPS: 00.00 FPS'''
                self.inventory_frame.y + self.inventory_frame.height / 2 - 400)
         self.inventory_effect = Effects.Inventory(space, pos, "Inventory",
                 self.inventory_frame.width, self.inventory_frame.height + 800,
-                level.inventory, gui_container=self.inventory_container, create_element_callback=self.create_element_callback)
+                level.inventory, gui_container=self.inventory_container, create_element_callback=self.create_element_callback, batch=self.batch)
 
     def get_effects(self):
         return [self.inventory_effect]

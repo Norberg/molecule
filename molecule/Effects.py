@@ -468,9 +468,10 @@ class Mining(Action):
 
 class Inventory(Effect):
     def __init__(self, space, pos, name, width, height, content = [],
-            capacity = 0, gui_container = None, create_element_callback = None):
+            capacity = 0, gui_container = None, create_element_callback = None, batch=None):
         Effect.__init__(self, space = space, pos = pos, width =
                 width, height = height, name = name)
+        self.batch = batch
         self.content = self.list_to_inventory(content)
         self.supported_attributes.append("get")
         self.supported_attributes.append("put")
@@ -479,15 +480,29 @@ class Inventory(Effect):
         self.reload_gui()
 
     def put_element(self, element):
-        self.add_to_inventroy(self.content, element.state_formula)
+        self.add_to_inventory(self.content, element.state_formula)
         self.reload_gui()
         return True
 
     def get_callback(self, button):
         self.create_element_callback(button.element, (button.x, button.y))
         self.remove_element(button.element)
-        if button.count > 1:
-            button.count -= 1
+        # Update the button's count or remove it here if preferred.
+        # However, reload_gui is called on put, but not explicitly on get?
+        # Actually in original code:
+        # if button.count > 1: button.count -= 1; button.update_label()
+        # else: self.gui_container.remove(button)
+        # 
+        # But wait, remove_element updates self.content.
+        # If we rely on reload_gui() to sync UI with state, we should call it here too?
+        # Or keep local logic.
+        # The key is that reload_gui iterates over existing buttons and matched them with content.
+        # Let's trust reload_gui to handle it if we call it, OR keep local logic if it works.
+        # Original code did manual update. Let's try to delegate to reload_gui for consistency, 
+        # OR fix manual update.
+        # Manual update:
+        if button.element in self.content:
+            button.count = self.content[button.element]
             button.update_label()
         else:
             self.gui_container.remove(button)
@@ -498,16 +513,18 @@ class Inventory(Effect):
     def list_to_inventory(self, inventory_list):
         inventory = OrderedDict()
         for element in inventory_list:
-            self.add_to_inventroy(inventory, element)
+            self.add_to_inventory(inventory, element)
         return inventory
 
-    def add_to_inventroy(self, inventory, element):
+    def add_to_inventory(self, inventory, element):
         if element in inventory:
             inventory[element] += 1
         else:
             inventory[element] = 1
 
     def remove_element(self, element):
+        if element not in self.content:
+            return
         if self.content[element] == 1:
             self.content.pop(element)
         else:
@@ -516,29 +533,31 @@ class Inventory(Effect):
     def reload_gui(self):
         if self.gui_container is None:
             return
-        gui_elements = list()
-        #Update existing elements
-        index = 0
+        
+        # Track which elements we have buttons for
+        existing_buttons = {}
         for button in list(self.gui_container.children):
-            element = button.element
-            count = self.content[button.element]
-            if (element in self.content.keys() and
-                button.count != count):
-                new_btn = Gui.MoleculeButton(element, count, self.get_callback)
-                self.gui_container.remove(button)
-                offset =len(self.gui_container.children)
-                self.gui_container.add(new_btn, offset - index)
-            if element not in self.content.keys():
-                self.gui_container.remove(button)
-            index += 1
-            gui_elements.append(button.element)
+            if hasattr(button, 'element'):
+                existing_buttons[button.element] = button
 
-        #Add new elements
+        # Update existing buttons and remove stale ones
+        for element, button in list(existing_buttons.items()):
+            if element in self.content:
+                # Update count
+                count = self.content[element]
+                if button.count != count:
+                    button.count = count
+                    button.update_label()
+            else:
+                # Remove button
+                self.gui_container.remove(button)
+                del existing_buttons[element]
+
+        # Add new buttons
         for element, count in self.content.items():
-            if element in gui_elements:
-                continue
-            button = Gui.MoleculeButton(element, count, self.get_callback)
-            self.gui_container.add(button)
+            if element not in existing_buttons:
+                button = Gui.MoleculeButton(element, count, self.get_callback, batch=self.batch)
+                self.gui_container.add(button)
 
 class VictoryInventory(Inventory):
     def __init__(self, space, pos, name, width, height, victory_condition):
@@ -553,7 +572,7 @@ class VictoryInventory(Inventory):
             if self.victory_condition_fullfilled(element):
                 return False
             else:
-                self.add_to_inventroy(self.content, element)
+                self.add_to_inventory(self.content, element)
                 return True
         return False
 

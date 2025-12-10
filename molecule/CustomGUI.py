@@ -435,6 +435,31 @@ class Frame(Widget):
                 c.x += dx
                 c.y += dy
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_press'):
+                if child.on_mouse_press(x, y, button, modifiers):
+                    return True
+        return False
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        # Only forward to children under the cursor
+        for child in reversed(self.children):
+            if child and child.contains_point(x, y) and hasattr(child, 'on_mouse_release'):
+                if child.on_mouse_release(x, y, button, modifiers):
+                    return True
+        return False
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_drag'):
+                if child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+                    return True
+        return False
 
 
 class Document(Widget):
@@ -590,6 +615,8 @@ class Button(Widget):
         
     def on_mouse_press(self, x, y, button, modifiers):
         """Switch to down visuals if present."""
+        if not self.contains_point(x, y):
+            return False
         self.pressed = True
         if self._down_slices:
             if self._up_slices:
@@ -604,6 +631,7 @@ class Button(Widget):
                 self._orig_color = tuple(self.bg_rect.color)
             r,g,b = self._orig_color
             self.bg_rect.color = (max(0,int(r*0.7)), max(0,int(g*0.7)), max(0,int(b*0.7)))
+        return True
         
     def on_mouse_release(self, x, y, button, modifiers):
         """Restore up visuals and fire click if inside."""
@@ -679,7 +707,7 @@ class OneTimeButton(Button):
                 self.on_click(self)
         self.pressed = False
         # Restore to normal state
-        if self.bg_sprite:
+        if hasattr(self, 'bg_sprite') and self.bg_sprite:
             normal_img = theme.get_image("green-button-up.png")
             if normal_img:
                 self.bg_sprite.image = normal_img
@@ -711,14 +739,14 @@ class Container(Widget):
         if widget:
             widget.parent = self
         self.children.append(widget)
-        self._layout_children()
+        self.layout()
         
     def remove(self, widget):
         """Remove a widget from the container"""
         if widget in self.children:
             self.children.remove(widget)
             widget.delete()
-            self._layout_children()
+            self.layout()
             
     def _layout_children(self):
         """Layout children widgets"""
@@ -747,11 +775,6 @@ class Container(Widget):
         for child in self.children:
             if hasattr(child, 'layout'):
                 child.layout()
-        print(f"[Container] After layout: width={self.width}, height={self.height}")
-        for i, child in enumerate(self.children):
-            if child:
-                print(f"  [Child {i}] x={child.x}, y={child.y}, w={child.width}, h={child.height}")
-        super().delete()
 
     def shift(self, dx, dy):
         super().shift(dx, dy)
@@ -776,6 +799,32 @@ class Container(Widget):
         return False
 
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_press'):
+                if child.on_mouse_press(x, y, button, modifiers):
+                    return True
+        return False
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        # Only forward to children under the cursor
+        for child in reversed(self.children):
+            if child and child.contains_point(x, y) and hasattr(child, 'on_mouse_release'):
+                if child.on_mouse_release(x, y, button, modifiers):
+                    return True
+        return False
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_drag'):
+                if child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+                    return True
+        return False
+
 class VerticalContainer(Container):
     """A container that arranges widgets vertically"""
     
@@ -784,8 +833,12 @@ class VerticalContainer(Container):
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
+        
+        # Vertical spacing between children
+        spacing = getattr(self, 'spacing', 4)  # Default 4 pixels spacing
+        
         current_y = self.y + self.height - pad_top
-        for child in self.children:
+        for i, child in enumerate(self.children):
             if child is None:
                 continue
             child.x = self.x + pad_left
@@ -793,6 +846,9 @@ class VerticalContainer(Container):
             child.y = current_y - child.height
             #child.y = self.y + current_y - child.height
             current_y -= child.height
+            # Add spacing after each child except the last one
+            if i < len(self.children) - 1:
+                current_y -= spacing
             
             # Handle horizontal alignment
             if self.align == 'center':
@@ -960,6 +1016,25 @@ class Scrollable(Widget):
             
         self._update_positions()
         return True
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        if self.content and hasattr(self.content, 'on_mouse_press'):
+            return self.content.on_mouse_press(x, y, button, modifiers)
+        return False
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        if self.content and hasattr(self.content, 'on_mouse_release'):
+            return self.content.on_mouse_release(x, y, button, modifiers)
+        return False
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if not self.contains_point(x, y):
+            return False
+        if self.content and hasattr(self.content, 'on_mouse_drag'):
+            return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
+        return False
 
     def _create_scrollbar_part(self, part_name, x, y, width, height):
         """Create scrollbar visual part (knob or bar)"""
@@ -1238,6 +1313,21 @@ class Manager:
         """Handle mouse scroll events"""
         if self.content and hasattr(self.content, 'on_mouse_scroll'):
             return self.content.on_mouse_scroll(x, y, scroll_x, scroll_y)
+        return False
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self.content and hasattr(self.content, 'on_mouse_press'):
+            return self.content.on_mouse_press(x, y, button, modifiers)
+        return False
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        if self.content and hasattr(self.content, 'on_mouse_release'):
+            return self.content.on_mouse_release(x, y, button, modifiers)
+        return False
+
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+        if self.content and hasattr(self.content, 'on_mouse_drag'):
+            return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         return False
 
     def delete(self):

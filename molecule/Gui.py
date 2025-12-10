@@ -73,20 +73,39 @@ def create_popup(window, batch, text, on_escape=None):
                  group=RenderingOrder.gui, on_escape=on_escape)
 
 class MoleculeButton(OneTimeButton):
-    def __init__(self, element, count, on_click=None):
+    def __init__(self, element, count, on_click=None, batch=None, group=None):
         self.element = element
         self.count = count
         self.update_label()
-        OneTimeButton.__init__(self, self.label)
-        self._on_click = on_click
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.change_state()
-        if self._on_click is not None:
-            self._on_click(self)
+        OneTimeButton.__init__(self, self.text, batch=batch, group=group, on_click=on_click)
 
     def update_label(self):
-        self.label = "%d - %s" % (self.count, self.element)
+        label_text = "%d - %s" % (self.count, self.element)
+        if hasattr(self, 'label') and hasattr(self.label, 'text'):
+            # Update existing Label object
+            self.label.text = label_text
+        else:
+            # Store text for initial creation
+            self.text = label_text
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        """Handle mouse release - don't stay pressed for reusable buttons"""
+        # Handle the click without setting is_pressed
+        if self.pressed and self.contains_point(x, y):
+            # Don't set is_pressed = True like OneTimeButton does
+            if self.on_click:
+                self.on_click(self)
+        self.pressed = False
+        # Restore to normal state (from Button class)
+        if self._down_slices and self._up_slices:
+            for s in self._down_slices['slices']:
+                s.visible = False
+            for s in self._up_slices['slices']:
+                s.visible = True
+            if self.label and hasattr(self.label, 'color'):
+                self.label.color = tuple(self._up_text_color)
+        elif self.bg_rect is not None and hasattr(self, '_orig_color'):
+            self.bg_rect.color = self._orig_color
 
     def get_path(self):
         path = ["molecule-button"]
