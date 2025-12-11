@@ -397,14 +397,15 @@ class Level:
     def update(self):
         dt = 1/120.0
         self.space.step(dt)
-        if self.victory() and self.finished == False:
-            Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
-                             on_escape=self.window.switch_level)
-            self.finished = True
+
         for element in self.elements:
             element.update()
         for area in self.areas:
             area.update()
+        if self.finished == False and self.victory():
+            Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
+                             on_escape=self.window.switch_level)
+            self.finished = True
 
         self.update_emitters(dt)
 
