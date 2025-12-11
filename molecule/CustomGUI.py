@@ -61,10 +61,8 @@ class Theme:
     def _load_theme(self):
         """Load theme configuration from JSON file"""
         try:
-            print(f"Loading theme from: {self.theme_path}")
             with open(self.theme_path, 'r') as f:
                 theme_data = json.load(f)
-                print(f"Successfully loaded theme with {len(theme_data)} entries")
                 return theme_data
         except Exception as e:
             print(f"Failed to load theme: {e}")
@@ -94,7 +92,6 @@ class Theme:
                 if os.path.exists(img_path):
                     # Load image directly from file path
                     self.images[img_file] = pyglet.image.load(img_path)
-                    print(f"Loaded theme image: {img_file}")
                 else:
                     print(f"Theme image not found: {img_path}")
             except Exception as e:
@@ -1311,7 +1308,7 @@ class Manager:
 
         # Content must implement shift now
         self.content.shift(dx, dy)
-        print(f"[Manager] Anchor {self.anchor}: moved content by ({dx},{dy}) to x={self.content.x}, y={self.content.y}")
+        pass
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         """Handle mouse scroll events"""
