@@ -17,7 +17,7 @@ import os
 import re
 
 import pyglet
-from molecule.CustomGUI import (
+from molecule.gui import (
     Manager, VerticalContainer, Document, Frame, SectionHeader, 
     FoldingSection, PopupMessage, Scrollable, OneTimeButton,
     ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
@@ -48,11 +48,6 @@ def create_folding_description(window, batch, heading, description, chapters=lis
     for chapter in chapters:
         heading, text = chapter
         text_doc = Document(text, 0, 0, 300, 100, batch)
-        layout.append(FoldingSection(heading, text_doc, 0, 0, 300, 130, batch, is_open=False))
-
-    # Create container and scrollable
-    container = VerticalContainer(0, 0, 300, 400)
-    for item in layout:
         container.add(item)
     
     scrollable = Scrollable(container, 0, 0, 300, 400, batch, height_limit=400)

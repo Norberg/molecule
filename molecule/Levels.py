@@ -27,7 +27,7 @@ from molecule import Effects
 from molecule import Gui
 from molecule import pyglet_util
 from molecule import HUD
-from molecule.CustomGUI import GUI_PADDING
+from molecule.gui import GUI_PADDING
 from molecule.emitters import Emitters
 from libcml import Cml
 

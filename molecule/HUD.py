@@ -17,9 +17,9 @@ import os
 import time
 
 import pyglet
-from molecule.CustomGUI import (
-    Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame, 
-    SectionHeader, FoldingSection, PopupMessage, Scrollable, Button, OneTimeButton,
+from molecule.gui import (
+    Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame,
+    PopupMessage, Scrollable, Button, OneTimeButton,
     ANCHOR_BOTTOM_LEFT, HALIGN_LEFT, ANCHOR_TOP_RIGHT, GUI_PADDING
 )
 from molecule import RenderingOrder
