@@ -83,6 +83,7 @@ class Level:
         self.points = 0
         self.reaction_log = []
         self.emitters = []
+        self.victory_popup = None
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -403,8 +404,10 @@ class Level:
         for area in self.areas:
             area.update()
         if self.finished == False and self.victory():
-            Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
+            print("Victory")
+            self.victory_popup = Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.switch_level)
+            print("Victory popup created")
             self.finished = True
 
         self.update_emitters(dt)
@@ -429,4 +432,6 @@ class Level:
 
     def delete(self):
         self.window.remove_handlers(self)
+        if self.victory_popup:
+            self.victory_popup.delete()
         self.hud.delete()

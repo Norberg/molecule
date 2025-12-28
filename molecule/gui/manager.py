@@ -60,6 +60,6 @@ class Manager:
         return False
 
     def delete(self):
-        self.window.remove_handlers(self)
+        self.window.pop_handlers()
         if self.content:
             self.content.delete()

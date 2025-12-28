@@ -94,6 +94,7 @@ class Frame(Widget):
         self.children.clear()
         for s in self.bg_slices:
             s.delete()
+        self.bg_slices = []
         if hasattr(self, 'bg_sprite') and self.bg_sprite:
             self.bg_sprite.delete()
         if hasattr(self, 'bg_rect') and self.bg_rect is not None:

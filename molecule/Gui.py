@@ -64,7 +64,7 @@ def create_popup(window, batch, text, on_escape=None):
         text - text message in popup
         on_escape - callback when popup is closed
     """
-    PopupMessage(text=text, window=window, batch=batch,
+    return PopupMessage(text=text, window=window, batch=batch,
                  group=RenderingOrder.gui, on_escape=on_escape)
 
 class MoleculeButton(OneTimeButton):
