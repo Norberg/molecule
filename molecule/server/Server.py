@@ -42,6 +42,7 @@ class Server:
                 "port": 8000,
                 "log_config": None,  # Disable default uvicorn logging
             },
+            daemon=True
         )
         server_thread.start()
 
