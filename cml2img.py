@@ -61,10 +61,9 @@ def convert_cml2png(formula, output):
     width = int(w*64) + 64 + 36
     height = int(h*64) + 64 + 36
 
-    # 2. Create Window (and OpenGL context)
+    # 2. Create Window (Invisible)
     config = gl.Config(double_buffer=True)
-    window = pyglet.window.Window(width=width, height=height, visible=True, config=config)
-    window.minimize()
+    window = pyglet.window.Window(width=width, height=height, visible=False, config=config)
 
     # 3. Create graphics objects now that context is active
     gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
