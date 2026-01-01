@@ -52,6 +52,8 @@ class EditorGTK:
         self.init_twStates()
         self.init_twReactions()
         self.init_reactions()
+        self.init_twSearchResults()
+        self.search_cache = None
         self.handle_command_arguments()
 
     def init_reactions(self):
@@ -127,6 +129,14 @@ class EditorGTK:
         for col in (col1, col2, col3, col4, col5):
             twStates.append_column(col)
 
+    def init_twSearchResults(self):
+        tv = self.widget("tvSearchResults")
+        renderer = Gtk.CellRendererText()
+        col1 = Gtk.TreeViewColumn("Formula", renderer, text=0)
+        col2 = Gtk.TreeViewColumn("Name", renderer, text=1)
+        tv.append_column(col1)
+        tv.append_column(col2)
+
     def on_winMain_destroy(self, widget):
         Gtk.main_quit()
 
@@ -179,6 +189,7 @@ class EditorGTK:
     def update_folder_list(self):
         self.folder_list = glob.glob(self.folder+"/*")
         self.folder_list.sort()
+        self.search_cache = None # Invalidate cache
 
 
     def on_fcbOpen_file_set(self, widget):
@@ -499,6 +510,65 @@ class EditorGTK:
         self.widget("fcbOpen").set_filename(path)
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
         self.widget("txtSmiles").set_text(smiles) 
+
+    def on_btnSearch_clicked(self, widget):
+        self.widget("winSearch").show_all()
+        self.widget("entSearch").grab_focus()
+
+    def on_winSearch_delete_event(self, widget, event):
+        self.widget("winSearch").hide()
+        return True
+
+    def on_winSearch_key_press_event(self, widget, event):
+        if Gdk.keyval_name(event.keyval) == "Escape":
+            self.widget("winSearch").hide()
+            return True
+        return False
+
+    def on_entSearch_changed(self, entry):
+        if self.search_cache is None:
+            self.build_search_cache()
+        
+        query = entry.get_text().lower()
+        ls = self.widget("lsSearchResults")
+        ls.clear()
+        
+        if not query:
+            return
+
+        for item in self.search_cache:
+            if (query in item['formula'].lower() or 
+                query in item['name'].lower() or 
+                query in item['smiles'].lower()):
+                ls.append([item['formula'], item['name'], item['path']])
+
+    def build_search_cache(self):
+        self.search_cache = []
+        for path in self.folder_list:
+            if not path.endswith(".cml"):
+                continue
+            try:
+                mol = Cml.Molecule()
+                mol.parse(path)
+                formula = os.path.basename(path).replace(".cml", "")
+                name = str(mol.property.get("Name", ""))
+                smiles = str(mol.property.get("Smiles", ""))
+                self.search_cache.append({
+                    'path': path,
+                    'formula': formula,
+                    'name': name,
+                    'smiles': smiles
+                })
+            except Exception as e:
+                print(f"Error indexing {path}: {e}")
+
+    def on_tvSearchResults_row_activated(self, tv, path, column):
+        model = tv.get_model()
+        iter = model.get_iter(path)
+        filepath = model.get_value(iter, 2)
+        self.widget("fcbOpen").set_filename(filepath)
+        self.openFile(filepath)
+        self.widget("winSearch").hide()
     
     def on_btnNewMoleculeFromWiki_clicked(self, widget):
         answers = InputBox("Molecule", ["Wikipedia link:"])
