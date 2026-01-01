@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="Sn"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">51.2</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.4</property>
+    <property title="Name">Tin</property>
+    <property title="Weight">118.7</property>
+    <property title="Description">Tin is a chemical element with the symbol Sn (from Latin: stannum) and atomic number 50. Tin is a silvery-white metal with a faint yellow hue. It is soft enough to be cut without much force, and a bar of tin can be bent by hand with little effort; when it is bent, the so-called "tin cry" can be heard as a result of twinning in tin crystals.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Tin</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Sn]</property>
+  </propertyList>
+</ns0:molecule>
