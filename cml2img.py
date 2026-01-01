@@ -13,9 +13,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 import getopt
 import sys
-
 import pyglet
 from pyglet import gl
 from molecule.Elements import Molecule
@@ -43,27 +43,53 @@ def main():
     convert_cml2png(input, output)
 
 def convert_cml2png(formula, output): 
-    space = SpaceMock()
-    batch = pyglet.graphics.Batch()
-    img = Molecule(formula, space, batch, pos=(50,50), render_only=True)
-    w, h, _ = img.cml.max_pos()
+    # Delete old output to avoid showing stale data if something fails
+    if os.path.exists(output):
+        try:
+            os.remove(output)
+        except Exception:
+            pass
+
+    # 1. Get CML data to calculate window dimensions
+    from libcml import CachedCml
+    from libreact import Reaction
+    formula_only, _ = Reaction.split_state(formula)
+    cml = CachedCml.getMolecule(formula_only)
+    cml.normalize_pos()
+    w, h, _ = cml.max_pos()
+
     width = int(w*64) + 64 + 36
     height = int(h*64) + 64 + 36
+
+    # 2. Create Window (and OpenGL context)
     config = gl.Config(double_buffer=True)
-    window = pyglet.window.Window(width=width,height=height,visible=True,config=config)
+    window = pyglet.window.Window(width=width, height=height, visible=True, config=config)
     window.minimize()
+
+    # 3. Create graphics objects now that context is active
     gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
     gl.glLineWidth(4)
     gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
+
+    space = SpaceMock()
+    batch = pyglet.graphics.Batch()
+    img = Molecule(formula, space, batch, pos=(50,50), render_only=True)
     img.update()
-    @window.event
-    def on_draw():
-        window.clear()
-        batch.draw()
+
+    # Process events and draw
+    window.switch_to()
+    window.dispatch_events()
+    window.clear()
+    batch.draw()
+
+    # Ensure all GL commands are executed
+    gl.glFlush()
+
+    # Save the buffer
+    try:
         pyglet.image.get_buffer_manager().get_color_buffer().save(output)
-        #window.close()
-        pyglet.app.exit()
-    pyglet.app.run()
+    finally:
+        window.close()
 
 def cmd_help():
     print("cml2img.py -f formula -o <pngfile>")
