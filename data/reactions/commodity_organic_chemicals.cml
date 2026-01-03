@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="Sn"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="SnCl2(aq)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+    <description>
+      Tin (Sn) reacts with hydrochloric acid (HCl) to produce tin(II) chloride (SnCl2) and hydrogen gas (H2).
+      This is a classic single displacement reaction where tin metal is oxidized to tin(II) ions and hydrogen ions are reduced to hydrogen gas.
+    </description>
+    <tagList>
+      <tag>Single displacement</tag>
+      <tag>Redox reaction</tag>
+      <tag>Inorganic</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5NO2"/>
+      <molecule title="SnCl2"/>
+      <molecule title="SnCl2"/>
+      <molecule title="SnCl2"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+      <molecule title="HCl"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H5NH2(l)"/>
+      <molecule title="SnCl4(l)"/>
+      <molecule title="SnCl4(l)"/>
+      <molecule title="SnCl4(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Nitrobenzene is reduced to aniline using tin(II) chloride (SnCl2) and hydrochloric acid (HCl).
+      In this redox process, the nitro group is converted to an amino group while tin(II) is oxidized to tin(IV).
+    </description>
+    <tagList>
+      <tag>Reduction</tag>
+      <tag>Aromatic</tag>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

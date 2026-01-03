@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Sn"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="Cl"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-345.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">95.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-325.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">51.2</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Tin(II) chloride</property>
+    <property title="Description">Tin(II) chloride, also known as stannous chloride, is a white crystalline solid with the formula SnCl2. It forms a stable dihydrate, but aqueous solutions tend to undergo hydrolysis, particularly if hot. SnCl2 is widely used as a reducing agent (in acid solution), and in electrolytic baths for tin-plating. Tin(II) chloride should not be confused with the other chloride of tin; tin(IV) chloride or stannic chloride (SnCl4).</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Tin(II)_chloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Cl[Sn]Cl</property>
+  </propertyList>
+</ns0:molecule>
