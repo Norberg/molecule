@@ -261,14 +261,16 @@ class TestLevels(unittest.TestCase):
                 # If we made no progress, check victory and maybe log buffered failures
                 if not performed_any or inventory == inventory_before:
                     missing = self._missing_for_victory(inventory, cml)
-                    if missing and has_mining_effect:  # Only mining levels considered
-                        # Try injecting one mined molecule to progress instead of failing immediately
-                        if mining_molecules:
+                    if missing:
+                        if has_mining_effect and mining_molecules:
+                            # Try injecting one mined molecule to progress instead of failing immediately
                             mined = mining_molecules[mining_index % len(mining_molecules)]
                             mining_index += 1
                             inventory.append(mined)
                             # Retry next cycle without logging failure yet
                             continue
+                        
+                        # If we get here, it means we are stuck and have missing victory molecules
                         for f in cycle_step_failures:
                             print(f"\n[STEP FAIL] Level: {level_path}")
                             print(f"  Step: {f['step']}")
@@ -284,13 +286,13 @@ class TestLevels(unittest.TestCase):
                         print(f"  Inventory: {inventory}")
                         print(f"  Victory condition: {cml.victory_condition}")
                         print(f"  Missing: {missing}")
-                        if has_mining_effect:
-                            failures.append({
-                                "level": level_path,
-                                "missing": missing,
-                                "inventory": inventory.copy(),
-                                "victory": cml.victory_condition,
-                            })
+                        
+                        failures.append({
+                            "level": level_path,
+                            "missing": missing,
+                            "inventory": inventory.copy(),
+                            "victory": cml.victory_condition,
+                        })
                     break
 
                 # Detect repeating inventory state (loop) and stop safely
