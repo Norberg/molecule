@@ -30,10 +30,10 @@ class ReactionCondition:
 
 def get_font(size=24):
     try:
-        return ImageFont.truetype("arial.ttf", size)
+        return ImageFont.truetype("DejaVuSans.ttf", size)
     except IOError as e:
-        print(f"Failed to load font due to {e} using default font.")
-        return ImageFont.load_default()
+        print(f"Failed to load font due to {e} using default font. Please install DejaVuSans.ttf")
+        return ImageFont.load_default(size)
 
 def render_all_reactions():
     cml = Cml.Reactions()
