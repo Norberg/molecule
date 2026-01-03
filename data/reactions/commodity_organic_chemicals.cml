@@ -15,9 +15,10 @@
       This is a classic single displacement reaction where tin metal is oxidized to tin(II) ions and hydrogen ions are reduced to hydrogen gas.
     </description>
     <tagList>
-      <tag>Single displacement</tag>
+      <tag>Substitution reaction</tag>
       <tag>Redox reaction</tag>
-      <tag>Inorganic</tag>
+      <tag>Precursor Formation</tag>
+      <tag>In Situ Generation</tag>
     </tagList>
   </reaction>
   <reaction>
@@ -46,8 +47,9 @@
       In this redox process, the nitro group is converted to an amino group while tin(II) is oxidized to tin(IV).
     </description>
     <tagList>
-      <tag>Reduction</tag>
-      <tag>Aromatic</tag>
+      <tag>Reduction reaction</tag>
+      <tag>Aromatic conversion</tag>
+      <tag>Amination reaction</tag>
       <tag>Redox reaction</tag>
     </tagList>
   </reaction>
