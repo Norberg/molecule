@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.464102" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="2.598076" y2="-0.5" id="a2" elementType="C"/>
+    <atom x2="1.732051" y2="-0.0" id="a3" elementType="N"/>
+    <atom x2="0.866025" y2="-0.5" id="a4" elementType="C"/>
+    <atom x2="0.866025" y2="-1.5" id="a5" elementType="C"/>
+    <atom x2="0.0" y2="-2.0" id="a6" elementType="C"/>
+    <atom x2="-0.866025" y2="-1.5" id="a7" elementType="C"/>
+    <atom x2="-0.866025" y2="-0.5" id="a8" elementType="C"/>
+    <atom x2="0.0" y2="-0.0" id="a9" elementType="C"/>
+    <atom x2="2.598076" y2="-1.5" id="a10" elementType="C"/>
+    <atom x2="1.732051" y2="0.9845" id="a11" elementType="H"/>
+    <atom x2="1.759764" y2="-2.016" id="a12" elementType="H"/>
+    <atom x2="0.0" y2="-3.032" id="a13" elementType="H"/>
+    <atom x2="-1.759764" y2="-2.016" id="a14" elementType="H"/>
+    <atom x2="-1.759764" y2="0.016" id="a15" elementType="H"/>
+    <atom x2="-0.0" y2="1.032" id="a16" elementType="H"/>
+    <atom x2="1.671429" y2="-2.035" id="a17" elementType="H"/>
+    <atom x2="3.524723" y2="-2.035" id="a18" elementType="H"/>
+    <atom x2="2.598076" y2="-2.57" id="a19" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="2"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a8 a9" order="1"/>
+    <bond atomRefs2="a4 a9" order="2"/>
+    <bond atomRefs2="a2 a10" order="1"/>
+    <bond atomRefs2="a3 a11" order="1"/>
+    <bond atomRefs2="a5 a12" order="1"/>
+    <bond atomRefs2="a6 a13" order="1"/>
+    <bond atomRefs2="a7 a14" order="1"/>
+    <bond atomRefs2="a8 a15" order="1"/>
+    <bond atomRefs2="a9 a16" order="1"/>
+    <bond atomRefs2="a10 a17" order="1"/>
+    <bond atomRefs2="a10 a18" order="1"/>
+    <bond atomRefs2="a10 a19" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-200.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">300.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Acetanilide</property>
+    <property title="Description">Acetanilide is the organic compound with the formula C6H5NHC(O)CH3.  It is the N-acetylated derivative of aniline. It is an odourless solid chemical of leaf or flake-like appearance.  It is also known as N-phenylacetamide, acetanil, or acetanilid, and was formerly known by the trade name Antifebrin.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Acetanilide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">O=C(Nc1ccccc1)C</property>
+  </propertyList>
+</ns0:molecule>

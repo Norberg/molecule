@@ -36,6 +36,14 @@
         <scalar units="units:molar_energy">159.8</scalar>
       </property>
     </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-432.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">282.0</scalar>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Name">Acetic acid</property>

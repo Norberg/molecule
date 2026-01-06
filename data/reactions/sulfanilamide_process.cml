@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="C6H5NH2"/>
+      <molecule title="C4H6O3"/>
+      <molecule title="C2H3NaO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="C8H9NO(s)"/>
+      <molecule title="CH3COOH(l)"/>
+      <molecule title="C2H3NaO2(s)"/>
+    </productList>
+    <description>
+      Aniline (C6H5NH2) reacts with acetic anhydride (C4H6O3) in the presence of sodium acetate (C2H3NaO2) to form acetanilide (C8H9NO).
+      Sodium acetate acts as a base/buffer to facilitate the acetylation.
+    </description>
+    <tagList>
+      <tag>Acetylation reaction</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C8H9NO"/>
+      <molecule title="HSO3Cl"/>
+      <molecule title="HSO3Cl"/>
+    </reactantList>
+    <productList>
+      <molecule title="C8H8ClNO3S(s)"/>
+      <molecule title="H2SO4(l)"/>
+      <molecule title="HCl(g)"/>
+    </productList>
+    <description>
+      Acetanilide (C8H9NO) reacts with excess chlorosulfuric acid (HSO3Cl) to produce 4-acetamidobenzenesulfonyl chloride (C8H8ClNO3S).
+      This is an electrophilic aromatic substitution where the chlorosulfonyl group is introduced at the para position relative to the acetamido group.
+    </description>
+    <tagList>
+      <tag>Electrophilic aromatic substitution</tag>
+      <tag>Chlorosulfonation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C8H8ClNO3S"/>
+      <molecule title="NH3"/>
+      <molecule title="NH3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C8H10N2O3S(s)"/>
+      <molecule title="NH4Cl(aq)"/>
+    </productList>
+    <description>
+      4-Acetamidobenzenesulfonyl chloride (C8H8ClNO3S) reacts with ammonia (NH3) to form 4-acetamidobenzenesulfonamide (C8H10N2O3S) and ammonium chloride (NH4Cl).
+      The sulfonyl chloride group is converted into a sulfonamide group through nucleophilic attack by ammonia.
+    </description>
+    <tagList>
+      <tag>Amination</tag>
+      <tag>Nucleophilic substitution</tag>
+      <tag>Sulfonamide formation</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="C8H10N2O3S"/>
+      <molecule title="H2O"/>
+      <molecule title="HCl"/>
+      <molecule title="Na2CO3"/>
+    </reactantList>
+    <productList>
+      <molecule title="C6H8N2O2S(s)"/>
+      <molecule title="CH3COOH(g)"/>
+      <molecule title="HCl(g)"/>
+      <molecule title="Na2CO3(s)"/>
+    </productList>
+    <description>
+      4-Acetamidobenzenesulfonamide (C8H10N2O3S) is hydrolyzed with water in the presence of an acid catalyst (HCl). Sodium carbonate (Na2CO3) is then used to neutralize the mixture, allowing the final sulfanilamide (C6H8N2O2S) to be isolated as a free base.
+    </description>
+    <tagList>
+      <tag>Hydrolysis</tag>
+      <tag>Deprotection</tag>
+      <tag>Catalytic reaction</tag>
+    </tagList>
+  </reaction>
+</reactions>

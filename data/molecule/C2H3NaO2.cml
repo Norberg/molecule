@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.232051" y2="-0.5" formalCharge="1" id="a1" elementType="Na"/>
+    <atom x2="2.232051" y2="-2.0" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="1.366025" y2="-1.5" id="a3" elementType="C"/>
+    <atom x2="1.366025" y2="-0.5" id="a4" elementType="O"/>
+    <atom x2="0.5" y2="-2.0" id="a5" elementType="C"/>
+    <atom x2="-0.426647" y2="-1.465" id="a6" elementType="H"/>
+    <atom x2="0.5" y2="-3.07" id="a7" elementType="H"/>
+    <atom x2="-0.426647" y2="-2.535" id="a8" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="2"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="1"/>
+    <bond atomRefs2="a5 a8" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles"> [Na+].[O-]C(=O)C</property>
+    <property title="Name">Sodium acetate</property>
+    <property title="Description">Sodium acetate is the sodium salt of acetic acid, a versatile compound used as a food additive, buffer, electrolyte, and in heating pads, known for its supercooling properties (forming "hot ice") and used in industries like textiles and concrete sealing. It's hydrophilic, readily dissolves in water, and acts as a neutralizing agent or pH regulator, often appearing as a white powder.&#xA0;</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+  </propertyList>
+</ns0:molecule>

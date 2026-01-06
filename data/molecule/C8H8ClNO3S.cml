@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-4.0" y2="0.732051" id="a1" elementType="C"/>
+    <atom x2="-4.5" y2="-0.133975" id="a2" elementType="C"/>
+    <atom x2="-5.5" y2="-0.133975" id="a3" elementType="O"/>
+    <atom x2="-4.0" y2="-1.0" id="a4" elementType="N"/>
+    <atom x2="-3.0" y2="-1.0" id="a5" elementType="C"/>
+    <atom x2="-2.5" y2="-0.133975" id="a6" elementType="C"/>
+    <atom x2="-1.5" y2="-0.133975" id="a7" elementType="C"/>
+    <atom x2="-1.0" y2="-1.0" id="a8" elementType="C"/>
+    <atom x2="-1.5" y2="-1.866025" id="a9" elementType="C"/>
+    <atom x2="-2.5" y2="-1.866025" id="a10" elementType="C"/>
+    <atom x2="-0.0" y2="-1.0" id="a11" elementType="S"/>
+    <atom x2="-0.0" y2="-2.0" id="a12" elementType="Cl"/>
+    <atom x2="1.0" y2="-1.0" id="a13" elementType="O"/>
+    <atom x2="0.0" y2="-0.0" id="a14" elementType="O"/>
+    <atom x2="-2.93" y2="0.732051" id="a15" elementType="H"/>
+    <atom x2="-4.535" y2="1.658698" id="a16" elementType="H"/>
+    <atom x2="-3.465" y2="1.658698" id="a17" elementType="H"/>
+    <atom x2="-4.49225" y2="-1.852602" id="a18" elementType="H"/>
+    <atom x2="-3.016" y2="0.759764" id="a19" elementType="H"/>
+    <atom x2="-0.984" y2="0.759764" id="a20" elementType="H"/>
+    <atom x2="-0.984" y2="-2.759764" id="a21" elementType="H"/>
+    <atom x2="-3.016" y2="-2.759764" id="a22" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="2"/>
+    <bond atomRefs2="a6 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a8 a9" order="1"/>
+    <bond atomRefs2="a9 a10" order="2"/>
+    <bond atomRefs2="a5 a10" order="1"/>
+    <bond atomRefs2="a8 a11" order="1"/>
+    <bond atomRefs2="a11 a12" order="1"/>
+    <bond atomRefs2="a11 a13" order="2"/>
+    <bond atomRefs2="a11 a14" order="2"/>
+    <bond atomRefs2="a1 a15" order="1"/>
+    <bond atomRefs2="a1 a16" order="1"/>
+    <bond atomRefs2="a1 a17" order="1"/>
+    <bond atomRefs2="a4 a18" order="1"/>
+    <bond atomRefs2="a6 a19" order="1"/>
+    <bond atomRefs2="a7 a20" order="1"/>
+    <bond atomRefs2="a9 a21" order="1"/>
+    <bond atomRefs2="a10 a22" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1500.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">400.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">4-Acetamidobenzenesulfonyl chloride</property>
+    <property title="Description">4-Acetamidobenzenesulfonyl chloride is a white to yellow crystalline solid, a derivative of benzenesulfonyl chloride, used as a chemical intermediate in synthesizing sulfa drugs (like sulfacetamide) and other organic compounds, known for its corrosive nature and harmful effects upon contact or inhalation, requiring careful handling with personal protective equipment. </property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+    <property title="Smiles">CC(=O)NC1=CC=C(C=C1)S(Cl)(=O)=O</property>
+  </propertyList>
+</ns0:molecule>
