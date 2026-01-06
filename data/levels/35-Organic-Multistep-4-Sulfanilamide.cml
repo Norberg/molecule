@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<level zoom="0.7">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="C6H5NH2(l)"/>
+    <molecule title="C4H6O3(l)"/>
+    <molecule title="C2H3NaO2(s)"/>
+    <molecule title="HSO3Cl(l)"/>
+    <molecule title="HSO3Cl(l)"/>
+    <molecule title="NH3(g)"/>
+    <molecule title="NH3(g)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="HCl(g)"/>
+    <molecule title="Na2CO3(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Fire" value="900" x2="200" y2="550"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C6H8N2O2S"/>
+  </victoryCondition>
+  <objective text="Synthesize Sulfanilamide (C6H8N2O2S), the first synthetic sulfa drug."/>
+  <hint text="Follow the multi-step synthesis: Acetylating aniline, chlorosulfonation, amination, and finally hydrolysis.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="C6H5NH2"/>
+          <molecule title="C4H6O3"/>
+          <molecule title="C2H3NaO2"/>
+        </reactantList>
+        <productList>
+          <molecule title="C8H9NO(s)"/>
+          <molecule title="CH3COOH(l)"/>
+          <molecule title="C2H3NaO2(s)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C8H9NO"/>
+          <molecule title="HSO3Cl"/>
+          <molecule title="HSO3Cl"/>
+        </reactantList>
+        <productList>
+          <molecule title="C8H8ClNO3S(s)"/>
+          <molecule title="H2SO4(l)"/>
+          <molecule title="HCl(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C8H8ClNO3S"/>
+          <molecule title="NH3"/>
+          <molecule title="NH3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C8H10N2O3S(s)"/>
+          <molecule title="NH4Cl(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="C8H10N2O3S"/>
+          <molecule title="H2O"/>
+          <molecule title="HCl"/>
+          <molecule title="Na2CO3"/>
+        </reactantList>
+        <productList>
+          <molecule title="C6H8N2O2S(s)"/>
+          <molecule title="CH3COOH(g)"/>
+          <molecule title="HCl(g)"/>
+          <molecule title="Na2CO3(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>
