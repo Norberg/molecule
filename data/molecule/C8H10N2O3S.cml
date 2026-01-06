@@ -67,6 +67,6 @@
     <property title="Description">4-Acetamidobenzenesulfonamide (also known as N-Acetyl Sulfanilamide) is a chemical compound that's a metabolite of certain sulfa drugs and herbicides, serving as a carbonic anhydrase inhibitor and used in research for potential metabolic disorder treatments, appearing as a white powder, and often stored at low temperatures</property>
     <property title="DescriptionAttribution">Simon Norberg</property>
     <property title="DescriptionLicense">GPLv3</property>
-    <property title="Smiles">CC(=O)NC1=CC=C(C=C1)S(=O)(=O)N </property>
+    <property title="Smiles">CC(=O)NC1=CC=C(C=C1)S(=O)(=O)N</property>
   </propertyList>
 </ns0:molecule>

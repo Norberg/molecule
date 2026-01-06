@@ -91,7 +91,7 @@ def fetch_smiles(formula):
     formula = formula.split("(")[0]
     molecule = Cml.Molecule()
     molecule.parse(f"data/molecule/{formula}.cml")
-    return molecule.property.get("Smiles", "")
+    return molecule.property.get("Smiles", "").strip()
 
 def crop_white_sides_cairo(surface, tolerance=240, margin=20):
     width = surface.get_width()

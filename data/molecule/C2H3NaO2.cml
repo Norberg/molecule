@@ -29,7 +29,7 @@
     </propertyList>
   </propertyList>
   <propertyList title="property">
-    <property title="Smiles"> [Na+].[O-]C(=O)C</property>
+    <property title="Smiles">[Na+].[O-]C(=O)C</property>
     <property title="Name">Sodium acetate</property>
     <property title="Description">Sodium acetate is the sodium salt of acetic acid, a versatile compound used as a food additive, buffer, electrolyte, and in heating pads, known for its supercooling properties (forming "hot ice") and used in industries like textiles and concrete sealing. It's hydrophilic, readily dissolves in water, and acts as a neutralizing agent or pH regulator, often appearing as a white powder.&#xA0;</property>
     <property title="DescriptionAttribution">Simon Norberg</property>

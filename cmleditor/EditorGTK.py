@@ -149,22 +149,22 @@ class EditorGTK:
             name = col[0]
             enthalpy = col[1] if col[1] != "" else None
             entropy = col[2] if col[2] != "" else None
-            ions = col[3].split(',') if col[3] != "" else None
+            ions = [ion.strip() for ion in col[3].split(',')] if col[3] != "" else None
             emitter = col[4] if col[4] != "" else None
             state = Cml.State(name, enthalpy, entropy, ions, emitter)
             self.molecule.states[name] = state
-        self.molecule.property["Name"] = self.txtMoleculeName.get_text()
+        self.molecule.property["Name"] = self.txtMoleculeName.get_text().strip()
         textbuffer = self.widget("textbufferDescription")
         start_iter = textbuffer.get_start_iter()
         end_iter = textbuffer.get_end_iter()
         description = textbuffer.get_text(start_iter, end_iter, True)
         self.molecule.property["Description"] = description
-        self.molecule.property["DescriptionAttribution"] = self.widget("txtAttribution").get_text()
+        self.molecule.property["DescriptionAttribution"] = self.widget("txtAttribution").get_text().strip()
         self.molecule.property["DescriptionLicense"] = get_active_text(self.widget("cmbLicense"))
         if self.molecule.is_atom:
             self.molecule.property["Weight"] = float(self.txtAtomWeight.get_text())
             self.molecule.property["Radius"] = float(self.txtAtomRadius.get_text())
-        self.molecule.property["Smiles"] = self.widget("txtSmiles").get_text()
+        self.molecule.property["Smiles"] = self.widget("txtSmiles").get_text().strip()
         self.molecule.write(self.filename)
         CachedCml.evictFromCache(self.formula)
         self.preview_molecule()
@@ -499,7 +499,8 @@ class EditorGTK:
             res = YesNo("Molecule already exist, do you want to overwrite?")
             if res == "No":
                 return
-        result = subprocess.run(["obabel", "-:%s" % smiles.strip(), "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
+        smiles = smiles.strip()
+        result = subprocess.run(["obabel", "-:%s" % smiles, "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
         print("Obabel response:", result.stdout)
         print(result.stderr)
         if ("0 molecule"  in result.stderr):
@@ -579,13 +580,13 @@ class EditorGTK:
         wiki = wiki_fetch.extract_wikipedia_info(url)
 
         formula = wiki.chemical_formula
-        smiles = wiki.smiles
+        smiles = wiki.smiles.strip()
         path = "data/molecule/%s.cml" % formula
         if os.path.isfile(path):
             res = YesNo(f"Molecule {formula} already exist, do you want to overwrite?")
             if res == "No":
                 return
-        result = subprocess.run(["obabel", "-:%s" % smiles.strip(), "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
+        result = subprocess.run(["obabel", "-:%s" % smiles, "-h", "--gen2d", "-ocml", "-O", path], capture_output=True, text=True)
         print("Obabel response:", result.stdout)
         print(result.stderr)
         if ("0 molecule"  in result.stderr):
@@ -595,10 +596,10 @@ class EditorGTK:
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
-        self.txtMoleculeName.set_text(wiki.name)
+        self.txtMoleculeName.set_text(wiki.name.strip())
         self.widget("txtSmiles").set_text(smiles)
         self.setLicense("CC BY-SA 3.0")
-        self.widget("txtAttribution").set_text(url)
+        self.widget("txtAttribution").set_text(url.strip())
 
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
 
