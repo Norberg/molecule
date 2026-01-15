@@ -32,7 +32,7 @@
     </description>
     <tagList>
       <tag>Acid-base reaction</tag>
-      <tag>Double displacement reaction</tag>
+      <tag>Double displacement</tag>
     </tagList>
   </reaction>
   <reaction>
@@ -52,7 +52,7 @@
       of sodium sulfate, which is widely used in detergents and glass manufacturing.
     </description>
     <tagList>
-      <tag>Double displacement reaction</tag>
+      <tag>Double displacement</tag>
     </tagList>
   </reaction>
   <reaction>
@@ -92,8 +92,8 @@
       in glass manufacturing, chemical processing, and water treatment.
     </description>
     <tagList>
-      <tag>Double displacement reaction</tag>
-      <tag>Precipitation reaction</tag>
+      <tag>Double displacement</tag>
+      <tag>Precipitation</tag>
     </tagList>
   </reaction>
 </reactions>

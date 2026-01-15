@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 import glob
 import subprocess
+import json
 from molecule.Levels import Level
 
 from libcml import Cml
@@ -22,10 +23,16 @@ def getMolecule(filename):
 router = APIRouter()
 known_molecules = [filename.split("/")[-1].split(".cml")[0] for filename in glob.glob("data/molecule/*")]
 moleculeList = [getMolecule(filename) for filename in glob.glob("data/molecule/*")]
+with open("data/reactions/tag_descriptions.json", "r") as f:
+    tag_descriptions = json.load(f)
 
 @router.get("/state")
 async def get_game_state():
     return {"state": "running"}
+
+@router.get("/reactions/tags")
+async def getTags():
+    return tag_descriptions
 
 @router.get("/molecule")
 async def getMolecules():
