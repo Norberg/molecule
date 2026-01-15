@@ -17,6 +17,7 @@
     <bond atomRefs2="a5 a6" order="1"/>
     <bond atomRefs2="a5 a7" order="1"/>
     <bond atomRefs2="a5 a8" order="1"/>
+    <bond atomRefs2="a1 a2" order="0"/>
   </ns0:bondArray>
   <propertyList title="states">
     <propertyList title="Solid">
