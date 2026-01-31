@@ -1,0 +1,13 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cleanStar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFEB3B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FBC02D;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path d="M64 12 L79 46 L116 48 L88 72 L96 108 L64 88 L32 108 L40 72 L12 48 L49 46 Z" 
+        fill="url(#cleanStar)" 
+        stroke="#F57F17" 
+        stroke-width="6" 
+        stroke-linejoin="round"/>
+</svg>

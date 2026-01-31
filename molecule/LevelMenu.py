@@ -6,54 +6,72 @@ from molecule.gui import (
 )
 from . import RenderingOrder
 
-BIOMES = [
-    ("Laboratory", [
-        "data/levels/01-Water.cml",
-        "data/levels/02-Methane-1.cml",
-        "data/levels/03-Methane-2.cml",
-        "data/levels/04-Methane-3.cml",
-    ]),
-    ("Acid Zone", [
-        "data/levels/05-Nitration-Nitrobenzene.cml",
-        "data/levels/06-Sodium-sulfate.cml",
-        "data/levels/10-Sulfur-1.cml",
-        "data/levels/11-Sulfur-2.cml",
-        "data/levels/16-Acid-production-1-Sulfuric-acid.cml",
-        "data/levels/17-Acid-production-2-Nitric-acid.cml",
-        "data/levels/18-Golden-rain.cml",
-    ]),
-    ("Desert", [
-        "data/levels/07-Urea.cml",
-        "data/levels/08-Calcium-carbonate.cml",
-        "data/levels/09-Magnesium-1.cml",
-        "data/levels/12-Iron-1.cml",
-        "data/levels/13-Phosphorus-pentoxide.cml",
-        "data/levels/14-Soda-1-Leblanc-process.cml",
-        "data/levels/15-Soda-2-Solvay-process.cml",
-    ]),
-    ("Cold Zone", [
-        "data/levels/19-Fireworks-Copper.cml",
-        "data/levels/20-Organic-Addition-1.cml",
-        "data/levels/21-Organic-Addition-2.cml",
-        "data/levels/22-Organic-Substitution-1.cml",
-        "data/levels/23-Organic-Substitution-2.cml",
-        "data/levels/24-Organic-Substitution-3.cml",
-    ]),
-    ("Forest Biome", [
-        "data/levels/30-Organic-Multistep-1-Paracetamol.cml",
-        "data/levels/31-Organic-Multistep-2-Aspirin.cml",
-        "data/levels/32-Organic-Multistep-3-3-Bromonitrobenzene.cml",
-        "data/levels/33-Organic-Industrial-1-Cativa.cml",
-        "data/levels/34-Organic-Reduction-Aniline.cml",
-        "data/levels/35-Organic-Multistep-4-Sulfanilamide.cml",
-        "data/levels/37-Petrochemical-1-Benzene.cml",
-        "data/levels/39-Petrochemical-1-MTBE.cml",
-        "data/levels/40-Life-1-DAMN.cml",
-        "data/levels/41-Life-2-Adenine.cml",
-        "data/levels/42-Life-3-Guanine.cml",
-        "data/levels/43-Life-4-Formaldehyde.cml",
-    ])
+PAGES = [
+    [ # Page 1: Foundations & Inorganic
+        ("Laboratory", "island_laboratory.png", [
+            "data/levels/01-Water.cml",
+            "data/levels/02-Methane-1.cml",
+            "data/levels/03-Methane-2.cml",
+            "data/levels/04-Methane-3.cml",
+        ]),
+        ("Acid Zone", "island_acid.png", [
+            "data/levels/05-Nitration-Nitrobenzene.cml",
+            "data/levels/13-Phosphorus-pentoxide.cml",
+            "data/levels/16-Acid-production-1-Sulfuric-acid.cml",
+            "data/levels/17-Acid-production-2-Nitric-acid.cml",
+        ]),
+        ("Volcanic Ridge", "island_volcano.png", [
+             "data/levels/09-Magnesium-1.cml",
+             "data/levels/10-Sulfur-1.cml",
+             "data/levels/11-Sulfur-2.cml",
+             "data/levels/12-Iron-1.cml",
+        ]),
+        ("Chemical Plant", "island_factory.png", [
+            "data/levels/06-Sodium-sulfate.cml",
+            "data/levels/07-Urea.cml",
+            "data/levels/14-Soda-1-Leblanc-process.cml",
+            "data/levels/15-Soda-2-Solvay-process.cml",
+        ]),
+        ("Fireworks Factory", "island_fireworks.png", [
+             "data/levels/08-Calcium-carbonate.cml",
+             "data/levels/18-Golden-rain.cml",
+             "data/levels/19-Fireworks-Copper.cml",
+        ]),
+    ],
+    [ # Page 2: Organic & Life
+        ("Dark Forest", "island_forest.png", [
+            "data/levels/20-Organic-Addition-1.cml",
+            "data/levels/21-Organic-Addition-2.cml",
+            "data/levels/22-Organic-Substitution-1.cml",
+            "data/levels/23-Organic-Substitution-2.cml",
+            "data/levels/24-Organic-Substitution-3.cml",
+        ]),
+        ("Pharmaceutical Lab", "island_pharma.png", [
+             "data/levels/30-Organic-Multistep-1-Paracetamol.cml",
+             "data/levels/31-Organic-Multistep-2-Aspirin.cml",
+             "data/levels/32-Organic-Multistep-3-3-Bromonitrobenzene.cml",
+             "data/levels/35-Organic-Multistep-4-Sulfanilamide.cml",
+        ]),
+        ("Petrochemical Desert", "island_desert.png", [
+             "data/levels/33-Organic-Industrial-1-Cativa.cml",
+             "data/levels/34-Organic-Reduction-Aniline.cml",
+             "data/levels/37-Petrochemical-1-Benzene.cml",
+             "data/levels/39-Petrochemical-1-MTBE.cml",
+        ]),
+        ("Primordial Soup", "island_primordial.png", [
+            "data/levels/40-Life-1-DAMN.cml",
+            "data/levels/41-Life-2-Adenine.cml",
+            "data/levels/42-Life-3-Guanine.cml",
+            "data/levels/43-Life-4-Formaldehyde.cml",
+        ]),
+        ("The Frontier", "island_frontier.png", [
+             "data/levels/98-Taurin-1.cml",
+             "data/levels/99-Test.cml",
+             "data/levels/100-Emmiter-testlevel.cml",
+        ])
+    ]
 ]
+
 
 class LevelMenu:
     def __init__(self, window, levels, on_level_selected):
@@ -63,7 +81,7 @@ class LevelMenu:
         self.batch = pyglet.graphics.Batch()
         
         # Load background
-        bg_path = os.path.join("molecule", "theme", "level_menu_bg.png")
+        bg_path = os.path.join("molecule", "theme", "level_menu_bg_v2.png")
         self.bg_image = pyglet.image.load(bg_path)
         self.bg_sprite = pyglet.sprite.Sprite(self.bg_image, batch=self.batch, group=RenderingOrder.background)
         
@@ -78,6 +96,7 @@ class LevelMenu:
         
         self.state = "MAIN"
         self.selected_biome = None
+        self.page_index = 0
         self.view_manager = None
         
         self.refresh()
@@ -97,30 +116,54 @@ class LevelMenu:
     def init_main_view(self, width, height):
         root = AbsoluteContainer(0, 0, width, height)
         
-        ISLANDS = {
-            "Laboratory": (0.24, 0.81),
-            "Acid Zone": (0.76, 0.81),
-            "Desert": (0.23, 0.32),
-            "Cold Zone": (0.50, 0.54),
-            "Forest Biome": (0.77, 0.29)
-        }
+        # 5 fixed island positions relative to screen (x, y)
+        ISLAND_POSITIONS = [
+            (0.25, 0.75),
+            (0.75, 0.75),
+            (0.50, 0.50),
+            (0.25, 0.25),
+            (0.75, 0.25)
+        ]
         
+        current_page = PAGES[self.page_index]
         prev_biome_started = True 
         
-        for biome_name, level_paths in BIOMES:
-            rel_x, rel_y = ISLANDS.get(biome_name, (0.5, 0.5))
+        for i, (biome_name, icon_file, level_paths) in enumerate(current_page):
+            if i >= len(ISLAND_POSITIONS): break
+            
+            rel_x, rel_y = ISLAND_POSITIONS[i]
             abs_x = int(rel_x * width)
             abs_y = int(rel_y * height)
             
+            # Load and draw island sprite
+            try:
+                island_img = pyglet.image.load(os.path.join("molecule", "theme", icon_file))
+                island_img.anchor_x = island_img.width // 2
+                island_img.anchor_y = island_img.height // 2
+                island_sprite = SpriteWidget(island_img, abs_x, abs_y, 0, 0, self.batch, RenderingOrder.gui_background)
+                # No specific container for just sprite in this simple GUI lib, so we might need a workaround 
+                # or just add it to a dummy container. 
+                # SpriteWidget handles its own drawing if batch is set.
+                # However, the Manager expects widgets. SpriteWidget is a Widget.
+                # We need to add it to root.
+                
+                # Scale sprite if needed (assuming 128x128 placeholders, maybe scale up slightly)
+                island_sprite.scale_x = 1.5
+                island_sprite.scale_y = 1.5
+                
+                root.add(island_sprite) 
+            except Exception as e:
+                print(f"Failed to load island {icon_file}: {e}")
+
             # Progress summary
             total = len(level_paths)
             done = sum(1 for p in level_paths if self.levels.is_completed(p))
             is_unlocked = prev_biome_started
             
-            frame_w = 160
-            frame_h = 75
+            frame_w = 180
+            frame_h = 80
             fx = abs_x - frame_w // 2
-            fy = abs_y - frame_h - 15
+            fy = abs_y - frame_h // 2 - 80 # Position below the island
             
             # Clamp to screen
             fx = max(10, min(fx, width - frame_w - 10))
@@ -160,8 +203,23 @@ class LevelMenu:
             # Unlock next biome if at least one level is done in this one
             prev_biome_started = (done > 0)
             
-        # push_handlers=False because LevelMenu itself is the handler and dispatches manually
-        # anchor=None because we already positioned the root container at (0,0) with correct size
+        # Navigation Buttons
+        nav_y = 50
+        
+        if self.page_index > 0:
+            def prev_page(btn):
+                self.page_index -= 1
+                self.refresh()
+            prev_btn = Button("<< PREV PAGE", 50, nav_y, 150, 40, self.batch, on_click=prev_page, button_type="molecule-button")
+            root.add(prev_btn)
+            
+        if self.page_index < len(PAGES) - 1:
+            def next_page(btn):
+                self.page_index += 1
+                self.refresh()
+            next_btn = Button("NEXT PAGE >>", width - 200, nav_y, 150, 40, self.batch, on_click=next_page, button_type="molecule-button")
+            root.add(next_btn)
+
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                      is_movable=False, push_handlers=False, anchor=None)
 
@@ -169,7 +227,10 @@ class LevelMenu:
         root = AbsoluteContainer(0, 0, width, height)
         
         biome_name = self.selected_biome
-        level_paths = next(lvls for name, lvls in BIOMES if name == biome_name)
+        
+        # Flatten biomes list to find the selected one
+        all_biomes = [biome for page in PAGES for biome in page]
+        level_paths = next(lvls for name, icon, lvls in all_biomes if name == biome_name)
         
         num_levels = len(level_paths)
         item_h = 32

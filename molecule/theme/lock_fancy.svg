@@ -1,0 +1,19 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cleanLock" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFCA28;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8F00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shackle" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#CFD8DC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#90A4AE;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path d="M40 56 V36 C40 22 51 12 64 12 C77 12 88 22 88 36 V56" 
+        stroke="url(#shackle)" 
+        stroke-width="12" 
+        stroke-linecap="round"/>
+  <rect x="24" y="52" width="80" height="64" rx="6" fill="url(#cleanLock)" stroke="#BF360C" stroke-width="2"/>
+  <circle cx="64" cy="80" r="8" fill="#3E2723"/>
+  <rect x="60" y="80" width="8" height="16" fill="#3E2723"/>
+</svg>
