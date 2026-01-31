@@ -46,7 +46,7 @@ class Button(Widget):
         if not self._up_slices:
             self.bg_rect = Rectangle(
                 self.x, self.y, self.width, self.height,
-                color=self.background_color[:3],
+                color=self.background_color,
                 batch=self.batch, group=RenderingOrder.gui_background
             )
         if self._down_slices:

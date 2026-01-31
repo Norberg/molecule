@@ -25,6 +25,7 @@ from molecule import Config
 from molecule.Levels import Levels
 from molecule import Gui
 from molecule.server.Server import Server
+from molecule.LevelMenu import LevelMenu
 
 class Game(pyglet.window.Window):
     def __init__(self):
@@ -42,6 +43,7 @@ class Game(pyglet.window.Window):
         self.init_pyglet()
         self.DEBUG_GRAPHICS = False
         self.level = None
+        self.menu = None # Add menu state
         self.server = Server()
         self.start()
 
@@ -61,8 +63,27 @@ class Game(pyglet.window.Window):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.levels = Levels("data/levels", Config.current.level, window=self)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
-        self.reset_level()
         self.server.start()
+        self.show_menu()
+
+    def show_menu(self):
+        if self.level:
+            self.level.delete()
+            self.level = None
+        if self.menu:
+            self.menu.delete()
+        self.menu = LevelMenu(self, self.levels, self.on_level_selected)
+
+    def on_level_selected(self, level_path):
+        # Find index of selected level
+        for i, path in enumerate(self.levels.levels):
+            if path == level_path:
+                self.levels.current_level = i
+                break
+        self.menu.delete()
+        self.menu = None
+        level = self.levels.get_current_level()
+        self.switch_level(level)
         
 
     def init_pyglet(self):
@@ -72,11 +93,18 @@ class Game(pyglet.window.Window):
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
 
     def update(self, dt):
-        self.level.update()
+        if self.level:
+            self.level.update()
 
     def on_draw(self):
+        if self.menu:
+            self.menu.on_draw()
+            return
+        # Ensure white background for gameplay
+        pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.clear()
-        self.batch.draw()
+        if self.batch:
+            self.batch.draw()
         if self.DEBUG_GRAPHICS:
             options = pyglet_util.DrawOptions()
             self.space.debug_draw(options)
@@ -89,7 +117,7 @@ class Game(pyglet.window.Window):
             level = self.levels.next_level()
             if level is None:
                 Gui.create_popup(self, self.batch, "Congratulation you have won the game!",
-                             on_escape=self.close)
+                             on_escape=self.show_menu)
             else:
                 self.run_level(level)
         else:

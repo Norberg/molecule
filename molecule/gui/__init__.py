@@ -5,18 +5,20 @@ from .base import draw_nine_patch
 from .frame import Frame
 from .document import Document
 from .button import Button, OneTimeButton
-from .containers import Container, VerticalContainer, HorizontalContainer
+from .containers import Container, VerticalContainer, HorizontalContainer, AbsoluteContainer
 from .section import SectionHeader
 from .folding_section import FoldingSection
 from .scrollable import Scrollable
 from .popup import PopupMessage
 from .manager import Manager
+from .sprite_widget import SpriteWidget
 from .constants import (
     GUI_PADDING,
     ANCHOR_BOTTOM_LEFT,
     ANCHOR_BOTTOM_RIGHT,
     ANCHOR_TOP_RIGHT,
     ANCHOR_TOP_LEFT,
+    ANCHOR_CENTER,
     HALIGN_LEFT,
     HALIGN_CENTER,
     HALIGN_RIGHT,

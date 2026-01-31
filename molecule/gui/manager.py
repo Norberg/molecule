@@ -2,7 +2,7 @@ from .constants import GUI_PADDING
 
 class Manager:
     def __init__(self, content, window, batch, group=None, anchor='bottom_left',
-                 theme_obj=None, is_movable=False):
+                 theme_obj=None, is_movable=False, push_handlers=True):
         self.content = content
         self.window = window
         self.batch = batch
@@ -13,7 +13,8 @@ class Manager:
         if hasattr(self.content, 'layout'):
             self.content.layout()
         self.update_position()
-        self.window.push_handlers(self)
+        if push_handlers:
+            self.window.push_handlers(self)
 
     def update_position(self):
         window_width, window_height = self.window.get_size()
@@ -30,6 +31,9 @@ class Manager:
         elif self.anchor == 'top_left':
             target_x = GUI_PADDING
             target_y = window_height - self.content.height - GUI_PADDING
+        elif self.anchor == 'center':
+            target_x = (window_width - self.content.width) // 2
+            target_y = (window_height - self.content.height) // 2
         else:
             target_x = old_x
             target_y = old_y
@@ -59,7 +63,17 @@ class Manager:
             return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         return False
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        if self.content and hasattr(self.content, 'on_mouse_motion'):
+            return self.content.on_mouse_motion(x, y, dx, dy)
+        return False
+
+    def on_key_press(self, symbol, modifiers):
+        if self.content and hasattr(self.content, 'on_key_press'):
+            return self.content.on_key_press(symbol, modifiers)
+        return False
+
     def delete(self):
-        self.window.pop_handlers()
+        self.window.remove_handlers(self)
         if self.content:
             self.content.delete()

@@ -6,17 +6,26 @@ class Container(Widget):
         self.children = []
         self.align = 'left'
 
-    def add(self, widget):
+    def add(self, widget, do_layout=True):
         if widget:
             widget.parent = self
-        self.children.append(widget)
-        self.layout()
+            self.children.append(widget)
+            if do_layout:
+                self.layout()
 
     def remove(self, widget):
         if widget in self.children:
             self.children.remove(widget)
-            widget.delete()
+            if hasattr(widget, 'delete'):
+                widget.delete()
             self.layout()
+
+    def delete(self):
+        for child in list(self.children):
+            if child and hasattr(child, 'delete'):
+                child.delete()
+        self.children = []
+        super().delete()
 
     def _layout_children(self):
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
@@ -62,6 +71,13 @@ class Container(Widget):
                     return True
         return False
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_motion'):
+                if child.on_mouse_motion(x, y, dx, dy):
+                    return True
+        return False
+
     def on_mouse_press(self, x, y, button, modifiers):
         if not self.contains_point(x, y):
             return False
@@ -73,7 +89,7 @@ class Container(Widget):
 
     def on_mouse_release(self, x, y, button, modifiers):
         for child in reversed(self.children):
-            if child and child.contains_point(x, y) and hasattr(child, 'on_mouse_release'):
+            if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False
@@ -131,3 +147,9 @@ class HorizontalContainer(Container):
             child.y = self.y + pad_bottom
             child.height = self.height - pad_top - pad_bottom
             current_x += child.width + self.spacing
+
+class AbsoluteContainer(Container):
+    """A container that does not enforce width/height on its children during layout."""
+    def _layout_children(self):
+        # Simply don't do anything to children coordinates or sizes
+        pass

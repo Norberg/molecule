@@ -181,11 +181,14 @@ FPS: 00.00 FPS'''
         status_frame = Frame(0, 0, width, status_height, batch)
         status_frame.add_child(self.status_doc)
         
+        menu_btn = Button("Meny", 0, 0, width, 30, batch, on_click=lambda b: window.show_menu(), button_type="molecule-button")
+
         inv_text = "<h4>Inventory</h4>"
         inventory_header = Document(inv_text, 0, 0, width, 30, batch)
-        self.inventory_container = VerticalContainer(0, 0, width, height - status_height - 30, spacing=5)
+        self.inventory_container = VerticalContainer(0, 0, width, height - status_height - 60, spacing=5)
 
         container = VerticalContainer(0, 0, width, height - status_height)
+        container.add(menu_btn)
         container.add(inventory_header)
         container.add(self.inventory_container)
         self.inventory_frame = Frame(0, 0, width, height - status_height, batch)

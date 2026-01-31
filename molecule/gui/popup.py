@@ -65,7 +65,10 @@ class PopupMessage(Widget):
             self.close_button.delete()
             self.close_button = None
         try:
-            self.window.pop_handlers()
+            self.window.remove_handlers(
+                on_mouse_press=self.on_mouse_press,
+                on_mouse_release=self.on_mouse_release
+            )
         except Exception:
             pass
         super().delete()

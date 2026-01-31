@@ -34,25 +34,35 @@ class Frame(Widget):
             else:
                 self.bg_slices = []
                 self.bg_sprite = None
+                color = self.background_color[:3]
+                opacity = self.background_color[3] if len(self.background_color) > 3 else 255
                 self.bg_rect = Rectangle(
                     self.x, self.y, self.width, self.height,
-                    color=self.background_color[:3],
+                    color=color,
                     batch=self.batch, group=RenderingOrder.gui_background
                 )
+                self.bg_rect.opacity = opacity
+
+                border_color = self.border_color[:3]
+                border_opacity = self.border_color[3] if len(self.border_color) > 3 else 255
                 self.border_rect = Rectangle(
                     self.x - 1, self.y - 1, self.width + 2, self.height + 2,
-                    color=self.border_color[:3],
+                    color=border_color,
                     batch=self.batch, group=RenderingOrder.gui_background
                 )
+                self.border_rect.opacity = border_opacity
         else:
             self.bg_slices = []
             self.bg_sprite = None
             self.bg_rect = None
             self.border_rect = None
 
-    def add_child(self, child):
+    def add(self, child):
         self.children.append(child)
         child.parent = self
+
+    def add_child(self, child):
+        self.add(child)
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         if not self.contains_point(x, y):
@@ -60,6 +70,13 @@ class Frame(Widget):
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_scroll'):
                 if child.on_mouse_scroll(x, y, scroll_x, scroll_y):
+                    return True
+        return False
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        for child in reversed(self.children):
+            if child and hasattr(child, 'on_mouse_motion'):
+                if child.on_mouse_motion(x, y, dx, dy):
                     return True
         return False
 
@@ -141,7 +158,7 @@ class Frame(Widget):
 
     def on_mouse_release(self, x, y, button, modifiers):
         for child in reversed(self.children):
-            if child and child.contains_point(x, y) and hasattr(child, 'on_mouse_release'):
+            if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False

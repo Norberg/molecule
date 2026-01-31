@@ -16,6 +16,8 @@
 import glob
 import math
 import time
+import json
+import os
 
 import pyglet
 import pymunk
@@ -46,6 +48,28 @@ class Levels:
             raise Exception(f"Requested level {start_level} not found!")
         elif self.current_level > 0:
             print("Starting on level %s" % self.levels[self.current_level])
+        self.load_progress()
+
+    def load_progress(self):
+        self.completed_levels = set()
+        if os.path.exists("progress.json"):
+            with open("progress.json", "r") as f:
+                try:
+                    data = json.load(f)
+                    self.completed_levels = set(data.get("completed", []))
+                except:
+                    pass
+
+    def save_progress(self):
+        with open("progress.json", "w") as f:
+            json.dump({"completed": sorted(list(self.completed_levels))}, f)
+
+    def mark_completed(self, level_path):
+        self.completed_levels.add(level_path)
+        self.save_progress()
+
+    def is_completed(self, level_path):
+        return level_path in self.completed_levels
 
     def init_levels(self):
         # Only include real level definition files (.cml)
@@ -65,7 +89,7 @@ class Levels:
         path = self.levels[self.current_level]
         cml = Cml.Level()
         cml.parse(path)
-        return Level(cml, self.window)
+        return Level(cml, self.window, path)
 
     def level_iter(self):
         level = self.next_level()
@@ -74,8 +98,9 @@ class Levels:
             level = self.next_level()
 
 class Level:
-    def __init__(self, cml, window):
+    def __init__(self, cml, window, path):
         self.cml = cml
+        self.path = path
         self.finished = False
         self.window = window
         self.batch = pyglet.graphics.Batch()
@@ -84,6 +109,7 @@ class Level:
         self.reaction_log = []
         self.emitters = []
         self.victory_popup = None
+        self.hud = None
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -135,7 +161,7 @@ class Level:
         )
 
     def init_pyglet(self):
-        self.window.set_handlers(self)
+        self.window.push_handlers(self)
 
     def init_elements(self):
         self.elements = Universe.create_elements(self.space, self.cml.molecules,
@@ -383,7 +409,7 @@ class Level:
             #for n in m:
             #    objgraph.show_backrefs(n)
         elif symbol == pyglet.window.key.ESCAPE:
-                self.window.close()
+                self.window.show_menu()
         elif symbol == pyglet.window.key.S:
             Gui.create_popup(self.window, self.batch, "Skipping level, Cheater!",
                              on_escape=self.window.switch_level)
@@ -405,6 +431,7 @@ class Level:
             area.update()
         if self.finished == False and self.victory():
             print("Victory")
+            self.window.levels.mark_completed(self.path)
             self.victory_popup = Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.switch_level)
             print("Victory popup created")
@@ -431,7 +458,8 @@ class Level:
 
 
     def delete(self):
+        if self.hud:
+            self.hud.delete()
         self.window.remove_handlers(self)
         if self.victory_popup:
             self.victory_popup.delete()
-        self.hud.delete()
