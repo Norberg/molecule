@@ -17,15 +17,16 @@ class Frame(Widget):
 
     def _create_background(self):
         if self.batch:
-            frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
             img = None
             frame = [8, 8, 8, 8]
             padding = [8, 8, 8, 8]
-            if frame_theme and "image" in frame_theme:
-                img_name = frame_theme["image"]["source"]
-                img = theme.get_image(img_name)
-                frame = frame_theme["image"].get("frame", frame)
-                padding = frame_theme["image"].get("padding", padding)
+            if self.frame_type and self.frame_type != "none":
+                frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
+                if frame_theme and "image" in frame_theme:
+                    img_name = frame_theme["image"]["source"]
+                    img = theme.get_image(img_name)
+                    frame = frame_theme["image"].get("frame", frame)
+                    padding = frame_theme["image"].get("padding", padding)
             if img:
                 self.bg_slices = draw_nine_patch(self.batch, RenderingOrder.gui_background, img, self.x, self.y, self.width, self.height, frame, padding)
                 self.bg_sprite = None

@@ -72,8 +72,9 @@ class LevelMenu:
         self.bg_sprite.scale_y = window.height / self.bg_image.height
         
         # Load icons
-        self.check_img = pyglet.image.load(os.path.join("molecule", "theme", "checkmark.png"))
-        self.lock_img = pyglet.image.load(os.path.join("molecule", "theme", "lock.png"))
+        self.star_img = pyglet.image.load(os.path.join("molecule", "theme", "star.png"))
+        self.play_img = pyglet.image.load(os.path.join("molecule", "theme", "play.png"))
+        self.lock_img = pyglet.image.load(os.path.join("molecule", "theme", "lock_fancy.png"))
         
         self.state = "MAIN"
         self.selected_biome = None
@@ -171,24 +172,34 @@ class LevelMenu:
         level_paths = next(lvls for name, lvls in BIOMES if name == biome_name)
         
         num_levels = len(level_paths)
-        item_h = 24
+        item_h = 32
         spacing = 4
         title_h = 30
         back_h = 32
         
         calc_height = title_h + 10 + (num_levels * (item_h + spacing)) + back_h + 10
-        frame_width = 300
+        frame_width = 400
         
         fx = width // 2 - frame_width // 2
         fy = height // 2 - calc_height // 2
         
         frame = Frame(fx, fy, frame_width, calc_height + 20, self.batch, RenderingOrder.gui_background,
-                     background_color=[0, 0, 0, 200], border_color=[255, 215, 0, 80])
+                     background_color=[15, 15, 20, 240], border_color=[255, 215, 0, 120],
+                     frame_type="none")
         
         content = VerticalContainer(0, 0, frame_width - 24, calc_height, spacing=spacing)
         content.align = 'center'
         
-        title = Document(f"<h3 align='center' color='gold'>{biome_name}</h3>", 0, 0, frame_width - 40, title_h, self.batch)
+        # Title Header with background
+        header_h = title_h + 20
+        header = Frame(fx, fy + calc_height + 15 - header_h, frame_width, header_h, self.batch, RenderingOrder.gui_background,
+                      background_color=[20, 20, 30, 255], border_color=[255, 215, 0, 180], frame_type="none")
+        root.add(header)
+        
+        # Center title in header
+        title_y_offset = (header_h - title_h) // 2
+        title = Document(f"<h3 align='center'><font color='#FFD700'>{biome_name}</font></h3>", 
+                        0, -title_y_offset, frame_width - 40, title_h, self.batch)
         title.is_fixed_size = True
         content.add(title, do_layout=False)
         
@@ -199,23 +210,32 @@ class LevelMenu:
             is_done = self.levels.is_completed(path)
             is_unlocked = prev_done
             
-            row = HorizontalContainer(0, 0, frame_width - 40, item_h, spacing=6)
+            row = HorizontalContainer(0, 0, frame_width - 40, item_h, spacing=10)
             
-            icon_img = self.check_img if is_done else (self.lock_img if not is_unlocked else None)
-            if icon_img:
-                icon_w = SpriteWidget(icon_img, 0, 0, 18, 18, self.batch, RenderingOrder.gui)
-                row.add(icon_w, do_layout=False)
+            icon_size = 32
+            
+            if is_done:
+                icon_img = self.star_img
+            elif is_unlocked:
+                icon_img = self.play_img
             else:
-                row.add(Container(0, 0, 18, 18), do_layout=False)
+                icon_img = self.lock_img
+                
+            icon_w = SpriteWidget(icon_img, 0, 0, icon_size, icon_size, self.batch, RenderingOrder.gui)
+            row.add(icon_w, do_layout=False)
             
             def make_lvl_click(p):
                 return lambda btn: self.on_level_selected(p)
                 
+            btn_text = display_name
+            if len(display_name) > 22:
+                btn_text = f"<font size='2'>{display_name}</font>"
+                
             if is_unlocked:
-                btn = Button(display_name, 0, 0, frame_width - 80, item_h, self.batch, 
+                btn = Button(btn_text, 0, 0, frame_width - 80, item_h, self.batch, 
                            on_click=make_lvl_click(path), button_type="molecule-button")
             else:
-                btn = Button(display_name, 0, 0, frame_width - 80, item_h, self.batch)
+                btn = Button(btn_text, 0, 0, frame_width - 80, item_h, self.batch)
                 btn.background_color = [30, 30, 30, 180]
             
             row.add(btn, do_layout=False)
