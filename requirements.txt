@@ -3,7 +3,7 @@
 # (Only direct deps; transitive ones are resolved by pip)  #
 ############################################################
 
-pyglet==2.1            # rendering
+pyglet==2.1.12            # rendering
 pymunk==7.1.0             # physics
 
 fastapi==0.115.8          # API server

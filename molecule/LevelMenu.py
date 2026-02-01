@@ -3,9 +3,11 @@ import os
 
 from molecule.gui import (
     Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame,
-    Button, SpriteWidget, AbsoluteContainer, ANCHOR_CENTER, HALIGN_LEFT, GUI_PADDING
+    Button, SpriteWidget, AbsoluteContainer, ANCHOR_CENTER, HALIGN_LEFT, GUI_PADDING,
+    Scrollable
 )
 from . import RenderingOrder
+from molecule import Config
 
 from libcml import Cml
 
@@ -44,6 +46,8 @@ class LevelMenu:
         self.lock_img = pyglet.image.load(os.path.join("molecule", "theme", "lock_fancy.png"))
         
         self.state = "MAIN"
+        if self.levels.player_id is None:
+            self.state = "PLAYER"
         self.selected_biome = None
         
         # Determine initial state based on current level
@@ -81,8 +85,10 @@ class LevelMenu:
         
         if self.state == "MAIN":
             self.init_main_view(width, height)
-        else:
+        elif self.state == "BIOME":
             self.init_biome_view(width, height)
+        elif self.state == "PLAYER":
+            self.init_player_selection_view(width, height)
 
     def init_main_view(self, width, height):
         root = AbsoluteContainer(0, 0, width, height)
@@ -192,6 +198,15 @@ class LevelMenu:
         
         exit_btn = Button("EXIT GAME", width - 150, height - 70, 120, 40, self.batch, on_click=on_exit, button_type="molecule-button")
         root.add(exit_btn)
+
+        # Change Player Button
+        player_name = Config.current.player or "Unknown"
+        def change_player(btn):
+            self.state = "PLAYER"
+            self.refresh()
+        
+        player_btn = Button(f"PLAYER: {player_name.upper()}", 50, height - 70, 250, 40, self.batch, on_click=change_player, button_type="molecule-button")
+        root.add(player_btn)
 
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                      is_movable=False, push_handlers=False, anchor=None)
@@ -310,6 +325,67 @@ class LevelMenu:
     def on_biome_clicked(self, name):
         self.selected_biome = name
         self.state = "BIOME"
+        self.refresh()
+
+    def init_player_selection_view(self, width, height):
+        root = AbsoluteContainer(0, 0, width, height)
+        
+        frame_w = 400
+        players = self.levels.persistence.get_players()
+        item_h = 40
+        header_h = 60
+        footer_h = 80
+        # Ensure we have at least some height for the list even if empty
+        list_h = max(100, min(len(players) * (item_h + 4), height - 300))
+        calc_height = header_h + list_h + footer_h + 20
+        
+        fx = width // 2 - frame_w // 2
+        fy = height // 2 - calc_height // 2
+        
+        frame = Frame(fx, fy, frame_w, calc_height, self.batch, RenderingOrder.gui_background,
+                     background_color=[20, 20, 30, 240], border_color=[255, 215, 0, 150])
+        
+        content = VerticalContainer(0, 0, frame_w - 24, calc_height - 20, spacing=10)
+        content.align = 'center'
+        
+        title = Document("<h3><font color='#FFD700' align='center'>SELECT PLAYER</font></h3>", 0, 0, frame_w - 40, 40, self.batch)
+        content.add(title, do_layout=False)
+        
+        # Player list container
+        player_list_cont = VerticalContainer(0, 0, frame_w - 60, max(1, len(players) * (item_h + 4)), spacing=4)
+        player_list_cont.align = 'center'
+        
+        def make_player_click(name):
+            return lambda btn: self.on_player_selected(name)
+
+        for p_name in players:
+            btn = Button(p_name, 0, 0, frame_w - 80, item_h, self.batch, on_click=make_player_click(p_name), button_type="molecule-button")
+            player_list_cont.add(btn, do_layout=False)
+            
+        scrollable = Scrollable(player_list_cont, 0, 0, frame_w - 40, list_h, self.batch)
+        content.add(scrollable, do_layout=False)
+        
+        def on_new_player(btn):
+            # Use random name for now as we don't have text input
+            import random
+            adjectives = ["Cool", "Smart", "Swift", "Atomic", "Brave"]
+            nouns = ["Chemist", "Scientist", "Player", "Pro", "Expert"]
+            name = f"{random.choice(adjectives)}{random.choice(nouns)}{random.randint(10, 99)}"
+            self.on_player_selected(name)
+
+        new_btn = Button("NEW PLAYER", 0, 0, 200, 40, self.batch, on_click=on_new_player, button_type="molecule-button")
+        content.add(new_btn, do_layout=False)
+        
+        frame.add(content)
+        frame.layout()
+        root.add(frame)
+        
+        self.view_manager = Manager(root, window=self.window, batch=self.batch, 
+                                      is_movable=False, push_handlers=False, anchor=None)
+
+    def on_player_selected(self, name):
+        self.levels.set_player(name)
+        self.state = "MAIN"
         self.refresh()
 
     def on_draw(self):

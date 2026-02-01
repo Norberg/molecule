@@ -93,6 +93,13 @@ class Reaction:
         self.tags = tags
         self.requirements = requirements
 
+    @property
+    def reaction_key(self):
+        from libreact.Reaction import list_without_state
+        reactants = list_without_state(self.reactants)
+        products = list_without_state(self.products)
+        return "_".join(reactants) + "_to_" + "_".join(products)
+
 class Effect:
     def __init__(self, title = None, value = None, x2 = None, y2 = None, molecules = []):
         self.title = title

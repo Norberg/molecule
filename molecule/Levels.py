@@ -31,6 +31,7 @@ from molecule import pyglet_util
 from molecule import HUD
 from molecule.gui import GUI_PADDING
 from molecule.emitters import Emitters
+from molecule.Persistence import Persistence
 from libcml import Cml
 
 class Levels:
@@ -48,25 +49,34 @@ class Levels:
             raise Exception(f"Requested level {start_level} not found!")
         elif self.current_level > 0:
             print("Starting on level %s" % self.levels[self.current_level])
+        self.persistence = Persistence()
+        
+        self.player_id = None
+        if Config.current.player:
+            self.player_id = self.persistence.create_player(Config.current.player)
+        
+        self.load_progress()
+
+    def set_player(self, name):
+        Config.current.player = name
+        self.player_id = self.persistence.create_player(name)
         self.load_progress()
 
     def load_progress(self):
-        self.completed_levels = set()
-        if os.path.exists("progress.json"):
-            with open("progress.json", "r") as f:
-                try:
-                    data = json.load(f)
-                    self.completed_levels = set(data.get("completed", []))
-                except:
-                    pass
+        self.completed_levels = self.persistence.get_completed_levels(self.player_id)
 
     def save_progress(self):
-        with open("progress.json", "w") as f:
-            json.dump({"completed": sorted(list(self.completed_levels))}, f)
+        pass # No longer needed for SQLite
 
-    def mark_completed(self, level_path):
-        self.completed_levels.add(level_path)
-        self.save_progress()
+    def mark_completed(self, level_path, score, reactions, molecules_seen, molecules_created):
+        if self.player_id is not None:
+            self.persistence.mark_completed(self.player_id, level_path, score)
+            if reactions or molecules_seen or molecules_created:
+                self.persistence.update_player_stats(self.player_id, 
+                                                   reactions or {}, 
+                                                   molecules_seen or set(), 
+                                                   molecules_created or {})
+            self.load_progress()
 
     def is_completed(self, level_path):
         return level_path in self.completed_levels
@@ -107,6 +117,8 @@ class Level:
         self.start_time = time.time()
         self.points = 0
         self.reaction_log = []
+        self.molecules_seen = set() # molecure_formula
+        self.molecules_created = {} # molecule_formula -> count
         self.emitters = []
         self.victory_popup = None
         self.hud = None
@@ -239,13 +251,18 @@ class Level:
         self.add_to_reaction_log(reaction.cml)
         if len(reactingMolecules) < 1:
             print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} without any reacting molecules")
-            reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
             return
         for molecule in reactingMolecules:
             self.delete_molecule(molecule)
         new_elements = Universe.create_elements(self.space, reaction.products, self.batch, position)
         self.elements.extend(new_elements)
         print("Reaction products:", reaction.products)
+        
+        # Track stats
+        for mol in new_elements:
+            self.molecules_seen.add(mol.formula)
+            self.molecules_created[mol.formula] = self.molecules_created.get(mol.formula, 0) + 1
+
         for mol in new_elements:
             base = mol.formula
             emitter_name = mol.current_state.emitter
@@ -377,6 +394,7 @@ class Level:
         self.mouse_spring.error_bias = math.pow(1.0-0.2, 30.0)
         self.space.add(self.mouse_spring)
         self.hud.update_info_text(shape.molecule.formula)
+        self.molecules_seen.add(shape.molecule.formula)
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.handle_element_released(x, y, button, modifiers)
@@ -431,7 +449,14 @@ class Level:
             area.update()
         if self.finished == False and self.victory():
             print("Victory")
-            self.window.levels.mark_completed(self.path)
+            reactions = {}
+            for reaction in self.reaction_log:
+                key = reaction.reaction_key
+                reactions[key] = reactions.get(key, 0) + 1
+            self.window.levels.mark_completed(self.path, self.get_time(), 
+                                             reactions, 
+                                             self.molecules_seen, 
+                                             self.molecules_created)
             self.victory_popup = Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.show_menu)
             print("Victory popup created")

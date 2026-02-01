@@ -27,8 +27,8 @@ class CliInterface:
     @staticmethod
     def handle_cmd_options():
         try:
-            opts, args = getopt.getopt(sys.argv[1:], "hldf",
-                ["help", "level=", "debug","fullscreen", "height=", "width="])
+            opts, args = getopt.getopt(sys.argv[1:], "hldfp:",
+                ["help", "level=", "debug","fullscreen", "height=", "width=", "player="])
         except getopt.GetoptError as err:
             print(str(err))
             CliInterface.cmd_help()
@@ -48,6 +48,8 @@ class CliInterface:
                 Config.current.width = int(a)
             elif o in ("--height"):
                 Config.current.height = int(a)
+            elif o in ("-p", "--player"):
+                Config.current.player = a
 
     @staticmethod
     def cmd_help():
@@ -59,6 +61,7 @@ class CliInterface:
         print("--fullscreen play in fullscreen mode")
         print("--width size of window, default=%s" % default.width)
         print("--height size of window, default=%s" % default.height)
+        print("-p --player=NAME choose player profile")
         print("During gameplay:")
         print("ESC - close game")
         print("r - reset current level")
