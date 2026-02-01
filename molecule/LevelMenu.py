@@ -160,8 +160,8 @@ class LevelMenu:
             done = sum(1 for p in level_paths if self.levels.is_completed(p))
             is_unlocked = prev_biome_started
             
-            frame_w = 180
-            frame_h = 80
+            frame_w = 220
+            frame_h = 90
             fx = abs_x - frame_w // 2
             fy = abs_y - frame_h // 2 - 80 # Position below the island
             
