@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<level zoom="0.6" aqueousNotDraggable="true">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="PbI2(s)"/>
+    <molecule title="PbI2(s)"/>
+    <molecule title="PbI2(s)"/>
+    <molecule title="PbI2(s)"/>
+    <molecule title="PbI2(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="640" y2="480"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+    <molecule title="PbI2"/>
+  </victoryCondition>
+  <objective text="Test emitters"/>
+  <hint text="test emitters">
+  </hint>
+</level>

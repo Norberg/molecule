@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<campaign>
+  <page id="1" name="Foundations &amp; Inorganic">
+    <biome name="Laboratory" icon="island_laboratory.png">
+      <level file="01-Water.cml"/>
+      <level file="02-Methane-1.cml"/>
+      <level file="03-Methane-2.cml"/>
+      <level file="04-Methane-3.cml"/>
+    </biome>
+    <biome name="Acid Zone" icon="island_acid.png">
+      <level file="05-Nitration-Nitrobenzene.cml"/>
+      <level file="13-Phosphorus-pentoxide.cml"/>
+      <level file="16-Acid-production-1-Sulfuric-acid.cml"/>
+      <level file="17-Acid-production-2-Nitric-acid.cml"/>
+    </biome>
+    <biome name="Volcanic Ridge" icon="island_volcano.png">
+      <level file="09-Magnesium-1.cml"/>
+      <level file="10-Sulfur-1.cml"/>
+      <level file="11-Sulfur-2.cml"/>
+      <level file="12-Iron-1.cml"/>
+    </biome>
+    <biome name="Chemical Plant" icon="island_factory.png">
+      <level file="06-Sodium-sulfate.cml"/>
+      <level file="07-Urea.cml"/>
+      <level file="14-Soda-1-Leblanc-process.cml"/>
+      <level file="15-Soda-2-Solvay-process.cml"/>
+    </biome>
+    <biome name="Fireworks Factory" icon="island_fireworks.png">
+      <level file="08-Calcium-carbonate.cml"/>
+      <level file="18-Golden-rain.cml"/>
+      <level file="19-Fireworks-Copper.cml"/>
+    </biome>
+  </page>
+  <page id="2" name="Organic &amp; Life">
+    <biome name="Dark Forest" icon="island_forest.png">
+      <level file="20-Organic-Addition-1.cml"/>
+      <level file="21-Organic-Addition-2.cml"/>
+      <level file="22-Organic-Substitution-1.cml"/>
+      <level file="23-Organic-Substitution-2.cml"/>
+      <level file="24-Organic-Substitution-3.cml"/>
+    </biome>
+    <biome name="Pharmaceutical Lab" icon="island_pharma.png">
+      <level file="30-Organic-Multistep-1-Paracetamol.cml"/>
+      <level file="31-Organic-Multistep-2-Aspirin.cml"/>
+      <level file="32-Organic-Multistep-3-3-Bromonitrobenzene.cml"/>
+      <level file="35-Organic-Multistep-4-Sulfanilamide.cml"/>
+    </biome>
+    <biome name="Petrochemical Desert" icon="island_desert.png">
+      <level file="33-Organic-Industrial-1-Cativa.cml"/>
+      <level file="34-Organic-Reduction-Aniline.cml"/>
+      <level file="37-Petrochemical-1-Benzene.cml"/>
+      <level file="39-Petrochemical-1-MTBE.cml"/>
+    </biome>
+    <biome name="Primordial Soup" icon="island_primordial.png">
+      <level file="40-Life-1-DAMN.cml"/>
+      <level file="41-Life-2-Adenine.cml"/>
+      <level file="42-Life-3-Guanine.cml"/>
+      <level file="43-Life-4-Formaldehyde.cml"/>
+    </biome>
+    <biome name="The Frontier" icon="island_frontier.png">
+      <level file="98-Taurin-1.cml"/>
+      <level file="99-Test.cml"/>
+      <level file="100-Emmiter-testlevel.cml"/>
+    </biome>
+  </page>
+</campaign>

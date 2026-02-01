@@ -1,76 +1,25 @@
 import pyglet
 import os
+
 from molecule.gui import (
     Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame,
     Button, SpriteWidget, AbsoluteContainer, ANCHOR_CENTER, HALIGN_LEFT, GUI_PADDING
 )
 from . import RenderingOrder
 
-PAGES = [
-    [ # Page 1: Foundations & Inorganic
-        ("Laboratory", "island_laboratory.png", [
-            "data/levels/01-Water.cml",
-            "data/levels/02-Methane-1.cml",
-            "data/levels/03-Methane-2.cml",
-            "data/levels/04-Methane-3.cml",
-        ]),
-        ("Acid Zone", "island_acid.png", [
-            "data/levels/05-Nitration-Nitrobenzene.cml",
-            "data/levels/13-Phosphorus-pentoxide.cml",
-            "data/levels/16-Acid-production-1-Sulfuric-acid.cml",
-            "data/levels/17-Acid-production-2-Nitric-acid.cml",
-        ]),
-        ("Volcanic Ridge", "island_volcano.png", [
-             "data/levels/09-Magnesium-1.cml",
-             "data/levels/10-Sulfur-1.cml",
-             "data/levels/11-Sulfur-2.cml",
-             "data/levels/12-Iron-1.cml",
-        ]),
-        ("Chemical Plant", "island_factory.png", [
-            "data/levels/06-Sodium-sulfate.cml",
-            "data/levels/07-Urea.cml",
-            "data/levels/14-Soda-1-Leblanc-process.cml",
-            "data/levels/15-Soda-2-Solvay-process.cml",
-        ]),
-        ("Fireworks Factory", "island_fireworks.png", [
-             "data/levels/08-Calcium-carbonate.cml",
-             "data/levels/18-Golden-rain.cml",
-             "data/levels/19-Fireworks-Copper.cml",
-        ]),
-    ],
-    [ # Page 2: Organic & Life
-        ("Dark Forest", "island_forest.png", [
-            "data/levels/20-Organic-Addition-1.cml",
-            "data/levels/21-Organic-Addition-2.cml",
-            "data/levels/22-Organic-Substitution-1.cml",
-            "data/levels/23-Organic-Substitution-2.cml",
-            "data/levels/24-Organic-Substitution-3.cml",
-        ]),
-        ("Pharmaceutical Lab", "island_pharma.png", [
-             "data/levels/30-Organic-Multistep-1-Paracetamol.cml",
-             "data/levels/31-Organic-Multistep-2-Aspirin.cml",
-             "data/levels/32-Organic-Multistep-3-3-Bromonitrobenzene.cml",
-             "data/levels/35-Organic-Multistep-4-Sulfanilamide.cml",
-        ]),
-        ("Petrochemical Desert", "island_desert.png", [
-             "data/levels/33-Organic-Industrial-1-Cativa.cml",
-             "data/levels/34-Organic-Reduction-Aniline.cml",
-             "data/levels/37-Petrochemical-1-Benzene.cml",
-             "data/levels/39-Petrochemical-1-MTBE.cml",
-        ]),
-        ("Primordial Soup", "island_primordial.png", [
-            "data/levels/40-Life-1-DAMN.cml",
-            "data/levels/41-Life-2-Adenine.cml",
-            "data/levels/42-Life-3-Guanine.cml",
-            "data/levels/43-Life-4-Formaldehyde.cml",
-        ]),
-        ("The Frontier", "island_frontier.png", [
-             "data/levels/98-Taurin-1.cml",
-             "data/levels/99-Test.cml",
-             "data/levels/100-Emmiter-testlevel.cml",
-        ])
-    ]
-]
+from libcml import Cml
+
+def load_pages():
+    campaign = Cml.Campaign()
+    path = os.path.join("data", "levels", "campaign.cml")
+    try:
+        campaign.parse(path)
+        return campaign.pages
+    except Exception as e:
+        print(f"Error loading campaign.cml: {e}")
+        return []
+
+PAGES = load_pages()
 
 
 class LevelMenu:

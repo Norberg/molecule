@@ -556,3 +556,29 @@ class Molecule(Cml):
             propertyTag = etree.SubElement(properties, "property",
                                            {"title":name})
             propertyTag.text = str(value)
+
+class Campaign(Cml):
+    def __init__(self):
+        self.pages = []
+
+    def parse(self, filename):
+        import os
+        self.tree = etree.parse(filename)
+        root = self.tree.getroot()
+        base_dir = os.path.dirname(filename)
+        
+        self.pages = []
+        for page_elem in root.findall('page'):
+            biomes = []
+            for biome_elem in page_elem.findall('biome'):
+                name = biome_elem.get('name')
+                icon = biome_elem.get('icon')
+                level_paths = []
+                for level_elem in biome_elem.findall('level'):
+                    fname = level_elem.get('file')
+                    level_paths.append(os.path.join(base_dir, fname))
+                biomes.append((name, icon, level_paths))
+            self.pages.append(biomes)
+
+    def write(self, filename):
+        raise NotImplementedError
