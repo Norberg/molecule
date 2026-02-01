@@ -433,7 +433,7 @@ class Level:
             print("Victory")
             self.window.levels.mark_completed(self.path)
             self.victory_popup = Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
-                             on_escape=self.window.switch_level)
+                             on_escape=self.window.show_menu)
             print("Victory popup created")
             self.finished = True
 

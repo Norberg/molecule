@@ -64,15 +64,15 @@ class Game(pyglet.window.Window):
         self.levels = Levels("data/levels", Config.current.level, window=self)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
         self.server.start()
-        self.show_menu()
+        self.show_menu(start_at_map=True)
 
-    def show_menu(self):
+    def show_menu(self, start_at_map=False):
         if self.level:
             self.level.delete()
             self.level = None
         if self.menu:
             self.menu.delete()
-        self.menu = LevelMenu(self, self.levels, self.on_level_selected)
+        self.menu = LevelMenu(self, self.levels, self.on_level_selected, start_at_map=start_at_map)
 
     def on_level_selected(self, level_path):
         # Find index of selected level

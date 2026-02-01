@@ -23,7 +23,7 @@ PAGES = load_pages()
 
 
 class LevelMenu:
-    def __init__(self, window, levels, on_level_selected):
+    def __init__(self, window, levels, on_level_selected, start_at_map=False):
         self.window = window
         self.levels = levels
         self.on_level_selected = on_level_selected
@@ -45,7 +45,29 @@ class LevelMenu:
         
         self.state = "MAIN"
         self.selected_biome = None
+        
+        # Determine initial state based on current level
+        if not start_at_map:
+            try:
+                current_level_path = self.levels.levels[self.levels.current_level]
+                for page in PAGES:
+                    for b_name, b_icon, b_paths in page:
+                        if any(os.path.abspath(p) == os.path.abspath(current_level_path) for p in b_paths):
+                            self.selected_biome = b_name
+                            self.state = "BIOME"
+                            break
+                    if self.selected_biome: break
+            except:
+                pass
+
         self.page_index = 0
+        # If we found a biome, make sure we are on the right page
+        if self.selected_biome:
+            for i, page in enumerate(PAGES):
+                if any(b[0] == self.selected_biome for b in page):
+                    self.page_index = i
+                    break
+
         self.view_manager = None
         
         self.refresh()
@@ -86,15 +108,10 @@ class LevelMenu:
             
             # Load and draw island sprite
             try:
-                island_img = pyglet.image.load(os.path.join("molecule", "theme", icon_file))
+                island_img = pyglet.image.load(os.path.join("img", "campaign", icon_file))
                 island_img.anchor_x = island_img.width // 2
-                island_img.anchor_y = island_img.height // 2
+                island_img.anchor_y = island_img.height // 2 - 70
                 island_sprite = SpriteWidget(island_img, abs_x, abs_y, 0, 0, self.batch, RenderingOrder.gui_background)
-                # No specific container for just sprite in this simple GUI lib, so we might need a workaround 
-                # or just add it to a dummy container. 
-                # SpriteWidget handles its own drawing if batch is set.
-                # However, the Manager expects widgets. SpriteWidget is a Widget.
-                # We need to add it to root.
                 
                 # Scale sprite if needed (assuming 128x128 placeholders, maybe scale up slightly)
                 island_sprite.scale_x = 1.5
@@ -169,6 +186,13 @@ class LevelMenu:
             next_btn = Button("NEXT PAGE >>", width - 200, nav_y, 150, 40, self.batch, on_click=next_page, button_type="molecule-button")
             root.add(next_btn)
 
+        # Exit Button
+        def on_exit(btn):
+            pyglet.app.exit()
+        
+        exit_btn = Button("EXIT GAME", width - 150, height - 70, 120, 40, self.batch, on_click=on_exit, button_type="molecule-button")
+        root.add(exit_btn)
+
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                      is_movable=False, push_handlers=False, anchor=None)
 
@@ -179,25 +203,38 @@ class LevelMenu:
         
         # Flatten biomes list to find the selected one
         all_biomes = [biome for page in PAGES for biome in page]
-        level_paths = next(lvls for name, icon, lvls in all_biomes if name == biome_name)
+        icon_file, level_paths = next((icon, lvls) for name, icon, lvls in all_biomes if name == biome_name)
         
         num_levels = len(level_paths)
         item_h = 32
         spacing = 4
-        title_h = 30
-        back_h = 32
-        
-        calc_height = title_h + 10 + (num_levels * (item_h + spacing)) + back_h + 10
-        frame_width = 400
+        title_h = 40
+        back_h = 40
+        content_spacing = 8
+        calc_height = title_h + 10 + (num_levels * (item_h + spacing)) + back_h + 30
+        frame_width = 440
         
         fx = width // 2 - frame_width // 2
         fy = height // 2 - calc_height // 2
         
+        # Add Campaign Image
+        icon_path = os.path.join("img", "campaign", icon_file)
+        camp_img = pyglet.image.load(icon_path)
+        # Anchor center-bottom for natural placement
+        camp_img.anchor_x = camp_img.width // 2
+        camp_img.anchor_y = 0
+        
+        # Positioned above/behind the top of the frame
+        camp_sprite = SpriteWidget(camp_img, width // 2, fy + calc_height - 10, 
+                                  camp_img.width, camp_img.height, 
+                                  self.batch, RenderingOrder.gui_background)
+        root.add(camp_sprite)
+
         frame = Frame(fx, fy, frame_width, calc_height + 20, self.batch, RenderingOrder.gui_background,
                      background_color=[15, 15, 20, 240], border_color=[255, 215, 0, 120],
                      frame_type="none")
         
-        content = VerticalContainer(0, 0, frame_width - 24, calc_height, spacing=spacing)
+        content = VerticalContainer(0, 0, frame_width - 24, calc_height, spacing=content_spacing)
         content.align = 'center'
         
         # Title Header with background
@@ -212,6 +249,10 @@ class LevelMenu:
                         0, -title_y_offset, frame_width - 40, title_h, self.batch)
         title.is_fixed_size = True
         content.add(title, do_layout=False)
+        
+        # Spacer for visual balance
+        spacer = Document("", 0, 0, frame_width, 10, self.batch)
+        content.add(spacer, do_layout=False)
         
         prev_done = True
         for path in level_paths:
