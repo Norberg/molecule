@@ -358,8 +358,12 @@ class LevelMenu:
         def make_player_click(name):
             return lambda btn: self.on_player_selected(name)
 
+        total_levels = len(self.levels.levels)
         for p_name in players:
-            btn = Button(p_name, 0, 0, frame_w - 80, item_h, self.batch, on_click=make_player_click(p_name), button_type="molecule-button")
+            p_id = self.levels.persistence.get_player_id(p_name)
+            completed_count = len(self.levels.persistence.get_completed_levels(p_id))
+            display_text = f"{p_name.upper()} ({completed_count}/{total_levels})"
+            btn = Button(display_text, 0, 0, frame_w - 80, item_h, self.batch, on_click=make_player_click(p_name), button_type="molecule-button")
             player_list_cont.add(btn, do_layout=False)
             
         scrollable = Scrollable(player_list_cont, 0, 0, frame_w - 40, list_h, self.batch)
