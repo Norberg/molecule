@@ -62,6 +62,8 @@ async def getAtomImage(symbol):
 
 @router.get("/level/current")
 async def getCurrentLevel(request: Request):
+    if request.app.state.server.level is None:
+        raise HTTPException(status_code=404, detail="No level loaded")
     current_level: Level = request.app.state.server.level
     return {"points": current_level.get_points(),
              "time": current_level.get_time(),

@@ -12,6 +12,7 @@ class Server:
         self.app = FastAPI()
         self.app.include_router(router)
         self.app.state.server = self
+        self.level = None
         
         # Add CORS middleware
         self.app.add_middleware(
