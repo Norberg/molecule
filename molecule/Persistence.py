@@ -196,3 +196,19 @@ class Persistence:
             cur.execute("SELECT molecule_formula FROM player_molecules_seen WHERE player_id = ?", (player_id,))
             return set(row[0] for row in cur.fetchall())
 
+    def get_created_molecules(self, player_id):
+        if player_id is None:
+            return {}
+        with self._get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT molecule_formula, total_count FROM player_molecules_created WHERE player_id = ?", (player_id,))
+            return {row[0]: row[1] for row in cur.fetchall()}
+
+    def get_performed_reactions(self, player_id):
+        if player_id is None:
+            return []
+        with self._get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT reaction_title, total_count FROM player_reactions WHERE player_id = ?", (player_id,))
+            return [{"reaction_title": row[0], "total_count": row[1]} for row in cur.fetchall()]
+

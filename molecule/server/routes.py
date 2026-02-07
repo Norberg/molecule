@@ -8,6 +8,7 @@ from molecule.Levels import Level
 from libcml import Cml
 import cml2img
 from molecule import Skeletal
+from molecule.Universe import universe
 from libreact.Reaction import list_without_state
 
 def getMolecule(filename):
@@ -40,7 +41,77 @@ async def getMolecules(request: Request):
     if levels is None or levels.player_id is None:
         return []
     seen_formulas = levels.persistence.get_seen_molecules(levels.player_id)
-    return [molecule for molecule in moleculeList if not molecule["isAtom"] and molecule["formula"] in seen_formulas]
+    created_counts = levels.persistence.get_created_molecules(levels.player_id)
+    
+    response = []
+    for molecule in moleculeList:
+        if not molecule["isAtom"] and molecule["formula"] in seen_formulas:
+            mol_data = molecule.copy()
+            mol_data["createdCount"] = created_counts.get(molecule["formula"], 0)
+            response.append(mol_data)
+    return response
+
+@router.get("/reaction")
+async def getReactions(request: Request):
+    levels = request.app.state.server.levels
+    if levels.player_id is None:
+        return []
+    performed_reactions = levels.persistence.get_performed_reactions(levels.player_id)
+    
+    # Map reaction_title back to reaction details if possible
+    # We'll use a dictionary to lookup reactions by their key
+    reaction_lookup = {r.reaction_key: r for r in universe.reactor.reactions}
+    
+    response = []
+    for perf in performed_reactions:
+        title = perf["reaction_title"]
+        count = perf["total_count"]
+        
+        reaction_cml = reaction_lookup.get(title)
+        if reaction_cml:
+            reaction_data = {
+                "reactants": list_without_state(reaction_cml.reactants),
+                "products": list_without_state(reaction_cml.products),
+                "description": reaction_cml.description,
+                "tags": reaction_cml.tags,
+                "reactionCount": count,
+                "reactionPath": Skeletal.reactionFileName(reaction_cml),
+                "reactionHintPath": Skeletal.reactionUnknownProductFileName(reaction_cml)
+            }
+            response.append(reaction_data)
+        else:
+            print("Reaction not found found in universe: " + title)
+                
+    return response
+
+@router.get("/statistics")
+async def getStatistics(request: Request):
+    levels = request.app.state.server.levels
+    if levels.player_id is None:
+        return {}
+    
+    seen_formulas = levels.persistence.get_seen_molecules(levels.player_id)
+    performed_reactions = levels.persistence.get_performed_reactions(levels.player_id)
+    
+    seenMolecules = len([m for m in moleculeList if not m["isAtom"] and m["formula"] in seen_formulas])
+    totalMolecules = len([m for m in moleculeList if not m["isAtom"]])
+    
+    seenAtoms = len([m for m in moleculeList if m["isAtom"] and m["formula"] in seen_formulas])
+    totalAtoms = len([m for m in moleculeList if m["isAtom"]])
+    
+    uniqueReactionsPerformed = len(performed_reactions)
+    totalUniqueReactions = len(universe.reactor.reactions)
+    totalReactionsMade = sum(r["total_count"] for r in performed_reactions)
+    
+    return {
+        "seenMolecules": seenMolecules,
+        "totalMolecules": totalMolecules,
+        "seenAtoms": seenAtoms,
+        "totalAtoms": totalAtoms,
+        "uniqueReactionsPerformed": uniqueReactionsPerformed,
+        "totalUniqueReactions": totalUniqueReactions,
+        "totalReactionsMade": totalReactionsMade
+    }
 
 @router.get("/molecule/all")
 async def getAllMolecules():
