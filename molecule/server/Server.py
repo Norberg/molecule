@@ -8,11 +8,11 @@ from fastapi.logger import logger as fastapi_logger
 from molecule.server.routes import router
 
 class Server:
-    def __init__(self):
+    def __init__(self, levels):
         self.app = FastAPI()
         self.app.include_router(router)
         self.app.state.server = self
-        self.level = None
+        self.levels = levels
         
         # Add CORS middleware
         self.app.add_middleware(
@@ -46,6 +46,3 @@ class Server:
             daemon=True
         )
         server_thread.start()
-
-    def switch_level(self, level):
-        self.level = level

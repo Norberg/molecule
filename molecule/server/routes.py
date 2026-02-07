@@ -35,7 +35,15 @@ async def getTags():
     return tag_descriptions
 
 @router.get("/molecule")
-async def getMolecules():
+async def getMolecules(request: Request):
+    levels = request.app.state.server.levels
+    if levels is None or levels.player_id is None:
+        return []
+    seen_formulas = levels.persistence.get_seen_molecules(levels.player_id)
+    return [molecule for molecule in moleculeList if not molecule["isAtom"] and molecule["formula"] in seen_formulas]
+
+@router.get("/molecule/all")
+async def getAllMolecules():
     return [molecule for molecule in moleculeList if not molecule["isAtom"]]
 
 @router.get("/molecule/{formula}/image")
@@ -62,9 +70,10 @@ async def getAtomImage(symbol):
 
 @router.get("/level/current")
 async def getCurrentLevel(request: Request):
-    if request.app.state.server.level is None:
+    levels = request.app.state.server.levels
+    if levels is None or levels.window.level is None:
         raise HTTPException(status_code=404, detail="No level loaded")
-    current_level: Level = request.app.state.server.level
+    current_level = levels.window.level
     return {"points": current_level.get_points(),
              "time": current_level.get_time(),
              "victoryCondition": current_level.cml.victory_condition,

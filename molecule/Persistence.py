@@ -188,3 +188,11 @@ class Persistence:
             """, (player_id, level_path, limit))
             return cur.fetchall()
 
+    def get_seen_molecules(self, player_id):
+        if player_id is None:
+            return set()
+        with self._get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT molecule_formula FROM player_molecules_seen WHERE player_id = ?", (player_id,))
+            return set(row[0] for row in cur.fetchall())
+

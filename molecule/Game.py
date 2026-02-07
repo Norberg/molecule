@@ -44,7 +44,6 @@ class Game(pyglet.window.Window):
         self.DEBUG_GRAPHICS = False
         self.level = None
         self.menu = None # Add menu state
-        self.server = Server()
         self.start()
 
     def create_config(self):
@@ -62,6 +61,7 @@ class Game(pyglet.window.Window):
     def start(self):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.levels = Levels("data/levels", Config.current.level, window=self)
+        self.server = Server(self.levels)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
         self.server.start()
         self.show_menu(start_at_map=True)
@@ -127,7 +127,6 @@ class Game(pyglet.window.Window):
         self.batch = level.batch
         self.level = level
         self.space = level.space
-        self.server.switch_level(level)
 
     def reset_level(self):
         level = self.levels.get_current_level()
