@@ -583,7 +583,12 @@ class Campaign(Cml):
                 level_paths = []
                 for level_elem in biome_elem.findall('level'):
                     fname = level_elem.get('file')
-                    level_paths.append(os.path.join(base_dir, fname))
+                    # Look in levels/ subdirectory first if file exists there
+                    levels_path = os.path.join(base_dir, "levels", fname)
+                    if os.path.exists(levels_path):
+                        level_paths.append(levels_path)
+                    else:
+                        level_paths.append(os.path.join(base_dir, fname))
                 biomes.append((name, icon, level_paths))
             self.pages.append(biomes)
 

@@ -43,8 +43,6 @@ class TestLevels(unittest.TestCase):
         failures = []
 
         for level_path in level_files:
-            if "campaign.cml" in level_path:
-                continue
             cml = Cml.Level()
             cml.parse(level_path)
 

@@ -8,7 +8,7 @@ from libcml import Cml
 
 class TestCampaign(unittest.TestCase):
     def test_all_levels_specified(self):
-        campaign_path = os.path.join("data", "levels", "campaign.cml")
+        campaign_path = os.path.join("data", "campaign.cml")
         levels_dir = os.path.join("data", "levels")
         
         if not os.path.exists(campaign_path):
@@ -27,14 +27,14 @@ class TestCampaign(unittest.TestCase):
                 # biome is (name, icon, level_paths)
                 # level_paths are absolute or relative paths as returned by parsing
                 for lvl_path in biome[2]:
-                    # The parser joins "data/levels" + fname
+                    # The parser joins "data" + "levels" + fname
                     # But we want to match against file list in levels_dir
                     fname = os.path.basename(lvl_path)
                     specified_levels.add(fname)
             
         # List actual files
         actual_files = set()
-        ignore_files = {"campaign.cml", "testlevel.cml"} 
+        ignore_files = {"testlevel.cml"} 
         
         if os.path.exists(levels_dir):
             for f in os.listdir(levels_dir):

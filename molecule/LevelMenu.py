@@ -13,7 +13,7 @@ from libcml import Cml
 
 def load_pages():
     campaign = Cml.Campaign()
-    path = os.path.join("data", "levels", "campaign.cml")
+    path = os.path.join("data", "campaign.cml")
     try:
         campaign.parse(path)
         return campaign.pages
