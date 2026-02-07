@@ -35,7 +35,7 @@ sudo apt update && sudo apt install -y \
     libreadline-dev libsqlite3-dev curl llvm libncursesw5-dev xz-utils \
     tk-dev libxml2-dev libxmlsec1-dev liblzma-dev \
     libgirepository1.0-dev libcairo2-dev gir1.2-gtk-3.0 \
-    openbabel
+    openbabel libsqlite3-dev
 ```
 openbabel is only required for some optional molecule generation workflows.
 
