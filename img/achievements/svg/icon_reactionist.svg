@@ -1,0 +1,20 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Flask icon -->
+  <g fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Flask body -->
+    <path d="M 35 25 L 35 40 L 25 65 Q 25 75 35 75 L 65 75 Q 75 75 75 65 L 65 40 L 65 25" fill="none"/>
+    
+    <!-- Flask neck -->
+    <line x1="40" y1="20" x2="40" y2="25"/>
+    <line x1="60" y1="20" x2="60" y2="25"/>
+    <line x1="40" y1="20" x2="60" y2="20"/>
+    
+    <!-- Liquid -->
+    <path d="M 30 60 Q 30 65 35 65 L 65 65 Q 70 65 70 60 L 62 45 L 38 45 Z" fill="white" opacity="0.4"/>
+    
+    <!-- Bubbles -->
+    <circle cx="45" cy="55" r="3" fill="white" opacity="0.6"/>
+    <circle cx="55" cy="50" r="2.5" fill="white" opacity="0.6"/>
+    <circle cx="50" cy="35" r="2" fill="white" opacity="0.6"/>
+  </g>
+</svg>

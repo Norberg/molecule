@@ -1,0 +1,70 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Bronze metallic gradient -->
+    <radialGradient id="bronzeGradient" cx="50%" cy="40%">
+      <stop offset="0%" style="stop-color:#f4c896;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#d4a574;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#b8864e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8c5a2b;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Inner shine gradient -->
+    <radialGradient id="bronzeShine" cx="50%" cy="35%">
+      <stop offset="0%" style="stop-color:#fff;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#f4c896;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#8c5a2b;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Drop shadow -->
+    <filter id="dropShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feFlood flood-color="rgba(0,0,0,0.4)"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Inner shadow for depth -->
+    <filter id="innerShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="rgba(0,0,0,0.3)"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feComposite in2="SourceAlpha" operator="in"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer hexagon with shadow -->
+  <path d="M100,15 L175,57.5 L175,142.5 L100,185 L25,142.5 L25,57.5 Z" 
+        fill="url(#bronzeGradient)" 
+        stroke="#5a3a1a" 
+        stroke-width="3" 
+        filter="url(#dropShadow)" />
+  
+  <!-- Inner hexagon for depth -->
+  <path d="M100,30 L160,65 L160,135 L100,170 L40,135 L40,65 Z" 
+        fill="none" 
+        stroke="#f4c896" 
+        stroke-width="2" 
+        opacity="0.3"/>
+  
+  <!-- Center circle background -->
+  <circle cx="100" cy="100" r="55" 
+          fill="url(#bronzeShine)" 
+          opacity="0.6"/>
+  
+  <!-- Decorative inner circle -->
+  <circle cx="100" cy="100" r="50" 
+          fill="none" 
+          stroke="#5a3a1a" 
+          stroke-width="2" 
+          opacity="0.4"/>
+  
+  <!-- Highlight shine -->
+  <ellipse cx="100" cy="70" rx="35" ry="25" 
+           fill="white" 
+           opacity="0.15"/>
+</svg>
