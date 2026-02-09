@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 import glob
+import os
 import subprocess
 import json
 from molecule.Levels import Level
@@ -10,6 +11,7 @@ import cml2img
 from molecule import Skeletal
 from molecule.Universe import universe
 from libreact.Reaction import list_without_state
+from molecule.Achievements import AchievementManager
 
 def getMolecule(filename):
     molecule = Cml.Molecule()
@@ -34,6 +36,61 @@ async def get_game_state():
 @router.get("/reactions/tags")
 async def getTags():
     return tag_descriptions
+
+@router.get("/achievements")
+async def getAchievements(request: Request):
+    levels = request.app.state.server.levels
+    if levels is None:
+        return []
+    
+    player_id = levels.player_id
+    player_achievements = levels.persistence.get_player_achievements(player_id)
+    
+    # helper for fast lookup
+    unlocked_map = {} # key -> {level: unlocked_at}
+    for entry in player_achievements:
+        if entry["key"] not in unlocked_map:
+            unlocked_map[entry["key"]] = {}
+        unlocked_map[entry["key"]][entry["level"]] = entry.get("unlocked_at")
+
+    manager = AchievementManager()
+    stats = manager.get_player_stats(player_id, levels.persistence)
+    response = []
+    
+    for ach in manager.achievements:
+        # Determine highest unlocked level
+        current_level = None
+        ach_unlocked = unlocked_map.get(ach.key, {})
+        if "gold" in ach_unlocked:
+            current_level = "gold"
+        elif "silver" in ach_unlocked:
+            current_level = "silver"
+        elif "bronze" in ach_unlocked:
+            current_level = "bronze"
+                
+        response.append({
+            "key": ach.key,
+            "name": ach.name,
+            "description": ach.description,
+            "thresholds": ach.thresholds,
+            "current": stats.get(ach.key, 0),
+            "currentLevel": current_level,
+            "unlockedLevels": ach_unlocked # returns dict {level: timestamp}
+        })
+        
+    return response
+
+@router.get("/achievements/image/{key}/{level}")
+async def getAchievementImage(key, level):
+    path = f"img/achievements/{key}_{level}.png"
+    if not os.path.exists(path):
+        # Fallback to generic badge
+        path = f"img/achievements/badge_{level}.png"
+        
+    if not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="Image not found")
+        
+    return FileResponse(path)
 
 @router.get("/molecule")
 async def getMolecules(request: Request):

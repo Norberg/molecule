@@ -32,6 +32,7 @@ from molecule import HUD
 from molecule.gui import GUI_PADDING
 from molecule.emitters import Emitters
 from molecule.Persistence import Persistence
+from molecule.Achievements import AchievementManager
 from libcml import Cml
 
 class Levels:
@@ -56,6 +57,7 @@ class Levels:
             self.player_id = self.persistence.create_player(Config.current.player)
         
         self.load_progress()
+        self.achievement_manager = AchievementManager()
 
     def set_player(self, name):
         Config.current.player = name
@@ -76,6 +78,12 @@ class Levels:
                                                    reactions or {}, 
                                                    molecules_seen or set(), 
                                                    molecules_created or {})
+            
+            # Check for achievements
+            new_achievements = self.achievement_manager.check_and_unlock(self.player_id, self.persistence)
+            if new_achievements:
+                print(f"Achievements unlocked: {new_achievements}")
+
             self.load_progress()
 
     def is_completed(self, level_path):

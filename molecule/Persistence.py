@@ -83,6 +83,17 @@ class Persistence:
                     FOREIGN KEY (player_id) REFERENCES players(id)
                 )
             """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS player_achievements (
+                    player_id INTEGER,
+                    achievement_key TEXT,
+                    level TEXT,
+                    unlocked_at DATETIME,
+                    PRIMARY KEY (player_id, achievement_key, level),
+                    FOREIGN KEY (player_id) REFERENCES players(id)
+                )
+            """)
+
             conn.commit()
 
     def get_player_id(self, name):
@@ -211,4 +222,23 @@ class Persistence:
             cur = conn.cursor()
             cur.execute("SELECT reaction_title, total_count FROM player_reactions WHERE player_id = ?", (player_id,))
             return [{"reaction_title": row[0], "total_count": row[1]} for row in cur.fetchall()]
+
+    def unlock_achievement(self, player_id, key, level):
+        now = datetime.datetime.now().isoformat()
+        with self._get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("""
+                INSERT OR IGNORE INTO player_achievements (player_id, achievement_key, level, unlocked_at)
+                VALUES (?, ?, ?, ?)
+            """, (player_id, key, level, now))
+            conn.commit()
+
+    def get_player_achievements(self, player_id):
+        if player_id is None:
+            return []
+        with self._get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT achievement_key, level, unlocked_at FROM player_achievements WHERE player_id = ?", (player_id,))
+            return [{"key": row[0], "level": row[1], "unlocked_at": row[2]} for row in cur.fetchall()]
+
 
