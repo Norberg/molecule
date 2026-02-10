@@ -109,19 +109,11 @@ class Game(pyglet.window.Window):
             options = pyglet_util.DrawOptions()
             self.space.debug_draw(options)
 
-    def switch_level(self, level=None):
-        """ Switch to level, if level=None switch to next level"""
+    def switch_level(self, level):
+        """ Switch to level """
         if self.level is not None:
             self.level.delete()
-        if level is None:
-            level = self.levels.next_level()
-            if level is None:
-                Gui.create_popup(self, self.batch, "Congratulation you have won the game!",
-                             on_escape=self.show_menu)
-            else:
-                self.run_level(level)
-        else:
-            self.run_level(level)
+        self.run_level(level)
 
     def run_level(self, level):
         self.batch = level.batch

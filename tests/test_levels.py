@@ -359,19 +359,18 @@ class TestLevels(unittest.TestCase):
         victory_effect.put_element(l.elements.pop())
         self.assertEqual(l.victory(), True)
 
-        l = levels.next_level()
+        levels.current_level = 1
+        l = levels.get_current_level()
         expected = ['H+(g)', 'O(g)', 'O(g)', 'H+(g)', 'OH-(aq)', 'CO2(g)', 'CH4(g)']
         self.assertEqual(l.cml.molecules, expected)
         self.assertEqual(l.cml.victory_condition, ['CO', 'H2', 'H2', 'H2'])
         self.assertEqual(l.cml.objective, "Create a CO and 3 H2 molecules")
         self.assertEqual(l.cml.hint, "1) H+ + OH- => H2O; 2) CH4 + H2O + Heat => CO + 3H2")
-        levels.current_level = 1000
-        l = levels.next_level()
-        self.assertEqual(l, None)
 
     def testDestroyElements(self):
         levels = Levels("data/levels", window=WindowMock())
-        l = levels.next_level()
+        levels.current_level = 1
+        l = levels.get_current_level()
         batch = pyglet.graphics.Batch()
         l.elements.extend(
             Universe.create_elements(l.space, ["O2(g)", "O2(g)", "CH4(g)"], batch, None)

@@ -97,11 +97,6 @@ class Levels:
         self.levels = [name for name in filenames if '#' not in name]
         self.levels.sort()
 
-    def next_level(self):
-        self.current_level += 1
-        if self.current_level >= len(self.levels):
-            return None
-        return self.get_current_level()
 
     def get_current_level(self):
         path = self.levels[self.current_level]
@@ -109,11 +104,6 @@ class Levels:
         cml.parse(path)
         return Level(cml, self.window, path)
 
-    def level_iter(self):
-        level = self.next_level()
-        while level is not None:
-            yield level
-            level = self.next_level()
 
 class Level:
     def __init__(self, cml, window, path):
@@ -436,9 +426,6 @@ class Level:
             #    objgraph.show_backrefs(n)
         elif symbol == pyglet.window.key.ESCAPE:
                 self.window.show_menu()
-        elif symbol == pyglet.window.key.S:
-            Gui.create_popup(self.window, self.batch, "Skipping level, Cheater!",
-                             on_escape=self.window.switch_level)
         elif symbol == pyglet.window.key.R:
             self.window.reset_level()
         elif symbol == pyglet.window.key.D:
