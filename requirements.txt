@@ -10,7 +10,7 @@ fastapi==0.115.8          # API server
 uvicorn==0.33.0           # ASGI server
 
 numpy==1.26.4             # numeric helpers
-Pillow==10.4.0            # image handling
+Pillow==12.1.1            # image handling
 pycairo==1.26.1           # cairo (import as cairo)
 xmlschema==3.4.3          # CML validation
 
