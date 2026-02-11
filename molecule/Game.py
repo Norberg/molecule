@@ -61,10 +61,15 @@ class Game(pyglet.window.Window):
     def start(self):
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.levels = Levels("data/levels", Config.current.level, window=self)
-        self.server = Server(self.levels)
+        self.penalty = 0
+        self.server = Server(self)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
         self.server.start()
         self.show_menu(start_at_map=True)
+
+    def add_penalty(self, seconds):
+        self.penalty += seconds
+
 
     def show_menu(self, start_at_map=False):
         if self.level:
@@ -80,7 +85,10 @@ class Game(pyglet.window.Window):
             if path == level_path:
                 self.levels.current_level = i
                 break
+        self.penalty = 0
         self.menu.delete()
+
+
         self.menu = None
         level = self.levels.get_current_level()
         self.switch_level(level)

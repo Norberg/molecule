@@ -198,10 +198,10 @@ async def getAtomImage(symbol):
 
 @router.get("/level/current")
 async def getCurrentLevel(request: Request):
-    levels = request.app.state.server.levels
-    if levels is None or levels.window.level is None:
+    game = request.app.state.server.game
+    current_level = game.level
+    if current_level is None:
         raise HTTPException(status_code=404, detail="No level loaded")
-    current_level = levels.window.level
     return {"points": current_level.get_points(),
              "time": current_level.get_time(),
              "victoryCondition": current_level.cml.victory_condition,
@@ -211,7 +211,14 @@ async def getCurrentLevel(request: Request):
              "reactionLog"  : reactionHint(current_level.reaction_log)
             }
 
+@router.post("/level/hint_used")
+async def levelHintUsed(request: Request):
+    game = request.app.state.server.game
+    game.add_penalty(30)
+    return {"status": "ok", "penalty": game.penalty}
+
 @router.get("/reaction/image/{filename}")
+
 async def getReactionImage(filename):
     path = Skeletal.REACTION_DIR + filename
     return FileResponse(path)

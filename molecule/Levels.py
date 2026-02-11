@@ -105,6 +105,7 @@ class Levels:
         return Level(cml, self.window, path)
 
 
+
 class Level:
     def __init__(self, cml, window, path):
         self.cml = cml
@@ -115,6 +116,8 @@ class Level:
         self.start_time = time.time()
         self.points = 0
         self.reaction_log = []
+
+
         self.molecules_seen = set() # molecure_formula
         self.molecules_created = {} # molecule_formula -> count
         self.emitters = []
@@ -346,9 +349,10 @@ class Level:
                 yield area
 
     def get_time(self):
-        return time.time() - self.start_time
+        return time.time() - self.start_time + self.window.penalty
 
     def get_points(self):
+
         return self.points
 
     def victory(self):

@@ -8,11 +8,13 @@ from fastapi.logger import logger as fastapi_logger
 from molecule.server.routes import router
 
 class Server:
-    def __init__(self, levels):
+    def __init__(self, game):
         self.app = FastAPI()
         self.app.include_router(router)
         self.app.state.server = self
-        self.levels = levels
+        self.game = game
+        self.levels = game.levels
+
         
         # Add CORS middleware
         self.app.add_middleware(
