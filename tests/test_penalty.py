@@ -1,7 +1,7 @@
 import unittest
+from unittest.mock import patch
 import time
 from molecule.Levels import Levels, Level
-from libcml import Cml
 
 class MockWindow:
     def __init__(self):
@@ -23,6 +23,13 @@ class MockWindow:
     def add_penalty(self, seconds):
         self.penalty += seconds
 
+
+# Mock Slow Level initialization methods
+@patch.object(Level, 'init_chipmunk', lambda self: None)
+@patch.object(Level, 'init_pyglet', lambda self: None)
+@patch.object(Level, 'init_gui', lambda self: None)
+@patch.object(Level, 'init_elements', lambda self: None)
+@patch.object(Level, 'init_effects', lambda self: None)
 class TestPenalty(unittest.TestCase):
     def setUp(self):
         self.window = MockWindow()
@@ -45,11 +52,9 @@ class TestPenalty(unittest.TestCase):
         level = self.levels.get_current_level()
         self.window.level = level
         self.window.add_penalty(30)
-
         
         # Simulate reset
         new_level = self.levels.get_current_level()
-        # The penalty stays in the window (MockWindow)
         self.assertEqual(self.window.penalty, 30)
         self.assertGreaterEqual(new_level.get_time(), 30.0)
 
