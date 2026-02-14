@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="0.0" id="a1" elementType="As"/>
+  </ns0:atomArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">35.1</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Gas">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">302.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">174.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Radius">1.85</property>
+    <property title="Name">Arsenic</property>
+    <property title="Weight">74.92</property>
+    <property title="Smiles">[As]</property>
+    <property title="Description">Arsenic is a metalloid used in semiconductors and historically as a potent poison.</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+  </propertyList>
+</ns0:molecule>
