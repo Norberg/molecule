@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="As"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="O"/>
+    <atom x2="1.732051" y2="-0.97" id="a5" elementType="H"/>
+    <atom x2="1.70607" y2="1.985" id="a6" elementType="H"/>
+    <atom x2="-0.840045" y2="0.485" id="a7" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a4 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-742.2</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">190.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles">O[As](O)O</property>
+    <property title="Name">Arsenous acid</property>
+    <property title="Description">Arsenous acid (or arsorous acid) is the inorganic compound with the formula H3AsO3, more descriptively written as As(OH)3. It is an acid known to occur in aqueous solutions. It has not been isolated as a pure material, although this fact does not detract from its significance.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Arsenous_acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

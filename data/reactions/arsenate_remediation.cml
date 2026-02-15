@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="H3AsO3"/>
+      <molecule title="Cl2"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="H3AsO4(l)"/>
+      <molecule title="HCl(g)"/>
+      <molecule title="HCl(g)"/>
+    </productList>
+    <description>
+      Oxidation of arsenite [As(III)] to arsenate [As(V)] using chlorine as a strong oxidizing agent. In many regions, particularly in Bangladesh and West Bengal, groundwater naturally contains high levels of As(III), which is highly mobile and difficult to remove. This pre-treatment step is critical because arsenate is significantly less toxic and adsorbs much more readily to mineral surfaces. Converting arsenic into As(V) prevents it from accumulating in crops like rice, a major staple that otherwise poses a severe health risk to millions through chronic exposure.
+    </description>
+    <tagList>
+      <tag>Oxidation reaction</tag>
+      <tag>Pre-treatment</tag>
+      <tag>Groundwater remediation</tag>
+      <tag>Arsenic removal</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="FeCl3"/>
+      <molecule title="H2O"/>
+      <molecule title="H2O"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="FeO3H3(s)"/>
+      <molecule title="HCl(g)"/>
+      <molecule title="HCl(g)"/>
+      <molecule title="HCl(g)"/>
+    </productList>
+    <description>
+      The hydrolysis of iron(III) chloride in water leads to the formation of ferric hydroxide, which acts as a powerful flocculating agent. This process is essential in municipal water treatment to destabilize suspended particles and facilitate their removal via sedimentation or filtration. The resulting "ferric floc" provides a massive surface area for the subsequent adsorption of many heavy metal contaminants. In rice-growing areas affected by arsenic-rich groundwater, iron-based coagulation is a robust and cost-effective remedy that helps protect both the local water supply and the safety of the food chain.
+    </description>
+    <tagList>
+      <tag>Hydrolysis reaction</tag>
+      <tag>Coagulation</tag>
+      <tag>Flocculation</tag>
+      <tag>Water treatment</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Fe+3"/>
+      <molecule title="AsO4-3"/>
+    </reactantList>
+    <productList>
+      <molecule title="FeAsO4(s)"/>
+    </productList>
+    <description>
+      Ferric ions (Fe&#xB3;&#x207A;) react directly with arsenate ions (AsO&#x2084;&#xB3;&#x207B;) to precipitate ferric arsenate, also known as the mineral scorodite. This precipitation effectively immobilizes dissolved arsenic by locking it into a stable, crystalline solid phase that can be separated from the treated water. Scorodite formation is one of the most reliable methods for long-term arsenic stabilization in environmental remediation and industrial waste management. It is a key strategy for mitigating the chronic arsenic poisoning crisis in agricultural deltas where groundwater is the primary source for irrigation and drinking.
+    </description>
+    <tagList>
+      <tag>Precipitation</tag>
+      <tag>Arsenic removal</tag>
+      <tag>Immobilization</tag>
+    </tagList>
+  </reaction>
+</reactions>

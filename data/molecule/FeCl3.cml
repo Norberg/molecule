@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" spinMultiplicity="2">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="Cl"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Fe"/>
+    <atom x2="0.866025" y2="1.5" id="a3" elementType="Cl"/>
+    <atom x2="-0.0" y2="-0.0" id="a4" elementType="Cl"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="Fe+3(aq)"/>
+            <molecule title="Cl-(aq)"/>
+            <molecule title="Cl-(aq)"/>
+            <molecule title="Cl-(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Iron(III) chloride</property>
+    <property title="Description">Iron(III) chloride describes the inorganic compounds with the formula FeCl3(H2O)x. Also called ferric chloride, these compounds are some of the most important and commonplace compounds of iron. They are available both in anhydrous and in hydrated forms, which are both hygroscopic. They feature iron in its +3 oxidation state. The anhydrous derivative is a Lewis acid, while all forms are mild oxidizing agents. It is used as a water cleaner and as an etchant for metals. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(III)_chloride</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">Cl[Fe](Cl)Cl</property>
+  </propertyList>
+</ns0:molecule>

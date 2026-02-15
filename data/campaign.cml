@@ -57,6 +57,11 @@
       <level file="42-Life-3-Guanine.cml"/>
       <level file="43-Life-4-Formaldehyde.cml"/>
     </biome>
+    <biome name="Environmental" icon="island_environment.png">
+      <level file="44-Arsenic-Remediation.cml"/>
+    </biome>
+  </page>
+  <page id="3" name="Earth &amp; Environment">
     <biome name="The Frontier" icon="island_frontier.png">
       <level file="98-Taurin-1.cml"/>
       <level file="99-Test.cml"/>

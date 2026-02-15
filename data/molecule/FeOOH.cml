@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema" spinMultiplicity="2">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" id="a1" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" id="a2" elementType="Fe"/>
+    <atom x2="-0.0" y2="-0.0" id="a3" elementType="O"/>
+    <atom x2="-0.840045" y2="0.485" id="a4" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">0.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles">O=[Fe]O</property>
+    <property title="Name">Iron(III) oxide-hydroxide</property>
+    <property title="Description">Iron(III) oxide-hydroxide or ferric oxyhydroxide is the chemical compound of iron, oxygen, and hydrogen with formula FeO(OH).
+The compound is often encountered as its hydrates - FeO(OH)&#xB7;nH
+2O, e.g. in rust. The monohydrate FeO(OH)&#xB7;H
+2O (sometimes incorrectly labelled Fe(OH)
+3) is often referred to as iron(III) hydroxide, hydrated iron oxide, yellow iron oxide, or Pigment Yellow 42. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Iron(III)_oxide-hydroxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>

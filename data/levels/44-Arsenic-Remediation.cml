@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<level aqueousNotDraggable="true">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="H3AsO3(aq)"/>
+    <molecule title="H3AsO3(aq)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="Cl2(g)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="FeCl3(s)"/>
+    <molecule title="FeCl3(s)"/>
+    <molecule title="FeCl3(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="500" y2="470"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="FeAsO4"/>
+    <molecule title="FeAsO4"/>
+  </victoryCondition>
+  <objective text="Remove arsenic via adsorption and precipitation"/>
+  <hint text="Oxidize As(III), then use iron to either adsorb arsenic acid or precipitate arsenate.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="H3AsO3"/>
+          <molecule title="Cl2"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="H3AsO4(l)"/>
+          <molecule title="HCl(g)"/>
+          <molecule title="HCl(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="H3AsO4"/>
+        </reactantList>
+        <productList>
+          <molecule title="AsO4-3(aq)"/>
+          <molecule title="H+(aq)"/>
+          <molecule title="H+(aq)"/>
+          <molecule title="H+(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="FeCl3"/>
+        </reactantList>
+        <productList>
+          <molecule title="Fe+3(aq)"/>
+          <molecule title="Cl-(aq)"/>
+          <molecule title="Cl-(aq)"/>
+          <molecule title="Cl-(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="Fe+3"/>
+          <molecule title="AsO4-3"/>
+        </reactantList>
+        <productList>
+          <molecule title="FeAsO4(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

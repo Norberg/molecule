@@ -358,5 +358,33 @@
   "Thermal decomposition": {
     "title": "Thermal decomposition",
     "description": "Thermal decomposition is a chemical decomposition caused by heat. The reaction is usually endothermic as heat is required to break chemical bonds in the compound undergoing decomposition."
+  },
+  "Pre-treatment": {
+    "title": "Pre-treatment",
+    "description": "Preliminary chemical or physical processes, such as oxidation or pH adjustment, designed to optimize the removal of specific contaminants in subsequent treatment stages."
+  },
+  "Groundwater remediation": {
+    "title": "Groundwater remediation",
+    "description": "The process of removing pollutants from groundwater to restore its quality for drinking, irrigation, or industrial use, often targeting naturally occurring or anthropogenic toxins."
+  },
+  "Coagulation": {
+    "title": "Coagulation",
+    "description": "A water treatment process where chemicals are added to destabilize colloidal particles, allowing them to clump together into larger, more easily removable aggregates."
+  },
+  "Flocculation": {
+    "title": "Flocculation",
+    "description": "The gentle mixing of water following coagulation to encourage the formation of large, stable flocs that can be effectively removed by sedimentation or filtration."
+  },
+  "Water treatment": {
+    "title": "Water treatment",
+    "description": "The collective processes used to make water more acceptable for a specific end-use, such as drinking, industrial processes, or environmental return."
+  },
+  "Arsenic removal": {
+    "title": "Arsenic removal",
+    "description": "Targeted chemical or physical interventions aimed at reducing the concentration of arsenic in water to levels that are safe for human consumption and agricultural use."
+  },
+  "Immobilization": {
+    "title": "Immobilization",
+    "description": "Converting a dissolved or mobile contaminant into a stable, non-reactive solid phase to prevent its further migration and reduce its environmental and health impact."
   }
 }

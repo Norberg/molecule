@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="20.196152" y2="-2.0" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="19.330127" y2="-1.5" id="a2" elementType="C"/>
+    <atom x2="19.330127" y2="-0.5" id="a3" elementType="O"/>
+    <atom x2="18.464102" y2="-2.0" id="a4" elementType="C"/>
+    <atom x2="18.464102" y2="-3.0" id="a5" elementType="C"/>
+    <atom x2="19.464102" y2="-3.0" id="a6" elementType="O"/>
+    <atom x2="18.464102" y2="-4.0" id="a7" elementType="C"/>
+    <atom x2="19.330127" y2="-4.5" id="a8" elementType="O"/>
+    <atom x2="17.598076" y2="-4.5" formalCharge="-1" id="a9" elementType="O"/>
+    <atom x2="17.464102" y2="-3.0" id="a10" elementType="C"/>
+    <atom x2="16.964102" y2="-2.133975" id="a11" elementType="C"/>
+    <atom x2="17.464102" y2="-1.267949" id="a12" elementType="O"/>
+    <atom x2="15.964102" y2="-2.133975" id="a13" elementType="O"/>
+    <atom x2="15.464102" y2="-1.267949" formalCharge="2" id="a14" elementType="Ca"/>
+    <atom x2="14.464102" y2="-1.267949" id="a15" elementType="O"/>
+    <atom x2="13.964102" y2="-2.133975" id="a16" elementType="C"/>
+    <atom x2="14.464102" y2="-3.0" formalCharge="-1" id="a17" elementType="O"/>
+    <atom x2="12.964102" y2="-2.133975" id="a18" elementType="C"/>
+    <atom x2="12.464102" y2="-3.0" id="a19" elementType="C"/>
+    <atom x2="13.330127" y2="-3.5" id="a20" elementType="O"/>
+    <atom x2="11.964102" y2="-3.866025" id="a21" elementType="C"/>
+    <atom x2="12.464102" y2="-4.732051" id="a22" elementType="O"/>
+    <atom x2="10.964102" y2="-3.866025" formalCharge="-1" id="a23" elementType="O"/>
+    <atom x2="11.598076" y2="-2.5" id="a24" elementType="C"/>
+    <atom x2="11.598076" y2="-1.5" id="a25" elementType="C"/>
+    <atom x2="12.464102" y2="-1.0" id="a26" elementType="O"/>
+    <atom x2="10.732051" y2="-1.0" formalCharge="-1" id="a27" elementType="O"/>
+    <atom x2="4.232051" y2="-12.464102" formalCharge="2" id="a41" elementType="Ca"/>
+    <atom x2="5.0" y2="-4.232051" formalCharge="2" id="a68" elementType="Ca"/>
+    <atom x2="17.537454" y2="-1.465" id="a82" elementType="H"/>
+    <atom x2="17.537454" y2="-2.535" id="a83" elementType="H"/>
+    <atom x2="19.949102" y2="-3.840045" id="a84" elementType="H"/>
+    <atom x2="16.929102" y2="-3.926647" id="a85" elementType="H"/>
+    <atom x2="16.394102" y2="-3.0" id="a86" elementType="H"/>
+    <atom x2="12.429102" y2="-1.207327" id="a87" elementType="H"/>
+    <atom x2="11.894102" y2="-2.133975" id="a88" elementType="H"/>
+    <atom x2="13.330127" y2="-4.47" id="a89" elementType="H"/>
+    <atom x2="10.671429" y2="-3.035" id="a90" elementType="H"/>
+    <atom x2="10.671429" y2="-1.965" id="a91" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a7 a9" order="1"/>
+    <bond atomRefs2="a5 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="1"/>
+    <bond atomRefs2="a11 a12" order="2"/>
+    <bond atomRefs2="a11 a13" order="1"/>
+    <bond atomRefs2="a13 a14" order="1"/>
+    <bond atomRefs2="a14 a15" order="1"/>
+    <bond atomRefs2="a15 a16" order="2"/>
+    <bond atomRefs2="a16 a17" order="1"/>
+    <bond atomRefs2="a16 a18" order="1"/>
+    <bond atomRefs2="a18 a19" order="1"/>
+    <bond atomRefs2="a19 a20" order="1"/>
+    <bond atomRefs2="a19 a21" order="1"/>
+    <bond atomRefs2="a21 a22" order="2"/>
+    <bond atomRefs2="a21 a23" order="1"/>
+    <bond atomRefs2="a19 a24" order="1"/>
+    <bond atomRefs2="a24 a25" order="1"/>
+    <bond atomRefs2="a25 a26" order="2"/>
+    <bond atomRefs2="a25 a27" order="1"/>
+    <bond atomRefs2="a4 a82" order="1"/>
+    <bond atomRefs2="a4 a83" order="1"/>
+    <bond atomRefs2="a6 a84" order="1"/>
+    <bond atomRefs2="a10 a85" order="1"/>
+    <bond atomRefs2="a10 a86" order="1"/>
+    <bond atomRefs2="a18 a87" order="1"/>
+    <bond atomRefs2="a18 a88" order="1"/>
+    <bond atomRefs2="a20 a89" order="1"/>
+    <bond atomRefs2="a24 a90" order="1"/>
+    <bond atomRefs2="a24 a91" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1543.8</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">252.1</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Calcium citrate</property>
+    <property title="Description">Calcium citrate is the calcium salt of citric acid. It is commonly used as a food additive (E333), usually as a preservative, but sometimes for flavor. In this sense, it is similar to sodium citrate. Calcium citrate is also found in some dietary calcium supplements (e.g. Citracal or Caltrate). Calcium makes up 24.1% of calcium citrate (anhydrous) and 21.1% of calcium citrate (tetrahydrate) by mass. The tetrahydrate occurs in nature as the mineral Earlandite. </property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_citrate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ca+2].[Ca+2].[Ca+2].[O-]C(=O)CC(O)(CC(=O)[O-])C(=O)[O-].[O-]C(=O)CC(O)(CC(=O)[O-])C(=O)[O-]</property>
+  </propertyList>
+</ns0:molecule>

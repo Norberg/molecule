@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="4.232051" y2="0.133975" id="a1" elementType="O"/>
+    <atom x2="3.366025" y2="0.633975" id="a2" elementType="C"/>
+    <atom x2="3.366025" y2="1.633975" id="a3" elementType="O"/>
+    <atom x2="2.5" y2="0.133975" id="a4" elementType="C"/>
+    <atom x2="2.5" y2="-0.866025" id="a5" elementType="C"/>
+    <atom x2="3.5" y2="-0.866025" id="a6" elementType="O"/>
+    <atom x2="2.5" y2="-1.866025" id="a7" elementType="C"/>
+    <atom x2="3.366025" y2="-2.366025" id="a8" elementType="O"/>
+    <atom x2="1.633975" y2="-2.366025" id="a9" elementType="O"/>
+    <atom x2="1.5" y2="-0.866025" id="a10" elementType="C"/>
+    <atom x2="1.0" y2="0.0" id="a11" elementType="C"/>
+    <atom x2="1.5" y2="0.866025" id="a12" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" id="a13" elementType="O"/>
+    <atom x2="4.232051" y2="-0.803025" id="a14" elementType="H"/>
+    <atom x2="1.573353" y2="0.668975" id="a15" elementType="H"/>
+    <atom x2="1.573353" y2="-0.401025" id="a16" elementType="H"/>
+    <atom x2="3.985" y2="-1.70607" id="a17" elementType="H"/>
+    <atom x2="0.822509" y2="-1.897525" id="a18" elementType="H"/>
+    <atom x2="0.965" y2="-1.792673" id="a19" elementType="H"/>
+    <atom x2="0.43" y2="-0.866025" id="a20" elementType="H"/>
+    <atom x2="-0.4685" y2="0.811466" id="a21" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="2"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a5 a6" order="1"/>
+    <bond atomRefs2="a5 a7" order="1"/>
+    <bond atomRefs2="a7 a8" order="2"/>
+    <bond atomRefs2="a7 a9" order="1"/>
+    <bond atomRefs2="a5 a10" order="1"/>
+    <bond atomRefs2="a10 a11" order="1"/>
+    <bond atomRefs2="a11 a12" order="2"/>
+    <bond atomRefs2="a11 a13" order="1"/>
+    <bond atomRefs2="a1 a14" order="1"/>
+    <bond atomRefs2="a4 a15" order="1"/>
+    <bond atomRefs2="a4 a16" order="1"/>
+    <bond atomRefs2="a6 a17" order="1"/>
+    <bond atomRefs2="a9 a18" order="1"/>
+    <bond atomRefs2="a10 a19" order="1"/>
+    <bond atomRefs2="a10 a20" order="1"/>
+    <bond atomRefs2="a13 a21" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1543.8</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">252.1</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles">OC(=O)CC(O)(C(=O)O)CC(=O)O</property>
+    <property title="Name">Citric acid</property>
+    <property title="Description">Citric acid is an organic compound with the formula C6H8O7. It is a colorless weak organic acid. It occurs naturally in citrus fruits. In biochemistry, it is an intermediate in the citric acid cycle, which occurs in the metabolism of all aerobic organisms.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Citric_acid</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
