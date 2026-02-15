@@ -27,7 +27,7 @@ class CliInterface:
     @staticmethod
     def handle_cmd_options():
         try:
-            opts, args = getopt.getopt(sys.argv[1:], "hldfp:",
+            opts, args = getopt.getopt(sys.argv[1:], "hl:dfp:",
                 ["help", "level=", "debug","fullscreen", "height=", "width=", "player="])
         except getopt.GetoptError as err:
             print(str(err))

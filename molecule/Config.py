@@ -16,7 +16,7 @@
 class Config:
     def __init__(self):
         self.DEBUG = False
-        self.level = 1
+        self.level = None
         self.fullscreen = False
         self.resizable = False
         self.width = 1650

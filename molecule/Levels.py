@@ -37,6 +37,8 @@ from libcml import Cml
 
 class Levels:
     def __init__(self, path, start_level = 1, window = None):
+        if start_level is None:
+            start_level = 1
         self.path = path
         self.window = window
         self.init_levels()

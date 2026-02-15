@@ -65,7 +65,10 @@ class Game(pyglet.window.Window):
         self.server = Server(self)
         pyglet.clock.schedule_interval(self.update, 1/100.0)
         self.server.start()
-        self.show_menu(start_at_map=True)
+        if Config.current.level is not None:
+            self.switch_level(self.levels.get_current_level())
+        else:
+            self.show_menu(start_at_map=True)
 
     def add_penalty(self, seconds):
         self.penalty += seconds
