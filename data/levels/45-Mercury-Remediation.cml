@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<level aqueousNotDraggable="true">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="HgCl2(s)"/>
+    <molecule title="HgCl2(s)"/>
+    <molecule title="Na2S(s)"/>
+    <molecule title="Na2S(s)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="500" y2="470"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="HgS"/>
+    <molecule title="HgS"/>
+  </victoryCondition>
+  <objective text="Remove toxic mercury by precipitating it as insoluble mercury sulfide"/>
+  <hint text="Dissolve the toxic mercury(II) chloride, then use sodium sulfide to precipitate the mercury as cinnabar.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="HgCl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Hg+2(aq)"/>
+          <molecule title="Cl-(aq)"/>
+          <molecule title="Cl-(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="Na2S"/>
+        </reactantList>
+        <productList>
+          <molecule title="Na+(aq)"/>
+          <molecule title="Na+(aq)"/>
+          <molecule title="S-2(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="Hg+2"/>
+          <molecule title="S-2"/>
+        </reactantList>
+        <productList>
+          <molecule title="HgS(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

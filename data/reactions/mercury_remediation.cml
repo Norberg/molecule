@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="Hg+2"/>
+      <molecule title="S-2"/>
+    </reactantList>
+    <productList>
+      <molecule title="HgS(s)"/>
+    </productList>
+    <description>
+      Precipitation of mercury(II) sulfide (cinnabar). Mercuric ions react with sulfide ions to form HgS, one of the least soluble substances known (Ksp &#x2248; 10&#x207B;&#x2075;&#xB3;). This reaction is the standard method for removing mercury from industrial wastewater, effectively "locking" the toxic metal into a stable solid form that can be safely filtered and disposed of. This process mimics the natural formation of cinnabar ore, the primary geological source of mercury.
+    </description>
+    <tagList>
+      <tag>Precipitation</tag>
+      <tag>Mercury removal</tag>
+      <tag>Environmental remediation</tag>
+      <tag>Immobilization</tag>
+      <tag>Mercury pollution</tag>
+      <tag>Industrial waste</tag>
+      <tag>Wastewater treatment</tag>
+    </tagList>
+  </reaction>
+</reactions>

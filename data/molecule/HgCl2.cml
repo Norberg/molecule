@@ -18,6 +18,23 @@
         <scalar units="units:molar_energy">144.0</scalar>
       </property>
     </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-220.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">196.0</scalar>
+      </property>
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="Hg+2(aq)"/>
+            <molecule title="Cl-(aq)"/>
+            <molecule title="Cl-(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Smiles">Cl[Hg]Cl</property>

@@ -59,6 +59,7 @@
     </biome>
     <biome name="Environmental" icon="island_environment.png">
       <level file="44-Arsenic-Remediation.cml"/>
+      <level file="45-Mercury-Remediation.cml"/>
     </biome>
   </page>
   <page id="3" name="Earth &amp; Environment">

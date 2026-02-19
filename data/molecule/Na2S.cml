@@ -18,6 +18,23 @@
         <scalar units="units:molar_energy">84.0</scalar>
       </property>
     </propertyList>
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-446.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">14.6</scalar>
+      </property>
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="Na+(aq)"/>
+            <molecule title="Na+(aq)"/>
+            <molecule title="S-2(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
   </propertyList>
   <propertyList title="property">
     <property title="Name">Sodium sulfide</property>
