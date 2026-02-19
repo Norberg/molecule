@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.0" y2="-0.0" id="a1" elementType="S"/>
+    <atom x2="-0.0" y2="-0.0" id="a2" elementType="Hg"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-58.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">78.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Smiles">[S]=[Hg]</property>
+    <property title="Name">Mercury sulfide</property>
+    <property title="Description">Mercury sulfide or mercury(II) sulfide is a chemical compound composed of the chemical elements mercury and sulfur. It is represented by the chemical formula HgS. It is virtually insoluble in water.
+When HgS is used as a red pigment, it is known as cinnabar. 
+Sulfur has been suggested to clean mercury spills, but the reaction does not proceed rapidly and completely enough for emergencie</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Mercury_sulfide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+  </propertyList>
+</ns0:molecule>
