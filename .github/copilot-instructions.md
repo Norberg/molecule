@@ -84,10 +84,33 @@ Targeted frontend test example: `npx jest src/utils/formulaUtils.test.tsx -t "re
 - `pyglet_gui` for HUD & inventory layout; avoid deep modification unless necessary.
 - `xmlschema` for validating CML data sets.
 
-## Adding Content
-1. New atom: Add SVG in `img/` (follow README color note), export PNGs, add `.cml` file under `data/molecule/` with states.
-2. New reaction: Extend `data/reactions/*.cml` (ensure uniqueness) then add or adjust tests if semantic behavior changes.
-3. New level: Add `data/levels/NN-Name.cml` (schema validated) with inventory, effects, molecules, victory condition.
+## Content Creation & Data Patterns
+
+### Molecules & Ions
+- **Adding new molecules**: Must include at least one state; tests fail if `data/molecule/*.cml` lacks state info.
+- **Ionic Dissociation Pattern**: Instead of explicit dissociation reactions, specify ions in the molecule's CML within the `Aqueous` state.
+  ```xml
+  <property title="ions">
+    <reaction>
+      <productList>
+        <molecule title="Ion1(aq)"/>
+        <molecule title="Ion2(aq)"/>
+      </productList>
+    </reaction>
+  </property>
+  ```
+- **Thermodynamic Solvability**: The level solvability test (`test_all_levels_reactions_possible`) simulates spontaneity. If a reaction doesn't fire, check `enthalpy` and `entropy` in the molecule CML. Adjust values to ensure Gibbs free energy ($\Delta G$) favors the reaction at the level's temperature.
+
+### Reactions & Tagging
+- **Tagging Discipline**:
+  - Every `<tag>` in a reaction CML MUST have a corresponding entry in `data/reactions/tag_descriptions.json`.
+  - Every tag defined in the JSON MUST be used in at least one CML file; otherwise, `tests/test_tags.py` will fail with an unused definition error.
+- **Contextual Tags**: When removing reactions, ensure their tags are still used elsewhere or removed from the JSON. Prefer adding relevant context tags (e.g., `Wastewater treatment`, `Environmental remediation`) to the remaining reactions.
+
+### Level Development
+- **New Level**: Add `data/levels/NN-Name.cml` (schema validated) with inventory, effects (e.g., `WaterBeaker` for ionic reactions), molecules, victory condition.
+- **Level Hints**: Hints should be educational and comprehensive. Even if a dissociation is handled implicitly by the engine, include it as an explicit step in the level's `<hint><reactions>` list to guide the player.
+- **Campaign Integration**: Always add new levels to `data/campaign.cml` within the appropriate biome/page.
 
 ## Safe Change Checklist (Before PR / Commit)
 - Run: `python3 -m unittest discover` (expect ~1–2s, 49 tests).
