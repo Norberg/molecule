@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<level aqueousNotDraggable="true">
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="CaCO3(s)"/>
+    <molecule title="CaCO3(s)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="PbSO4(s)"/>
+    <molecule title="PbCl2(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="WaterBeaker" x2="500" y2="470"/>
+    <effect title="Fire" value="2000" x2="1100" y2="270"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="PbO2H2"/>
+    <molecule title="PbO2H2"/>
+  </victoryCondition>
+  <objective text="Treat industrial and mine waste lead using lime"/>
+  <hint text="Burn limestone over fire to make quicklime, slake it in water to get lime milk, then use the hydroxide ions to precipitate the dissolved lead from sulfate and chloride sources.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CaCO3"/>
+        </reactantList>
+        <productList>
+          <molecule title="CaO(s)"/>
+          <molecule title="CO2(g)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="CaO"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="CaO2H2(s)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="CaO2H2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Ca+2(aq)"/>
+          <molecule title="OH-(aq)"/>
+          <molecule title="OH-(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="PbSO4"/>
+        </reactantList>
+        <productList>
+          <molecule title="Pb+2(aq)"/>
+          <molecule title="SO4-2(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="PbCl2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Pb+2(aq)"/>
+          <molecule title="Cl-(aq)"/>
+          <molecule title="Cl-(aq)"/>
+        </productList>
+      </reaction>
+      <reaction>
+        <reactantList>
+          <molecule title="Pb+2"/>
+          <molecule title="OH-"/>
+          <molecule title="OH-"/>
+        </reactantList>
+        <productList>
+          <molecule title="PbO2H2(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

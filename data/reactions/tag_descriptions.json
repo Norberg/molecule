@@ -406,5 +406,17 @@
   "Wastewater treatment": {
     "title": "Wastewater treatment",
     "description": "The process of removing contaminants from municipal or industrial wastewater, including toxic chemicals and heavy metals, to produce an effluent that can be safely returned to the environment or reused."
+  },
+  "Lead removal": {
+    "title": "Lead removal",
+    "description": "Targeted chemical or physical interventions aimed at reducing the concentration of dissolved lead (Pb²⁺) in water to safe levels, typically using precipitation as hydroxide or carbonate, ion exchange, or adsorption."
+  },
+  "Heavy metal removal": {
+    "title": "Heavy metal removal",
+    "description": "The extraction or immobilisation of toxic heavy metals (e.g. lead, mercury, arsenic, cadmium) from water, soil, or industrial effluents to meet environmental discharge standards and protect human health."
+  },
+  "Lime softening": {
+    "title": "Lime softening",
+    "description": "A water treatment process in which calcium hydroxide (slaked lime) is added to raise the pH, causing dissolved metals and hardness ions to precipitate as insoluble hydroxides or carbonates that can be filtered out. Widely used for lead removal in drinking water and mine drainage treatment."
   }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.732051" y2="-0.0" formalCharge="-1" id="a1" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" formalCharge="2" id="a2" elementType="Pb"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="1.732051" y2="-0.97" id="a4" elementType="H"/>
+    <atom x2="-0.840045" y2="0.485" id="a5" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-515.9</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">88.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Lead(II) hydroxide</property>
+    <property title="Weight">241.2</property>
+    <property title="Radius">1.9</property>
+    <property title="Smiles">[OH-][Pb+2][OH-]</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Lead(II)_hydroxide</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Description">Lead(II) hydroxide (Pb(OH)&#x2082;) is an extremely insoluble white solid (Ksp &#x2248; 1.2&#xD7;10&#x207B;&#xB9;&#x2075;). It forms when aqueous lead(II) ions meet hydroxide ions under alkaline conditions. Lead hydroxide precipitation is the classical method for removing lead from contaminated wastewater and acid mine drainage: by adding lime (Ca(OH)&#x2082;) to raise the pH above 8, lead ions are driven out of solution as the insoluble hydroxide and can then be filtered off. This technique is widely used at former mining and smelting sites to protect rivers and groundwater.</property>
+  </propertyList>
+</ns0:molecule>

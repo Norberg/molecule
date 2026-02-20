@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.5" y2="-2.5" id="a1" elementType="O"/>
+    <atom x2="1.5" y2="-1.5" id="a2" elementType="S"/>
+    <atom x2="2.5" y2="-1.5" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="1.5" y2="-0.5" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="0.5" y2="-1.5" id="a5" elementType="O"/>
+    <atom x2="3.5" y2="-0.5" formalCharge="2" id="a6" elementType="Pb"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="2"/>
+    <bond atomRefs2="a6 a3" order="0"/>
+    <bond atomRefs2="a6 a4" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-920.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">148.5</scalar>
+      </property>
+    </propertyList>
+    <propertyList title="Aqueous">
+      <property title="ions">
+        <reaction>
+          <productList>
+            <molecule title="Pb+2(aq)"/>
+            <molecule title="SO4-2(aq)"/>
+          </productList>
+        </reaction>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Lead(II) sulfate</property>
+    <property title="Description">Lead(II) sulfate (PbSO4) is a white solid, which appears white in microcrystalline form. It is also known as fast white, milk white, sulfuric acid lead salt or anglesite. It is often seen in the plates/electrodes of car batteries, as it is formed when the battery is discharged. Lead(II) sulfate is poorly soluble in water.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Lead(II)_sulfate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[O-]S(=O)(=O)[O-].[Pb+2]</property>
+  </propertyList>
+</ns0:molecule>

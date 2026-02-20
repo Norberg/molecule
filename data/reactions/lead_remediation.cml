@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<reactions>
+  <!-- Lead mine drainage remediation: lime softening and hydroxide precipitation -->
+  <reaction>
+    <reactantList>
+      <molecule title="Pb+2"/>
+      <molecule title="OH-"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="PbO2H2(s)"/>
+    </productList>
+    <description>
+      Lead(II) ions (Pb&#xB2;&#x207A;) react with two hydroxide ions (OH&#x207B;) to precipitate lead(II) hydroxide, an extremely insoluble white solid (Ksp &#x2248; 1.2&#xD7;10&#x207B;&#xB9;&#x2075;). This is the core step in lime softening &#x2014; the primary technique used to remove dissolved lead from acid mine drainage, industrial wastewater, and drinking water supplies. By adding lime (calcium hydroxide) to raise the pH above 8, lead ions are driven out of solution as Pb(OH)&#x2082; and can be filtered or settled out. This process protects rivers and aquifers from one of the most dangerous heavy-metal pollutants at legacy mining and smelting sites. Lead is toxic at even trace concentrations, causing irreversible neurological damage particularly in children.
+    </description>
+    <tagList>
+      <tag>Precipitation</tag>
+      <tag>Lead removal</tag>
+      <tag>Environmental remediation</tag>
+      <tag>Immobilization</tag>
+      <tag>Lime softening</tag>
+      <tag>Wastewater treatment</tag>
+      <tag>Heavy metal removal</tag>
+    </tagList>
+  </reaction>
+</reactions>
