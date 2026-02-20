@@ -32,7 +32,7 @@
     </biome>
   </page>
   <page id="2" name="Organic &amp; Life">
-    <biome name="Dark Forest" icon="island_forest.png">
+    <biome name="Organic Chemistry" icon="island_organic.png">
       <level file="20-Organic-Addition-1.cml"/>
       <level file="21-Organic-Addition-2.cml"/>
       <level file="22-Organic-Substitution-1.cml"/>
