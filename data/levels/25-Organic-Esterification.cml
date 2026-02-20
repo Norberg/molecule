@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="CH3COOH(l)"/>
+    <molecule title="C2H6O(l)"/>
+    <molecule title="H2SO4(l)"/>
+    <molecule title="H2O(l)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Fire" value="350" x2="400" y2="480"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C4H8O2"/>
+  </victoryCondition>
+  <objective text="Create Ethyl acetate (C4H8O2) through Fischer esterification"/>
+  <hint text="React acetic acid with ethanol using sulfuric acid as a catalyst and heat.">
+    <reactions>
+      <reaction>
+        <reactantList>
+          <molecule title="CH3COOH"/>
+          <molecule title="C2H6O"/>
+          <molecule title="H2SO4"/>
+        </reactantList>
+        <productList>
+          <molecule title="C4H8O2(l)"/>
+          <molecule title="H2O(l)"/>
+          <molecule title="H2SO4(l)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

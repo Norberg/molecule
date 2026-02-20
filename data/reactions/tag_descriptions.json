@@ -418,5 +418,9 @@
   "Lime softening": {
     "title": "Lime softening",
     "description": "A water treatment process in which calcium hydroxide (slaked lime) is added to raise the pH, causing dissolved metals and hardness ions to precipitate as insoluble hydroxides or carbonates that can be filtered out. Widely used for lead removal in drinking water and mine drainage treatment."
+  },
+  "Organic synthesis": {
+    "title": "Organic synthesis",
+    "description": "Organic synthesis is a purposeful execution of chemical reactions in order to obtain a specific organic molecule or set of molecules. It involves the construction of complex organic compounds from simpler precursors through a series of chemical transformations."
   }
 }

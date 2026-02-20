@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<reactions>
+  <reaction>
+    <reactantList>
+      <molecule title="CH3COOH"/>
+      <molecule title="C2H6O"/>
+      <molecule title="H2SO4"/>
+    </reactantList>
+    <productList>
+      <molecule title="C4H8O2(l)"/>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2SO4(l)"/>
+    </productList>
+    <description>
+      Acetic acid (CH3COOH) reacts with ethanol (C2H6O) to form ethyl acetate (C4H8O2) and water.
+      This is a Fischer esterification reaction, typically catalyzed by an acid like sulfuric acid.
+      Ethyl acetate is a widely used solvent in various industries.
+    </description>
+    <tagList>
+      <tag>Esterification reaction</tag>
+      <tag>Organic synthesis</tag>
+    </tagList>
+  </reaction>
+</reactions>

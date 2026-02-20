@@ -38,6 +38,7 @@
       <level file="22-Organic-Substitution-1.cml"/>
       <level file="23-Organic-Substitution-2.cml"/>
       <level file="24-Organic-Substitution-3.cml"/>
+      <level file="25-Organic-Esterification.cml"/>
     </biome>
     <biome name="Pharmaceutical Lab" icon="island_pharma.png">
       <level file="30-Organic-Multistep-1-Paracetamol.cml"/>
