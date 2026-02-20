@@ -381,9 +381,16 @@ class Level:
             if action.clicked((x,y)):
                 action.on_click(create_elements_cb)
 
+    def release_spring(self):
+        """Detach the mouse spring, stopping the dragged molecule in place."""
+        if self.mouse_spring is not None:
+            self.mouse_spring.b.velocity = (0, 0)
+            self.mouse_spring.b.molecule.set_dragging(False)
+            self.space.remove(self.mouse_spring)
+            self.mouse_spring = None
+
     def handle_element_pressed(self, x, y):
-        if self.mouse_spring != None:
-            self.handle_element_released(None, None, None, None)
+        self.release_spring()  # cancel any in-progress drag without dropping on an effect
         self.mouse_body.position = (x, y)
         clicked = self.space.point_query_nearest((x,y), 16, shape_filter=CollisionTypes.ELEMENT_PICK_FILTER)
         if (clicked is None or clicked.shape.collision_type != CollisionTypes.ELEMENT):
@@ -407,12 +414,9 @@ class Level:
                 action.on_release()
 
     def handle_element_released(self, x, y, button, modifiers):
-        if self.mouse_spring != None:
-            self.mouse_spring.b.velocity = (0,0)
+        if self.mouse_spring is not None:
             molecule = self.mouse_spring.b.molecule
-            molecule.set_dragging(False)
-            self.space.remove(self.mouse_spring)
-            self.mouse_spring = None
+            self.release_spring()
             for effect in self.get_effect_supporting("put"):
                 if effect.clicked((x,y)):
                     if effect.put_element(molecule):
