@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.207107" y2="-1.5" id="a1" elementType="C"/>
+    <atom x2="0.5" y2="-2.207107" id="a2" elementType="O"/>
+    <atom x2="1.207107" y2="-0.5" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="2.207107" y2="-0.5" formalCharge="2" id="a4" elementType="Mg"/>
+    <atom x2="2.207107" y2="-1.5" formalCharge="-1" id="a5" elementType="O"/>
+    <atom x2="4.207107" y2="-1.5" id="a6" elementType="C"/>
+    <atom x2="4.914214" y2="-2.207107" id="a7" elementType="O"/>
+    <atom x2="3.207107" y2="-1.5" formalCharge="-1" id="a8" elementType="O"/>
+    <atom x2="3.207107" y2="-0.5" formalCharge="2" id="a9" elementType="Ca"/>
+    <atom x2="4.207107" y2="-0.5" formalCharge="-1" id="a10" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="2"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+    <bond atomRefs2="a1 a5" order="1"/>
+    <bond atomRefs2="a6 a7" order="2"/>
+    <bond atomRefs2="a6 a8" order="1"/>
+    <bond atomRefs2="a8 a9" order="1"/>
+    <bond atomRefs2="a9 a10" order="1"/>
+    <bond atomRefs2="a6 a10" order="1"/>
+    <bond atomRefs2="a4 a9" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-2326.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">155.2</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Dolomite</property>
+    <property title="Description">Dolomite is an anhydrous carbonate mineral composed of calcium magnesium carbonate, ideally CaMg(CO3)2.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Dolomite</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">C1(=O)[O-][Mg+2][O-]1.C1(=O)[O-][Ca+2][O-]1</property>
+  </propertyList>
+</ns0:molecule>

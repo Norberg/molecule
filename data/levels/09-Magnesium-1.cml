@@ -1,28 +1,47 @@
 <?xml version="1.0"?>
 <level>
   <moleculeList>
-    <molecule title="Si(s)"/>
-    <molecule title="MgO(s)"/>
-    <molecule title="MgO(s)"/>
   </moleculeList>
+  <inventoryList>
+    <molecule title="FeSi(s)"/>
+    <molecule title="FeSi(s)"/>
+  </inventoryList>
   <effectList>
-    <effect title="Fire" value="2300" x2="200" y2="270"/>
+    <effect title="Mining" x2="200" y2="400">
+      <molecule title="CaMgC2O6(s)"/>
+    </effect>
+    <effect title="Fire" value="4000" x2="800" y2="270"/>
   </effectList>
   <victoryCondition>
     <molecule title="Mg"/>
     <molecule title="Mg"/>
+    <molecule title="Mg"/>
+    <molecule title="Mg"/>
   </victoryCondition>
   <objective text="Create 2 Mg"/>
-  <hint text="Si(s) + 2 MgO  => SiO2 + 2 Mg">
+  <hint text="Mine Dolomite (CaMg(CO3)2). Calcine it to Dolime (CaO·MgO), then use Ferrosilicon (FeSi) to reduce it via the Pidgeon process: 2 CaO·MgO + FeSi => Ca2SiO4 + Fe + 2 Mg">
     <reactions>
+      <!-- Calcination -->
       <reaction>
         <reactantList>
-          <molecule title="MgO"/>
-          <molecule title="MgO"/>
-          <molecule title="Si"/>
+          <molecule title="CaMgC2O6"/>
         </reactantList>
         <productList>
-          <molecule title="SiO2(s)"/>
+          <molecule title="CaMgO2(s)"/>
+          <molecule title="CO2(g)"/>
+          <molecule title="CO2(g)"/>
+        </productList>
+      </reaction>
+      <!-- Pidgeon Process -->
+      <reaction>
+        <reactantList>
+          <molecule title="CaMgO2"/>
+          <molecule title="CaMgO2"/>
+          <molecule title="FeSi"/>
+        </reactantList>
+        <productList>
+          <molecule title="Ca2SiO4(s)"/>
+          <molecule title="Fe(s)"/>
           <molecule title="Mg(g)"/>
           <molecule title="Mg(g)"/>
         </productList>

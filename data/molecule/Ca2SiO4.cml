@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="0.5" y2="-0.633975" formalCharge="2" id="a1" elementType="Ca"/>
+    <atom x2="1.0" y2="-1.5" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="2.0" y2="-1.5" id="a3" elementType="Si"/>
+    <atom x2="2.0" y2="-2.5" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="3.0" y2="-1.5" formalCharge="-1" id="a5" elementType="O"/>
+    <atom x2="2.0" y2="-0.5" formalCharge="-1" id="a6" elementType="O"/>
+    <atom x2="3.5" y2="-0.633975" formalCharge="2" id="a7" elementType="Ca"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="0"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a3 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a7 a5" order="0"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-2307.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">120.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Calcium silicate</property>
+    <property title="Description">Calcium silicate is a chemical compound with the formula Ca2SiO4. It is formed during the silicothermic reduction of magnesium as a slag by-product.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Calcium_silicate</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Ca+2].[O-][Si]([O-])([O-])[O-].[Ca+2]</property>
+  </propertyList>
+</ns0:molecule>

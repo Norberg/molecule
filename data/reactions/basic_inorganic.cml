@@ -130,6 +130,42 @@
   </reaction>
   <reaction>
     <reactantList>
+      <molecule title="CaMgC2O6"/>
+    </reactantList>
+    <productList>
+      <molecule title="CaMgO2(s)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+    <description>
+      Calcination of Dolomite (CaMg(CO3)2). Heating dolomite causes it to decompose into calcined dolomite or dolime (a mixture of calcium oxide and magnesium oxide) and carbon dioxide gas. This highly endothermic step is the first in the Pidgeon process.
+    </description>
+    <tagList>
+      <tag>Thermal decomposition</tag>
+      <tag>Calcination</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="CaMgO2"/>
+      <molecule title="CaMgO2"/>
+      <molecule title="FeSi"/>
+    </reactantList>
+    <productList>
+      <molecule title="Ca2SiO4(s)"/>
+      <molecule title="Fe(s)"/>
+      <molecule title="Mg(s)"/>
+      <molecule title="Mg(s)"/>
+    </productList>
+    <description>
+      The Pidgeon process for the production of metallic magnesium. Calcined dolomite (a mixture of MgO and CaO) is reduced by silicon (typically as a ferrosilicon alloy) at high temperatures. The reaction produces magnesium vapor, solid calcium silicate slag, and iron.
+    </description>
+    <tagList>
+      <tag>Reduction reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
       <molecule title="NH3"/>
       <molecule title="NH3"/>
       <molecule title="CO2"/>
