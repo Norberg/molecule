@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-1.0" y2="0.0" formalCharge="1" id="a1" elementType="Cu"/>
+    <atom x2="0.0" y2="0.7" formalCharge="-2" id="a2" elementType="S"/>
+    <atom x2="1.0" y2="0.0" formalCharge="3" id="a3" elementType="Fe"/>
+    <atom x2="0.0" y2="-0.7" formalCharge="-2" id="a4" elementType="S"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-939.4</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">30.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Name">Chalcopyrite</property>
+    <property title="Description">Chalcopyrite is a copper iron sulfide mineral and the most abundant copper ore mineral. It has the chemical formula CuFeS2 and crystallizes in the tetragonal system. It has a brassy to golden yellow color and a hardness of 3.5 to 4 on the Mohs scale. Its streak is diagnostic as green tinged black.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Chalcopyrite</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
+    <property title="Smiles">[Cu+1]1[S-2][Fe+3][S-2]1</property>
+  </propertyList>
+</ns0:molecule>

@@ -409,4 +409,91 @@
       <tag>Golden rain</tag>
     </tagList>
   </reaction>
+  <!-- Copper Smelting sequence -->
+  <reaction>
+    <reactantList>
+      <molecule title="CuFeS2"/>
+      <molecule title="CuFeS2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Cu2S(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="FeO(s)"/>
+      <molecule title="SO2(g)"/>
+      <molecule title="SO2(g)"/>
+      <molecule title="SO2(g)"/>
+    </productList>
+    <description>
+      The first step in copper smelting is the roasting of chalcopyrite (CuFeS2). Here, the copper iron sulfide ore is heated strongly in air. The oxidation leads to the formation of a copper-rich matte consisting primarily of copper(I) sulfide (chalcocite, Cu2S), alongside iron(II) oxide and sulfur dioxide gas.
+    </description>
+    <tagList>
+      <tag>Roasting</tag>
+      <tag>Oxidation reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="FeO"/>
+      <molecule title="SiO2"/>
+    </reactantList>
+    <productList>
+      <molecule title="FeSiO3(s)"/>
+    </productList>
+    <description>
+      In the smelting process, a flux such as silica (SiO2) is added to react with the iron(II) oxide generated during roasting. This forms a molten iron(II) silicate slag (fayalite, FeSiO3). The lighter slag floats on top of the heavier copper matte, allowing it to be skimmed off and removing iron impurities from the target copper.
+    </description>
+    <tagList>
+      <tag>Slag formation</tag>
+      <tag>Combination reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Cu2S"/>
+      <molecule title="Cu2S"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+      <molecule title="O2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Cu2O(s)"/>
+      <molecule title="Cu2O(s)"/>
+      <molecule title="SO2(g)"/>
+      <molecule title="SO2(g)"/>
+    </productList>
+    <description>
+      During the first (slag-forming) stage of the Bessemer converting process for copper, air is blown through the molten matte. A portion of the copper(I) sulfide is oxidized to form copper(I) oxide (cuprite, Cu2O) and sulfur dioxide. 
+    </description>
+    <tagList>
+      <tag>Converting (metallurgy)</tag>
+      <tag>Oxidation reaction</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Cu2O"/>
+      <molecule title="Cu2O"/>
+      <molecule title="Cu2S"/>
+    </reactantList>
+    <productList>
+      <molecule title="Cu(s)"/>
+      <molecule title="Cu(s)"/>
+      <molecule title="Cu(s)"/>
+      <molecule title="Cu(s)"/>
+      <molecule title="Cu(s)"/>
+      <molecule title="Cu(s)"/>
+      <molecule title="SO2(g)"/>
+    </productList>
+    <description>
+      In the final (blister-forming) stage of copper converting, the supply of air is shut off. The copper(I) oxide produced in the previous step reacts with the remaining copper(I) sulfide in the melt. This self-reduction produces blister copper (nearly pure metallic copper) and releases more sulfur dioxide gas. The process derives its name from the blisters formed as the gas escapes the solidifying metal.
+    </description>
+    <tagList>
+      <tag>Converting (metallurgy)</tag>
+      <tag>Redox reaction</tag>
+    </tagList>
+  </reaction>
 </reactions>

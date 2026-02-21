@@ -422,5 +422,17 @@
   "Organic synthesis": {
     "title": "Organic synthesis",
     "description": "Organic synthesis is a purposeful execution of chemical reactions in order to obtain a specific organic molecule or set of molecules. It involves the construction of complex organic compounds from simpler precursors through a series of chemical transformations."
+  },
+  "Roasting": {
+    "title": "Roasting",
+    "description": "Roasting is a metallurgical process involving gas-solid reactions at elevated temperatures with the goal of purifying the metal component. Often applied to sulfide ores like chalcopyrite, the ore is heated in the presence of air to oxidize the sulfur and form sulfur dioxide, leaving behind metal oxides or other modified minerals."
+  },
+  "Slag formation": {
+    "title": "Slag formation",
+    "description": "Slag formation is a high-temperature process where fluxes, such as silica or limestone, react with impurities in the melt (often iron oxides) to form a molten, separable byproduct called slag. This is a critical step in smelting and refining to remove unwanted gangue minerals from the target metal."
+  },
+  "Converting (metallurgy)": {
+    "title": "Converting (metallurgy)",
+    "description": "Converting is a specific pyrometallurgical process where air or oxygen is blown through a molten matte to selectively oxidize remaining impurities. In the refining of copper, this step oxidizes copper sulfides and any remaining iron sulfides to ultimately produce blister copper and sulfur dioxide gas."
   }
 }

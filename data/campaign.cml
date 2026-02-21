@@ -26,6 +26,7 @@
     <biome name="Mining" icon="island_mining.png">
       <level file="09-Magnesium-1.cml"/>
       <level file="12-Iron-1.cml"/>
+      <level file="50-Copper-1.cml"/>
     </biome>
   </page>
   <page id="2" name="Organic &amp; Life">

@@ -4,7 +4,7 @@
     <atom x2="1.0" y2="0.0" id="a1" elementType="Cu"/>
   </ns0:atomArray>
   <propertyList title="states">
-    <propertyList title="Solid" emitter="fireworks" emitterColor="#3399FF">
+    <propertyList title="Solid" emitter="fireworks">
       <property title="enthalpy">
         <scalar units="units:molar_energy">0.0</scalar>
       </property>
@@ -26,5 +26,10 @@
     <property title="Name">Copper</property>
     <property title="Weight">63.0</property>
     <property title="Smiles">[Cu]</property>
+    <property title="Description">Copper is a chemical element; it has symbol Cu (from Latin cuprum) and atomic number 29. It is a soft, malleable, and ductile metal with very high thermal and electrical conductivity. A freshly exposed surface of pure copper has a pinkish-orange color. Copper is used as a conductor of heat and electricity, as a building material, and as a constituent of various metal alloys, such as sterling silver used in jewelry, cupronickel used to make marine hardware and coins, and constantan used in strain gauges and thermocouples for temperature measurement.
+
+Copper is one of the few native metals, meaning metals that occur naturally in a directly usable, unalloyed metallic form. This led to very early human use in several regions, from c.&#x2009;8000 BC. Thousands of years later, it was the first metal to be smelted from sulfide ores, c.&#x2009;5000 BC; the first metal to be cast into a shape in a mold, c.&#x2009;4000 BC; and the first metal to be purposely alloyed with another metal, tin, to create bronze, c.&#x2009;3500 BC.</property>
+    <property title="DescriptionAttribution">https://en.wikipedia.org/wiki/Copper</property>
+    <property title="DescriptionLicense">CC BY-SA 3.0</property>
   </propertyList>
 </ns0:molecule>

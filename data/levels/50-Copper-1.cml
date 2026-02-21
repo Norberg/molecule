@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="O2(g)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+    <molecule title="SiO2(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Mining" x2="200" y2="400">
+      <molecule title="CuFeS2(s)"/>
+      <molecule title="CuFeS2(s)"/>
+    </effect>
+    <effect title="Fire" value="4000" x2="800" y2="270"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+    <molecule title="Cu"/>
+  </victoryCondition>
+  <objective text="Refine 6 Cu from Chalcopyrite using intense heat"/>
+  <hint text="Mine Chalcopyrite (CuFeS2). Roast it using Fire to form Cu2S, FeO, and SO2. Add Silica (SiO2) and more Fire to the FeO to form Fayalite slag (FeSiO3). Then blow air and apply Fire to the Cu2S to form Cu2O, and finally use Fire again to trigger the self-reduction to Blister Copper (Cu).">
+    <reactions>
+      <!-- Roasting -->
+      <reaction>
+        <reactantList>
+          <molecule title="CuFeS2"/>
+          <molecule title="CuFeS2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Cu2S(s)"/>
+          <molecule title="FeO(s)"/>
+          <molecule title="FeO(s)"/>
+          <molecule title="SO2(g)"/>
+          <molecule title="SO2(g)"/>
+          <molecule title="SO2(g)"/>
+        </productList>
+      </reaction>
+      <!-- Slag formation -->
+      <reaction>
+        <reactantList>
+          <molecule title="FeO"/>
+          <molecule title="SiO2"/>
+        </reactantList>
+        <productList>
+          <molecule title="FeSiO3(s)"/>
+        </productList>
+      </reaction>
+      <!-- Converting Stage 1 -->
+      <reaction>
+        <reactantList>
+          <molecule title="Cu2S"/>
+          <molecule title="Cu2S"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+          <molecule title="O2"/>
+        </reactantList>
+        <productList>
+          <molecule title="Cu2O(s)"/>
+          <molecule title="Cu2O(s)"/>
+          <molecule title="SO2(g)"/>
+          <molecule title="SO2(g)"/>
+        </productList>
+      </reaction>
+      <!-- Converting Stage 2 -->
+      <reaction>
+        <reactantList>
+          <molecule title="Cu2O"/>
+          <molecule title="Cu2O"/>
+          <molecule title="Cu2S"/>
+        </reactantList>
+        <productList>
+          <molecule title="Cu(s)"/>
+          <molecule title="Cu(s)"/>
+          <molecule title="Cu(s)"/>
+          <molecule title="Cu(s)"/>
+          <molecule title="Cu(s)"/>
+          <molecule title="Cu(s)"/>
+          <molecule title="SO2(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>
