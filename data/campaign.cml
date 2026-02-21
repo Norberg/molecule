@@ -14,10 +14,8 @@
       <level file="17-Acid-production-2-Nitric-acid.cml"/>
     </biome>
     <biome name="Volcanic Ridge" icon="island_volcano.png">
-      <level file="09-Magnesium-1.cml"/>
       <level file="10-Sulfur-1.cml"/>
       <level file="11-Sulfur-2.cml"/>
-      <level file="12-Iron-1.cml"/>
     </biome>
     <biome name="Chemical Plant" icon="island_factory.png">
       <level file="06-Sodium-sulfate.cml"/>
@@ -25,10 +23,9 @@
       <level file="14-Soda-1-Leblanc-process.cml"/>
       <level file="15-Soda-2-Solvay-process.cml"/>
     </biome>
-    <biome name="Fireworks Factory" icon="island_fireworks.png">
-      <level file="08-Calcium-carbonate.cml"/>
-      <level file="18-Golden-rain.cml"/>
-      <level file="19-Fireworks-Copper.cml"/>
+    <biome name="Mining" icon="island_mining.png">
+      <level file="09-Magnesium-1.cml"/>
+      <level file="12-Iron-1.cml"/>
     </biome>
   </page>
   <page id="2" name="Organic &amp; Life">
@@ -69,6 +66,11 @@
       <level file="98-Taurin-1.cml"/>
       <level file="99-Test.cml"/>
       <level file="100-Emmiter-testlevel.cml"/>
+    </biome>
+    <biome name="Fireworks Factory" icon="island_fireworks.png">
+      <level file="08-Calcium-carbonate.cml"/>
+      <level file="18-Golden-rain.cml"/>
+      <level file="19-Fireworks-Copper.cml"/>
     </biome>
   </page>
 </campaign>
