@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="-0.0" y2="1.0" formalCharge="3" id="a1" elementType="Al"/>
+    <atom x2="0.866025" y2="1.5" formalCharge="-1" id="a2" elementType="O"/>
+    <atom x2="-0.866025" y2="1.5" formalCharge="-1" id="a3" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="-1" id="a4" elementType="O"/>
+    <atom x2="1.70607" y2="1.015" id="a5" elementType="H"/>
+    <atom x2="-0.866025" y2="2.47" id="a6" elementType="H"/>
+    <atom x2="-0.840045" y2="-0.485" id="a7" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a1 a3" order="1"/>
+    <bond atomRefs2="a1 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a3 a6" order="1"/>
+    <bond atomRefs2="a4 a7" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1276.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">71.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Weight">78.0</property>
+    <property title="Name">Aluminium hydroxide</property>
+    <property title="Description">Aluminium hydroxide, Al(OH)3, is found in nature as the mineral gibbsite and its three much rarer polymorphs: bayerite, doyleite, and nordstrandite. Aluminium hydroxide is amphoteric, meaning it has both basic and acidic properties. Closely related are aluminium oxide hydroxide, AlO(OH), and aluminium oxide, Al2O3, which differ only by loss of water. These compounds together are the major components of the aluminium ore bauxite.</property>
+    <property title="Smiles">[Al+3]([OH-])([OH-])([OH-])</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+  </propertyList>
+</ns0:molecule>

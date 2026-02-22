@@ -89,6 +89,8 @@ class TestLevels(unittest.TestCase):
             for e in cml.effects:
                 if e.title == 'UvLight':
                     energy_sources.append(Cml.Requirement.EnergyType.UV_LIGHT)
+                elif e.title == 'Electrolysis':
+                    energy_sources.append(Cml.Requirement.EnergyType.ELECTROLYSIS)
 
             reactor = setupRealReactor()
             # Repeat the reaction cycle as long as possible

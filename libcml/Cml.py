@@ -112,6 +112,7 @@ class Effect:
 class Requirement:
     class EnergyType(Enum):
         UV_LIGHT = "UV light"
+        ELECTROLYSIS = "Electrolysis"
 
     def __init__(self, type, molar_energy):
         self.type = Requirement.EnergyType(type)

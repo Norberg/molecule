@@ -496,4 +496,120 @@
       <tag>Redox reaction</tag>
     </tagList>
   </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="PbO2H2"/>
+    </reactantList>
+    <productList>
+      <molecule title="Pb+2(aq)"/>
+      <molecule title="OH-(aq)"/>
+      <molecule title="OH-(aq)"/>
+    </productList>
+  </reaction>
+  <!-- Aluminum production sequence -->
+  <reaction>
+    <reactantList>
+      <molecule title="NaCl"/>
+      <molecule title="NaCl"/>
+      <molecule title="H2O"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="NaOH(s)"/>
+      <molecule title="NaOH(s)"/>
+      <molecule title="Cl2(g)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+    <requirementList>
+      <requirement type="Electrolysis" molar_energy="600.0"/>
+    </requirementList>
+    <description>
+      The Chloralkali process is an industrial process for the electrolysis of sodium chloride. It is the technology used to produce chlorine and sodium hydroxide (caustic soda), which are commodity chemicals required by industry.
+    </description>
+    <tagList>
+      <tag>Electrolysis</tag>
+      <tag>Chloralkali process</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="AlO3H3"/>
+      <molecule title="NaOH"/>
+    </reactantList>
+    <productList>
+      <molecule title="NaAlO4H4(aq)"/>
+    </productList>
+    <description>
+      Bayer process - Digestion: Aluminium-bearing minerals in bauxite are selectively dissolved by heating with concentrated sodium hydroxide solution.
+    </description>
+    <tagList>
+      <tag>Bayer process</tag>
+      <tag>Dissolution</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NaAlO4H4"/>
+    </reactantList>
+    <productList>
+      <molecule title="AlO3H3(s)"/>
+      <molecule title="NaOH(s)"/>
+    </productList>
+    <description>
+      Bayer process - Precipitation: The clear sodium aluminate solution is cooled and seeded with aluminium hydroxide crystals, causing the dissolved aluminium hydroxide to precipitate. This step also recovers the sodium hydroxide for reuse.
+    </description>
+    <tagList>
+      <tag>Bayer process</tag>
+      <tag>Precipitation</tag>
+      <tag>Recycling</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="AlO3H3"/>
+      <molecule title="AlO3H3"/>
+    </reactantList>
+    <productList>
+      <molecule title="Al2O3(s)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+      <molecule title="H2O(g)"/>
+    </productList>
+    <description>
+      Calcination of aluminium hydroxide: The precipitated aluminium hydroxide is heated to high temperatures (over 1000&#xB0;C) in a kiln. This drives off the chemically combined water, leaving pure aluminium oxide (alumina).
+    </description>
+    <tagList>
+      <tag>Calcination</tag>
+      <tag>Thermal decomposition</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="Al2O3"/>
+      <molecule title="Al2O3"/>
+      <molecule title="C"/>
+      <molecule title="C"/>
+      <molecule title="C"/>
+    </reactantList>
+    <productList>
+      <molecule title="Al(s)"/>
+      <molecule title="Al(s)"/>
+      <molecule title="Al(s)"/>
+      <molecule title="Al(s)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+      <molecule title="CO2(g)"/>
+    </productList>
+    <requirementList>
+      <requirement type="Electrolysis" molar_energy="2200.0"/>
+    </requirementList>
+    <description>
+      Hall-H&#xE9;roult process: The electrolytic reduction of alumina dissolved in molten cryolite. This is the major industrial process for smelting aluminium. The carbon anodes are consumed by reacting with the oxygen from the alumina, producing carbon dioxide.
+    </description>
+    <tagList>
+      <tag>Hall-H&#xE9;roult process</tag>
+      <tag>Electrolysis</tag>
+      <tag>Reduction</tag>
+    </tagList>
+  </reaction>
 </reactions>

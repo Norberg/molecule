@@ -132,6 +132,11 @@ class UvLight(EnergySource):
     def __init__(self, space, batch, pos):
         EnergySource.__init__(self, space, batch, pos, "uv-light.png", "UvLight", Cml.Requirement.EnergyType.UV_LIGHT)
 
+class Electrolysis(EnergySource):
+    """Electrolysis effect"""
+    def __init__(self, space, batch, pos):
+        EnergySource.__init__(self, space, batch, pos, "electrolysis.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
+
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""
     def __init__(self, space, batch, pos):
@@ -625,6 +630,9 @@ def create_effects(space, batch, effects, emitters, consume_molecule_cb):
         elif effect.title == "UvLight":
             uv_light = UvLight(space, batch, (x, y))
             new_effects.append(uv_light)
+        elif effect.title == "Electrolysis":
+            electrolysis = Electrolysis(space, batch, (x, y))
+            new_effects.append(electrolysis)
         elif effect.title == "Fireworks":
             fireworks = Fireworks(space, batch, (x, y), emitters, consume_molecule_cb)
             new_effects.append(fireworks)

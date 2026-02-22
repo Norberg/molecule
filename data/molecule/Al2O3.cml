@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="3.464102" y2="-0.0" formalCharge="-2" id="a1" elementType="O"/>
+    <atom x2="2.598076" y2="0.5" formalCharge="3" id="a2" elementType="Al"/>
+    <atom x2="1.732051" y2="0.0" formalCharge="-2" id="a3" elementType="O"/>
+    <atom x2="0.866025" y2="0.5" formalCharge="3" id="a4" elementType="Al"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="-2" id="a5" elementType="O"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a3 a4" order="1"/>
+    <bond atomRefs2="a4 a5" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Solid">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1675.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">51.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Weight">102.0</property>
+    <property title="Name">Aluminium oxide</property>
+    <property title="Description">Aluminium oxide is a chemical compound of aluminium and oxygen with the chemical formula Al2O3. It is the most commonly occurring of several aluminium oxides, and specifically identified as aluminium(III) oxide. It is commonly called alumina and may also be called aloxide, aloxite, or alundum depending on particular forms or applications. It occurs naturally in its crystalline polymorphic phase alpha-Al2O3 as the mineral corundum, varieties of which form the precious gemstones ruby and sapphire.</property>
+    <property title="Smiles">[O-2][Al+3][O-2][Al+3][O-2]</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+  </propertyList>
+</ns0:molecule>

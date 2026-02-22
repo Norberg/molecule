@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ns0:molecule xmlns:ns0="http://www.xml-cml.org/schema">
+  <ns0:atomArray>
+    <atom x2="1.149881" y2="-0.244415" id="a1" elementType="O"/>
+    <atom x2="0.743145" y2="0.669131" formalCharge="-1" id="a2" elementType="Al"/>
+    <atom x2="1.737667" y2="0.773659" id="a3" elementType="O"/>
+    <atom x2="0.951057" y2="1.647278" id="a4" elementType="O"/>
+    <atom x2="-0.122881" y2="1.169131" id="a5" elementType="O"/>
+    <atom x2="-0.0" y2="-0.0" formalCharge="1" id="a6" elementType="Na"/>
+    <atom x2="0.57973" y2="-1.029161" id="a7" elementType="H"/>
+    <atom x2="2.307818" y2="-0.011087" id="a8" elementType="H"/>
+    <atom x2="1.873581" y2="1.947025" id="a9" elementType="H"/>
+    <atom x2="-0.122881" y2="2.139131" id="a10" elementType="H"/>
+  </ns0:atomArray>
+  <ns0:bondArray>
+    <bond atomRefs2="a1 a2" order="1"/>
+    <bond atomRefs2="a2 a3" order="1"/>
+    <bond atomRefs2="a2 a4" order="1"/>
+    <bond atomRefs2="a2 a5" order="1"/>
+    <bond atomRefs2="a2 a6" order="1"/>
+    <bond atomRefs2="a1 a7" order="1"/>
+    <bond atomRefs2="a3 a8" order="1"/>
+    <bond atomRefs2="a4 a9" order="1"/>
+    <bond atomRefs2="a5 a10" order="1"/>
+  </ns0:bondArray>
+  <propertyList title="states">
+    <propertyList title="Aqueous">
+      <property title="enthalpy">
+        <scalar units="units:molar_energy">-1835.0</scalar>
+      </property>
+      <property title="entropy">
+        <scalar units="units:molar_energy">150.0</scalar>
+      </property>
+    </propertyList>
+  </propertyList>
+  <propertyList title="property">
+    <property title="Weight">118.0</property>
+    <property title="Name">Sodium aluminate</property>
+    <property title="Description">Sodium aluminate is an important commercial inorganic chemical. It is used as an effective source of aluminium hydroxide for many industrial and technical applications. Pure sodium aluminate (anhydrous) is a white crystalline solid. Aqueous sodium aluminate is an intermediate in the Bayer process for the production of aluminium.</property>
+    <property title="Smiles">O[Al-](O)(O)(O)[Na+]</property>
+    <property title="DescriptionAttribution">Simon Norberg</property>
+    <property title="DescriptionLicense">GPLv3</property>
+  </propertyList>
+</ns0:molecule>

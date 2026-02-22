@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+    <molecule title="C(s)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Mining" x2="150" y2="450">
+      <molecule title="AlO3H3(s)"/>
+      <molecule title="NaCl(s)"/>
+    </effect>
+    <effect title="Electrolysis" x2="1220" y2="350"/>
+    <effect title="Furnace" value="1200" x2="650" y2="500"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="Al"/>
+    <molecule title="Al"/>
+    <molecule title="Al"/>
+    <molecule title="Al"/>
+  </victoryCondition>
+  <objective text="Refine 4 Aluminum from Bauxite (AlO3H3) and Salt (NaCl)"/>
+  <hint text="Start by electrolyzing Salt (NaCl) in Water to produce NaOH. Then use the Bayer process to digest Bauxite (AlO3H3) with NaOH to form Aluminate, and precipitate it back to pure Hydroxide to recycle the NaOH. Calcine the Hydroxide in the Furnace to Alumina (Al2O3), and finally use Electrolysis with Carbon to reduce it to metallic Aluminum.">
+    <reactions>
+      <!-- Chloralkali -->
+      <reaction>
+        <reactantList>
+          <molecule title="NaCl"/>
+          <molecule title="NaCl"/>
+          <molecule title="H2O"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="NaOH(s)"/>
+          <molecule title="NaOH(s)"/>
+          <molecule title="Cl2(g)"/>
+          <molecule title="H2(g)"/>
+        </productList>
+        <requirementList>
+          <requirement type="Electrolysis" molar_energy="600.0"/>
+        </requirementList>
+      </reaction>
+      <!-- Bayer Digestion -->
+      <reaction>
+        <reactantList>
+          <molecule title="AlO3H3"/>
+          <molecule title="NaOH"/>
+        </reactantList>
+        <productList>
+          <molecule title="NaAlO4H4(aq)"/>
+        </productList>
+      </reaction>
+      <!-- Bayer Precipitation -->
+      <reaction>
+        <reactantList>
+          <molecule title="NaAlO4H4"/>
+        </reactantList>
+        <productList>
+          <molecule title="AlO3H3(s)"/>
+          <molecule title="NaOH(s)"/>
+        </productList>
+      </reaction>
+      <!-- Calcination -->
+      <reaction>
+        <reactantList>
+          <molecule title="AlO3H3"/>
+          <molecule title="AlO3H3"/>
+        </reactantList>
+        <productList>
+          <molecule title="Al2O3(s)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+          <molecule title="H2O(g)"/>
+        </productList>
+      </reaction>
+      <!-- Hall-Heroult -->
+      <reaction>
+        <reactantList>
+          <molecule title="Al2O3"/>
+          <molecule title="Al2O3"/>
+          <molecule title="C"/>
+          <molecule title="C"/>
+          <molecule title="C"/>
+        </reactantList>
+        <productList>
+          <molecule title="Al(s)"/>
+          <molecule title="Al(s)"/>
+          <molecule title="Al(s)"/>
+          <molecule title="Al(s)"/>
+          <molecule title="CO2(g)"/>
+          <molecule title="CO2(g)"/>
+          <molecule title="CO2(g)"/>
+        </productList>
+        <requirementList>
+          <requirement type="Electrolysis" molar_energy="2200.0"/>
+        </requirementList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>
