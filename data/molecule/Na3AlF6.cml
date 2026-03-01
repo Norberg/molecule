@@ -33,6 +33,7 @@
   <propertyList title="property">
     <property title="Weight">210.0</property>
     <property title="Name">Cryolite</property>
+    <property title="Smiles">[Na+].[Na+].[Na+].F[Al-3](F)(F)(F)(F)F</property>
     <property title="Description">Cryolite (Na3AlF6, sodium hexafluoroaluminate) is an uncommon mineral of very limited natural distribution. Historically it was used as an ore of aluminium and later in the electrolytic processing of the aluminium-rich oxide ore bauxite (itself a combination of aluminium oxide minerals such as gibbsite, boehmite and diaspore). The difficulty of separating aluminium from oxygen in the oxide ores was overcome by the use of cryolite as a flux to dissolve the oxide mineral(s).</property>
   </propertyList>
 </ns0:molecule>

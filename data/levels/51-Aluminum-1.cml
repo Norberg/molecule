@@ -16,14 +16,16 @@
     <molecule title="C(s)"/>
     <molecule title="C(s)"/>
     <molecule title="C(s)"/>
+    <molecule title="NaCl(s)"/>
+    <molecule title="NaCl(s)"/>
   </inventoryList>
   <effectList>
     <effect title="Mining" x2="150" y2="450">
       <molecule title="AlO3H3(s)"/>
       <molecule title="NaCl(s)"/>
     </effect>
-    <effect title="Electrolysis" x2="1220" y2="350"/>
-    <effect title="Furnace" value="1200" x2="650" y2="500"/>
+    <effect title="Electrolysis" x2="1000" y2="400"/>
+    <effect title="Fire" value="1200" x2="500" y2="450"/>
   </effectList>
   <victoryCondition>
     <molecule title="Al"/>
@@ -43,8 +45,10 @@
           <molecule title="H2O"/>
         </reactantList>
         <productList>
-          <molecule title="NaOH(s)"/>
-          <molecule title="NaOH(s)"/>
+          <molecule title="Na+(aq)"/>
+          <molecule title="Na+(aq)"/>
+          <molecule title="OH-(aq)"/>
+          <molecule title="OH-(aq)"/>
           <molecule title="Cl2(g)"/>
           <molecule title="H2(g)"/>
         </productList>
@@ -56,7 +60,8 @@
       <reaction>
         <reactantList>
           <molecule title="AlO3H3"/>
-          <molecule title="NaOH"/>
+          <molecule title="Na+"/>
+          <molecule title="OH-"/>
         </reactantList>
         <productList>
           <molecule title="NaAlO4H4(aq)"/>
@@ -69,7 +74,8 @@
         </reactantList>
         <productList>
           <molecule title="AlO3H3(s)"/>
-          <molecule title="NaOH(s)"/>
+          <molecule title="Na+(aq)"/>
+          <molecule title="OH-(aq)"/>
         </productList>
       </reaction>
       <!-- Calcination -->

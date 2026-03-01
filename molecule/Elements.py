@@ -64,6 +64,10 @@ class Molecule:
         return "Molecule<%s>" % (self.state_formula)
 
     @property
+    def charge(self):
+        return sum(atom.charge for atom in self.atoms.values())
+
+    @property
     def enthalpy(self):
         """Return enthalpy(aka H) for current state"""
         return self.state.enthalpy

@@ -434,5 +434,25 @@
   "Converting (metallurgy)": {
     "title": "Converting (metallurgy)",
     "description": "Converting is a specific pyrometallurgical process where air or oxygen is blown through a molten matte to selectively oxidize remaining impurities. In the refining of copper, this step oxidizes copper sulfides and any remaining iron sulfides to ultimately produce blister copper and sulfur dioxide gas."
+  },
+  "Hall-Héroult process": {
+    "title": "Hall-Héroult process",
+    "description": "The Hall-Héroult process is the major industrial process for smelting aluminium. It involves dissolving aluminium oxide (alumina) in molten cryolite, and electrolyzing the molten salt bath, typically in a purpose-built cell."
+  },
+  "Chloralkali process": {
+    "title": "Chloralkali process",
+    "description": "The Chloralkali process is an industrial process for the electrolysis of sodium chloride. It is the technology used to produce chlorine and sodium hydroxide (caustic soda), which are commodity chemicals required by industry."
+  },
+  "Electrolysis": {
+    "title": "Electrolysis",
+    "description": "Electrolysis is a technique that uses a direct electric current (DC) to drive an otherwise non-spontaneous chemical reaction. Electrolysis is commercially important as a stage in the separation of elements from naturally occurring sources such as ores using an electrolytic cell."
+  },
+  "Bayer process": {
+    "title": "Bayer process",
+    "description": "The Bayer process is the principal industrial means of refining bauxite to produce alumina (aluminium oxide) and was developed by Carl Josef Bayer. Bauxite, the most important ore of aluminium, contains only 30-60% aluminium oxide."
+  },
+  "Reduction": {
+    "title": "Reduction",
+    "description": "Reduction is a chemical reaction that involves the gaining of electrons by one of the atoms involved in the reaction. The term refers to the element that accepts electrons, as the oxidation state of the element that gains electrons is lowered."
   }
 }

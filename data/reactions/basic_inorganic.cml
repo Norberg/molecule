@@ -510,13 +510,37 @@
   <reaction>
     <reactantList>
       <molecule title="NaCl"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="Na+(aq)"/>
+      <molecule title="Cl-(aq)"/>
+      <molecule title="OH-(aq)"/>
+      <molecule title="H+(aq)"/>
+    </productList>
+    <requirementList>
+      <requirement type="Electrolysis" molar_energy="100.0"/>
+    </requirementList>
+    <description>
+      During electrolysis, solid sodium chloride dissolves and dissociates into aqueous sodium and chloride ions.
+    </description>
+    <tagList>
+      <tag>Electrolysis</tag>
+      <tag>Dissolution</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NaCl"/>
       <molecule title="NaCl"/>
       <molecule title="H2O"/>
       <molecule title="H2O"/>
     </reactantList>
     <productList>
-      <molecule title="NaOH(s)"/>
-      <molecule title="NaOH(s)"/>
+      <molecule title="Na+(aq)"/>
+      <molecule title="Na+(aq)"/>
+      <molecule title="OH-(aq)"/>
+      <molecule title="OH-(aq)"/>
       <molecule title="Cl2(g)"/>
       <molecule title="H2(g)"/>
     </productList>
@@ -534,7 +558,8 @@
   <reaction>
     <reactantList>
       <molecule title="AlO3H3"/>
-      <molecule title="NaOH"/>
+      <molecule title="Na+"/>
+      <molecule title="OH-"/>
     </reactantList>
     <productList>
       <molecule title="NaAlO4H4(aq)"/>
@@ -553,7 +578,8 @@
     </reactantList>
     <productList>
       <molecule title="AlO3H3(s)"/>
-      <molecule title="NaOH(s)"/>
+      <molecule title="Na+(aq)"/>
+      <molecule title="OH-(aq)"/>
     </productList>
     <description>
       Bayer process - Precipitation: The clear sodium aluminate solution is cooled and seeded with aluminium hydroxide crystals, causing the dissolved aluminium hydroxide to precipitate. This step also recovers the sodium hydroxide for reuse.

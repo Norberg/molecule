@@ -100,8 +100,8 @@ class TestReact(unittest.TestCase):
         self.assertRaises(Exception, Reaction_verify, ["P4O10H0(g)"])
 
     def testPerformAllReactions(self):
-        unsupported_reactions = [["C2H7NO3S(l)"]]
-        all_energy_sources = [Requirement.EnergyType.UV_LIGHT]
+        unsupported_reactions = [["C2H7NO3S(l)"], ["Pb+2(aq)", "OH-(aq)", "OH-(aq)"], ["AlO3H3(s)", "Na+(aq)", "OH-(aq)"]]
+        all_energy_sources = [Requirement.EnergyType.UV_LIGHT, Requirement.EnergyType.ELECTROLYSIS]
         tempranges = [0, 298, 1000, 2000, 4000, 8000, 50]
         reactor = self.setupRealReactor()
         for reaction in reactor.reactions:

@@ -135,7 +135,138 @@ class UvLight(EnergySource):
 class Electrolysis(EnergySource):
     """Electrolysis effect"""
     def __init__(self, space, batch, pos):
-        EnergySource.__init__(self, space, batch, pos, "electrolysis.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
+        EnergySource.__init__(self, space, batch, pos, "electrolysis-beaker.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
+        self.body = None
+        self.space = space
+
+    def init_chipmunk(self,space, pos):
+        static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        static_body.position = pos
+        
+        # Relative dimensions from center (pos)
+        left = -215
+        right = 215
+        bottom = -255
+        top = 255
+        thickness = 10
+
+        # Creating walls relative to body position
+        walls = [
+            pymunk.Segment(static_body, (left, bottom), (left, top), thickness),  # Left wall
+            pymunk.Segment(static_body, (left, bottom), (right, bottom), thickness),  # Bottom wall
+            pymunk.Segment(static_body, (right, bottom), (right, top), thickness),  # Right wall
+            pymunk.Segment(static_body, (left, top), (right, top), thickness),  # Top wall
+        ]
+        for wall in walls:
+            wall.elasticity = 0.95
+            wall.collision_type = CollisionTypes.WALL
+            wall.filter = CollisionTypes.WALL_FILTER
+        space.add(static_body, *walls)
+        shape = pymunk.Poly.create_box(static_body, (430, 520), 5)
+        space.add(shape) 
+        self.shape = shape
+        self.shape.collision_type = CollisionTypes.EFFECT
+        self.shape.sensor = True
+        self.shape.effect = self
+        self.shape.filter = CollisionTypes.EFFECT_FILTER
+
+    def set_pos(self, pos):
+        OFFSET_X, OFFSET_Y = 0,140
+        self.shape.body.position = pos
+        x, y = self.shape.body.position
+        self.x = x - self.width/2 + OFFSET_X
+        self.y = y - self.height/2 + OFFSET_Y
+
+    def update(self):
+        if not self.space:
+            return
+            
+        if not hasattr(self, 'ion_joints'):
+            self.ion_joints = {}
+
+        # Find molecules inside the electrolysis area
+        bp = self.shape.body.position
+        # Electrolysis beaker is approx 430x520 box
+        query_rect = pymunk.Poly.create_box(None, (430, 520))
+        query_rect.body = pymunk.Body(body_type=pymunk.Body.STATIC)
+        query_rect.body.position = bp
+
+        # Query all shapes, as dragging molecules temporarily change their collision group
+        bb = query_rect.cache_bb()
+        query = self.space.bb_query(bb, pymunk.ShapeFilter())
+        
+        valid_mols = set()
+        for shape in query:
+            if not hasattr(shape, 'molecule'):
+                continue
+            mol = shape.molecule
+            if mol in valid_mols:
+                continue
+
+            # Check if inside logically
+            if not self.inside(shape.body.position):
+                continue
+                
+            # Only affect aqueous state molecules
+            if mol.current_state.short != "aq":
+                continue
+                
+            if mol.charge == 0:
+                continue
+                
+            valid_mols.add(mol)
+
+        # Clean up joints for molecules that are deleted or left the valid area
+        mols_to_remove = []
+        for mol, joints in self.ion_joints.items():
+            if hasattr(mol, 'is_deleted') and mol.is_deleted():
+                invalid = True
+            elif mol not in valid_mols:
+                invalid = True
+            else:
+                invalid = False
+                
+            if invalid:
+                for atom, spring, target_x in joints:
+                    try:
+                        self.space.remove(spring)
+                    except:
+                        pass
+                mols_to_remove.append(mol)
+            else:
+                # Keep the spring pulling purely horizontally
+                for atom, spring, target_x in joints:
+                    try:
+                        spring.anchor_b = (target_x, atom.body.position.y)
+                    except:
+                        pass
+
+        for mol in mols_to_remove:
+            del self.ion_joints[mol]
+            
+        # Create springs for new molecules
+        for mol in valid_mols:
+            if mol not in self.ion_joints:
+                joints = []
+                charge = mol.charge
+                # Cations (+) to left, Anions (-) to right based on image
+                # Beaker physics box width is 430, so edges are at offset 215
+                target_x = bp.x - 215 + 20 if charge > 0 else bp.x + 215 - 20
+                
+                target_atom = None
+                for atom in mol.atoms.values():
+                    if (charge > 0 and atom.charge > 0) or (charge < 0 and atom.charge < 0):
+                        target_atom = atom
+                        break
+                if not target_atom:
+                    target_atom = list(mol.atoms.values())[0]
+                    
+                spring = pymunk.DampedSpring(target_atom.body, self.space.static_body, 
+                                             (0,0), (target_x, target_atom.body.position.y), 
+                                             rest_length=0, stiffness=100, damping=20)
+                self.space.add(spring)
+                joints.append((target_atom, spring, target_x))
+                self.ion_joints[mol] = joints
 
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""
