@@ -257,6 +257,11 @@ class Level:
             return
         for molecule in reactingMolecules:
             self.delete_molecule(molecule)
+
+        # Clamp position to effects if needed (e.g. stay inside beaker walls)
+        for area in self.get_affecting_areas(position):
+            position = area.clamp_pos(position)
+
         new_elements = Universe.create_elements(self.space, reaction.products, self.batch, position)
         self.elements.extend(new_elements)
         print("Reaction products:", reaction.products)

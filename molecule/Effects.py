@@ -83,6 +83,10 @@ class Effect:
     def on_release(self, callback = None):
         pass
 
+    def clamp_pos(self, pos):
+        """Clamp position to be inside the effect, if possible"""
+        return pos
+
 
 class EffectSprite(pyglet.sprite.Sprite, Effect):
     """Effect base class + sprite"""
@@ -139,6 +143,20 @@ class Electrolysis(EnergySource):
         self.body = None
         self.space = space
 
+    def clamp_pos(self, pos):
+        """Clamp position to be inside the electrolysis beaker walls"""
+        bp = self.shape.body.position
+        # Internal wall bounds: left=-215, right=215, bottom=-255, top=255
+        # Use a margin of 60 to account for possible jitter during product spawning (up to 50)
+        margin = 60
+        min_x = bp.x - 215 + margin
+        max_x = bp.x + 215 - margin
+        min_y = bp.y - 255 + margin
+        max_y = bp.y + 255 - margin
+        
+        px, py = pos
+        return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
+
     def init_chipmunk(self,space, pos):
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         static_body.position = pos
@@ -191,13 +209,12 @@ class Electrolysis(EnergySource):
         query_rect.body = pymunk.Body(body_type=pymunk.Body.STATIC)
         query_rect.body.position = bp
 
-        # Query all shapes, as dragging molecules temporarily change their collision group
         bb = query_rect.cache_bb()
-        query = self.space.bb_query(bb, pymunk.ShapeFilter())
+        query = self.space.bb_query(bb, pymunk.ShapeFilter(categories=CollisionTypes.ELEMENT))
         
         valid_mols = set()
         for shape in query:
-            if not hasattr(shape, 'molecule'):
+            if shape.collision_type != CollisionTypes.ELEMENT:
                 continue
             mol = shape.molecule
             if mol in valid_mols:
@@ -219,14 +236,7 @@ class Electrolysis(EnergySource):
         # Clean up joints for molecules that are deleted or left the valid area
         mols_to_remove = []
         for mol, joints in self.ion_joints.items():
-            if hasattr(mol, 'is_deleted') and mol.is_deleted():
-                invalid = True
-            elif mol not in valid_mols:
-                invalid = True
-            else:
-                invalid = False
-                
-            if invalid:
+            if mol.is_deleted() or mol not in valid_mols:
                 for atom, spring, target_x in joints:
                     try:
                         self.space.remove(spring)
@@ -236,10 +246,7 @@ class Electrolysis(EnergySource):
             else:
                 # Keep the spring pulling purely horizontally
                 for atom, spring, target_x in joints:
-                    try:
-                        spring.anchor_b = (target_x, atom.body.position.y)
-                    except:
-                        pass
+                    spring.anchor_b = (target_x, atom.body.position.y)
 
         for mol in mols_to_remove:
             del self.ion_joints[mol]
@@ -276,6 +283,20 @@ class WaterBeaker(EffectSprite):
         self.supported_attributes.append("action")
         self.is_clicked = False
         self.body = None
+
+    def clamp_pos(self, pos):
+        """Clamp position to be inside the water beaker walls"""
+        bp = self.shape.body.position
+        # Internal wall bounds: left=-280, right=285, bottom=-320, top=340
+        # Use a margin of 60 to account for possible jitter during product spawning (up to 50)
+        margin = 60
+        min_x = bp.x - 280 + margin
+        max_x = bp.x + 285 - margin
+        min_y = bp.y - 320 + margin
+        max_y = bp.y + 340 - margin
+        
+        px, py = pos
+        return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
 
     def init_chipmunk(self,space, pos):
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
