@@ -1,14 +1,17 @@
+from __future__ import annotations
+
 import uvicorn
 import threading
 import logging
+from typing import Any
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.logger import logger as fastapi_logger
 
 from molecule.server.routes import router
 
+
 class Server:
-    def __init__(self, game):
+    def __init__(self, game: Any) -> None:
         self.app = FastAPI()
         self.app.include_router(router)
         self.app.state.server = self
@@ -29,10 +32,10 @@ class Server:
         logging.getLogger("uvicorn.access").addFilter(self.Suppress200Filter())
 
     class Suppress200Filter(logging.Filter):
-        def filter(self, record):
+        def filter(self, record: logging.LogRecord) -> bool:
             return "200 OK" not in record.getMessage()
 
-    def start(self):
+    def start(self) -> None:
         # Configure uvicorn logging to suppress 200 responses
         access_log_config = logging.getLogger("uvicorn.access")
         access_log_config.addFilter(self.Suppress200Filter())

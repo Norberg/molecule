@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import getopt
+from types import FrameType
+from typing import Any
 
 import pyglet
 
@@ -25,7 +27,7 @@ faulthandler.enable()
 
 class CliInterface:
     @staticmethod
-    def handle_cmd_options():
+    def handle_cmd_options() -> None:
         try:
             opts, args = getopt.getopt(sys.argv[1:], "hl:dfp:",
                 ["help", "level=", "debug","fullscreen", "height=", "width=", "player="])
@@ -52,7 +54,7 @@ class CliInterface:
                 Config.current.player = a
 
     @staticmethod
-    def cmd_help():
+    def cmd_help() -> None:
         default = Config.Config()
         print("Molecule - a chemical reaction puzzle game")
         print("-h --help print this help")
@@ -70,9 +72,11 @@ class CliInterface:
         print("h - print hint for level")
 import code, traceback, signal
 
-def debug(sig, frame):
+def debug(sig: int, frame: FrameType | None) -> None:
     """Interrupt running process, and provide a python prompt for
     interactive debugging."""
+    if frame is None:
+        return
     d={'_frame':frame}         # Allow access to frame object.
     d.update(frame.f_globals)  # Unless shadowed by global
     d.update(frame.f_locals)
@@ -82,10 +86,10 @@ def debug(sig, frame):
     message += ''.join(traceback.format_stack(frame))
     i.interact(message)
 
-def listen():
+def listen() -> None:
     signal.signal(signal.SIGUSR1, debug)  # Register handler
 
-def main():
+def main() -> None:
     listen()
     CliInterface.handle_cmd_options()
     from molecule.Game import Game

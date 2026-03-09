@@ -13,15 +13,28 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
 
-class MultiMapEntry:
-    def __init__(self, keys, value):
+from typing import Any, Callable, Generic, Iterable, TypeVar
+
+K = TypeVar("K")
+V = TypeVar("V")
+E = TypeVar("E")
+
+
+class MultiMapEntry(Generic[K, V]):
+    def __init__(self, keys: Iterable[K], value: V) -> None:
         self.keys = keys
         self.value = value
 
-class MultiMap:
-    def __init__(self, entries, entry_mapper = None):
-        self.multi_map = dict()
+
+class MultiMap(Generic[K, V, E]):
+    def __init__(
+        self,
+        entries: Iterable[Any],
+        entry_mapper: Callable[[E], MultiMapEntry[K, V]] | None = None,
+    ) -> None:
+        self.multi_map: dict[K, list[V]] = {}
         for e in entries:
             if entry_mapper is None:
                 entry = e
@@ -29,15 +42,13 @@ class MultiMap:
                 entry = entry_mapper(e)
             self.add_entry(entry)
 
-    def add_entry(self, entry):
+    def add_entry(self, entry: MultiMapEntry[K, V]) -> None:
         for key in entry.keys:
             if key in self.multi_map:
                 self.multi_map[key].append(entry.value)
             else:
                 self.multi_map[key] = [entry.value]
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: K) -> list[V]:
         return self.multi_map[key]
-
-
 

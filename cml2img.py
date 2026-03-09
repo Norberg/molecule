@@ -16,11 +16,12 @@
 import os
 import getopt
 import sys
+from typing import Any
 import pyglet
 from pyglet import gl
 from molecule.Elements import Molecule
 
-def main():
+def main() -> None:
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hf:o:", ["help", "formula=", "output=",])
     except getopt.GetoptError as err:
@@ -42,7 +43,7 @@ def main():
         sys.exit()
     convert_cml2png(input, output)
 
-def convert_cml2png(formula, output): 
+def convert_cml2png(formula: str, output: str) -> None:
     # Delete old output to avoid showing stale data if something fails
     if os.path.exists(output):
         try:
@@ -90,11 +91,11 @@ def convert_cml2png(formula, output):
     finally:
         window.close()
 
-def cmd_help():
+def cmd_help() -> None:
     print("cml2img.py -f formula -o <pngfile>")
 
 class SpaceMock():
-    def add(*args):
+    def add(*args: Any) -> None:
         pass
 
 if __name__ == "__main__":

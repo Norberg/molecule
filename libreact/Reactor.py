@@ -13,55 +13,71 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
+from typing import Any, Iterable, Iterator
+
 from libreact import Reaction
 from libreact.MultiMap import MultiMap, MultiMapEntry
 
 
 class ReactionEntryMapper:
-    def __init__(self, cml_reaction):
+    def __init__(self, cml_reaction: Any) -> None:
         self.keys = cml_reaction.reactants
         self.value = cml_reaction
 
+
 class Energy:
-    def __init(self, type):
+    def __init__(self, type: Any) -> None:
         self.type = type
 
+
 class Reactor:
-    def __init__(self, cml_reactions):
+    def __init__(self, cml_reactions: Iterable[Any]) -> None:
         self.reactions = cml_reactions
-        self.reaction_map = MultiMap(cml_reactions, ReactionEntryMapper)
+        self.reaction_map = MultiMap[Any, Any, Any](
+            cml_reactions,
+            lambda reaction: MultiMapEntry(reaction.reactants, reaction),
+        )
  
-    def find_all_reactions(self, reactants):
-        reactants = Reaction.list_without_state(reactants)
-        if len(reactants) == 1:
+    def find_all_reactions(self, reactants: list[str]) -> Iterator[Any]:
+        normalized_reactants: list[str | None] = list(Reaction.list_without_state(reactants))
+        if len(normalized_reactants) == 1:
             # Add a None to the end of the list to make sure that the next loop
             # will find all reactions that only have one reactant
-            reactants.append(None)
+            normalized_reactants.append(None)
 
-        for reactant in reactants[:-1]:
+        for reactant in normalized_reactants[:-1]:
             try:
                 rs = self.reaction_map[reactant]
             except KeyError:
                 continue
 
             for r in rs:
-                if sublist_in_list(r.reactants, reactants):
+                if sublist_in_list(r.reactants, normalized_reactants):
                     yield r
 
-
-    def find_reactions(self, reactants):
+    def find_reactions(self, reactants: list[str]) -> set[Any]:
         """ check if all elements needed for a reaction exists in
              in the reacting elements. 
             Return the reactions, or empty set if none exists
         """
         return set(self.find_all_reactions(reactants))
 
-    def react(self, reactants, K = 298, trace = False, energy_source = []):
+    def react(
+        self,
+        reactants: list[str],
+        K: float = 298,
+        trace: bool = False,
+        energy_source: list[Any] | None = None,
+    ) -> Reaction.Reaction | None:
         """ check if all elements needed for the reaction exists in
              in the reacting elements and that the reaction is spontaneous
             in the given temperature. 
             Return the reaction if it will occur otherwise None
         """
+        if energy_source is None:
+            energy_source = []
         reactionCmls = self.find_reactions(reactants)
 
         if len(reactionCmls) == 0 and trace:
@@ -69,7 +85,7 @@ class Reactor:
         elif len(reactionCmls) == 0:
             return None
 
-        reactions = list()
+        reactions: list[tuple[float, Reaction.Reaction]] = []
 
         for reactionCml in reactionCmls:
             additional_energy = 0
@@ -116,7 +132,7 @@ class Reactor:
 
 
 
-def sublist_in_list(sublist, superlist):
+def sublist_in_list(sublist: list[Any], superlist: list[Any]) -> bool:
     for e in sublist:
         if sublist.count(e) > superlist.count(e):
             return False

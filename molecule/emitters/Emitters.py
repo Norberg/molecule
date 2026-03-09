@@ -12,7 +12,7 @@ isn't registered yet we import a known module path for that name.
 """
 from __future__ import annotations
 
-from typing import Callable, Dict, Tuple
+from typing import Any, Callable, Dict, Tuple
 from importlib import import_module
 
 # Registry mapping emitter name to a callable factory
@@ -28,7 +28,9 @@ _EMITTER_MODULES: Dict[str, str] = {
 }
 
 
-def register_emitter(name: str, auto_spawn: bool = True):
+def register_emitter(
+    name: str, auto_spawn: bool = True
+) -> Callable[[Callable[..., object]], Callable[..., object]]:
     """Decorator to register an emitter class/factory.
 
     Parameters:
@@ -36,21 +38,23 @@ def register_emitter(name: str, auto_spawn: bool = True):
       auto_spawn: whether this emitter should appear automatically when a
                   reaction creates a molecule whose state references it.
     """
-    def decorator(factory: Callable[..., object]):
+    def decorator(factory: Callable[..., object]) -> Callable[..., object]:
         _EMITTER_REGISTRY[name] = factory
         _EMITTER_POLICY[name] = auto_spawn
         return factory
     return decorator
 
 
-def _lazy_import(name: str):
+def _lazy_import(name: str) -> None:
     module_path = _EMITTER_MODULES.get(name)
     if not module_path:
         raise ValueError(f"Emitter '{name}' not found")
     import_module(module_path)
 
 
-def spawn_emitter(name: str, batch, position: Tuple[float, float], **kwargs):
+def spawn_emitter(
+    name: str, batch: Any, position: Tuple[float, float], **kwargs: Any
+) -> object | None:
     factory = _EMITTER_REGISTRY.get(name)
     if not factory:
         _lazy_import(name)
@@ -64,7 +68,7 @@ def spawn_emitter(name: str, batch, position: Tuple[float, float], **kwargs):
         return factory(batch, position)
 
 
-def list_emitters():
+def list_emitters() -> list[str]:
     """List available emitter names.
 
     Includes both already-registered emitters (modules imported) and the
@@ -92,7 +96,9 @@ def should_autospawn(name: str) -> bool:
     return _EMITTER_POLICY.get(name, True)
 
 
-def spawn_reaction_emitter(name: str, batch, position: Tuple[float, float], **kwargs):
+def spawn_reaction_emitter(
+    name: str, batch: Any, position: Tuple[float, float], **kwargs: Any
+) -> object | None:
     """Spawn an emitter as a consequence of a chemical reaction.
 
     This centralises the auto-spawn policy so game logic (Levels) does not

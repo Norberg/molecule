@@ -13,14 +13,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from libcml import Cml
-__cml_cache = dict()
+from __future__ import annotations
 
-def getMolecule(element):
+from typing import Any
+
+from libcml import Cml
+__cml_cache: dict[str, Any] = {}
+
+
+def getMolecule(element: str) -> Any:
     filename = "data/molecule/%s.cml" % element
     return getMoleculeCml(filename)
 
-def getMoleculeCml(filename):
+
+def getMoleculeCml(filename: str) -> Any:
     global __cml_cache
     if filename in __cml_cache:
         return __cml_cache[filename]
@@ -30,7 +36,8 @@ def getMoleculeCml(filename):
     __cml_cache[filename] = m
     return m
 
-def evictFromCache(element):
+
+def evictFromCache(element: str) -> None:
     filename = "data/molecule/%s.cml" % element
     if filename in __cml_cache:
         del __cml_cache[filename]                

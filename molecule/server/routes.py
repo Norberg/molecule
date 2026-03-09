@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 import glob
 import os
 import subprocess
 import json
+from typing import Any, NotRequired, TypedDict
 from molecule.Levels import Level
 
 from libcml import Cml
@@ -13,7 +16,15 @@ from molecule.Universe import universe
 from libreact.Reaction import list_without_state
 from molecule.Achievements import AchievementManager
 
-def getMolecule(filename):
+
+class MoleculeInfo(TypedDict):
+    formula: str
+    property: dict[str, Any]
+    isAtom: bool
+    createdCount: NotRequired[int]
+
+
+def getMolecule(filename: str) -> MoleculeInfo:
     molecule = Cml.Molecule()
     molecule.parse(filename)
     formula = filename.split("/")[-1].split(".cml")[0]
@@ -30,15 +41,15 @@ with open("data/reactions/tag_descriptions.json", "r") as f:
     tag_descriptions = json.load(f)
 
 @router.get("/state")
-async def get_game_state():
+async def get_game_state() -> dict[str, str]:
     return {"state": "running"}
 
 @router.get("/reactions/tags")
-async def getTags():
+async def getTags() -> dict[str, str]:
     return tag_descriptions
 
 @router.get("/achievements")
-async def getAchievements(request: Request):
+async def getAchievements(request: Request) -> list[dict[str, Any]]:
     levels = request.app.state.server.levels
     if levels is None:
         return []
@@ -47,7 +58,7 @@ async def getAchievements(request: Request):
     player_achievements = levels.persistence.get_player_achievements(player_id)
     
     # helper for fast lookup
-    unlocked_map = {} # key -> {level: unlocked_at}
+    unlocked_map: dict[str, dict[str, Any]] = {} # key -> {level: unlocked_at}
     for entry in player_achievements:
         if entry["key"] not in unlocked_map:
             unlocked_map[entry["key"]] = {}
@@ -55,7 +66,7 @@ async def getAchievements(request: Request):
 
     manager = AchievementManager()
     stats = manager.get_player_stats(player_id, levels.persistence)
-    response = []
+    response: list[dict[str, Any]] = []
     
     for ach in manager.achievements:
         # Determine highest unlocked level
@@ -81,7 +92,7 @@ async def getAchievements(request: Request):
     return response
 
 @router.get("/achievements/image/{key}/{level}")
-async def getAchievementImage(key, level):
+async def getAchievementImage(key: str, level: str) -> FileResponse:
     path = f"img/achievements/{key}_{level}.png"
     if not os.path.exists(path):
         # Fallback to generic badge
@@ -93,14 +104,14 @@ async def getAchievementImage(key, level):
     return FileResponse(path)
 
 @router.get("/molecule")
-async def getMolecules(request: Request):
+async def getMolecules(request: Request) -> list[MoleculeInfo]:
     levels = request.app.state.server.levels
     if levels is None or levels.player_id is None:
         return []
     seen_formulas = levels.persistence.get_seen_molecules(levels.player_id)
     created_counts = levels.persistence.get_created_molecules(levels.player_id)
     
-    response = []
+    response: list[MoleculeInfo] = []
     for molecule in moleculeList:
         if not molecule["isAtom"] and molecule["formula"] in seen_formulas:
             mol_data = molecule.copy()
@@ -109,7 +120,7 @@ async def getMolecules(request: Request):
     return response
 
 @router.get("/reaction")
-async def getReactions(request: Request):
+async def getReactions(request: Request) -> list[dict[str, Any]]:
     levels = request.app.state.server.levels
     if levels.player_id is None:
         return []
@@ -142,7 +153,7 @@ async def getReactions(request: Request):
     return response
 
 @router.get("/statistics")
-async def getStatistics(request: Request):
+async def getStatistics(request: Request) -> dict[str, int]:
     levels = request.app.state.server.levels
     if levels.player_id is None:
         return {}
@@ -171,33 +182,33 @@ async def getStatistics(request: Request):
     }
 
 @router.get("/molecule/all")
-async def getAllMolecules():
+async def getAllMolecules() -> list[MoleculeInfo]:
     return [molecule for molecule in moleculeList if not molecule["isAtom"]]
 
 @router.get("/molecule/{formula}/image")
-async def getMoleculeImage(formula):
+async def getMoleculeImage(formula: str) -> FileResponse:
     state_formula = formula+"(aq)"
     subprocess.run(["python", "cml2img.py", "-f", state_formula, "-o", "preview.png"])
     return FileResponse("preview.png")
 
 @router.get("/molecule/{formula}/skeletal")
-async def getMoleculeSkeletal(formula):
+async def getMoleculeSkeletal(formula: str) -> FileResponse:
     validateFormula(formula)
     path = "img/skeletal/molecule/" + formula + ".png"
     return FileResponse(path)
 
 @router.get("/atom")
-async def getAtoms():
+async def getAtoms() -> list[MoleculeInfo]:
     return [molecule for molecule in moleculeList if molecule["isAtom"]]
 
 @router.get("/atom/{symbol}/image")
-async def getAtomImage(symbol):
+async def getAtomImage(symbol: str) -> FileResponse:
     symbol = stripAtomSymbol(symbol.lower())
     path = "img/atom-" + symbol + ".png"
     return FileResponse(path)
 
 @router.get("/level/current")
-async def getCurrentLevel(request: Request):
+async def getCurrentLevel(request: Request) -> dict[str, Any]:
     game = request.app.state.server.game
     current_level = game.level
     if current_level is None:
@@ -212,29 +223,29 @@ async def getCurrentLevel(request: Request):
             }
 
 @router.post("/level/hint_used")
-async def levelHintUsed(request: Request):
+async def levelHintUsed(request: Request) -> dict[str, Any]:
     game = request.app.state.server.game
     game.add_penalty(30)
     return {"status": "ok", "penalty": game.penalty}
 
 @router.get("/reaction/image/{filename}")
 
-async def getReactionImage(filename):
+async def getReactionImage(filename: str) -> FileResponse:
     path = Skeletal.REACTION_DIR + filename
     return FileResponse(path)
 
-def validateFormula(formula):
+def validateFormula(formula: str) -> None:
     if not formula in known_molecules:
         raise HTTPException(status_code=404, detail="Formula not found")
 
-def stripAtomSymbol(symbol):
+def stripAtomSymbol(symbol: str) -> str:
     return ''.join(filter(str.isalpha, symbol))[:3]
 
-def reactingElements(elements):
+def reactingElements(elements: list[Any]) -> list[str]:
     return [element.formula for element in elements]
 
-def reactionHint(reactions):
-    response = []
+def reactionHint(reactions: list[Any]) -> list[dict[str, Any]]:
+    response: list[dict[str, Any]] = []
     for reaction in reactions:
         description = reaction.description
         tags = reaction.tags
@@ -251,7 +262,7 @@ def reactionHint(reactions):
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response
 
-def handleIons(reaction):
+def handleIons(reaction: Any) -> tuple[str, list[str]]:
     reactant = reaction.reactants[0]
     ionStrings = " and ".join(list_without_state(reaction.products))
     description = f"{reactant} dissociates in an aqueous solution to form the ions {ionStrings}."
@@ -261,5 +272,3 @@ def handleIons(reaction):
         description += "This reaction releases a proton (H⁺) in an aqueous solution, forming a conjugate base"
     tags.append("Ionization")
     return description,tags
-
-
