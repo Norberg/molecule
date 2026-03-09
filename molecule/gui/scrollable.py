@@ -1,3 +1,4 @@
+from typing import Any
 from pyglet.shapes import Rectangle
 from molecule import RenderingOrder
 from .base import Widget, draw_nine_patch
@@ -5,13 +6,14 @@ from .scissor_group import ScissorGroup
 from .theme import theme
 
 class Scrollable(Widget):
-    def __init__(self, content, x=0, y=0, width=200, height=100,
-                 batch=None, group=None, height_limit=None):
+    def __init__(self, content: Any, x: Any=0, y: Any=0, width: Any=200, height: Any=100,
+                 batch: Any=None, group: Any=None, height_limit: Any=None) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.content = content
         self.height_limit = height_limit or height
         self.scroll_offset = 0
         self.scrollbar_width = 16
+        self.scissor_group: ScissorGroup | None
         if self.batch:
             self.scissor_group = ScissorGroup(x, y, width, height, parent=group)
         else:
@@ -20,7 +22,7 @@ class Scrollable(Widget):
         self.scrollbar_bg_items = []
         self.scrollbar_handle_items = []
 
-    def _setup_scrolling(self):
+    def _setup_scrolling(self) -> None:
         if self.content:
             if self.scissor_group:
                 self.content.group = self.scissor_group
@@ -32,7 +34,7 @@ class Scrollable(Widget):
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
             self.content.width = self.width - self.scrollbar_width
 
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         content_height = self.content.height if self.content else 0
@@ -49,26 +51,26 @@ class Scrollable(Widget):
         self._update_positions()
         return True
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         if self.content and hasattr(self.content, 'on_mouse_press'):
             return self.content.on_mouse_press(x, y, button, modifiers)
         return False
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if self.content and hasattr(self.content, 'on_mouse_release'):
             return self.content.on_mouse_release(x, y, button, modifiers)
         return False
 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+    def on_mouse_drag(self, x: Any, y: Any, dx: Any, dy: Any, buttons: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         if self.content and hasattr(self.content, 'on_mouse_drag'):
             return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         return False
 
-    def _create_scrollbar_part(self, part_name, x, y, width, height):
+    def _create_scrollbar_part(self, part_name: Any, x: Any, y: Any, width: Any, height: Any) -> Any:
         if not self.batch:
             return []
         items = []
@@ -89,7 +91,7 @@ class Scrollable(Widget):
         rect = Rectangle(x, y, width, height, color=color, batch=self.batch, group=self.group)
         return [rect]
 
-    def _update_positions(self):
+    def _update_positions(self) -> None:
         if self.content:
             self.content.width = self.width - self.scrollbar_width
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
@@ -123,15 +125,15 @@ class Scrollable(Widget):
                     self.x + self.width - self.scrollbar_width, handle_y,
                     self.scrollbar_width, handle_height)
 
-    def layout(self):
+    def layout(self) -> None:
         self._update_positions()
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         self.x += dx
         self.y += dy
         self._update_positions()
 
-    def delete(self):
+    def delete(self) -> None:
         if self.content:
             self.content.delete()
         for item in self.scrollbar_bg_items:

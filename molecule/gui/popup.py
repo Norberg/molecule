@@ -1,3 +1,4 @@
+from typing import Any
 from molecule import RenderingOrder
 from .base import Widget
 from .frame import Frame
@@ -5,7 +6,7 @@ from .document import Document
 from .button import Button
 
 class PopupMessage(Widget):
-    def __init__(self, text, window, batch, group=None, theme_obj=None, on_escape=None):
+    def __init__(self, text: Any, window: Any, batch: Any, group: Any=None, theme_obj: Any=None, on_escape: Any=None) -> None:
         self.window = window
         window_width, window_height = window.get_size()
         width = min(400, window_width - 100)
@@ -16,6 +17,9 @@ class PopupMessage(Widget):
         self.text = text
         self.theme_obj = theme_obj
         self.on_escape = on_escape
+        self.frame: Frame | None = None
+        self.document: Document | None = None
+        self.close_button: Button | None = None
         self._create_popup()
         self.window.push_handlers(
             on_mouse_press=self.on_mouse_press,
@@ -23,7 +27,7 @@ class PopupMessage(Widget):
         )
         self._mouse_press_within = False
 
-    def _create_popup(self):
+    def _create_popup(self) -> None:
         if self.batch:
             self.frame = Frame(self.x, self.y, self.width, self.height,
                               self.batch, RenderingOrder.gui_background,
@@ -38,7 +42,7 @@ class PopupMessage(Widget):
             self.document = Document(self.text, self.x + margin_x, self.y + self.height - top_margin - doc_height,
                                    self.width - 2*margin_x, doc_height,
                                    self.batch, RenderingOrder.gui)
-            def ok_popup(button):
+            def ok_popup(button: Any) -> None:
                 if self.on_escape:
                     try:
                         self.on_escape()
@@ -54,7 +58,7 @@ class PopupMessage(Widget):
             self.document = None
             self.close_button = None
 
-    def delete(self):
+    def delete(self) -> None:
         if self.frame:
             self.frame.delete()
             self.frame = None
@@ -73,12 +77,12 @@ class PopupMessage(Widget):
             pass
         super().delete()
 
-    def _inside_button(self, x, y):
+    def _inside_button(self, x: Any, y: Any) -> Any:
         return (self.close_button and
                 self.close_button.x <= x <= self.close_button.x + self.close_button.width and
                 self.close_button.y <= y <= self.close_button.y + self.close_button.height)
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if self._inside_button(x, y):
             if hasattr(self.close_button, 'on_mouse_press'):
                 self.close_button.on_mouse_press(x, y, button, modifiers)
@@ -88,7 +92,7 @@ class PopupMessage(Widget):
             return True
         return False
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if self._mouse_press_within and self._inside_button(x, y):
             if hasattr(self.close_button, 'on_mouse_release'):
                 self.close_button.on_mouse_release(x, y, button, modifiers)

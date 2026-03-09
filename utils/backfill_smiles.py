@@ -1,3 +1,4 @@
+from typing import Any
 import argparse
 import subprocess
 
@@ -18,12 +19,12 @@ from libreact.Reaction import verify as Reaction_verify
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
 
-def fetch_smiles(formula):
+def fetch_smiles(formula: Any) -> Any:
     ret = subprocess.Popen(["obabel", "-icml", f"data/molecule/{formula}.cml", "-osmi"], stdout=subprocess.PIPE)
     return ret.stdout.read().decode().strip()
 
 
-def main():
+def main() -> None:
     # for all files in data/molecule
     for filename in os.listdir("data/molecule"):
         if filename.endswith(".cml"):

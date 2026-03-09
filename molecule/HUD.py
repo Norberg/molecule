@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from collections.abc import Callable
 import os
 import time
 
@@ -31,7 +32,14 @@ class HUD:
     HEIGHT = 108 # 5 lines of text
     VERTICAL_HUD_WIDTH = 180
 
-    def __init__(self, window, batch, space, level, create_elements_callback):
+    def __init__(
+        self,
+        window: object,
+        batch: object,
+        space: object,
+        level: object,
+        create_elements_callback: Callable[[list[str], tuple[float, float] | None], None],
+    ) -> None:
         height = self.HEIGHT
         
         VERTICAL_HUD_WIDTH = self.VERTICAL_HUD_WIDTH
@@ -46,21 +54,21 @@ class HUD:
         vertical_height = window.height - (GUI_PADDING * 2)
         self.vertical = VerticalHUD(window, batch, space, level, vertical_height, VERTICAL_HUD_WIDTH, create_elements_callback)
 
-    def update_info_text(self, formula):
+    def update_info_text(self, formula: str) -> None:
         self.horizontal.update_info_text(formula)
 
-    def get_effects(self):
+    def get_effects(self) -> list[object]:
         l = list()
         l.extend(self.horizontal.get_effects())
         l.extend(self.vertical.get_effects())
         return l
 
-    def delete(self):
+    def delete(self) -> None:
         self.horizontal.delete()
         self.vertical.delete()
 
 class HorizontalHUD:
-    def __init__(self, window, batch, space, level, height, width):
+    def __init__(self, window: object, batch: object, space: object, level: object, height: int, width: int) -> None:
         self.window = window
         self.batch = batch
         self.space = space
@@ -127,17 +135,17 @@ class HorizontalHUD:
         self.init_effects(space, level)
         self.manager.update_position()
 
-    def init_effects(self, space, level):
+    def init_effects(self, space: object, level: object) -> None:
         pos = (self.left_container.x + self.left_container.width / 2,
                self.left_container.y + self.left_container.height / 2 - 50)
         self.victory = Effects.VictoryInventory(space, pos, "Victory Inventory",
                 self.left_container.width, self.left_container.height + 100,
                 level.victory_condition)
 
-    def get_effects(self):
+    def get_effects(self) -> list[object]:
         return [self.victory]
 
-    def update_info_text(self, formula):
+    def update_info_text(self, formula: str) -> None:
         cml = CachedCml.getMolecule(formula)
         info_text = "<b>%s - %s</b><br> %s" % (
                 cml.property.get("Name", "Undefined"),
@@ -150,25 +158,34 @@ class HorizontalHUD:
             self.info_scroll.scroll_offset = 0
             self.info_scroll.layout()
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         self.tick += 1
         if self.tick > 30:
             return
         self.tick = 0
         self.update_progress()
 
-    def update_progress(self):
+    def update_progress(self) -> None:
         progress_text = self.victory.progress_text()
         formatted_text = "Progress: " + progress_text
         self.progress_doc.set_text(Gui.find_and_convert_formulas(formatted_text))
 
-    def delete(self):
+    def delete(self) -> None:
         self.window.remove_handlers(on_draw=self.on_draw)
         self.manager.delete()
 
 
 class VerticalHUD:
-    def __init__(self, window, batch, space, level, height, width, create_elements_callback):
+    def __init__(
+        self,
+        window: object,
+        batch: object,
+        space: object,
+        level: object,
+        height: int,
+        width: int,
+        create_elements_callback: Callable[[list[str], tuple[float, float] | None], None],
+    ) -> None:
         self.window = window
         self.batch = batch
         self.space = space
@@ -213,17 +230,17 @@ FPS: 00.00 FPS'''
         self.frame_count = 0
         self.fps = 0.0
 
-    def init_effects(self, space, level):
+    def init_effects(self, space: object, level: object) -> None:
         pos = (self.inventory_frame.x + self.inventory_frame.width / 2,
                self.inventory_frame.y + self.inventory_frame.height / 2 - 400)
         self.inventory_effect = Effects.Inventory(space, pos, "Inventory",
                 self.inventory_frame.width, self.inventory_frame.height + 800,
                 level.inventory, gui_container=self.inventory_container, create_element_callback=self.create_element_callback, batch=self.batch)
 
-    def get_effects(self):
+    def get_effects(self) -> list[object]:
         return [self.inventory_effect]
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         self.frame_count += 1
         current_time = time.time()
         if current_time - self.last_fps_time >= 0.2: # Update every 0.2s
@@ -232,7 +249,7 @@ FPS: 00.00 FPS'''
             self.last_fps_time = current_time
             self.update_status()
 
-    def update_status(self):
+    def update_status(self) -> None:
         level_time = self.window.level.get_time()
         points = self.window.level.get_points()
         status_text = '''Time: %d sec
@@ -240,7 +257,6 @@ Points: %d points
 FPS: %.2f FPS''' % (level_time, points, self.fps)
         self.status_doc.set_text(status_text)
 
-    def delete(self):
+    def delete(self) -> None:
         self.window.remove_handlers(on_draw=self.on_draw)
         self.manager.delete()
-

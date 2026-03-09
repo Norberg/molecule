@@ -39,9 +39,17 @@ BOND_LENGTH_FACTOR = 1.4
 ATOM_SPACE = SPRITE_SIZE / 1.5
 # Cooldown (seconds) before a newly created molecule is allowed to react.
 REACTION_COOLDOWN = 1.0
+Vec2 = tuple[float, float]
 
 class Molecule:
-    def __init__(self, formula_with_state, space, batch, pos=None, render_only=False):
+    def __init__(
+        self,
+        formula_with_state: str,
+        space: object,
+        batch: object,
+        pos: Vec2 | None = None,
+        render_only: bool = False,
+    ) -> None:
         self.space = space
         self.batch = batch
         self.creation_time = time.time()
@@ -60,33 +68,33 @@ class Molecule:
         self.pos = pos
         self.create_atoms()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Molecule<%s>" % (self.state_formula)
 
     @property
-    def charge(self):
+    def charge(self) -> int:
         return sum(atom.charge for atom in self.atoms.values())
 
     @property
-    def enthalpy(self):
+    def enthalpy(self) -> float | None:
         """Return enthalpy(aka H) for current state"""
         return self.state.enthalpy
 
     @property
-    def entropy(self):
+    def entropy(self) -> float | None:
         """Return entropy(aka S) for current state"""
         return self.state.entropy
 
     @property
-    def state(self):
+    def state(self) -> Cml.State:
         """Return current state"""
         return self.current_state
 
     @property
-    def state_formula(self):
+    def state_formula(self) -> str:
         return self.formula + "(%s)" % self.current_state.short
 
-    def try_change_state(self, new_state):
+    def try_change_state(self, new_state: str) -> bool:
         """new_state: shortform of wanted state"""
         if self.state.short == new_state:
             return False
@@ -98,11 +106,12 @@ class Molecule:
             print(f"{self.formula} changed state to {new_state}")
             return True
 
-    def to_aqueous(self):
+    def to_aqueous(self) -> list[str] | None:
         if self.try_change_state("aq"):
             return self.state.ions
+        return None
 
-    def create_atoms(self):
+    def create_atoms(self) -> None:
         self.atoms = dict()
         for atom in self.cml.atoms.values():
             x, y = self.pos
@@ -112,7 +121,7 @@ class Molecule:
             self.atoms[atom.id] = new
         self.create_bonds()
 
-    def create_bonds(self):
+    def create_bonds(self) -> None:
         self.bonds = list()
         for cml_bond in self.cml.bonds:
             atomA = self.atoms[cml_bond.atomA.id]
@@ -120,7 +129,7 @@ class Molecule:
             bond = Bond(cml_bond, atomA, atomB, self.space, self.batch)
             self.bonds.append(bond)
 
-    def set_dragging(self, value):
+    def set_dragging(self, value: bool) -> None:
         for atom in self.atoms.values():
             
             if value:
@@ -128,17 +137,17 @@ class Molecule:
             else:
                 atom.shape.filter = CollisionTypes.ELEMENT_FILTER
 
-    def can_react(self):
+    def can_react(self) -> bool:
         return self.creation_time + REACTION_COOLDOWN < time.time() and not self.is_deleted()
 
-    def update(self):
+    def update(self) -> None:
         for atom in self.atoms.values():
             atom.update()
 
         for bond in self.bonds:
             bond.update()
 
-    def delete(self):
+    def delete(self) -> None:
         for bond in self.bonds:
             bond.delete()
         self.bonds = list()
@@ -147,12 +156,12 @@ class Molecule:
             atom.delete()
         self.atoms = dict()
     
-    def is_deleted(self):
+    def is_deleted(self) -> bool:
         return len(self.atoms) == 0
 
 
 class Bond:
-    def __init__(self, cml_bond, atomA, atomB, space, batch):
+    def __init__(self, cml_bond: Cml.Bond, atomA: "Atom", atomB: "Atom", space: object, batch: object) -> None:
         self.joints = list()
         self.vertex = None
         self.cml_bond = cml_bond
@@ -180,13 +189,13 @@ class Bond:
             self.space.add(groove_joint_a)
             self.space.add(groove_joint_b)
 
-    def create_groove_joint(self, bodyA, bodyB):
+    def create_groove_joint(self, bodyA: "Atom", bodyB: "Atom") -> object:
         relative_pos = bodyB.body.position - bodyA.body.position
         joint = pymunk.GrooveJoint(bodyA.body, bodyB.body, (0,0), relative_pos*2, (0,0))
         joint.max_force = 1.5 * 1500000
         return joint
 
-    def get_bond_lenght(self, bond):
+    def get_bond_lenght(self, bond: Cml.Bond) -> float:
         rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
         rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
         bond_lenght = (rA + rB) * SPRITE_RADIUS * scaleFactor()
@@ -194,7 +203,7 @@ class Bond:
             bond_lenght *= BOND_LENGTH_FACTOR
         return bond_lenght
 
-    def create_parallell_lines(self, pv1, pv2, nr):
+    def create_parallell_lines(self, pv1: Vec2d, pv2: Vec2d, nr: int) -> tuple[float, ...]:
         line = (pv1.x, pv1.y, pv2.x, pv2.y)
         if nr == 1:
             return line
@@ -211,7 +220,7 @@ class Bond:
         raise Exception("Unsupported nr of lines",nr)
 
 
-    def create_parallell_factor(self, pv1, pv2, k):
+    def create_parallell_factor(self, pv1: Vec2d, pv2: Vec2d, k: float) -> tuple[float, float]:
         if pv2.x - pv1.x != 0.0:
             v = math.atan((pv2.y-pv1.y)/(pv2.x-pv1.x))
         else:
@@ -220,7 +229,7 @@ class Bond:
         k_y = k * -math.cos(v)
         return k_x, k_y
 
-    def create_vertex(self):
+    def create_vertex(self) -> list[shapes.Line]:
         pv1 = self.joints[0].a.position
         pv2 = self.joints[0].b.position
         bonds = max(1, self.cml_bond.bonds)
@@ -234,7 +243,7 @@ class Bond:
             lines.append(shapes.Line(x1, y1, x2, y2, thickness=width, color=color, batch=self.batch, group=group))
         return lines
 
-    def update(self):
+    def update(self) -> None:
         if self.vertex:
             pv1 = self.joints[0].a.position
             pv2 = self.joints[0].b.position
@@ -248,7 +257,7 @@ class Bond:
                     ln.x2 = x2
                     ln.y2 = y2
 
-    def delete(self):
+    def delete(self) -> None:
         for joint in self.joints:
             self.space.remove(joint)
         self.joints = list()
@@ -258,7 +267,7 @@ class Bond:
         self.vertex = []
 
 class Atom(pyglet.sprite.Sprite):
-    def __init__(self, symbol, charge, space, batch, molecule, pos):
+    def __init__(self, symbol: str, charge: int, space: object, batch: object, molecule: Molecule, pos: Vec2) -> None:
         img = pyglet_util.load_image("atom-" + symbol.lower() + ".png")
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
@@ -274,7 +283,7 @@ class Atom(pyglet.sprite.Sprite):
         self.init_chipmunk()
         self.move(pos)
 
-    def init_chipmunk(self):
+    def init_chipmunk(self) -> None:
         weight = self.cml.property["Weight"]
         radius = self.scale * SPRITE_RADIUS
         body = pymunk.Body(weight,moment = pymunk.moment_for_circle(weight, 0, radius))
@@ -291,7 +300,7 @@ class Atom(pyglet.sprite.Sprite):
         self.body = body
         self.shape = shape
 
-    def create_force_vector(self):
+    def create_force_vector(self) -> Vec2d:
         x = random.randrange(-10, 10)/10.0
         y = random.randrange(-10, 10)/10.0
         vec = Vec2d(x,y)
@@ -299,10 +308,10 @@ class Atom(pyglet.sprite.Sprite):
         return force * vec
 
     @property
-    def affected_by_gravity(self):
+    def affected_by_gravity(self) -> bool:
         return self.molecule.current_state.short == "s"
 
-    def create_electric_charge_sprite(self, charge, batch):
+    def create_electric_charge_sprite(self, charge: int, batch: object) -> None:
         self.electric_charge_sprite = None
         if charge == 0:
             return
@@ -316,7 +325,7 @@ class Atom(pyglet.sprite.Sprite):
         self.electric_charge_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
         self.electric_charge_sprite.scale = self.scale
 
-    def create_state_sprite(self, batch):
+    def create_state_sprite(self, batch: object) -> None:
         self.state_sprite = None
         if self.molecule.current_state.short != "aq":
             return
@@ -326,14 +335,14 @@ class Atom(pyglet.sprite.Sprite):
         self.state_sprite = pyglet.sprite.Sprite(e, batch=batch, group=group)
         self.state_sprite.scale = self.scale
 
-    def get_only_atom_symbol(self, symbol):
+    def get_only_atom_symbol(self, symbol: str) -> str:
         """ returns the atom symbol without any electric charge """
         return symbol.split("-")[0].split("+")[0]
 
-    def move(self, pos):
+    def move(self, pos: Vec2) -> None:
         self.body.position = pos
 
-    def update(self):
+    def update(self) -> None:
         x, y = self.body.position
         if math.isnan(x) or math.isnan(y):
                 print(f"Broken position with NaN! for {self.symbol} {self.body.position}")
@@ -350,22 +359,22 @@ class Atom(pyglet.sprite.Sprite):
         else:
             self.body.velocity_func = limit_velocity
 
-    def delete(self):
+    def delete(self) -> None:
         self.space.remove(self.shape)
         self.space.remove(self.body)
         if self.electric_charge_sprite is not None:
             self.electric_charge_sprite.delete()
         super(Atom, self).delete()
 
-def scaleFactor():
+def scaleFactor() -> float:
     return DEFAULT_SIZE/SPRITE_SIZE * Config.current.zoom
 
 
-def gravity_func(body, gravity, damping, dt):
+def gravity_func(body: object, gravity: tuple[float, float], damping: float, dt: float) -> None:
     gravity = (0.0,-920.0)
     return limit_velocity(body, gravity, damping, dt)
     
-def limit_velocity(body, gravity, damping, dt):
+def limit_velocity(body: object, gravity: tuple[float, float], damping: float, dt: float) -> None:
     max_velocity = 1000
     pymunk.Body.update_velocity(body, gravity, damping, dt)
     l = body.velocity.length

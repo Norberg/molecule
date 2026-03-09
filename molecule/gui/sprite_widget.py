@@ -1,8 +1,9 @@
+from typing import Any
 from .base import Widget
 import pyglet
 
 class SpriteWidget(Widget):
-    def __init__(self, image, x=0, y=0, width=None, height=None, batch=None, group=None):
+    def __init__(self, image: Any, x: Any=0, y: Any=0, width: Any=None, height: Any=None, batch: Any=None, group: Any=None) -> None:
         w = width or image.width
         h = height or image.height
         super().__init__(x, y, w, h, batch, group)
@@ -17,15 +18,15 @@ class SpriteWidget(Widget):
         elif height:
             self.sprite.scale = height / image.height
 
-    def layout(self):
+    def layout(self) -> None:
         self.sprite.x = self.x
         self.sprite.y = self.y
 
-    def delete(self):
+    def delete(self) -> None:
         self.sprite.delete()
         super().delete()
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         super().shift(dx, dy)
         self.sprite.x += dx
         self.sprite.y += dy

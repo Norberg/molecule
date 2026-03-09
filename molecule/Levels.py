@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from collections.abc import Iterator
 import glob
 import math
 import time
@@ -35,14 +36,17 @@ from molecule.Persistence import Persistence
 from molecule.Achievements import AchievementManager
 from libcml import Cml
 
+Vec2 = tuple[float, float]
+
+
 class Levels:
-    def __init__(self, path, start_level = 1, window = None):
+    def __init__(self, path: str, start_level: int | None = 1, window: object | None = None) -> None:
         if start_level is None:
             start_level = 1
         self.path = path
         self.window = window
         self.init_levels()
-        self.current_level = None
+        self.current_level: int | None = None
         for i, level in enumerate(self.levels):
             levelIndex = int(level.strip("data/levels/").split("-")[0])
             if levelIndex == start_level:
@@ -54,25 +58,32 @@ class Levels:
             print("Starting on level %s" % self.levels[self.current_level])
         self.persistence = Persistence()
         
-        self.player_id = None
+        self.player_id: int | None = None
         if Config.current.player:
             self.player_id = self.persistence.create_player(Config.current.player)
         
         self.load_progress()
         self.achievement_manager = AchievementManager()
 
-    def set_player(self, name):
+    def set_player(self, name: str) -> None:
         Config.current.player = name
         self.player_id = self.persistence.create_player(name)
         self.load_progress()
 
-    def load_progress(self):
+    def load_progress(self) -> None:
         self.completed_levels = self.persistence.get_completed_levels(self.player_id)
 
-    def save_progress(self):
+    def save_progress(self) -> None:
         pass # No longer needed for SQLite
 
-    def mark_completed(self, level_path, score, reactions, molecules_seen, molecules_created):
+    def mark_completed(
+        self,
+        level_path: str,
+        score: float,
+        reactions: dict[str, int] | None,
+        molecules_seen: set[str] | None,
+        molecules_created: dict[str, int] | None,
+    ) -> None:
         if self.player_id is not None:
             self.persistence.mark_completed(self.player_id, level_path, score)
             if reactions or molecules_seen or molecules_created:
@@ -88,10 +99,10 @@ class Levels:
 
             self.load_progress()
 
-    def is_completed(self, level_path):
+    def is_completed(self, level_path: str) -> bool:
         return level_path in self.completed_levels
 
-    def init_levels(self):
+    def init_levels(self) -> None:
         # Only include real level definition files (.cml)
         pattern = self.path + "/*.cml"
         filenames = glob.glob(pattern)
@@ -100,7 +111,9 @@ class Levels:
         self.levels.sort()
 
 
-    def get_current_level(self):
+    def get_current_level(self) -> "Level":
+        if self.current_level is None:
+            raise Exception("No current level selected")
         path = self.levels[self.current_level]
         cml = Cml.Level()
         cml.parse(path)
@@ -109,7 +122,7 @@ class Levels:
 
 
 class Level:
-    def __init__(self, cml, window, path):
+    def __init__(self, cml: Cml.Level, window: object, path: str) -> None:
         self.cml = cml
         self.path = path
         self.finished = False
@@ -117,14 +130,14 @@ class Level:
         self.batch = pyglet.graphics.Batch()
         self.start_time = time.time()
         self.points = 0
-        self.reaction_log = []
+        self.reaction_log: list[object] = []
 
 
-        self.molecules_seen = set() # molecure_formula
-        self.molecules_created = {} # molecule_formula -> count
-        self.emitters = []
-        self.victory_popup = None
-        self.hud = None
+        self.molecules_seen: set[str] = set() # molecure_formula
+        self.molecules_created: dict[str, int] = {} # molecule_formula -> count
+        self.emitters: list[object] = []
+        self.victory_popup: object | None = None
+        self.hud: HUD.HUD | None = None
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
         self.init_pyglet()
@@ -132,7 +145,7 @@ class Level:
         self.init_gui()
         self.init_effects()
 
-    def init_chipmunk(self):
+    def init_chipmunk(self) -> None:
         self.space = pymunk.Space()
         self.space.idle_speed_threshold = 0.5
         thickness = 1000
@@ -166,7 +179,7 @@ class Level:
             post_solve=self.element_collision,
         )
         # Dwell-time tracking for element/effect collisions (molecule_id,effect_id)->start_time
-        self._effect_collision_times = {}
+        self._effect_collision_times: dict[tuple[int, int], float] = {}
         self.space.on_collision(
             CollisionTypes.ELEMENT,
             CollisionTypes.EFFECT,
@@ -175,14 +188,14 @@ class Level:
             separate=self.effect_reaction_separate,
         )
 
-    def init_pyglet(self):
+    def init_pyglet(self) -> None:
         self.window.push_handlers(self)
 
-    def init_elements(self):
+    def init_elements(self) -> None:
         self.elements = Universe.create_elements(self.space, self.cml.molecules,
                                           self.batch)
 
-    def init_effects(self):
+    def init_effects(self) -> None:
         self.areas = Effects.create_effects(
             self.space,
             self.batch,
@@ -192,22 +205,22 @@ class Level:
         )
         self.areas.extend(self.hud.get_effects())
 
-    def consume_molecule(self, molecule):
+    def consume_molecule(self, molecule: object) -> bool:
         """Callback from effects when a molecule is consumed, returnes true if used for victory condition"""
         for area in self.areas:
             if isinstance(area, Effects.VictoryInventory):
                 return area.put_element(molecule)
         raise Exception("No VictoryInventory area to consume molecule into")
 
-    def init_gui(self):
+    def init_gui(self) -> None:
         self.hud = HUD.HUD(self.window, self.batch, self.space, self.cml, self.create_elements)
 
-    def create_elements(self, elements, pos = None):
+    def create_elements(self, elements: list[str], pos: Vec2 | None = None) -> None:
         self.elements.extend(Universe.create_elements(self.space, elements,
                                           self.batch, pos))
 
-    def get_colliding_molecules(self, collisions):
-        molecules = list()
+    def get_colliding_molecules(self, collisions: list[object]) -> list[object]:
+        molecules: list[object] = []
         for collision in collisions:
             #TODO: Should be possible to filter collision type earlier
             if collision.collision_type == CollisionTypes.ELEMENT:
@@ -218,7 +231,7 @@ class Level:
                     molecules.append(molecule)
         return molecules
 
-    def is_molecule_part_of_reactants(self, molecule, reactants):
+    def is_molecule_part_of_reactants(self, molecule: object, reactants: list[str]) -> bool:
         """
         check if the molecule is part of the reactants,
         and if it is remove itself from the list of reactants
@@ -226,23 +239,24 @@ class Level:
         if molecule.state_formula in reactants:
             reactants.remove(molecule.state_formula)
             return True
+        return False
 
-    def get_molecules_in_reaction(self, collisions, reaction):
+    def get_molecules_in_reaction(self, collisions: list[object], reaction: object) -> list[object]:
         """ return all molecules included in the reaction """
         reactants = list(reaction.reactants)
-        molecules = list()
+        molecules: list[object] = []
         collidingMolecules = self.get_colliding_molecules(collisions)
         for molecule in collidingMolecules:
             if self.is_molecule_part_of_reactants(molecule, reactants):
                 molecules.append(molecule)
         return molecules
 
-    def react(self, collisions, reacting_areas):
+    def react(self, collisions: list[object], reacting_areas: list[object]) -> object | None:
         collidingMolecules = self.get_colliding_molecules(collisions)
         reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
         return Universe.universe.react(reactingForumlas, reacting_areas)
 
-    def perform_reaction(self, reaction, collisions, position):
+    def perform_reaction(self, reaction: object, collisions: list[object], position: Vec2) -> None:
         if len(collisions) == 1:
             print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
             reactingMolecules = [collisions[0].molecule]
@@ -282,17 +296,17 @@ class Level:
                 elif Config.current.DEBUG:
                     print(f"Emitter suppressed (no reaction autospawn): {emitter_name} for {mol.state_formula}")
 
-    def add_to_reaction_log(self, reaction):
+    def add_to_reaction_log(self, reaction: object) -> None:
         self.points += 1
         self.reaction_log.append(reaction)
 
-    def element_collision(self, arbiter, space, data):
+    def element_collision(self, arbiter: object, space: object, data: object) -> None:
         """ Called if two elements collides"""
         a, b = arbiter.shapes
         pos = a.body.position
         reacting_areas = list(self.get_affecting_areas(pos))
 
-        def perform_query(distance):
+        def perform_query(distance: float) -> tuple[list[object], object | None]:
             query = space.point_query(pos, distance, shape_filter=pymunk.ShapeFilter(categories=CollisionTypes.ELEMENT))
             colls = [point.shape for point in query]
             reaction = self.react(colls, reacting_areas)
@@ -312,7 +326,7 @@ class Level:
             if reaction is not None and len(reaction.reactants) >= bigReactionThreshold:
                 self.perform_reaction(reaction, collisions, pos)
 
-    def effect_reaction(self, arbiter, space, data):
+    def effect_reaction(self, arbiter: object, space: object, data: object) -> bool:
         """Called when an element touches an effect; only react after 1s continuous contact."""
         a, b = arbiter.shapes
         molecule = a.molecule
@@ -342,30 +356,30 @@ class Level:
             return False
         return True
 
-    def effect_reaction_separate(self, arbiter, space, data):
+    def effect_reaction_separate(self, arbiter: object, space: object, data: object) -> bool:
         a, b = arbiter.shapes
         molecule = a.molecule
         effect = b.effect
         self._effect_collision_times.pop((id(molecule), id(effect)), None)
         return True
 
-    def get_affecting_areas(self, position):
+    def get_affecting_areas(self, position: Vec2) -> Iterator[object]:
         """Return all areas that have a affect on reactions in the area """
         for area in self.get_effect_supporting("reaction"):
             if area.inside(position):
                 yield area
 
-    def get_time(self):
+    def get_time(self) -> float:
         return time.time() - self.start_time + self.window.penalty
 
-    def get_points(self):
+    def get_points(self) -> int:
 
         return self.points
 
-    def victory(self):
+    def victory(self) -> bool:
         return self.hud.horizontal.victory.victory()
 
-    def limit_pos_to_screen(self, x, y):
+    def limit_pos_to_screen(self, x: float, y: float) -> Vec2:
         x = max(0,x)
         y = max(0,y)
         w, h = self.window.get_size()
@@ -373,20 +387,20 @@ class Level:
         y = min(h,y)
         return x,y
 
-    def get_effect_supporting(self, support):
+    def get_effect_supporting(self, support: str) -> Iterator[object]:
         for effect in self.areas:
             if effect.supports(support):
                 yield effect
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
         self.handle_element_pressed(x, y)
-        def create_elements_cb(elements):
+        def create_elements_cb(elements: list[str]) -> None:
             self.create_elements(elements, (x,y))
         for action in self.get_effect_supporting("action"):
             if action.clicked((x,y)):
                 action.on_click(create_elements_cb)
 
-    def release_spring(self):
+    def release_spring(self) -> None:
         """Detach the mouse spring, stopping the dragged molecule in place."""
         if self.mouse_spring is not None:
             self.mouse_spring.b.velocity = (0, 0)
@@ -394,7 +408,7 @@ class Level:
             self.space.remove(self.mouse_spring)
             self.mouse_spring = None
 
-    def handle_element_pressed(self, x, y):
+    def handle_element_pressed(self, x: float, y: float) -> None:
         self.release_spring()  # cancel any in-progress drag without dropping on an effect
         self.mouse_body.position = (x, y)
         clicked = self.space.point_query_nearest((x,y), 16, shape_filter=CollisionTypes.ELEMENT_PICK_FILTER)
@@ -412,13 +426,13 @@ class Level:
         self.hud.update_info_text(shape.molecule.formula)
         self.molecules_seen.add(shape.molecule.formula)
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> None:
         self.handle_element_released(x, y, button, modifiers)
         for action in self.get_effect_supporting("action"):
             if action.is_clicked == True:
                 action.on_release()
 
-    def handle_element_released(self, x, y, button, modifiers):
+    def handle_element_released(self, x: float, y: float, button: int, modifiers: int) -> None:
         if self.mouse_spring is not None:
             molecule = self.mouse_spring.b.molecule
             self.release_spring()
@@ -427,11 +441,11 @@ class Level:
                     if effect.put_element(molecule):
                         self.delete_molecule(molecule)
 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+    def on_mouse_drag(self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int) -> None:
         x,y = self.limit_pos_to_screen(x,y)
         self.mouse_body.position = (x, y)
 
-    def on_key_press(self, symbol, modifiers):
+    def on_key_press(self, symbol: int, modifiers: int) -> None:
         if symbol == pyglet.window.key.M:
             import objgraph
             objgraph.show_growth()
@@ -449,7 +463,7 @@ class Level:
             hint = self.window.level.cml.hint
             Gui.create_popup(self.window, self.batch, hint)
 
-    def update(self):
+    def update(self) -> None:
         dt = 1/120.0
         self.space.step(dt)
 
@@ -474,7 +488,7 @@ class Level:
 
         self.update_emitters(dt)
 
-    def update_emitters(self, dt):
+    def update_emitters(self, dt: float) -> None:
         alive_emitters = []
         for emitter in self.emitters:
             if emitter.update(dt):
@@ -484,7 +498,7 @@ class Level:
         # Remove dead emitters without creating a new list
         self.emitters[:] = alive_emitters
 
-    def delete_molecule(self, molecule):
+    def delete_molecule(self, molecule: object) -> None:
         if molecule in self.elements:
             self.elements.remove(molecule)
         else:
@@ -492,7 +506,7 @@ class Level:
         molecule.delete()
 
 
-    def delete(self):
+    def delete(self) -> None:
         if self.hud:
             self.hud.delete()
         self.window.remove_handlers(self)

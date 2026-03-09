@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from collections.abc import Callable
 import os
 import re
 
@@ -30,7 +31,13 @@ NA = "<b>N<sub>A<sub><b>"
 formula_pattern = re.compile(r"([A-Z][a-z]?)(\d*)|(\+|\-)(\d*)?")
 identify_formula_pattern = re.compile(r"([A-Z][a-z]?)(\d+|[+-]\d*)")
 
-def create_folding_description(window, batch, heading, description, chapters=list()):
+def create_folding_description(
+    window: object,
+    batch: object,
+    heading: str,
+    description: str,
+    chapters: list[tuple[str, str]] | None = None,
+) -> None:
     """
         window - window
         batch - batch
@@ -45,7 +52,7 @@ def create_folding_description(window, batch, heading, description, chapters=lis
     layout.append(SectionHeader(heading, 0, 0, 300, 30, batch))
     layout.append(description_doc)
 
-    for chapter in chapters:
+    for chapter in (chapters or []):
         heading, text = chapter
         text_doc = Document(text, 0, 0, 300, 100, batch)
         container.add(item)
@@ -57,7 +64,9 @@ def create_folding_description(window, batch, heading, description, chapters=lis
     Manager(content, window=window, batch=batch, group=RenderingOrder.gui,
            anchor=ANCHOR_BOTTOM_RIGHT, is_movable=False)
 
-def create_popup(window, batch, text, on_escape=None):
+def create_popup(
+    window: object, batch: object, text: str, on_escape: Callable[..., None] | None = None
+) -> PopupMessage:
     """
         window - window
         batch - batch
@@ -68,13 +77,20 @@ def create_popup(window, batch, text, on_escape=None):
                  group=RenderingOrder.gui, on_escape=on_escape)
 
 class MoleculeButton(OneTimeButton):
-    def __init__(self, element, count, on_click=None, batch=None, group=None):
+    def __init__(
+        self,
+        element: str,
+        count: int,
+        on_click: Callable[..., None] | None = None,
+        batch: object | None = None,
+        group: object | None = None,
+    ) -> None:
         self.element = element
         self.count = count
         self.update_label()
         OneTimeButton.__init__(self, self.text, batch=batch, group=group, on_click=on_click)
 
-    def update_label(self):
+    def update_label(self) -> None:
         label_text = "%d - %s" % (self.count, formula_to_html(self.element))
         
         # CRITICAL: Always update self.text because layout() might recreate the button
@@ -96,7 +112,7 @@ class MoleculeButton(OneTimeButton):
                 anchor_x='center', anchor_y='center'
             )
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> None:
         """Handle mouse release - don't stay pressed for reusable buttons"""
         # Handle the click without setting is_pressed
         if self.pressed and self.contains_point(x, y):
@@ -115,7 +131,7 @@ class MoleculeButton(OneTimeButton):
         elif self.bg_rect is not None and hasattr(self, '_orig_color'):
             self.bg_rect.color = self._orig_color
 
-    def get_path(self):
+    def get_path(self) -> list[str]:
         path = ["molecule-button"]
         if self.is_pressed:
                 path.append('down')
@@ -123,8 +139,8 @@ class MoleculeButton(OneTimeButton):
                 path.append('up')
         return path
 
-def formula_to_html(formula):
-    def html_formatter(match):
+def formula_to_html(formula: str) -> str:
+    def html_formatter(match: re.Match[str]) -> str:
         element, count, charge_sign, charge_count = match.groups()
         if element:
             return f"{element}{f'<sub>{count}</sub>' if count else ''}"
@@ -134,9 +150,9 @@ def formula_to_html(formula):
     html_formula = formula_pattern.sub(html_formatter, formula)
     return html_formula
 
-def find_and_convert_formulas(text):
+def find_and_convert_formulas(text: str) -> str:
 
-    def replace_formula(match):
+    def replace_formula(match: re.Match[str]) -> str:
         #print(f"Match: {match.group()}")
         return formula_to_html(match.group())
     

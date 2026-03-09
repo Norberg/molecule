@@ -1,12 +1,13 @@
 
+from typing import Any
 class Achievement:
-    def __init__(self, key, name, description, thresholds):
+    def __init__(self, key: Any, name: Any, description: Any, thresholds: Any) -> None:
         self.key = key
         self.name = name
         self.description = description
         self.thresholds = thresholds  # dict: {"bronze": val, "silver": val, "gold": val}
 
-    def check(self, current_value, unlocked_levels):
+    def check(self, current_value: Any, unlocked_levels: Any) -> Any:
         new_unlocks = []
         for level, threshold in self.thresholds.items():
             if current_value >= threshold and level not in unlocked_levels:
@@ -14,7 +15,7 @@ class Achievement:
         return new_unlocks
 
 class AchievementManager:
-    def __init__(self):
+    def __init__(self) -> None:
         self.achievements = [
             Achievement("molecule_discover", "Molecule Discover", "Find unique molecules", 
                         {"bronze": 15, "silver": 30, "gold": 50}),
@@ -28,7 +29,7 @@ class AchievementManager:
                         {"bronze": 10, "silver": 20, "gold": 50}),
         ]
 
-    def get_player_stats(self, player_id, persistence):
+    def get_player_stats(self, player_id: Any, persistence: Any) -> Any:
         if player_id is None:
             return {}
 
@@ -60,7 +61,7 @@ class AchievementManager:
             "level_crusher": count_levels
         }
 
-    def check_and_unlock(self, player_id, persistence):
+    def check_and_unlock(self, player_id: Any, persistence: Any) -> Any:
         if player_id is None:
             return []
 

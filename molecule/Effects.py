@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from collections.abc import Callable
 import glob
 import random
 import time
@@ -28,11 +29,20 @@ from molecule import Gui
 from libreact import Reaction
 from libcml import Cml
 
+Vec2 = tuple[float, float]
+InventoryMap = OrderedDict[str, int]
+
 
 class Effect:
     """Effect base class, act as a sensor"""
-    def __init__(self, space = None, width = None, height = None, pos = None,
-            name = None):
+    def __init__(
+        self,
+        space: object | None = None,
+        width: float | None = None,
+        height: float | None = None,
+        pos: Vec2 | None = None,
+        name: str | None = None,
+    ) -> None:
         self.name = name
         if width != None:
             self.width = width
@@ -43,13 +53,13 @@ class Effect:
             self.set_pos(pos)
         self.supported_attributes = list()
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         self.shape.body.position = pos
         x, y = self.shape.body.position
         self.x = x - self.width/2
         self.y = y - self.height/2
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2 | None) -> None:
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         body.position = pos
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
@@ -60,37 +70,37 @@ class Effect:
         self.shape.filter = CollisionTypes.EFFECT_FILTER
         space.add(shape, body)
 
-    def clicked(self, pos):
+    def clicked(self, pos: Vec2) -> bool:
         return self.inside(pos)
 
-    def inside(self, pos):
+    def inside(self, pos: Vec2) -> bool:
         bp = self.shape.body.position
         position = (bp.x - self.width / 2, bp.y - self.height / 2)
         return pos_inside(pos, position, self.width, self.height)
 
-    def supports(self, attribute):
+    def supports(self, attribute: str) -> bool:
         return attribute in self.supported_attributes
 
-    def update(self):
+    def update(self) -> None:
         pass
 
-    def react(self, element):
+    def react(self, element: object) -> None:
         pass
 
-    def on_click(self, callback = None):
+    def on_click(self, callback: Callable[..., None] | None = None) -> None:
         pass
 
-    def on_release(self, callback = None):
+    def on_release(self, callback: Callable[..., None] | None = None) -> None:
         pass
 
-    def clamp_pos(self, pos):
+    def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the effect, if possible"""
         return pos
 
 
 class EffectSprite(pyglet.sprite.Sprite, Effect):
     """Effect base class + sprite"""
-    def __init__(self, space, batch, pos, img_path, name):
+    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str) -> None:
         group = RenderingOrder.background
         img = pyglet_util.load_image(img_path)
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
@@ -98,14 +108,14 @@ class EffectSprite(pyglet.sprite.Sprite, Effect):
 
 
 class Action(EffectSprite):
-    def __init__(self, space, batch, pos, img_path, name):
+    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.supported_attributes.append("action")
         self.is_clicked = False
-        self.callback = None
+        self.callback: Callable[..., None] | None = None
 
 class Temperature(EffectSprite):
-    def __init__(self, space, batch, pos, img_path, name, temp):
+    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str, temp: float) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         if temp is None:
             raise Exception("Temperature must be specified for effect: " + name)
@@ -115,17 +125,17 @@ class Temperature(EffectSprite):
 
 class Fire(Temperature):
     """Fire effect"""
-    def __init__(self, space, batch, pos, temp=1000):
+    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 1000) -> None:
         Temperature.__init__(self, space, batch, pos, "fire.png", "Fire", temp)
 
 class Cold(Temperature):
     """Cold effect"""
-    def __init__(self, space, batch, pos, temp=250):
+    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 250) -> None:
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
 class EnergySource(EffectSprite):
     """EnergySource effect"""
-    def __init__(self, space, batch, pos, img_path, name, energy_source):
+    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str, energy_source: object) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.energy_source = energy_source
         self.supported_attributes.append("energy_source")
@@ -133,17 +143,17 @@ class EnergySource(EffectSprite):
 
 class UvLight(EnergySource):
     """UvLight effect"""
-    def __init__(self, space, batch, pos):
+    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
         EnergySource.__init__(self, space, batch, pos, "uv-light.png", "UvLight", Cml.Requirement.EnergyType.UV_LIGHT)
 
 class Electrolysis(EnergySource):
     """Electrolysis effect"""
-    def __init__(self, space, batch, pos):
+    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
         EnergySource.__init__(self, space, batch, pos, "electrolysis-beaker.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
         self.body = None
         self.space = space
 
-    def clamp_pos(self, pos):
+    def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the electrolysis beaker walls"""
         bp = self.shape.body.position
         # Internal wall bounds: left=-215, right=215, bottom=-255, top=255
@@ -157,7 +167,7 @@ class Electrolysis(EnergySource):
         px, py = pos
         return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         static_body.position = pos
         
@@ -188,14 +198,14 @@ class Electrolysis(EnergySource):
         self.shape.effect = self
         self.shape.filter = CollisionTypes.EFFECT_FILTER
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         OFFSET_X, OFFSET_Y = 0,140
         self.shape.body.position = pos
         x, y = self.shape.body.position
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def update(self):
+    def update(self) -> None:
         if not self.space:
             return
             
@@ -277,14 +287,14 @@ class Electrolysis(EnergySource):
 
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""
-    def __init__(self, space, batch, pos):
+    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
         EffectSprite.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
         self.supported_attributes.append("reaction")
         self.supported_attributes.append("action")
         self.is_clicked = False
         self.body = None
 
-    def clamp_pos(self, pos):
+    def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the water beaker walls"""
         bp = self.shape.body.position
         # Internal wall bounds: left=-280, right=285, bottom=-320, top=340
@@ -298,7 +308,7 @@ class WaterBeaker(EffectSprite):
         px, py = pos
         return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -329,14 +339,14 @@ class WaterBeaker(EffectSprite):
         self.shape.effect = self
         self.shape.filter = CollisionTypes.EFFECT_FILTER
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         OFFSET_X, OFFSET_Y = 0,60
         self.shape.body.position = pos
         x, y = self.shape.body.position
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def react(self, molecule):
+    def react(self, molecule: object) -> object | None:
         ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
             print(molecule.formula, "-(Water)>", ions)
@@ -345,17 +355,18 @@ class WaterBeaker(EffectSprite):
             return reaction
         elif Config.current.DEBUG:
             print("Water beaker didnt react with:", molecule.formula)
+        return None
 
-    def on_click(self, callback):
+    def on_click(self, callback: Callable[..., None]) -> None:
         print("Water beaker clicked")
 
 class InertSolventBeaker(EffectSprite):
     """InertSolventBeaker"""
-    def __init__(self, space, batch, pos):
+    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
         EffectSprite.__init__(self, space, batch, pos, "inert-solvent-beaker.png","Inert Solvent Beaker")
         self.body = None
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -386,7 +397,7 @@ class InertSolventBeaker(EffectSprite):
         self.shape.effect = self
         self.shape.filter = CollisionTypes.EFFECT_FILTER
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         OFFSET_X, OFFSET_Y = 0,60
         self.shape.body.position = pos
         x, y = self.shape.body.position
@@ -395,7 +406,7 @@ class InertSolventBeaker(EffectSprite):
 
 class HotplateBeaker(EffectSprite):
     """HotplateBeaker"""
-    def __init__(self, space, batch, pos, temp=100):
+    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 100) -> None:
         EffectSprite.__init__(self, space, batch, pos, "hotplate.png","Hotplate Beaker")
         self.supported_attributes.append("reaction")
         self.supported_attributes.append("temp")
@@ -403,7 +414,7 @@ class HotplateBeaker(EffectSprite):
         self.is_clicked = False
         self.body = None
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -434,14 +445,14 @@ class HotplateBeaker(EffectSprite):
         self.shape.effect = self
         self.shape.filter = CollisionTypes.EFFECT_FILTER
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         OFFSET_X, OFFSET_Y = 0,-70
         self.shape.body.position = pos
         x, y = self.shape.body.position
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def react(self, molecule):
+    def react(self, molecule: object) -> object | None:
         ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
             print(molecule.formula, "-(Water)>", ions)
@@ -450,10 +461,11 @@ class HotplateBeaker(EffectSprite):
             return reaction
         elif Config.current.DEBUG:
             print("HotplateBeaker didnt react with:", molecule.formula)
+        return None
 
 class Furnace(EffectSprite):
     """Furnace"""
-    def __init__(self, space, batch, pos, temp=100):
+    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 100) -> None:
         EffectSprite.__init__(self, space, batch, pos, "furnace.png","Furnace")
         self.supported_attributes.append("temp")
         self.supported_attributes.append("reaction")
@@ -461,7 +473,7 @@ class Furnace(EffectSprite):
         self.is_clicked = False
         self.body = None
 
-    def init_chipmunk(self,space, pos):
+    def init_chipmunk(self, space: object, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -492,7 +504,7 @@ class Furnace(EffectSprite):
         self.shape.effect = self
         self.shape.filter = CollisionTypes.EFFECT_FILTER
 
-    def set_pos(self, pos):
+    def set_pos(self, pos: Vec2) -> None:
         OFFSET_X, OFFSET_Y = 5,-30
         self.shape.body.position = pos
         x, y = self.shape.body.position
@@ -511,10 +523,17 @@ class Fireworks(EffectSprite):
     """
     FUSE_TIME = 1.0  # already enforced by dwell system, kept for clarity
     ROCKET_TIME = 1.2  # shorter internal fuse for snappier feedback
-    def __init__(self, space, batch, pos, emitters_ref, consume_callback):
+    def __init__(
+        self,
+        space: object,
+        batch: object,
+        pos: Vec2,
+        emitters_ref: list[object],
+        consume_callback: Callable[[object], None] | None,
+    ) -> None:
         EffectSprite.__init__(self, space, batch, pos, "fireworks.png", "Fireworks")
-        self._active_fuse = None  # (molecule, start_time)
-        self._pending_launches = []  # list of (launch_time, color)
+        self._active_fuse: tuple[object, float] | None = None  # (molecule, start_time)
+        self._pending_launches: list[tuple[float, str | None]] = []  # list of (launch_time, color)
         self.batch = batch
         self.emitters_ref = emitters_ref  # direct list reference
         self.consume_callback = consume_callback
@@ -522,10 +541,10 @@ class Fireworks(EffectSprite):
         self._last_pulse = time.time()
         # Mark as put-capable so Level/Inventory can call put_element
         self.supported_attributes.append("put")
-        self._pending_victory = None  # (molecule) to be added after explosion
+        self._pending_victory: object | None = None  # (molecule) to be added after explosion
 
 
-    def put_element(self, molecule):
+    def put_element(self, molecule: object) -> bool:
         # Only allow one active rocket at a time
         if self._active_fuse is not None or self._pending_victory is not None:
             return False
@@ -534,7 +553,7 @@ class Fireworks(EffectSprite):
             print("Fireworks fuse lit for", molecule.formula)
         return True
 
-    def update(self):
+    def update(self) -> None:
         now = time.time()
         # Promote active fuse to pending launch after ROCKET_TIME
         if self._active_fuse is not None:
@@ -572,7 +591,7 @@ class Fireworks(EffectSprite):
                     break
             self._pending_victory = None
 
-    def _on_explosion(self, molecule):
+    def _on_explosion(self, molecule: object) -> None:
         # Called by emitter when explosion/fade is done
         if self.consume_callback:
             self.consume_callback(molecule)
@@ -580,25 +599,25 @@ class Fireworks(EffectSprite):
 class Mining(Action):
     ACTION_TIME = 3
     FRAME_DURATION = 5
-    def __init__(self, space, batch, pos, mineral_list):
+    def __init__(self, space: object, batch: object, pos: Vec2, mineral_list: list[str]) -> None:
         Action.__init__(self, space, batch, pos,
                         "mining_animation/frame_0000.png","mining")
         self.mineral_list = mineral_list
-        self.timer = None
+        self.timer: float | None = None
         self.current_frame = 0
         self.current_frame_duration = self.FRAME_DURATION
         self.frames = list()
         for img in sorted(glob.glob("img/mining_animation/frame_*")):
             self.frames.append(pyglet_util.load_image(img.split("img/")[1]))
 
-    def update(self):
+    def update(self) -> None:
         if self.timer:
             self.switch_frame()
         if self.timer and self.timer < time.time():
             self.perform_callback()
             self.timer = None
 
-    def switch_frame(self):
+    def switch_frame(self) -> None:
         self.current_frame_duration -= 1
         if self.current_frame_duration == 0:
             self.current_frame += 1
@@ -607,16 +626,17 @@ class Mining(Action):
             self.image = self.frames[self.current_frame]
             self.current_frame_duration = self.FRAME_DURATION
 
-    def perform_callback(self):
+    def perform_callback(self) -> None:
             mineral = random.choice(self.mineral_list)
-            self.callback(mineral)
+            if self.callback is not None:
+                self.callback(mineral)
 
-    def on_click(self, callback):
+    def on_click(self, callback: Callable[[str], None]) -> None:
         self.is_clicked = True
         self.callback = callback
         self.timer = time.time() + self.ACTION_TIME
 
-    def on_release(self, callback = None):
+    def on_release(self, callback: Callable[..., None] | None = None) -> None:
         self.is_clicked = False
         self.timer = None
         self.image = self.frames[0]
@@ -624,45 +644,58 @@ class Mining(Action):
 
 
 class Inventory(Effect):
-    def __init__(self, space, pos, name, width, height, content = [],
-            capacity = 0, gui_container = None, create_element_callback = None, batch=None):
+    def __init__(
+        self,
+        space: object,
+        pos: Vec2,
+        name: str,
+        width: float,
+        height: float,
+        content: list[str] | None = None,
+        capacity: int = 0,
+        gui_container: object | None = None,
+        create_element_callback: Callable[[str, Vec2], None] | None = None,
+        batch: object | None = None,
+    ) -> None:
         Effect.__init__(self, space = space, pos = pos, width =
                 width, height = height, name = name)
         self.batch = batch
-        self.content = self.list_to_inventory(content)
+        self.content = self.list_to_inventory(content or [])
         self.supported_attributes.append("get")
         self.supported_attributes.append("put")
         self.gui_container = gui_container
         self.create_element_callback = create_element_callback
         self.reload_gui()
 
-    def put_element(self, element):
+    def put_element(self, element: object) -> bool:
         self.add_to_inventory(self.content, element.state_formula)
         self.reload_gui()
         return True
 
-    def get_callback(self, button):
+    def get_callback(self, button: object) -> None:
+        if self.create_element_callback is None:
+            return
         self.create_element_callback(button.element, (button.x, button.y))
         self.remove_element(button.element)
         # Always sync UI with inventory state to avoid inconsistencies
         self.reload_gui()
 
-    def get_element(self, element, x, y):
+    def get_element(self, element: str, x: float, y: float) -> None:
         return None
 
-    def list_to_inventory(self, inventory_list):
-        inventory = OrderedDict()
+    def list_to_inventory(self, inventory_list: list[str]) -> InventoryMap:
+        inventory: InventoryMap = OrderedDict()
         for element in inventory_list:
             self.add_to_inventory(inventory, element)
         return inventory
 
-    def add_to_inventory(self, inventory, element):
+    def add_to_inventory(self, inventory: InventoryMap, element: str) -> None:
         if element in inventory:
             inventory[element] += 1
         else:
             inventory[element] = 1
 
-    def remove_element(self, element):
+    def remove_element(self, element: str) -> None:
         if element not in self.content:
             return
         if self.content[element] == 1:
@@ -670,7 +703,7 @@ class Inventory(Effect):
         else:
             self.content[element] -= 1
 
-    def reload_gui(self):
+    def reload_gui(self) -> None:
         if self.gui_container is None:
             return
         
@@ -700,13 +733,13 @@ class Inventory(Effect):
                 self.gui_container.add(button)
 
 class VictoryInventory(Inventory):
-    def __init__(self, space, pos, name, width, height, victory_condition):
+    def __init__(self, space: object, pos: Vec2, name: str, width: float, height: float, victory_condition: list[str]) -> None:
         Inventory.__init__(self, space, pos, name, width, height)
         self.victory_condition = self.list_to_inventory(victory_condition)
         self.supported_attributes.append("put")
         self.supported_attributes.append("victory")
 
-    def put_element(self, element):
+    def put_element(self, element: object) -> bool:
         element = element.formula
         if element in self.victory_condition:
             if self.victory_condition_fullfilled(element):
@@ -716,13 +749,13 @@ class VictoryInventory(Inventory):
                 return True
         return False
 
-    def victory_condition_fullfilled(self, element):
+    def victory_condition_fullfilled(self, element: str) -> bool:
         needed = self.victory_condition[element]
         if element in self.content:
             return needed <= self.content[element]
         return False
 
-    def progress_text(self):
+    def progress_text(self) -> str:
         progress = ""
         for element, victory_count in self.victory_condition.items():
             if len(progress) != 0:
@@ -734,25 +767,31 @@ class VictoryInventory(Inventory):
 
         return progress
 
-    def victory(self):
+    def victory(self) -> bool:
         for element in self.victory_condition:
             if not self.victory_condition_fullfilled(element):
                 return False
         return True
 
 
-def pos_inside(pos, rec_pos, rec_width, rec_height):
+def pos_inside(pos: Vec2, rec_pos: Vec2, rec_width: float, rec_height: float) -> bool:
     x, y = pos
     rec_x, rec_y = rec_pos
     rec_X = rec_x + rec_width
     rec_Y = rec_y + rec_height
     return between(x, rec_x, rec_X) and between(y, rec_y, rec_Y)
 
-def between(a, b, B):
+def between(a: float, b: float, B: float) -> bool:
     return a >= b and a <= B
 
-def create_effects(space, batch, effects, emitters, consume_molecule_cb):
-    new_effects = list()
+def create_effects(
+    space: object,
+    batch: object,
+    effects: list[object],
+    emitters: list[object],
+    consume_molecule_cb: Callable[[object], None] | None,
+) -> list[Effect]:
+    new_effects: list[Effect] = []
     for effect in effects:
         x = effect.x2
         y = effect.y2

@@ -1,11 +1,12 @@
+from typing import Any
 from pyglet.text import Label, HTMLLabel
 from molecule import RenderingOrder
 from .base import Widget
 from .theme import theme
 
 class Document(Widget):
-    def __init__(self, text, x, y, width, height=None, batch=None, group=None,
-                 font_size=12, color=None, multiline=True, is_fixed_size=False, autosize_height=False):
+    def __init__(self, text: Any, x: Any, y: Any, width: Any, height: Any=None, batch: Any=None, group: Any=None,
+                 font_size: Any=12, color: Any=None, multiline: Any=True, is_fixed_size: Any=False, autosize_height: Any=False) -> None:
         super().__init__(x, y, width, height or 100, batch, group)
         self.text = text
         self.font_size = font_size
@@ -15,7 +16,7 @@ class Document(Widget):
         self.autosize_height = autosize_height
         self._create_label()
 
-    def _create_label(self):
+    def _create_label(self) -> None:
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         x = self.x + pad_left
         y = self.y + self.height - pad_top
@@ -48,25 +49,25 @@ class Document(Widget):
         else:
             self.label = None
 
-    def set_text(self, text):
+    def set_text(self, text: Any) -> None:
         self.text = text
         if self.label:
             self.label.delete()
         self._create_label()
 
-    def delete(self):
+    def delete(self) -> None:
         if self.label:
             self.label.delete()
         super().delete()
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         self.x += dx
         self.y += dy
         if self.label:
             self.label.x += dx
             self.label.y += dy
 
-    def layout(self):
+    def layout(self) -> None:
         if self.label:
             pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
             x = self.x + pad_left

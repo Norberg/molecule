@@ -1,12 +1,13 @@
+from typing import Any
 from pyglet.shapes import Rectangle
 from molecule import RenderingOrder
 from .theme import theme
 from .base import Widget, draw_nine_patch
 
 class Frame(Widget):
-    def __init__(self, x, y, width, height, batch=None, group=None,
-                 background_color=None, border_color=None,
-                 is_expandable=False, frame_type="frame"):
+    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None,
+                 background_color: Any=None, border_color: Any=None,
+                 is_expandable: Any=False, frame_type: Any="frame") -> None:
         super().__init__(x, y, width, height, batch, group)
         self.background_color = background_color or theme.get_color("gui_color")
         self.border_color = border_color or [100, 100, 100, 255]
@@ -15,7 +16,7 @@ class Frame(Widget):
         self.frame_type = frame_type
         self._create_background()
 
-    def _create_background(self):
+    def _create_background(self) -> None:
         if self.batch:
             img = None
             frame = [8, 8, 8, 8]
@@ -58,14 +59,14 @@ class Frame(Widget):
             self.bg_rect = None
             self.border_rect = None
 
-    def add(self, child):
+    def add(self, child: Any) -> None:
         self.children.append(child)
         child.parent = self
 
-    def add_child(self, child):
+    def add_child(self, child: Any) -> None:
         self.add(child)
 
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -74,14 +75,14 @@ class Frame(Widget):
                     return True
         return False
 
-    def on_mouse_motion(self, x, y, dx, dy):
+    def on_mouse_motion(self, x: Any, y: Any, dx: Any, dy: Any) -> Any:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_motion'):
                 if child.on_mouse_motion(x, y, dx, dy):
                     return True
         return False
 
-    def layout(self):
+    def layout(self) -> None:
         if self.bg_rect is not None:
             self.bg_rect.x = self.x
             self.bg_rect.y = self.y
@@ -106,7 +107,7 @@ class Frame(Widget):
             if hasattr(child, 'layout'):
                 child.layout()
 
-    def delete(self):
+    def delete(self) -> None:
         for child in self.children:
             child.delete()
         self.children.clear()
@@ -121,13 +122,13 @@ class Frame(Widget):
             self.border_rect.delete()
         super().delete()
 
-    def get_padding(self):
+    def get_padding(self) -> Any:
         frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
         if frame_theme and "image" in frame_theme:
             return frame_theme["image"].get("padding", [8, 8, 8, 8])
         return [8, 8, 8, 8]
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         self.x += dx
         self.y += dy
         if self.bg_rect is not None:
@@ -148,7 +149,7 @@ class Frame(Widget):
                 c.x += dx
                 c.y += dy
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -157,14 +158,14 @@ class Frame(Widget):
                     return True
         return False
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False
 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+    def on_mouse_drag(self, x: Any, y: Any, dx: Any, dy: Any, buttons: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):

@@ -13,14 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from typing import Any
 class Config:
-    def __init__(self):
+    def __init__(self) -> None:
         self.DEBUG = False
-        self.level = None
+        self.level: int | None = None
         self.fullscreen = False
         self.resizable = False
         self.width = 1650
         self.height = 1080
         self.zoom = 1.0
-        self.player = None
+        self.player: str | None = None
 current = Config()

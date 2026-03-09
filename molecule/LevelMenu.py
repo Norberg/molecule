@@ -1,3 +1,4 @@
+from collections.abc import Callable
 import pyglet
 import os
 
@@ -11,7 +12,11 @@ from molecule import Config
 
 from libcml import Cml
 
-def load_pages():
+BiomeEntry = tuple[str, str, list[str]]
+Pages = list[list[BiomeEntry]]
+
+
+def load_pages() -> Pages:
     campaign = Cml.Campaign()
     path = os.path.join("data", "campaign.cml")
     try:
@@ -25,7 +30,13 @@ PAGES = load_pages()
 
 
 class LevelMenu:
-    def __init__(self, window, levels, on_level_selected, start_at_map=False):
+    def __init__(
+        self,
+        window: object,
+        levels: object,
+        on_level_selected: Callable[[str], None],
+        start_at_map: bool = False,
+    ) -> None:
         self.window = window
         self.levels = levels
         self.on_level_selected = on_level_selected
@@ -48,7 +59,7 @@ class LevelMenu:
         self.state = "MAIN"
         if self.levels.player_id is None:
             self.state = "PLAYER"
-        self.selected_biome = None
+        self.selected_biome: str | None = None
         
         # Determine initial state based on current level
         if not start_at_map:
@@ -72,12 +83,12 @@ class LevelMenu:
                     self.page_index = i
                     break
 
-        self.view_manager = None
+        self.view_manager: Manager | None = None
         
         self.refresh()
         self.window.push_handlers(self)
 
-    def refresh(self):
+    def refresh(self) -> None:
         if self.view_manager:
             self.view_manager.delete()
         
@@ -90,7 +101,7 @@ class LevelMenu:
         elif self.state == "PLAYER":
             self.init_player_selection_view(width, height)
 
-    def init_main_view(self, width, height):
+    def init_main_view(self, width: int, height: int) -> None:
         root = AbsoluteContainer(0, 0, width, height)
         
         # 5 fixed island positions relative to screen (x, y)
@@ -129,7 +140,10 @@ class LevelMenu:
 
             # Progress summary
             total = len(level_paths)
-            done = sum(1 for p in level_paths if self.levels.is_completed(p))
+            done = 0
+            for p in level_paths:
+                if self.levels.is_completed(p):
+                    done += 1
             is_unlocked = prev_biome_started
             
             frame_w = 220
@@ -158,7 +172,7 @@ class LevelMenu:
             prog.is_fixed_size = True
             content.add(prog, do_layout=False)
             
-            def make_click(name):
+            def make_click(name: str) -> Callable[[object], None]:
                 return lambda btn: self.on_biome_clicked(name)
 
             if is_unlocked:
@@ -179,21 +193,21 @@ class LevelMenu:
         nav_y = 50
         
         if self.page_index > 0:
-            def prev_page(btn):
+            def prev_page(btn: object) -> None:
                 self.page_index -= 1
                 self.refresh()
             prev_btn = Button("<< PREV PAGE", 50, nav_y, 150, 40, self.batch, on_click=prev_page, button_type="molecule-button")
             root.add(prev_btn)
             
         if self.page_index < len(PAGES) - 1:
-            def next_page(btn):
+            def next_page(btn: object) -> None:
                 self.page_index += 1
                 self.refresh()
             next_btn = Button("NEXT PAGE >>", width - 200, nav_y, 150, 40, self.batch, on_click=next_page, button_type="molecule-button")
             root.add(next_btn)
 
         # Exit Button
-        def on_exit(btn):
+        def on_exit(btn: object) -> None:
             pyglet.app.exit()
         
         exit_btn = Button("EXIT GAME", width - 150, height - 70, 120, 40, self.batch, on_click=on_exit, button_type="molecule-button")
@@ -201,7 +215,7 @@ class LevelMenu:
 
         # Change Player Button
         player_name = Config.current.player or "Unknown"
-        def change_player(btn):
+        def change_player(btn: object) -> None:
             self.state = "PLAYER"
             self.refresh()
         
@@ -211,7 +225,7 @@ class LevelMenu:
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                      is_movable=False, push_handlers=False, anchor=None)
 
-    def init_biome_view(self, width, height):
+    def init_biome_view(self, width: int, height: int) -> None:
         root = AbsoluteContainer(0, 0, width, height)
         
         biome_name = self.selected_biome
@@ -290,7 +304,7 @@ class LevelMenu:
             icon_w = SpriteWidget(icon_img, 0, 0, icon_size, icon_size, self.batch, RenderingOrder.gui)
             row.add(icon_w, do_layout=False)
             
-            def make_lvl_click(p):
+            def make_lvl_click(p: str) -> Callable[[object], None]:
                 return lambda btn: self.on_level_selected(p)
                 
             btn_text = display_name
@@ -308,7 +322,7 @@ class LevelMenu:
             content.add(row, do_layout=False)
             prev_done = is_done
             
-        def go_back(btn):
+        def go_back(btn: object) -> None:
             self.state = "MAIN"
             self.refresh()
             
@@ -322,12 +336,12 @@ class LevelMenu:
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                      is_movable=False, push_handlers=False, anchor=None)
 
-    def on_biome_clicked(self, name):
+    def on_biome_clicked(self, name: str) -> None:
         self.selected_biome = name
         self.state = "BIOME"
         self.refresh()
 
-    def init_player_selection_view(self, width, height):
+    def init_player_selection_view(self, width: int, height: int) -> None:
         root = AbsoluteContainer(0, 0, width, height)
         
         frame_w = 400
@@ -355,7 +369,7 @@ class LevelMenu:
         player_list_cont = VerticalContainer(0, 0, frame_w - 60, max(1, len(players) * (item_h + 4)), spacing=4)
         player_list_cont.align = 'center'
         
-        def make_player_click(name):
+        def make_player_click(name: str) -> Callable[[object], None]:
             return lambda btn: self.on_player_selected(name)
 
         total_levels = len(self.levels.levels)
@@ -369,7 +383,7 @@ class LevelMenu:
         scrollable = Scrollable(player_list_cont, 0, 0, frame_w - 40, list_h, self.batch)
         content.add(scrollable, do_layout=False)
         
-        def on_new_player(btn):
+        def on_new_player(btn: object) -> None:
             # Use random name for now as we don't have text input
             import random
             adjectives = ["Cool", "Smart", "Swift", "Atomic", "Brave"]
@@ -387,41 +401,43 @@ class LevelMenu:
         self.view_manager = Manager(root, window=self.window, batch=self.batch, 
                                       is_movable=False, push_handlers=False, anchor=None)
 
-    def on_player_selected(self, name):
+    def on_player_selected(self, name: str) -> None:
         self.levels.set_player(name)
         self.state = "MAIN"
         self.refresh()
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         self.window.clear()
         self.batch.draw()
         
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if self.view_manager:
             return self.view_manager.on_mouse_press(x, y, button, modifiers)
         return False
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if self.view_manager:
             return self.view_manager.on_mouse_release(x, y, button, modifiers)
         return False
 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+    def on_mouse_drag(
+        self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int
+    ) -> bool:
         if self.view_manager:
             return self.view_manager.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         return False
 
-    def on_mouse_motion(self, x, y, dx, dy):
+    def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
         if self.view_manager:
             return self.view_manager.on_mouse_motion(x, y, dx, dy)
         return False
 
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+    def on_mouse_scroll(self, x: float, y: float, scroll_x: float, scroll_y: float) -> bool:
         if self.view_manager:
             return self.view_manager.on_mouse_scroll(x, y, scroll_x, scroll_y)
         return False
 
-    def delete(self):
+    def delete(self) -> None:
         self.window.remove_handlers(self)
         if self.view_manager:
             self.view_manager.delete()

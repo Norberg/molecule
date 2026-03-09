@@ -1,3 +1,4 @@
+from typing import Any
 import argparse
 import subprocess
 
@@ -24,18 +25,18 @@ import cairo
 import numpy as np
 
 class ReactionCondition:
-    def __init__(self, upper, lower):
+    def __init__(self, upper: Any, lower: Any) -> None:
         self.upper = upper
         self.lower = lower
 
-def get_font(size=24):
+def get_font(size: Any=24) -> Any:
     try:
         return ImageFont.truetype("DejaVuSans.ttf", size)
     except IOError as e:
         print(f"Failed to load font due to {e} using default font. Please install DejaVuSans.ttf")
         return ImageFont.load_default(size)
 
-def render_all_reactions():
+def render_all_reactions() -> None:
     cml = Cml.Reactions()
     cml.parse("data/reactions")
     reactor = Reactor(cml.reactions)
@@ -46,7 +47,7 @@ def render_all_reactions():
         render_reaction_image(reactants, products, Skeletal.reactionPath(reaction), requirements)
         render_reaction_image([], products, Skeletal.reactionUnknownProductPath(reaction), requirements)
 
-def render_all_molecules():
+def render_all_molecules() -> None:
     for filename in os.listdir("data/molecule"):
         if filename.endswith(".cml"):
             formula = filename.split(".")[0]
@@ -59,7 +60,7 @@ def render_all_molecules():
             img = render_molecule(smiles)
             img.save(f"img/skeletal/molecule/{formula}.png", format='PNG')
 
-def render_all_ions():
+def render_all_ions() -> None:
     for filename in os.listdir("data/molecule"):
         if filename.endswith(".cml"):
             formula = filename.split(".")[0]
@@ -75,7 +76,7 @@ def render_all_ions():
             render_reaction_image([formula], ions, Skeletal.reactionPath(ionReaction))
             render_reaction_image([], ions, Skeletal.reactionUnknownProductPath(ionReaction))
 
-def render_molecule(molecule: str, size: tuple = (300, 300)):
+def render_molecule(molecule: str, size: tuple = (300, 300)) -> Any:
     ps = Chem.SmilesParserParams()
     ps.removeHs = False
     ps.sanitize = False
@@ -86,14 +87,14 @@ def render_molecule(molecule: str, size: tuple = (300, 300)):
     #Chem.Kekulize(mol)
     return Draw.MolToImage(mol, size=size)
 
-def fetch_smiles(formula):
+def fetch_smiles(formula: Any) -> Any:
     # strip state if present
     formula = formula.split("(")[0]
     molecule = Cml.Molecule()
     molecule.parse(f"data/molecule/{formula}.cml")
     return molecule.property.get("Smiles", "").strip()
 
-def crop_white_sides_cairo(surface, tolerance=240, margin=20):
+def crop_white_sides_cairo(surface: Any, tolerance: Any=240, margin: Any=20) -> Any:
     width = surface.get_width()
     height = surface.get_height()
     stride = surface.get_stride()
@@ -131,12 +132,12 @@ def crop_white_sides_cairo(surface, tolerance=240, margin=20):
     ctx.paint()
     return new_surface
 
-def process_png_with_cairo(png_path, tolerance=240):
+def process_png_with_cairo(png_path: Any, tolerance: Any=240) -> None:
     surface = cairo.ImageSurface.create_from_png(png_path)
     cropped = crop_white_sides_cairo(surface, tolerance)
     cropped.write_to_png(png_path)
 
-def render_individual_molecule(formula, smiles, output):
+def render_individual_molecule(formula: Any, smiles: Any, output: Any) -> None:
     if formula:
         molecule = fetch_smiles(formula)
     elif smiles:
@@ -154,7 +155,7 @@ def render_individual_molecule(formula, smiles, output):
     else:
         img.show()
 
-def render_reaction_image(reactants, products, output, requirements=[]):
+def render_reaction_image(reactants: Any, products: Any, output: Any, requirements: Any=[]) -> None:
     reactant_smiles = [fetch_smiles(formula) for formula in reactants]
     product_smiles = [fetch_smiles(formula) for formula in products]
 
@@ -181,7 +182,7 @@ def render_reaction_image(reactants, products, output, requirements=[]):
     else:
         img.show()
 
-def _render_reaction_image(reaction, reactionCondition, output):
+def _render_reaction_image(reaction: Any, reactionCondition: Any, output: Any) -> None:
     reaction = AllChem.ReactionFromSmarts(reaction, useSmiles=True)    
     img = _reaction_to_image(reaction, reactionCondition)
 
@@ -190,7 +191,7 @@ def _render_reaction_image(reaction, reactionCondition, output):
     else:
         img.show()
 
-def _groupTemplates(num_templates, get_template, subImgSize):
+def _groupTemplates(num_templates: Any, get_template: Any, subImgSize: Any) -> Any:
     groups = {}
     for i in range(num_templates):
         tmpl = get_template(i)
@@ -215,7 +216,7 @@ def _groupTemplates(num_templates, get_template, subImgSize):
         images.append(_createPlaceholder(subImgSize, "*"))
     return images
 
-def _reaction_to_image(reaction, reactionCondition):
+def _reaction_to_image(reaction: Any, reactionCondition: Any) -> Any:
     subImgSize = (200, 200)
     # Process reactants by grouping duplicate templates.
     reactant_count = reaction.GetNumReactantTemplates()
@@ -254,7 +255,7 @@ def _reaction_to_image(reaction, reactionCondition):
         offset_x += img.width
     return res
 
-def _crop_white_borders(image, margin=0):
+def _crop_white_borders(image: Any, margin: Any=0) -> Any:
     # Create a white background image of the same size.
     bg = Image.new(image.mode, image.size, (255, 255, 255, 255) if "A" in image.getbands() else (255, 255, 255))
     # Compute the difference between the image and a pure white background.
@@ -268,7 +269,7 @@ def _crop_white_borders(image, margin=0):
         return image.crop((left, 0, right, image.height))
     return image
 
-def _createLabeledImage(mol, count, size):
+def _createLabeledImage(mol: Any, count: Any, size: Any) -> Any:
     label_width = 30
     mol_img = Draw.MolToImage(mol, size=size)
     mol_img = _crop_white_borders(mol_img, margin=5)
@@ -283,14 +284,14 @@ def _createLabeledImage(mol, count, size):
     draw.text(text_position, text, fill=(0, 0, 0), font=font)
     return new_img
 
-def _createPlaceholder(size, text):
+def _createPlaceholder(size: Any, text: Any) -> Any:
     image = Image.new("RGBA", size, (255, 255, 255, 255))
     draw = ImageDraw.Draw(image)
     text_position = (size[0] // 2 - 10, size[1] // 2 - 10)
     draw.text(text_position, text, fill=(0, 0, 0), font=get_font(24))
     return image
 
-def _createPlusImage(size):
+def _createPlusImage(size: Any) -> Any:
     new_size = (20, size[1])
     image = Image.new("RGBA", new_size, (255, 255, 255, 255))
     draw = ImageDraw.Draw(image)
@@ -308,7 +309,7 @@ def _createPlusImage(size):
     draw.line([vertical_start, vertical_end], fill=(0, 0, 0), width=line_width)
     return image
 
-def _drawReactionArrow(subImgSize, agent_images, reactionCondition):
+def _drawReactionArrow(subImgSize: Any, agent_images: Any, reactionCondition: Any) -> Any:
     # Define arrow margin and default arrow length.
     arrow_margin = 20  # margin from left/right edges
     default_arrow_length = subImgSize[0] - 2 * arrow_margin
@@ -375,12 +376,12 @@ def _drawReactionArrow(subImgSize, agent_images, reactionCondition):
     
     return arrow_img
 
-def _createCanvas(size):
+def _createCanvas(size: Any) -> Any:
     image = Image.new("RGBA", size, (255, 255, 255, 255))
     draw = ImageDraw.Draw(image)
     return image, draw
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Render and save molecule image or reaction image.')
     parser.add_argument('--formula', metavar='F', type=str, help='molecule formula')
     parser.add_argument('--smiles', metavar='S', type=str, help='molecule smiles')

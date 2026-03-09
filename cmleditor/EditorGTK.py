@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #!/usr/bin/env python
+from typing import Any
 import sys
 import os
 import gi
@@ -38,7 +39,7 @@ from molecule.emitters.Emitters import list_emitters
 
 class EditorGTK:
 
-    def __init__(self):
+    def __init__(self) -> None:
         sys.excepthook = self.excepthook
         self.gladefile = "cmleditor/gui.gtkbuilder"
         self.builder = Gtk.Builder()
@@ -48,20 +49,20 @@ class EditorGTK:
         self.widget("fcbOpen").set_current_folder("data/molecule")
         self.builder.connect_signals(self)
         self.folder = "data/molecule/"
-        self.last_selected_temp = None
+        self.last_selected_temp: int | None = None
         self.init_twStates()
         self.init_twReactions()
         self.init_reactions()
         self.init_twSearchResults()
-        self.search_cache = None
+        self.search_cache: list[dict[str, str]] | None = None
         self.handle_command_arguments()
 
-    def init_reactions(self):
+    def init_reactions(self) -> None:
             cml = Cml.Reactions()
             cml.parse("data/reactions")
             self.reactor = Reactor(cml.reactions)
 
-    def init_twReactions(self):
+    def init_twReactions(self) -> None:
         twReactions = self.widget("twReactions")
         #set what data type twReactions should contain
         #4th column is shown as tooltip
@@ -81,7 +82,7 @@ class EditorGTK:
 
         twReactions.get_selection().set_select_function(self.on_twReactions_row_selected)
 
-    def init_twStates(self):
+    def init_twStates(self) -> None:
         twStates = self.widget("twStates")
         # Columns: State, Enthalpy, Entropy, Ions, Emitter
         self.modelStates = Gtk.ListStore(str, str, str, str, str)
@@ -129,7 +130,7 @@ class EditorGTK:
         for col in (col1, col2, col3, col4, col5):
             twStates.append_column(col)
 
-    def init_twSearchResults(self):
+    def init_twSearchResults(self) -> None:
         tv = self.widget("tvSearchResults")
         renderer = Gtk.CellRendererText()
         col1 = Gtk.TreeViewColumn("Formula", renderer, text=0)
@@ -137,13 +138,13 @@ class EditorGTK:
         tv.append_column(col1)
         tv.append_column(col2)
 
-    def on_winMain_destroy(self, widget):
+    def on_winMain_destroy(self, widget: Any) -> None:
         Gtk.main_quit()
 
-    def on_btnExit_clicked(self, widget):
+    def on_btnExit_clicked(self, widget: Any) -> None:
         Gtk.main_quit()
 
-    def on_btnSave_clicked(self, widget):
+    def on_btnSave_clicked(self, widget: Any) -> None:
         self.molecule.states = dict()
         for col in self.modelStates:
             name = col[0]
@@ -170,13 +171,13 @@ class EditorGTK:
         self.preview_molecule()
         self.updateReactions(self.formula)
 
-    def on_btnNext_clicked(self, widget):
+    def on_btnNext_clicked(self, widget: Any) -> None:
         self.switch_molecule(1)
 
-    def on_btnPrev_clicked(self, widget):
+    def on_btnPrev_clicked(self, widget: Any) -> None:
         self.switch_molecule(-1)
 
-    def switch_molecule(self, relative):
+    def switch_molecule(self, relative: Any) -> None:
         new_index = (self.current_pos + relative)
         if new_index > len(self.folder_list)-1:
             new_index = 0
@@ -186,20 +187,20 @@ class EditorGTK:
         self.widget("fcbOpen").set_filename(newFile)
         self.openFile(newFile)
 
-    def update_folder_list(self):
+    def update_folder_list(self) -> None:
         self.folder_list = glob.glob(self.folder+"/*")
         self.folder_list.sort()
         self.search_cache = None # Invalidate cache
 
 
-    def on_fcbOpen_file_set(self, widget):
+    def on_fcbOpen_file_set(self, widget: Any) -> None:
         new_folder = widget.get_current_folder()
         self.folder = os.path.relpath(new_folder)
         self.update_folder_list()
         filename = os.path.relpath(widget.get_filename())
         self.openFile(filename)
 
-    def openFile(self, filename):
+    def openFile(self, filename: Any) -> None:
         self.filename = filename
         if filename not in self.folder_list:
             print(f"File {filename} not in folder list of lenght {len(self.folder_list)} with content {self.folder_list}")
@@ -250,7 +251,7 @@ class EditorGTK:
         self.setLicense(molecule.property.get("DescriptionLicense", "N/A"))
         self.updateReactions(self.formula)
 
-    def preview_molecule(self):
+    def preview_molecule(self) -> None:
         state_formula = self.formula+"(aq)"
         cml2img.convert_cml2png(state_formula, "preview.png")
         pixBuffPreview = Pixbuf.new_from_file("preview.png")
@@ -261,7 +262,7 @@ class EditorGTK:
         imgSkeletalPreview = self.widget("imgSkeletalPreview")
         imgSkeletalPreview.set_from_pixbuf(pixBuffPreview)
 
-    def setLicense(self, selectedLicense):
+    def setLicense(self, selectedLicense: Any) -> None:
         self.widget("cmbLicense").set_active(-1)
         index = 0
         for license in self.widget("liststoreLicenses"):
@@ -270,7 +271,7 @@ class EditorGTK:
                 break
             index += 1
 
-    def updateReactions(self, formula):
+    def updateReactions(self, formula: Any) -> None:
         #Refresh the reactions in case the reaction file have been changed
         self.init_reactions()
         self.reactionStates.clear()
@@ -293,7 +294,7 @@ class EditorGTK:
                     reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
 
-    def findReactingTemperatures(self, reactants, expected_products, trace=False, selected_temp=None):
+    def findReactingTemperatures(self, reactants: Any, expected_products: Any, trace: Any=False, selected_temp: Any=None) -> Any:
         if trace:
             print("\nFinding reacting temperatures for:", reactants, expected_products)
         # only use the specific temperature if one is chosen
@@ -308,71 +309,71 @@ class EditorGTK:
                 reactions[reaction.key].temperatures.append(temp)
         return reactions
 
-    def setAtomSettings(self):
+    def setAtomSettings(self) -> None:
         self.txtAtomWeight.set_sensitive(True)
         self.txtAtomRadius.set_sensitive(True)
         molecule = self.molecule
         self.txtAtomWeight.set_text(str(molecule.property.get("Weight","")))
         self.txtAtomRadius.set_text(str(molecule.property.get("Radius","")))
 
-    def emptyContainer(self, container):
+    def emptyContainer(self, container: Any) -> None:
         for child in container.get_children():
             child.destroy()
 
-    def createAndAttachLabel(self, text, table, col, row):
+    def createAndAttachLabel(self, text: Any, table: Any, col: Any, row: Any) -> None:
         label = Gtk.Label(label=text)
         table.attach(label, col, row, col+1, row+1)
         label.set_visible(True)
 
-    def createAndAttachTextBox(self,text,table, row):
+    def createAndAttachTextBox(self,text: Any,table: Any, row: Any) -> Any:
         self.createAndAttachLabel(text, table, 0, row)
         entry = Gtk.Entry()
         table.attach(entry, 1, row, 2, row+1)
         entry.set_visible(True)
         return entry
 
-    def edited_string(self, cell, path, new_text, userdata):
+    def edited_string(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def edited_combo(self, cell, path, new_text, userdata):
+    def edited_combo(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
         # Same logic as edited_string but kept separate for clarity.
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num, new_text)
 
-    def edited_float(self, cell, path, new_text, userdata):
+    def edited_float(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
         if new_text != "":
             new_text = "%.1f" % float(new_text)
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def edited_ions(self, cell, path, new_text, userdata):
+    def edited_ions(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def on_btnAddState_clicked(self, widget):
+    def on_btnAddState_clicked(self, widget: Any) -> None:
         cmbStates = self.widget("cmbStates")
         new_state = get_active_text(cmbStates)
         if not self.state_already_added(new_state):
             self.modelStates.append([new_state, "","", "", ""])  # emitter column empty by default
 
-    def state_already_added(self, statename):
+    def state_already_added(self, statename: Any) -> Any:
         for state in self.modelStates:
             if state[0] == statename:
                 return True
         return False
 
-    def on_twStates_key_press_event(self,widget, userdata):
+    def on_twStates_key_press_event(self,widget: Any, userdata: Any) -> None:
         if Gdk.keyval_name(userdata.keyval) == "Delete":
             model, iter = self.widget("twStates").get_selection().get_selected()
             if iter:
                 model.remove(iter)
 
-    def on_twReactions_key_press_event(self, widget, userdata):
+    def on_twReactions_key_press_event(self, widget: Any, userdata: Any) -> None:
         # if pressed t/T trace the reaction with temperature selection
         if Gdk.keyval_name(userdata.keyval) in ["t", "T"]:
             model, tree_iter = self.widget("twReactions").get_selection().get_selected()
@@ -385,14 +386,14 @@ class EditorGTK:
                 # otherwise use all temperatures.
                 self.findReactingTemperatures(reactants, products, trace=True, selected_temp=selected_temp)
 
-    def choose_temperature_dialog(self):
+    def choose_temperature_dialog(self) -> Any:
         tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
         dialog = Gtk.Dialog(title="Choose temperatur (K)", parent=self.widget("winMain"), flags=0)
         dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         
         # Define a key press handler to respond to t/T key presses.
-        def on_dialog_key_press(widget, event):
+        def on_dialog_key_press(widget: Any, event: Any) -> Any:
             if Gdk.keyval_name(event.keyval) in ["t", "T"]:
                 widget.response(Gtk.ResponseType.OK)
                 return True
@@ -433,7 +434,7 @@ class EditorGTK:
         dialog.destroy()
         return selected_value
 
-    def on_twReactions_row_activated(self, widget, path, column):
+    def on_twReactions_row_activated(self, widget: Any, path: Any, column: Any) -> None:
         """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
         if column.get_title() == "Temperature (K)":
             return
@@ -467,13 +468,13 @@ class EditorGTK:
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
 
-    def on_twReactions_row_selected(self, selection, model, path, is_selected_data):
+    def on_twReactions_row_selected(self, selection: Any, model: Any, path: Any, is_selected_data: Any) -> Any:
         reactants = split_formated_elements(model[path][0])
         products = split_formated_elements(model[path][1])
         self.update_reaction_preview(reactants, products)
         return True
 
-    def on_twReactions_query_tooltip(self, widget, x, y, keyboard_mode, tooltip):
+    def on_twReactions_query_tooltip(self, widget: Any, x: Any, y: Any, keyboard_mode: Any, tooltip: Any) -> Any:
         x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)
         path_info = widget.get_path_at_pos(x_bin_window, y_bin_window)
 
@@ -487,7 +488,7 @@ class EditorGTK:
                 return True
         return False
 
-    def on_btnNewMolecule_clicked(self, widget):
+    def on_btnNewMolecule_clicked(self, widget: Any) -> None:
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
         print(answers)
         if answers is None:
@@ -512,21 +513,21 @@ class EditorGTK:
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
         self.widget("txtSmiles").set_text(smiles) 
 
-    def on_btnSearch_clicked(self, widget):
+    def on_btnSearch_clicked(self, widget: Any) -> None:
         self.widget("winSearch").show_all()
         self.widget("entSearch").grab_focus()
 
-    def on_winSearch_delete_event(self, widget, event):
+    def on_winSearch_delete_event(self, widget: Any, event: Any) -> Any:
         self.widget("winSearch").hide()
         return True
 
-    def on_winSearch_key_press_event(self, widget, event):
+    def on_winSearch_key_press_event(self, widget: Any, event: Any) -> Any:
         if Gdk.keyval_name(event.keyval) == "Escape":
             self.widget("winSearch").hide()
             return True
         return False
 
-    def on_entSearch_changed(self, entry):
+    def on_entSearch_changed(self, entry: Any) -> None:
         if self.search_cache is None:
             self.build_search_cache()
         
@@ -543,7 +544,7 @@ class EditorGTK:
                 query in item['smiles'].lower()):
                 ls.append([item['formula'], item['name'], item['path']])
 
-    def build_search_cache(self):
+    def build_search_cache(self) -> None:
         self.search_cache = []
         for path in self.folder_list:
             if not path.endswith(".cml"):
@@ -563,7 +564,7 @@ class EditorGTK:
             except Exception as e:
                 print(f"Error indexing {path}: {e}")
 
-    def on_tvSearchResults_row_activated(self, tv, path, column):
+    def on_tvSearchResults_row_activated(self, tv: Any, path: Any, column: Any) -> None:
         model = tv.get_model()
         iter = model.get_iter(path)
         filepath = model.get_value(iter, 2)
@@ -571,7 +572,7 @@ class EditorGTK:
         self.openFile(filepath)
         self.widget("winSearch").hide()
     
-    def on_btnNewMoleculeFromWiki_clicked(self, widget):
+    def on_btnNewMoleculeFromWiki_clicked(self, widget: Any) -> None:
         answers = InputBox("Molecule", ["Wikipedia link:"])
         print(answers)
         if answers is None:
@@ -603,13 +604,13 @@ class EditorGTK:
 
         self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
 
-    def on_txtSmiles_changed(self, entry):
+    def on_txtSmiles_changed(self, entry: Any) -> None:
         """Show refresh button when SMILES is edited."""
         btn_refresh = self.widget("btnRefreshSmiles")
         if btn_refresh:
             btn_refresh.set_visible(True)
 
-    def on_btnRefreshSmiles_clicked(self, widget):
+    def on_btnRefreshSmiles_clicked(self, widget: Any) -> None:
         """Regenerate current molecule's atom/bond arrays from updated SMILES using obabel.
 
         Steps:
@@ -680,7 +681,7 @@ class EditorGTK:
             pass
         MsgBox("Structure updated from SMILES.")
 
-    def update_reaction_preview(self, reactants, products):
+    def update_reaction_preview(self, reactants: Any, products: Any) -> None:
         reactants = list_without_state(reactants)
         products = list_without_state(products)
         rdkit_render.render_reaction_image(reactants, products, "reaction-preview.png")
@@ -688,11 +689,11 @@ class EditorGTK:
         imgReactionPreview = self.widget("imgReactionPreview")
         imgReactionPreview.set_from_pixbuf(pixBuffPreview)
 
-    def excepthook(self, type, value, traceback):
+    def excepthook(self, type: Any, value: Any, traceback: Any) -> None:
         MsgBox("Error:"+ str(type) +"\n"+ str(value))
         sys.__excepthook__(type, value, traceback)
 
-    def handle_command_arguments(self):
+    def handle_command_arguments(self) -> None:
         """Handle command line arguments with parseargs"""
         import argparse
         parser = argparse.ArgumentParser(description="Molecule editor")
@@ -703,7 +704,7 @@ class EditorGTK:
             self.widget("fcbOpen").set_filename("data/molecule/"+args.molecule + ".cml")
             self.openFile("data/molecule/"+args.molecule + ".cml")
 
-def addStatePermutations(stateless):
+def addStatePermutations(stateless: Any) -> Any:
     states_per_molecule = []
     for formula in stateless:
         m = CachedCml.getMolecule(formula)
@@ -730,12 +731,12 @@ def addStatePermutations(stateless):
 
     return unique_permutations
 
-def get_active_text(cmb):
+def get_active_text(cmb: Any) -> Any:
     tree_iter = cmb.get_active_iter()
     model = cmb.get_model()
     return model[tree_iter][0]
 
-def MsgBox(message):
+def MsgBox(message: Any) -> None:
         dialog = Gtk.MessageDialog(None,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
@@ -743,7 +744,7 @@ def MsgBox(message):
         dialog.run()
         dialog.destroy()
 
-def YesNo(message):
+def YesNo(message: Any) -> Any:
         dialog = Gtk.MessageDialog(None,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
@@ -755,10 +756,10 @@ def YesNo(message):
         else:
                 return "No"
 
-def responseToDialog(entry, dialog, response):
+def responseToDialog(entry: Any, dialog: Any, response: Any) -> None:
     dialog.response(response)
 
-def InputBox(title, questions):
+def InputBox(title: Any, questions: Any) -> Any:
     dialog = Gtk.Dialog(title, None, 0,
     (Gtk.STOCK_OK, Gtk.ResponseType.OK,
     "Cancel", Gtk.ResponseType.CANCEL))
@@ -802,7 +803,7 @@ def InputBox(title, questions):
     return answers
 
 class ReactionInfo:
-    def __init__(self, reaction):
+    def __init__(self, reaction: Any) -> None:
         self.reaction = reaction
         self.temperatures = list()
         self.reactants = reaction.reactants
@@ -810,16 +811,16 @@ class ReactionInfo:
         self.title = reaction.cml.title
 
     @property
-    def key(self):
+    def key(self) -> Any:
         return str(self.reaction.reactants)+ "->" + str(self.reaction.products)
     
 
-def format_elements(elements):
+def format_elements(elements: Any) -> Any:
     element_count = Counter(elements)
     formatted_elements = [f"{count} {element}" if count > 1 else element for element, count in element_count.items()]
     return " + ".join(formatted_elements)
 
-def split_formated_elements(formated_elements):
+def split_formated_elements(formated_elements: Any) -> Any:
     elements_with_counts = formated_elements.split(" + ")
     result = []
     for item in elements_with_counts:
@@ -831,7 +832,7 @@ def split_formated_elements(formated_elements):
         result.extend([element] * count)
     return result
 
-def unicodeFormulaToAscii(unicodeFormula):
+def unicodeFormulaToAscii(unicodeFormula: Any) -> Any:
     """Convert possible unicode formula to an ascii formula"""
     unicode_to_ascii = {
         '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4',

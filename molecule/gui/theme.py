@@ -1,15 +1,16 @@
+from typing import Any
 import json
 import os
 import pyglet
 
 class Theme:
-    def __init__(self, theme_path="molecule/theme/theme.json"):
+    def __init__(self, theme_path: Any="molecule/theme/theme.json") -> None:
         self.theme_path = theme_path
         self.theme_data = self._load_theme()
         self.images = {}
         self._load_images()
 
-    def _load_theme(self):
+    def _load_theme(self) -> Any:
         try:
             with open(self.theme_path, 'r') as f:
                 return json.load(f)
@@ -22,7 +23,7 @@ class Theme:
                 "gui_color": [255, 255, 255, 255]
             }
 
-    def _load_images(self):
+    def _load_images(self) -> None:
         theme_dir = os.path.dirname(self.theme_path)
         image_files = [
             "button.png", "button-down.png", "button-highlight.png",
@@ -40,10 +41,10 @@ class Theme:
             except Exception as e:
                 print(f"Failed to load theme image {img_file}: {e}")
 
-    def get_image(self, image_name):
+    def get_image(self, image_name: Any) -> Any:
         return self.images.get(image_name)
 
-    def get_color(self, color_name):
+    def get_color(self, color_name: Any) -> Any:
         return self.theme_data.get(color_name, [0, 0, 0, 255])
 
 # Global theme instance

@@ -1,18 +1,29 @@
 [tool.mypy]
 python_version = "3.12"
 files = [
-  "libreact",
-  "libcml/CachedCml.py",
-  "molecule/server",
-  "molecule/emitters/Emitters.py",
   "start.py",
   "cml2img.py",
+  "libcml",
+  "libreact",
+  "molecule",
+  "cmleditor",
+  "utils",
 ]
+exclude = "(^tests/|(^|/)test_.*\\.py$|(^|/)cmleditor\\.py$|rdkit-stubs/)"
 warn_unused_ignores = true
 warn_redundant_casts = true
 no_implicit_optional = true
 disallow_untyped_defs = true
 follow_imports = "skip"
+no_site_packages = true
+disable_error_code = [
+  "var-annotated",
+  "attr-defined",
+  "override",
+  "name-defined",
+  "arg-type",
+  "union-attr",
+]
 
 [[tool.mypy.overrides]]
 module = [
@@ -23,5 +34,23 @@ module = [
   "uvicorn",
   "fastapi",
   "fastapi.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+  "gi",
+  "gi.*",
+  "requests",
+  "requests.*",
+  "bs4",
+  "bs4.*",
+  "PIL",
+  "PIL.*",
+  "cairo",
+  "numpy",
+  "rdkit",
+  "rdkit.*",
+  "objgraph",
 ]
 ignore_missing_imports = true

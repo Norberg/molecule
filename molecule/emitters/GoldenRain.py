@@ -5,6 +5,7 @@ fall and fade out, simulating the classic bright crystalline "golden rain".
 
 Kept intentionally lightweight (no new dependencies). Uses pyglet.shapes.
 """
+from typing import Any
 
 import random
 import pyglet
@@ -14,7 +15,7 @@ from molecule.emitters.Emitters import register_emitter
 
 
 class GoldenRainParticle:
-    def __init__(self, batch, x, y, group):
+    def __init__(self, batch: Any, x: Any, y: Any, group: Any) -> None:
         ox = random.uniform(-15, 15)
         oy = random.uniform(-10, 10)
         self.x = x + ox
@@ -34,7 +35,7 @@ class GoldenRainParticle:
         self.shape = shapes.Circle(self.x, self.y, radius, color=color, batch=batch, group=group)
         self.shape.opacity = 255
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         self.age += dt
         if self.age >= self.life:
             return False
@@ -50,7 +51,7 @@ class GoldenRainParticle:
         self.shape.opacity = int(255 * (1.0 - fade_progress))
         return True
 
-    def delete(self):
+    def delete(self) -> None:
         if self.shape:
             self.shape.delete()
         self.shape = None
@@ -58,13 +59,13 @@ class GoldenRainParticle:
 
 @register_emitter("golden_rain", auto_spawn=True)
 class GoldenRainEmitter:
-    def __init__(self, batch, position, particle_count=15):
+    def __init__(self, batch: Any, position: Any, particle_count: Any=15) -> None:
         # Use a higher layer so particles are visible above beakers/effects
         group = RenderingOrder.charge  # above elements & background
         self.particles = [GoldenRainParticle(batch, position[0], position[1], group) for _ in range(particle_count)]
         self._dead = False
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         if self._dead:
             return False
         alive = []
@@ -78,7 +79,7 @@ class GoldenRainEmitter:
             self._dead = True
         return not self._dead
 
-    def delete(self):
+    def delete(self) -> None:
         for p in self.particles:
             p.delete()
         self.particles = []

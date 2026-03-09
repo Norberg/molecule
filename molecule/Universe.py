@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from typing import Any
 import random
 import time
 from molecule.Elements import Molecule
@@ -23,13 +24,13 @@ from libcml import Cml
 
 class Universe:
     """Universe contains all fundamental particles and laws needed to get the universe to spin"""
-    def __init__(self):
+    def __init__(self) -> None:
         self.moelcules = {}
         cml = Cml.Reactions()
         cml.parse("data/reactions")
         self.reactor = Reactor(cml.reactions)
 
-    def react(self, reactants, effects):
+    def react(self, reactants: Any, effects: Any) -> Any:
         if len(reactants) == 0:
             return
         elif len(reactants) == 1 and Config.current.DEBUG:
@@ -57,7 +58,7 @@ class Universe:
                 print(reaction.reactants, "+", effect_names, "->", reaction.products)
             return reaction
 
-def create_elements(space, elements, batch, pos=None):
+def create_elements(space: Any, elements: Any, batch: Any, pos: Any=None) -> Any:
     """ Create a set of elements
     body: shape to attach molecule to
     element: list of elements to create

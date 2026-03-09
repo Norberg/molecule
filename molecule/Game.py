@@ -28,12 +28,12 @@ from molecule.server.Server import Server
 from molecule.LevelMenu import LevelMenu
 
 class Game(pyglet.window.Window):
-    def __init__(self):
+    def __init__(self) -> None:
         config = self.create_config()
         fullscreen = Config.current.fullscreen
         resizable = Config.current.resizable
-        width = Config.current.width
-        height = Config.current.height
+        width: int | None = Config.current.width
+        height: int | None = Config.current.height
         if fullscreen:
             width = None
             height = None
@@ -42,11 +42,11 @@ class Game(pyglet.window.Window):
             width=width, height=height)
         self.init_pyglet()
         self.DEBUG_GRAPHICS = False
-        self.level = None
-        self.menu = None # Add menu state
+        self.level: object | None = None
+        self.menu: object | None = None # Add menu state
         self.start()
 
-    def create_config(self):
+    def create_config(self) -> object:
         # In pyglet 2+, we can create a config directly without going through canvas
         try:
             config = pyglet.gl.Config(sample_buffers=1,
@@ -58,7 +58,7 @@ class Game(pyglet.window.Window):
             config = pyglet.gl.Config(double_buffer=True)
         return config
 
-    def start(self):
+    def start(self) -> None:
         pyglet.gl.glClearColor(250/256.0, 250/256.0, 250/256.0, 0)
         self.levels = Levels("data/levels", Config.current.level, window=self)
         self.penalty = 0
@@ -70,11 +70,11 @@ class Game(pyglet.window.Window):
         else:
             self.show_menu(start_at_map=True)
 
-    def add_penalty(self, seconds):
+    def add_penalty(self, seconds: int) -> None:
         self.penalty += seconds
 
 
-    def show_menu(self, start_at_map=False):
+    def show_menu(self, start_at_map: bool=False) -> None:
         if self.level:
             self.level.delete()
             self.level = None
@@ -82,7 +82,7 @@ class Game(pyglet.window.Window):
             self.menu.delete()
         self.menu = LevelMenu(self, self.levels, self.on_level_selected, start_at_map=start_at_map)
 
-    def on_level_selected(self, level_path):
+    def on_level_selected(self, level_path: str) -> None:
         # Find index of selected level
         for i, path in enumerate(self.levels.levels):
             if path == level_path:
@@ -97,17 +97,17 @@ class Game(pyglet.window.Window):
         self.switch_level(level)
         
 
-    def init_pyglet(self):
+    def init_pyglet(self) -> None:
         gl.glLineWidth(4)
         gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
 
-    def update(self, dt):
+    def update(self, dt: float) -> None:
         if self.level:
             self.level.update()
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         if self.menu:
             self.menu.on_draw()
             return
@@ -120,17 +120,17 @@ class Game(pyglet.window.Window):
             options = pyglet_util.DrawOptions()
             self.space.debug_draw(options)
 
-    def switch_level(self, level):
+    def switch_level(self, level: object) -> None:
         """ Switch to level """
         if self.level is not None:
             self.level.delete()
         self.run_level(level)
 
-    def run_level(self, level):
+    def run_level(self, level: object) -> None:
         self.batch = level.batch
         self.level = level
         self.space = level.space
 
-    def reset_level(self):
+    def reset_level(self) -> None:
         level = self.levels.get_current_level()
         self.switch_level(level)

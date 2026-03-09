@@ -4,13 +4,14 @@ Spawns an ascending rocket that explodes into colorful particles.
 Color can be overridden via 'color' (#RRGGBB) parameter; otherwise random hue.
 Lightweight pyglet implementation.
 """
+from typing import Any
 import random, math
 import pyglet
 from pyglet import shapes
 from molecule import RenderingOrder
 from molecule.emitters.Emitters import register_emitter
 
-def _parse_hex(color_hex):
+def _parse_hex(color_hex: Any) -> Any:
     if not color_hex:
         return None
     color_hex = color_hex.strip().lstrip('#')
@@ -28,7 +29,7 @@ class _ExplosionParticle:
     scale: allows shrinking (radius & lifetime) for small explosions.
     scale=0.5 -> ~50% radius, 50% lifetime (after size-based adjustment).
     """
-    def __init__(self, batch, x, y, base_color, group, scale=1.0):
+    def __init__(self, batch: Any, x: Any, y: Any, base_color: Any, group: Any, scale: Any=1.0) -> None:
         angle = random.uniform(0, 2*math.pi)
         speed = random.uniform(140 * 0.4286, 380 * 0.4286)
         self.vx = math.cos(angle) * speed
@@ -44,7 +45,7 @@ class _ExplosionParticle:
                 random.randint(120, 255)
             )
         # Random slight hue shift per particle
-        def shift(c):
+        def shift(c: Any) -> Any:
             return max(0, min(255, int(c + random.uniform(-40, 40))))
         color = tuple(shift(c) for c in base_color)
         base_radius = random.uniform(2.0, 6.0)
@@ -63,7 +64,7 @@ class _ExplosionParticle:
         self.shape.opacity = 255
     # no glitter sink
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         self.age += dt
         if self.age >= self.life:
             return False
@@ -96,7 +97,7 @@ class _ExplosionParticle:
         self.shape.opacity = int(255 * fade * twinkle)
         return True
 
-    def delete(self):
+    def delete(self) -> None:
         if self.shape:
             self.shape.delete()
         self.shape = None
@@ -107,7 +108,7 @@ class _ExplosionParticle:
 
 class _SmokeParticle:
     """Soft expanding smoke puff used in trail and post‑explosion."""
-    def __init__(self, batch, x, y, group):
+    def __init__(self, batch: Any, x: Any, y: Any, group: Any) -> None:
         self.x = x; self.y = y
         self.life = random.uniform(0.4, 0.8)
         self.age = 0.0
@@ -116,7 +117,7 @@ class _SmokeParticle:
         self.shape = shapes.Circle(self.x, self.y, self.radius, color=(gray, gray, gray), batch=batch, group=group)
         self.shape.opacity = 140
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         self.age += dt
         if self.age >= self.life:
             return False
@@ -126,14 +127,14 @@ class _SmokeParticle:
         self.shape.opacity = int(140 * fade * 0.9)
         return True
 
-    def delete(self):
+    def delete(self) -> None:
         if self.shape:
             self.shape.delete()
         self.shape = None
 
 class _EmberParticle:
     """Short-lived warm ember drifting downward after explosion."""
-    def __init__(self, batch, x, y, group):
+    def __init__(self, batch: Any, x: Any, y: Any, group: Any) -> None:
         angle = random.uniform(0, 2*math.pi)
         speed = random.uniform(30, 90)
         self.vx = math.cos(angle) * speed * 0.55  # slightly flattened radial
@@ -151,7 +152,7 @@ class _EmberParticle:
         self.shape = shapes.Circle(self.x, self.y, random.uniform(1.6, 2.6), color=color, batch=batch, group=group)
         self.shape.opacity = 240
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         self.age += dt
         if self.age >= self.life:
             return False
@@ -171,7 +172,7 @@ class _EmberParticle:
             self.shape.color = (r, max(0, int(g*0.97)), max(0, int(b*0.94)))
         return True
 
-    def delete(self):
+    def delete(self) -> None:
         if self.shape:
             self.shape.delete()
         self.shape = None
@@ -179,7 +180,7 @@ class _EmberParticle:
 @register_emitter("fireworks", auto_spawn=False)
 class FireworksEmitter:
     # Controlled exclusively by the Fireworks effect; do not auto-spawn on product creation.
-    def __init__(self, batch, position, color=None, consume_callback=None, molecule=None):
+    def __init__(self, batch: Any, position: Any, color: Any=None, consume_callback: Any=None, molecule: Any=None) -> None:
         self.batch = batch
         self.group = RenderingOrder.charge
         self.x, self.y = position
@@ -221,7 +222,7 @@ class FireworksEmitter:
             self.x+3.5, self.y-2,
             self.x+8.0, self.y+1,
             color=(200,200,210), batch=batch, group=self.group)
-        self.rocket_shapes = [
+        self.rocket_shapes: list[Any] | None = [
             self.rocket_body,
             self.rocket_stripe,
             self.rocket_nose,
@@ -252,7 +253,7 @@ class FireworksEmitter:
         self.smoke_particles = []
         self.ember_particles = []
 
-    def _start_explosion(self):
+    def _start_explosion(self) -> None:
         cx = self.x
         cy = self.y
         if self.rocket_shapes:
@@ -297,7 +298,7 @@ class FireworksEmitter:
             self.shockwave = shapes.Circle(cx, cy, 10, color=(255,255,255), batch=self.batch, group=self.group)
             self.shockwave.opacity = 180
 
-    def update(self, dt):
+    def update(self, dt: Any) -> Any:
         if self._dead:
             return False
         if self.stage == 'rocket':
@@ -437,7 +438,7 @@ class FireworksEmitter:
                 self._dead = True
         return not self._dead
 
-    def delete(self):
+    def delete(self) -> None:
         if self.rocket_shapes:
             for s in self.rocket_shapes:
                 s.delete()

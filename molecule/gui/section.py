@@ -1,14 +1,15 @@
+from typing import Any
 from pyglet.text import Label
 from molecule import RenderingOrder
 from .base import Widget
 
 class SectionHeader(Widget):
-    def __init__(self, text, x=0, y=0, width=200, height=30, batch=None, group=None):
+    def __init__(self, text: Any, x: Any=0, y: Any=0, width: Any=200, height: Any=30, batch: Any=None, group: Any=None) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.text = text
         self._create_label()
 
-    def _create_label(self):
+    def _create_label(self) -> None:
         if self.batch:
             self.label = Label(
                 self.text, x=self.x, y=self.y + self.height//2,
@@ -19,7 +20,7 @@ class SectionHeader(Widget):
         else:
             self.label = None
 
-    def delete(self):
+    def delete(self) -> None:
         if self.label:
             self.label.delete()
         super().delete()

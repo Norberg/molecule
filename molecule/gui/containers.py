@@ -1,33 +1,34 @@
+from typing import Any
 from .base import Widget
 
 class Container(Widget):
-    def __init__(self, x, y, width, height, batch=None, group=None):
+    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.children = []
         self.align = 'left'
 
-    def add(self, widget, do_layout=True):
+    def add(self, widget: Any, do_layout: Any=True) -> None:
         if widget:
             widget.parent = self
             self.children.append(widget)
             if do_layout:
                 self.layout()
 
-    def remove(self, widget):
+    def remove(self, widget: Any) -> None:
         if widget in self.children:
             self.children.remove(widget)
             if hasattr(widget, 'delete'):
                 widget.delete()
             self.layout()
 
-    def delete(self):
+    def delete(self) -> None:
         for child in list(self.children):
             if child and hasattr(child, 'delete'):
                 child.delete()
         self.children = []
         super().delete()
 
-    def _layout_children(self):
+    def _layout_children(self) -> None:
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
@@ -46,13 +47,13 @@ class Container(Widget):
             else:
                 child.x = self.x
 
-    def layout(self):
+    def layout(self) -> None:
         self._layout_children()
         for child in self.children:
             if hasattr(child, 'layout'):
                 child.layout()
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         super().shift(dx, dy)
         for child in self.children:
             if child:
@@ -62,7 +63,7 @@ class Container(Widget):
                     child.x += dx
                     child.y += dy
 
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -71,14 +72,14 @@ class Container(Widget):
                     return True
         return False
 
-    def on_mouse_motion(self, x, y, dx, dy):
+    def on_mouse_motion(self, x: Any, y: Any, dx: Any, dy: Any) -> Any:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_motion'):
                 if child.on_mouse_motion(x, y, dx, dy):
                     return True
         return False
 
-    def on_mouse_press(self, x, y, button, modifiers):
+    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -87,14 +88,14 @@ class Container(Widget):
                     return True
         return False
 
-    def on_mouse_release(self, x, y, button, modifiers):
+    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False
 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
+    def on_mouse_drag(self, x: Any, y: Any, dx: Any, dy: Any, buttons: Any, modifiers: Any) -> Any:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -104,11 +105,11 @@ class Container(Widget):
         return False
 
 class VerticalContainer(Container):
-    def __init__(self, x, y, width, height, batch=None, group=None, spacing=0):
+    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None, spacing: Any=0) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.spacing = spacing
 
-    def _layout_children(self):
+    def _layout_children(self) -> None:
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
@@ -131,11 +132,11 @@ class VerticalContainer(Container):
                 child.x = self.x
 
 class HorizontalContainer(Container):
-    def __init__(self, x, y, width, height, batch=None, group=None, spacing=0):
+    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None, spacing: Any=0) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.spacing = spacing
 
-    def _layout_children(self):
+    def _layout_children(self) -> None:
         pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
         if hasattr(self, 'get_padding'):
             pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
@@ -150,6 +151,6 @@ class HorizontalContainer(Container):
 
 class AbsoluteContainer(Container):
     """A container that does not enforce width/height on its children during layout."""
-    def _layout_children(self):
+    def _layout_children(self) -> None:
         # Simply don't do anything to children coordinates or sizes
         pass

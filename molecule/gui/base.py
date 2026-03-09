@@ -1,5 +1,6 @@
+from typing import Any
 class Widget:
-    def __init__(self, x, y, width, height, batch=None, group=None):
+    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None) -> None:
         self.x = x
         self.y = y
         self.width = width
@@ -8,24 +9,24 @@ class Widget:
         self.group = group
         self.visible = True
 
-    def contains_point(self, x, y):
+    def contains_point(self, x: Any, y: Any) -> Any:
         return (self.x <= x <= self.x + self.width and 
                 self.y <= y <= self.y + self.height)
 
-    def delete(self):
+    def delete(self) -> None:
         pass
 
-    def shift(self, dx, dy):
+    def shift(self, dx: Any, dy: Any) -> None:
         self.x += dx
         self.y += dy
 
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
         return False
 
 # Shared GUI helpers
 import pyglet
 
-def draw_nine_patch(batch, group, img, x, y, width, height, frame, padding):
+def draw_nine_patch(batch: Any, group: Any, img: Any, x: Any, y: Any, width: Any, height: Any, frame: Any, padding: Any) -> Any:
     left, top, right, bottom = frame
     img_w, img_h = img.width, img.height
 
