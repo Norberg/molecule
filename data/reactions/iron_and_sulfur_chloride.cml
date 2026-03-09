@@ -34,6 +34,9 @@
       <molecule title="FeO(s)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -44,6 +47,9 @@
       <molecule title="Fe(s)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <!-- Pidginon / silicothermic magnesium production (simplified) -->
   <reaction>
@@ -57,6 +63,9 @@
       <molecule title="Mg(g)"/>
       <molecule title="Mg(g)"/>
     </productList>
+    <tagList>
+      <tag>Reduction reaction</tag>
+    </tagList>
   </reaction>
   <!-- Sulfur chlorination and mustard precursor -->
   <reaction>
@@ -73,6 +82,9 @@
       <molecule title="S2Cl2(g)"/>
       <molecule title="S2Cl2(g)"/>
     </productList>
+    <tagList>
+      <tag>Oxidation reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -83,6 +95,9 @@
       <molecule title="SCl2(g)"/>
       <molecule title="SCl2(g)"/>
     </productList>
+    <tagList>
+      <tag>Oxidation reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -93,5 +108,8 @@
     <productList>
       <molecule title="C4H8Cl2S(g)"/>
     </productList>
+    <tagList>
+      <tag>Addition reaction</tag>
+    </tagList>
   </reaction>
 </reactions>

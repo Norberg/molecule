@@ -187,6 +187,10 @@
     "title": "Hydrodealkylation",
     "description": "Hydrodealkylation is a chemical reaction that involves the removal of alkyl groups from aromatic rings in the presence of hydrogen, often producing simpler aromatic hydrocarbons like benzene."
   },
+  "Hydrogen halide formation": {
+    "title": "Hydrogen halide formation",
+    "description": "Hydrogen halide formation covers direct combination of dihydrogen with a halogen to produce hydrogen halides such as HCl or HBr. These products are important intermediates in halogenation, acid chemistry, and bulk inorganic synthesis."
+  },
   "Hydrogen abstraction": {
     "description": "Hydrogen abstraction is a bimolecular radical process in which a radical removes an H atom (H\u00b7) from a donor substrate, forming a new \u03c3 bond and a new radical center. This step translocates radical character onto a different molecular framework, lowering barriers for subsequent functionalization (e.g. O incorporation) and shaping chain propagation kinetics. Selectivity reflects C\u2013H bond dissociation energies, steric accessibility, and polar (electron\u2011withdrawing / donating) effects.",
     "title": "Hydrogen abstraction"
@@ -446,6 +450,10 @@
   "Electrolysis": {
     "title": "Electrolysis",
     "description": "Electrolysis is a technique that uses a direct electric current (DC) to drive an otherwise non-spontaneous chemical reaction. Electrolysis is commercially important as a stage in the separation of elements from naturally occurring sources such as ores using an electrolytic cell."
+  },
+  "Electrolytic bromine production": {
+    "title": "Electrolytic bromine production",
+    "description": "Electrolytic bromine production refers to oxidation of bromide ions at the anode during electrolysis of bromide brines, producing elemental bromine while reduction at the cathode commonly generates hydrogen and hydroxide."
   },
   "Bayer process": {
     "title": "Bayer process",

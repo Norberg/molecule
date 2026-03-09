@@ -4,6 +4,9 @@
     <atom x2="0.0" y2="-0.0" formalCharge="1" id="a1" elementType="K"/>
     <atom x2="1.2" y2="-0.0" formalCharge="-1" id="a2" elementType="Br"/>
   </ns0:atomArray>
+  <bondArray>
+    <bond atomRefs2="a1 a2" order="0"/>
+  </bondArray>
   <propertyList title="states">
     <propertyList title="Solid">
       <property title="enthalpy">

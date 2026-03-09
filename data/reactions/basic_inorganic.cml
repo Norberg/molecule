@@ -9,6 +9,9 @@
     <productList>
       <molecule title="OH-(aq)"/>
     </productList>
+    <tagList>
+      <tag>Protonation</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -18,6 +21,9 @@
     <productList>
       <molecule title="O2(g)"/>
     </productList>
+    <tagList>
+      <tag>Combination reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -27,6 +33,9 @@
     <productList>
       <molecule title="H2O(l)"/>
     </productList>
+    <tagList>
+      <tag>Combination reaction</tag>
+    </tagList>
   </reaction>
   <!-- Bulk water formation using molecular oxygen -->
   <reaction>
@@ -39,6 +48,9 @@
       <molecule title="H2O(l)"/>
       <molecule title="H2O(l)"/>
     </productList>
+    <tagList>
+      <tag>Combustion reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -48,6 +60,9 @@
     <productList>
       <molecule title="H2(g)"/>
     </productList>
+    <tagList>
+      <tag>Reduction reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -57,6 +72,9 @@
     <productList>
       <molecule title="H2O(l)"/>
     </productList>
+    <tagList>
+      <tag>Neutralization reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -69,6 +87,9 @@
       <molecule title="H2(g)"/>
       <molecule title="H2(g)"/>
     </productList>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -81,6 +102,9 @@
       <molecule title="H2O(g)"/>
       <molecule title="H2O(g)"/>
     </productList>
+    <tagList>
+      <tag>Combustion reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -112,6 +136,9 @@
     <productList>
       <molecule title="CaO2H2(s)"/>
     </productList>
+    <tagList>
+      <tag>Combination reaction</tag>
+    </tagList>
   </reaction>
   <!-- Added remaining migrated reactions -->
   <!-- Start appended -->
@@ -127,6 +154,9 @@
       <molecule title="H2O(g)"/>
       <molecule title="H2(g)"/>
     </productList>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -174,6 +204,9 @@
       <molecule title="CH4N2O(s)"/>
       <molecule title="H2O(g)"/>
     </productList>
+    <tagList>
+      <tag>Condensation reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -183,6 +216,9 @@
     <productList>
       <molecule title="N2(g)"/>
     </productList>
+    <tagList>
+      <tag>Combination reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -195,6 +231,9 @@
       <molecule title="NH3(g)"/>
       <molecule title="NH3(g)"/>
     </productList>
+    <tagList>
+      <tag>Reduction reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -210,6 +249,9 @@
       <molecule title="H2O(g)"/>
       <molecule title="H2O(g)"/>
     </productList>
+    <tagList>
+      <tag>Combustion reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -219,6 +261,9 @@
     <productList>
       <molecule title="CaCO3(s)"/>
     </productList>
+    <tagList>
+      <tag>Precipitation</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -228,6 +273,9 @@
     <productList>
       <molecule title="C2H5ClO(l)"/>
     </productList>
+    <tagList>
+      <tag>Addition reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -237,6 +285,9 @@
     <productList>
       <molecule title="CO2(g)"/>
     </productList>
+    <tagList>
+      <tag>Combustion reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -247,6 +298,9 @@
       <molecule title="CO(g)"/>
       <molecule title="CO(g)"/>
     </productList>
+    <tagList>
+      <tag>Redox reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -257,6 +311,9 @@
       <molecule title="C(s)"/>
       <molecule title="CO2(g)"/>
     </productList>
+    <tagList>
+      <tag>Disproportionation reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -270,6 +327,9 @@
     <productList>
       <molecule title="P4O10(s)"/>
     </productList>
+    <tagList>
+      <tag>Combustion reaction</tag>
+    </tagList>
   </reaction>
   <!-- Carbocation / addition / substitution cluster -->
   <reaction>
@@ -335,6 +395,22 @@
   </reaction>
   <reaction>
     <reactantList>
+      <molecule title="C2H4"/>
+      <molecule title="HBr"/>
+    </reactantList>
+    <productList>
+      <molecule title="C2H5Br(g)"/>
+    </productList>
+    <description>
+      Ethene reacts with hydrogen bromide in an electrophilic addition to form bromoethane.
+    </description>
+    <tagList>
+      <tag>Addition reaction</tag>
+      <tag>Electrophilic addition</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
       <molecule title="OH-"/>
       <molecule title="CH3Br"/>
     </reactantList>
@@ -368,6 +444,9 @@
     <productList>
       <molecule title="C4H11O+(l)"/>
     </productList>
+    <tagList>
+      <tag>Nucleophilic addition</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -378,6 +457,9 @@
       <molecule title="C4H10O(l)"/>
       <molecule title="H3O+(aq)"/>
     </productList>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+    </tagList>
   </reaction>
   <reaction>
     <reactantList>
@@ -388,6 +470,9 @@
       <molecule title="HBr(g)"/>
       <molecule title="H2O(l)"/>
     </productList>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+    </tagList>
   </reaction>
   <!-- End appended -->
   <!-- Golden rain net ionic: Pb+2 + 2 I- -> PbI2(s) -->
@@ -505,6 +590,9 @@
       <molecule title="OH-(aq)"/>
       <molecule title="OH-(aq)"/>
     </productList>
+    <tagList>
+      <tag>Dissolution</tag>
+    </tagList>
   </reaction>
   <!-- Aluminum production sequence -->
   <reaction>
@@ -552,7 +640,51 @@
     </description>
     <tagList>
       <tag>Electrolysis</tag>
+      <tag>Electrolytic bromine production</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="KBr"/>
+      <molecule title="KBr"/>
+      <molecule title="H2O"/>
+      <molecule title="H2O"/>
+    </reactantList>
+    <productList>
+      <molecule title="K+(aq)"/>
+      <molecule title="K+(aq)"/>
+      <molecule title="OH-(aq)"/>
+      <molecule title="OH-(aq)"/>
+      <molecule title="Br2(g)"/>
+      <molecule title="H2(g)"/>
+    </productList>
+    <requirementList>
+      <requirement type="Electrolysis" molar_energy="620.0"/>
+    </requirementList>
+    <description>
+      Electrolytic bromine production: concentrated potassium bromide brine is electrolyzed to produce
+      bromine at the anode and hydrogen at the cathode, while potassium hydroxide accumulates in
+      solution.
+    </description>
+    <tagList>
+      <tag>Electrolysis</tag>
       <tag>Chloralkali process</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="H2"/>
+      <molecule title="Br2"/>
+    </reactantList>
+    <productList>
+      <molecule title="HBr(g)"/>
+      <molecule title="HBr(g)"/>
+    </productList>
+    <description>
+      Direct synthesis of hydrogen bromide from hydrogen and bromine.
+    </description>
+    <tagList>
+      <tag>Hydrogen halide formation</tag>
     </tagList>
   </reaction>
   <reaction>

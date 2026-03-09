@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="KBr(s)"/>
+    <molecule title="KBr(s)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="H2O(l)"/>
+    <molecule title="C2H4(g)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="Electrolysis" x2="920" y2="420"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="C2H5Br"/>
+  </victoryCondition>
+  <objective text="Synthesize bromoethane (C2H5Br) from KBr brine via electrolytic bromine production"/>
+  <hint text="Run electrolytic bromine production on KBr brine to generate Br2 and H2. Convert those to HBr, then react HBr with ethene to form bromoethane.">
+    <reactions>
+      <!-- Step 1: New electrolysis route for bromine -->
+      <reaction>
+        <reactantList>
+          <molecule title="KBr"/>
+          <molecule title="KBr"/>
+          <molecule title="H2O"/>
+          <molecule title="H2O"/>
+        </reactantList>
+        <productList>
+          <molecule title="K+(aq)"/>
+          <molecule title="K+(aq)"/>
+          <molecule title="OH-(aq)"/>
+          <molecule title="OH-(aq)"/>
+          <molecule title="Br2(g)"/>
+          <molecule title="H2(g)"/>
+        </productList>
+        <requirementList>
+          <requirement type="Electrolysis" molar_energy="620.0"/>
+        </requirementList>
+      </reaction>
+      <!-- Step 2: Form hydrogen bromide -->
+      <reaction>
+        <reactantList>
+          <molecule title="H2"/>
+          <molecule title="Br2"/>
+        </reactantList>
+        <productList>
+          <molecule title="HBr(g)"/>
+          <molecule title="HBr(g)"/>
+        </productList>
+      </reaction>
+      <!-- Step 3: Hydrobromination of ethene -->
+      <reaction>
+        <reactantList>
+          <molecule title="C2H4"/>
+          <molecule title="HBr"/>
+        </reactantList>
+        <productList>
+          <molecule title="C2H5Br(g)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>
