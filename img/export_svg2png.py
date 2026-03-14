@@ -1,4 +1,3 @@
-from typing import Any
 import glob
 import os
 import sys
@@ -12,7 +11,7 @@ custom_sizes = {
     "fireworks": {"width": 256, "height": 256},
 }
 
-def collect_all_svgs() -> Any:
+def collect_all_svgs() -> dict[str, str]:
     """Return dict mapping basename -> full svg path from svg/ folder."""
     mapping = {}
     for path in glob.glob("svg/*.svg"):
@@ -21,7 +20,9 @@ def collect_all_svgs() -> Any:
     return mapping
 
 
-def resolve_requested_svgs(args_list: Any, all_svgs: Any) -> Any:
+def resolve_requested_svgs(
+    args_list: list[str], all_svgs: dict[str, str]
+) -> tuple[list[str], list[str]]:
     """Resolve user supplied names/paths to actual svg paths.
 
     Accepted forms per argument:
@@ -53,7 +54,7 @@ def resolve_requested_svgs(args_list: Any, all_svgs: Any) -> Any:
     return resolved, missing
 
 
-def export_svg(svg_path: Any) -> Any:
+def export_svg(svg_path: str) -> bool:
     basename = os.path.splitext(os.path.basename(svg_path))[0]
     if basename in to_skip:
         return False  # skipped
@@ -70,7 +71,7 @@ def export_svg(svg_path: Any) -> Any:
     return True
 
 
-def parse_args(argv: Any) -> Any:
+def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Export SVG icons in svg/ to PNG med fördefinierade storlekar. Utan argument exporteras alla.")
     parser.add_argument(
@@ -80,7 +81,7 @@ def parse_args(argv: Any) -> Any:
     return parser.parse_args(argv)
 
 
-def main(argv: Any=None) -> Any:
+def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv or sys.argv[1:])
     all_svgs = collect_all_svgs()
     selected, missing = resolve_requested_svgs(args.svgs, all_svgs)

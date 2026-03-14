@@ -1,13 +1,25 @@
-from typing import Any
+from __future__ import annotations
+
+from typing import Sequence
 from pyglet.shapes import Rectangle
 from molecule import RenderingOrder
 from .theme import theme
 from .base import Widget, draw_nine_patch
 
 class Frame(Widget):
-    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None,
-                 background_color: Any=None, border_color: Any=None,
-                 is_expandable: Any=False, frame_type: Any="frame") -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+        background_color: Sequence[int] | None = None,
+        border_color: Sequence[int] | None = None,
+        is_expandable: bool = False,
+        frame_type: str = "frame",
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.background_color = background_color or theme.get_color("gui_color")
         self.border_color = border_color or [100, 100, 100, 255]
@@ -59,14 +71,16 @@ class Frame(Widget):
             self.bg_rect = None
             self.border_rect = None
 
-    def add(self, child: Any) -> None:
+    def add(self, child: Widget) -> None:
         self.children.append(child)
         child.parent = self
 
-    def add_child(self, child: Any) -> None:
+    def add_child(self, child: Widget) -> None:
         self.add(child)
 
-    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
+    def on_mouse_scroll(
+        self, x: float, y: float, scroll_x: float, scroll_y: float
+    ) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -75,7 +89,7 @@ class Frame(Widget):
                     return True
         return False
 
-    def on_mouse_motion(self, x: Any, y: Any, dx: Any, dy: Any) -> Any:
+    def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_motion'):
                 if child.on_mouse_motion(x, y, dx, dy):
@@ -122,13 +136,13 @@ class Frame(Widget):
             self.border_rect.delete()
         super().delete()
 
-    def get_padding(self) -> Any:
+    def get_padding(self) -> list[int]:
         frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
         if frame_theme and "image" in frame_theme:
             return frame_theme["image"].get("padding", [8, 8, 8, 8])
         return [8, 8, 8, 8]
 
-    def shift(self, dx: Any, dy: Any) -> None:
+    def shift(self, dx: float, dy: float) -> None:
         self.x += dx
         self.y += dy
         if self.bg_rect is not None:
@@ -149,7 +163,7 @@ class Frame(Widget):
                 c.x += dx
                 c.y += dy
 
-    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -158,14 +172,18 @@ class Frame(Widget):
                     return True
         return False
 
-    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_release(
+        self, x: float, y: float, button: int, modifiers: int
+    ) -> bool:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False
 
-    def on_mouse_drag(self, x: Any, y: Any, dx: Any, dy: Any, buttons: Any, modifiers: Any) -> Any:
+    def on_mouse_drag(
+        self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int
+    ) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):

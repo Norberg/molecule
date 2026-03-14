@@ -1,4 +1,3 @@
-from typing import Any
 import argparse
 import subprocess
 
@@ -19,7 +18,7 @@ from libreact.Reaction import verify as Reaction_verify
 from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
 
-def fetch_smiles(formula: Any) -> Any:
+def fetch_smiles(formula: str) -> str:
     ret = subprocess.Popen(["obabel", "-icml", f"data/molecule/{formula}.cml", "-osmi"], stdout=subprocess.PIPE)
     return ret.stdout.read().decode().strip()
 

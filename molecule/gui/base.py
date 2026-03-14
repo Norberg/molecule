@@ -1,6 +1,18 @@
-from typing import Any
+from typing import Sequence
+
+import pyglet
+
+
 class Widget:
-    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None) -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+    ) -> None:
         self.x = x
         self.y = y
         self.width = width
@@ -9,24 +21,33 @@ class Widget:
         self.group = group
         self.visible = True
 
-    def contains_point(self, x: Any, y: Any) -> Any:
+    def contains_point(self, x: float, y: float) -> bool:
         return (self.x <= x <= self.x + self.width and 
                 self.y <= y <= self.y + self.height)
 
     def delete(self) -> None:
         pass
 
-    def shift(self, dx: Any, dy: Any) -> None:
+    def shift(self, dx: float, dy: float) -> None:
         self.x += dx
         self.y += dy
 
-    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
+    def on_mouse_scroll(
+        self, x: float, y: float, scroll_x: float, scroll_y: float
+    ) -> bool:
         return False
 
-# Shared GUI helpers
-import pyglet
-
-def draw_nine_patch(batch: Any, group: Any, img: Any, x: Any, y: Any, width: Any, height: Any, frame: Any, padding: Any) -> Any:
+def draw_nine_patch(
+    batch: object | None,
+    group: object | None,
+    img: pyglet.image.AbstractImage,
+    x: float,
+    y: float,
+    width: float,
+    height: float,
+    frame: Sequence[int],
+    padding: Sequence[int],
+) -> list[pyglet.sprite.Sprite]:
     left, top, right, bottom = frame
     img_w, img_h = img.width, img.height
 

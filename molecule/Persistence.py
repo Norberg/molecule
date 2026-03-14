@@ -13,17 +13,27 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
+from typing import TypedDict
 import sqlite3
 import datetime
-import os
+
+
+class PerformedReaction(TypedDict):
+    reaction_title: str
+    total_count: int
+
+
+class PlayerAchievement(TypedDict):
+    key: str
+    level: str
+    unlocked_at: str
 
 class Persistence:
-    def __init__(self, db_path: Any="progress.db") -> None:
+    def __init__(self, db_path: str = "progress.db") -> None:
         self.db_path = db_path
         self._init_db()
 
-    def _get_conn(self) -> Any:
+    def _get_conn(self) -> sqlite3.Connection:
         return sqlite3.connect(self.db_path)
 
     def _init_db(self) -> None:
@@ -97,7 +107,7 @@ class Persistence:
 
             conn.commit()
 
-    def get_player_id(self, name: Any) -> Any:
+    def get_player_id(self, name: str) -> int | None:
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute("SELECT id FROM players WHERE name = ?", (name,))
@@ -106,7 +116,7 @@ class Persistence:
                 return row[0]
         return None
 
-    def create_player(self, name: Any) -> Any:
+    def create_player(self, name: str) -> int | None:
         with self._get_conn() as conn:
             cur = conn.cursor()
             try:
@@ -117,13 +127,13 @@ class Persistence:
                 player_id = self.get_player_id(name)
         return player_id
 
-    def get_players(self) -> Any:
+    def get_players(self) -> list[str]:
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute("SELECT name FROM players")
             return [row[0] for row in cur.fetchall()]
 
-    def mark_completed(self, player_id: Any, level_path: Any, score: Any) -> None:
+    def mark_completed(self, player_id: int, level_path: str, score: float) -> None:
         now = datetime.datetime.now().isoformat()
         with self._get_conn() as conn:
             cur = conn.cursor()
@@ -144,7 +154,13 @@ class Persistence:
             
             conn.commit()
 
-    def update_player_stats(self, player_id: Any, reactions: Any, molecules_seen: Any, molecules_created: Any) -> None:
+    def update_player_stats(
+        self,
+        player_id: int,
+        reactions: dict[str, int],
+        molecules_seen: set[str],
+        molecules_created: dict[str, int],
+    ) -> None:
         """
         reactions: dict of {reaction_title: count}
         molecules_seen: set of molecule_formula
@@ -181,7 +197,7 @@ class Persistence:
 
             conn.commit()
 
-    def get_completed_levels(self, player_id: Any) -> Any:
+    def get_completed_levels(self, player_id: int | None) -> set[str]:
         if player_id is None:
             return set()
         with self._get_conn() as conn:
@@ -189,7 +205,9 @@ class Persistence:
             cur.execute("SELECT level_path FROM level_progress WHERE player_id = ?", (player_id,))
             return set(row[0] for row in cur.fetchall())
 
-    def get_top_scores(self, player_id: Any, level_path: Any, limit: Any=10) -> Any:
+    def get_top_scores(
+        self, player_id: int, level_path: str, limit: int = 10
+    ) -> list[tuple[str, float]]:
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute("""
@@ -200,7 +218,7 @@ class Persistence:
             """, (player_id, level_path, limit))
             return cur.fetchall()
 
-    def get_seen_molecules(self, player_id: Any) -> Any:
+    def get_seen_molecules(self, player_id: int | None) -> set[str]:
         if player_id is None:
             return set()
         with self._get_conn() as conn:
@@ -208,7 +226,7 @@ class Persistence:
             cur.execute("SELECT molecule_formula FROM player_molecules_seen WHERE player_id = ?", (player_id,))
             return set(row[0] for row in cur.fetchall())
 
-    def get_created_molecules(self, player_id: Any) -> Any:
+    def get_created_molecules(self, player_id: int | None) -> dict[str, int]:
         if player_id is None:
             return {}
         with self._get_conn() as conn:
@@ -216,7 +234,7 @@ class Persistence:
             cur.execute("SELECT molecule_formula, total_count FROM player_molecules_created WHERE player_id = ?", (player_id,))
             return {row[0]: row[1] for row in cur.fetchall()}
 
-    def get_performed_reactions(self, player_id: Any) -> Any:
+    def get_performed_reactions(self, player_id: int | None) -> list[PerformedReaction]:
         if player_id is None:
             return []
         with self._get_conn() as conn:
@@ -224,7 +242,7 @@ class Persistence:
             cur.execute("SELECT reaction_title, total_count FROM player_reactions WHERE player_id = ?", (player_id,))
             return [{"reaction_title": row[0], "total_count": row[1]} for row in cur.fetchall()]
 
-    def unlock_achievement(self, player_id: Any, key: Any, level: Any) -> None:
+    def unlock_achievement(self, player_id: int, key: str, level: str) -> None:
         now = datetime.datetime.now().isoformat()
         with self._get_conn() as conn:
             cur = conn.cursor()
@@ -234,12 +252,11 @@ class Persistence:
             """, (player_id, key, level, now))
             conn.commit()
 
-    def get_player_achievements(self, player_id: Any) -> Any:
+    def get_player_achievements(self, player_id: int | None) -> list[PlayerAchievement]:
         if player_id is None:
             return []
         with self._get_conn() as conn:
             cur = conn.cursor()
             cur.execute("SELECT achievement_key, level, unlocked_at FROM player_achievements WHERE player_id = ?", (player_id,))
             return [{"key": row[0], "level": row[1], "unlocked_at": row[2]} for row in cur.fetchall()]
-
 

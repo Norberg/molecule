@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
 import unittest
 from libcml import Cml
 from libcml import CachedCml
@@ -22,13 +21,13 @@ from libreact.Reactor import sublist_in_list
 from libreact.Reactor import Reactor
 import time
 
-def setupRealReactor() -> Any:
+def setupRealReactor() -> Reactor:
     cml = Cml.Reactions()
     cml.parse("data/reactions")
     reactor = Reactor(cml.reactions)
     return reactor
 
-def performance_test(times: Any) -> None:
+def performance_test(times: int) -> None:
     reactor = setupRealReactor()
     for x in range(times):
         reaction = reactor.react(["CH4(g)", "H2O(g)"], K=1000)

@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
+from typing import Sequence
 import random
 import time
 from molecule.Elements import Molecule
@@ -30,9 +30,9 @@ class Universe:
         cml.parse("data/reactions")
         self.reactor = Reactor(cml.reactions)
 
-    def react(self, reactants: Any, effects: Any) -> Any:
+    def react(self, reactants: list[str], effects: Sequence[object]) -> Reaction.Reaction | None:
         if len(reactants) == 0:
-            return
+            return None
         elif len(reactants) == 1 and Config.current.DEBUG:
             # Check if decomposition reaction, might be a bit innificient
             # and also relies on self collision within the molecule
@@ -50,7 +50,7 @@ class Universe:
                 energy_source.append(effect.energy_source)
         reaction = self.reactor.react(reactants, temp, energy_source=energy_source)
 
-        if reaction == None:
+        if reaction is None:
             if Config.current.DEBUG: print(F"Did not react(T={temp}):", reactants)
             return None
         else:
@@ -58,14 +58,19 @@ class Universe:
                 print(reaction.reactants, "+", effect_names, "->", reaction.products)
             return reaction
 
-def create_elements(space: Any, elements: Any, batch: Any, pos: Any=None) -> Any:
+def create_elements(
+    space: object,
+    elements: str | list[str],
+    batch: object,
+    pos: tuple[float, float] | None = None,
+) -> list[Molecule]:
     """ Create a set of elements
     body: shape to attach molecule to
     element: list of elements to create
     pos : position of the new element
     """
-    list_of_elements = list()
-    if pos != None:
+    list_of_elements: list[Molecule] = []
+    if pos is not None:
         x, y = pos
 
     if isinstance(elements, str):
@@ -73,7 +78,7 @@ def create_elements(space: Any, elements: Any, batch: Any, pos: Any=None) -> Any
         elements = [elements]
 
     for element in elements:
-        if pos != None and len(elements) > 1:
+        if pos is not None and len(elements) > 1:
             pos = (x + random.randint(-50,50), y + random.randint(-50, 50))
         list_of_elements.append(Molecule(element, space, batch, pos))
 

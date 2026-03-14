@@ -13,12 +13,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
 import os
+import pyglet
 from pyglet.resource import Loader
 
 loader = Loader("img", script_home=os.getcwd())
 
-def load_image(name: Any) -> Any:
+def load_image(name: str) -> pyglet.image.AbstractImage:
     img = loader.image(name)
     return img

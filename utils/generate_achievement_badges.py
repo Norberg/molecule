@@ -4,8 +4,6 @@ Script to generate achievement badge PNGs.
 Creates temporary composite SVGs (badge + icon) and exports them to PNG.
 Composite SVGs are not saved, only used during generation.
 """
-from typing import Any
-
 import os
 import tempfile
 from xml.etree import ElementTree as ET
@@ -30,7 +28,7 @@ LEVEL_COLORS = {
     "gold": "#8b6508"
 }
 
-def create_composite_svg(achievement_key: Any, level: Any) -> Any:
+def create_composite_svg(achievement_key: str, level: str) -> str:
     """Create a temporary composite SVG by embedding icon into badge."""
     
     # Load badge SVG
@@ -47,7 +45,7 @@ def create_composite_svg(achievement_key: Any, level: Any) -> Any:
     icon_color = LEVEL_COLORS.get(level, "white")
     
     # Helper to recursively recolor elements
-    def recolor_element(element: Any, color: Any) -> None:
+    def recolor_element(element: ET.Element, color: str) -> None:
         # Update fill if it's white/light
         if element.get('fill') in ['white', '#ffffff', '#fff']:
             element.set('fill', color)
@@ -88,7 +86,7 @@ def create_composite_svg(achievement_key: Any, level: Any) -> Any:
     
     return temp_path
 
-def convert_svg_to_png(svg_path: Any, png_path: Any) -> None:
+def convert_svg_to_png(svg_path: str, png_path: str) -> None:
     """Convert SVG to PNG using inkscape."""
     import subprocess
     cmd = [

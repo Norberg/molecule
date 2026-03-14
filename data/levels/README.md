@@ -59,7 +59,7 @@ Typical effect titles and meaning:
    - Simple: only `hint text`.
    - Structured: add `<reactions>` ensuring dataset alignment and execution feasibility.
 7. Run `python -m unittest tests.test_levels.TestLevels.test_all_levels_reactions_possible` to confirm structured hints work and victory is reachable.
-8. Run full suite: `python -m unittest discover` (target ~1–2 s) before committing.
+8. Run full suite: `python -m mypy && python -m unittest discover` (target ~1–2 s + typecheck) before committing.
 9. (Optional) Render skeletal images if new reactions were added: `python utils/rdkit_render.py --render-all`.
 
 ## Common Pitfalls

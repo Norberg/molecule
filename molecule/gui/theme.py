@@ -4,13 +4,13 @@ import os
 import pyglet
 
 class Theme:
-    def __init__(self, theme_path: Any="molecule/theme/theme.json") -> None:
+    def __init__(self, theme_path: str = "molecule/theme/theme.json") -> None:
         self.theme_path = theme_path
         self.theme_data = self._load_theme()
-        self.images = {}
+        self.images: dict[str, pyglet.image.AbstractImage] = {}
         self._load_images()
 
-    def _load_theme(self) -> Any:
+    def _load_theme(self) -> dict[str, Any]:
         try:
             with open(self.theme_path, 'r') as f:
                 return json.load(f)
@@ -41,10 +41,10 @@ class Theme:
             except Exception as e:
                 print(f"Failed to load theme image {img_file}: {e}")
 
-    def get_image(self, image_name: Any) -> Any:
+    def get_image(self, image_name: str) -> pyglet.image.AbstractImage | None:
         return self.images.get(image_name)
 
-    def get_color(self, color_name: Any) -> Any:
+    def get_color(self, color_name: str) -> list[int]:
         return self.theme_data.get(color_name, [0, 0, 0, 255])
 
 # Global theme instance

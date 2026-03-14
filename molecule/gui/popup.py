@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Callable
 from molecule import RenderingOrder
 from .base import Widget
 from .frame import Frame
@@ -6,7 +6,15 @@ from .document import Document
 from .button import Button
 
 class PopupMessage(Widget):
-    def __init__(self, text: Any, window: Any, batch: Any, group: Any=None, theme_obj: Any=None, on_escape: Any=None) -> None:
+    def __init__(
+        self,
+        text: str,
+        window: object,
+        batch: object,
+        group: object | None = None,
+        theme_obj: object | None = None,
+        on_escape: Callable[..., None] | None = None,
+    ) -> None:
         self.window = window
         window_width, window_height = window.get_size()
         width = min(400, window_width - 100)
@@ -42,7 +50,7 @@ class PopupMessage(Widget):
             self.document = Document(self.text, self.x + margin_x, self.y + self.height - top_margin - doc_height,
                                    self.width - 2*margin_x, doc_height,
                                    self.batch, RenderingOrder.gui)
-            def ok_popup(button: Any) -> None:
+            def ok_popup(button: object) -> None:
                 if self.on_escape:
                     try:
                         self.on_escape()
@@ -77,12 +85,16 @@ class PopupMessage(Widget):
             pass
         super().delete()
 
-    def _inside_button(self, x: Any, y: Any) -> Any:
-        return (self.close_button and
-                self.close_button.x <= x <= self.close_button.x + self.close_button.width and
-                self.close_button.y <= y <= self.close_button.y + self.close_button.height)
+    def _inside_button(self, x: float, y: float) -> bool:
+        return bool(
+            self.close_button
+            and self.close_button.x <= x <= self.close_button.x + self.close_button.width
+            and self.close_button.y <= y <= self.close_button.y + self.close_button.height
+        )
 
-    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_press(
+        self, x: float, y: float, button: int, modifiers: int
+    ) -> bool:
         if self._inside_button(x, y):
             if hasattr(self.close_button, 'on_mouse_press'):
                 self.close_button.on_mouse_press(x, y, button, modifiers)
@@ -92,7 +104,9 @@ class PopupMessage(Widget):
             return True
         return False
 
-    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_release(
+        self, x: float, y: float, button: int, modifiers: int
+    ) -> bool:
         if self._mouse_press_within and self._inside_button(x, y):
             if hasattr(self.close_button, 'on_mouse_release'):
                 self.close_button.on_mouse_release(x, y, button, modifiers)

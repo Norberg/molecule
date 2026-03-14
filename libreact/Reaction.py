@@ -20,6 +20,7 @@ from collections import Counter
 from typing import Any, Iterator
 
 from libcml import CachedCml
+from libcml import Cml
 
 
 class Reaction:
@@ -84,7 +85,7 @@ class Reaction:
         return free_energy < 0
 
     def sumEntropy(self, elements: list[str], text: str) -> float:
-        total_entropy = 0
+        total_entropy = 0.0
         for element in elements:
             formula, state = split_state(element)
             entropy = self.getMolecule(formula).get_state(state).entropy
@@ -99,7 +100,7 @@ class Reaction:
 
 
     def sumEnthalpy(self, elements: list[str], text: str) -> float:
-        total_enthalpy = 0
+        total_enthalpy = 0.0
         for element in elements:
             formula, state = split_state(element)
             cml_state = self.getMolecule(formula).get_state(state)
@@ -115,10 +116,10 @@ class Reaction:
             print(f"Total enthalpy for {text}: {total_enthalpy} J/K")
         return total_enthalpy
     
-    def getMolecule(self, formula: str) -> Any:
+    def getMolecule(self, formula: str) -> Cml.Molecule:
         return CachedCml.getMolecule(formula)
 
-    def getStates(self, elements: list[str]) -> Iterator[Any]:
+    def getStates(self, elements: list[str]) -> Iterator[Cml.State]:
         for element in elements:
             formula, state = split_state(element)
             molecule = self.getMolecule(formula)

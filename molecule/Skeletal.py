@@ -13,22 +13,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
 from libreact.Reaction import Reaction, list_without_state
 from libcml import Cml
 
 REACTION_DIR = "img/skeletal/reaction/"
 
-def reactionFileName(reaction : Cml.Reaction) -> Any:
+def reactionFileName(reaction: Cml.Reaction) -> str:
     return reaction.reaction_key + ".png"
 
-def reactionUnknownProductFileName(reaction : Cml.Reaction) -> Any:
+def reactionUnknownProductFileName(reaction: Cml.Reaction) -> str:
     products = list_without_state(reaction.products)
     return "UNKNOWN_to_" + "_".join(products) + ".png"
 
-def reactionPath(reaction : Cml.Reaction) -> Any:
-    return REACTION_DIR+ reactionFileName(reaction)
+def reactionPath(reaction: Cml.Reaction) -> str:
+    return REACTION_DIR + reactionFileName(reaction)
 
-def reactionUnknownProductPath(reaction : Cml.Reaction) -> Any:
-    products = list_without_state(reaction.products)
+def reactionUnknownProductPath(reaction: Cml.Reaction) -> str:
     return REACTION_DIR + reactionUnknownProductFileName(reaction)

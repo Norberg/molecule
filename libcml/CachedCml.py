@@ -15,18 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from typing import Any
-
 from libcml import Cml
-__cml_cache: dict[str, Any] = {}
+__cml_cache: dict[str, Cml.Molecule] = {}
 
 
-def getMolecule(element: str) -> Any:
+def getMolecule(element: str) -> Cml.Molecule:
     filename = "data/molecule/%s.cml" % element
     return getMoleculeCml(filename)
 
 
-def getMoleculeCml(filename: str) -> Any:
+def getMoleculeCml(filename: str) -> Cml.Molecule:
     global __cml_cache
     if filename in __cml_cache:
         return __cml_cache[filename]

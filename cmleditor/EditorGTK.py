@@ -294,12 +294,18 @@ class EditorGTK:
                     reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
 
-    def findReactingTemperatures(self, reactants: Any, expected_products: Any, trace: Any=False, selected_temp: Any=None) -> Any:
+    def findReactingTemperatures(
+        self,
+        reactants: list[str],
+        expected_products: list[str],
+        trace: bool = False,
+        selected_temp: int | None = None,
+    ) -> dict[str, "ReactionInfo"]:
         if trace:
             print("\nFinding reacting temperatures for:", reactants, expected_products)
         # only use the specific temperature if one is chosen
         temps = [selected_temp] if selected_temp is not None else [0, 50, 298, 773, 1000, 2000, 4000, 8000]
-        reactions = dict()
+        reactions: dict[str, ReactionInfo] = {}
         for temp in temps:
             result = self.reactor.react(reactants, temp, trace=trace)
             if result is not None and expected_products == result.products:
@@ -325,7 +331,7 @@ class EditorGTK:
         table.attach(label, col, row, col+1, row+1)
         label.set_visible(True)
 
-    def createAndAttachTextBox(self,text: Any,table: Any, row: Any) -> Any:
+    def createAndAttachTextBox(self,text: Any,table: Any, row: Any) -> object:
         self.createAndAttachLabel(text, table, 0, row)
         entry = Gtk.Entry()
         table.attach(entry, 1, row, 2, row+1)
@@ -361,7 +367,7 @@ class EditorGTK:
         if not self.state_already_added(new_state):
             self.modelStates.append([new_state, "","", "", ""])  # emitter column empty by default
 
-    def state_already_added(self, statename: Any) -> Any:
+    def state_already_added(self, statename: str) -> bool:
         for state in self.modelStates:
             if state[0] == statename:
                 return True
@@ -386,14 +392,14 @@ class EditorGTK:
                 # otherwise use all temperatures.
                 self.findReactingTemperatures(reactants, products, trace=True, selected_temp=selected_temp)
 
-    def choose_temperature_dialog(self) -> Any:
+    def choose_temperature_dialog(self) -> int | None:
         tempranges = [0, 50, 298, 773, 1000, 2000, 4000, 8000]
         dialog = Gtk.Dialog(title="Choose temperatur (K)", parent=self.widget("winMain"), flags=0)
         dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         
         # Define a key press handler to respond to t/T key presses.
-        def on_dialog_key_press(widget: Any, event: Any) -> Any:
+        def on_dialog_key_press(widget: Any, event: Any) -> bool:
             if Gdk.keyval_name(event.keyval) in ["t", "T"]:
                 widget.response(Gtk.ResponseType.OK)
                 return True
@@ -468,13 +474,13 @@ class EditorGTK:
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
 
-    def on_twReactions_row_selected(self, selection: Any, model: Any, path: Any, is_selected_data: Any) -> Any:
+    def on_twReactions_row_selected(self, selection: Any, model: Any, path: Any, is_selected_data: Any) -> bool:
         reactants = split_formated_elements(model[path][0])
         products = split_formated_elements(model[path][1])
         self.update_reaction_preview(reactants, products)
         return True
 
-    def on_twReactions_query_tooltip(self, widget: Any, x: Any, y: Any, keyboard_mode: Any, tooltip: Any) -> Any:
+    def on_twReactions_query_tooltip(self, widget: Any, x: Any, y: Any, keyboard_mode: Any, tooltip: Any) -> bool:
         x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)
         path_info = widget.get_path_at_pos(x_bin_window, y_bin_window)
 
@@ -517,11 +523,11 @@ class EditorGTK:
         self.widget("winSearch").show_all()
         self.widget("entSearch").grab_focus()
 
-    def on_winSearch_delete_event(self, widget: Any, event: Any) -> Any:
+    def on_winSearch_delete_event(self, widget: Any, event: Any) -> bool:
         self.widget("winSearch").hide()
         return True
 
-    def on_winSearch_key_press_event(self, widget: Any, event: Any) -> Any:
+    def on_winSearch_key_press_event(self, widget: Any, event: Any) -> bool:
         if Gdk.keyval_name(event.keyval) == "Escape":
             self.widget("winSearch").hide()
             return True
@@ -597,12 +603,18 @@ class EditorGTK:
         self.update_folder_list()
         self.widget("fcbOpen").set_filename(path)
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
-        self.txtMoleculeName.set_text(wiki.name.strip())
+        self.txtMoleculeName.set_text((wiki.name or "").strip())
         self.widget("txtSmiles").set_text(smiles)
         self.setLicense("CC BY-SA 3.0")
         self.widget("txtAttribution").set_text(url.strip())
 
-        self.widget("textbufferDescription").set_text(wiki.summary + "\nEnthalpy:" + str(wiki.std_enthalpy_of_formation) + "\nEntropy:" + str(wiki.std_molar_entropy))
+        self.widget("textbufferDescription").set_text(
+            (wiki.summary or "")
+            + "\nEnthalpy:"
+            + str(wiki.std_enthalpy_of_formation)
+            + "\nEntropy:"
+            + str(wiki.std_molar_entropy)
+        )
 
     def on_txtSmiles_changed(self, entry: Any) -> None:
         """Show refresh button when SMILES is edited."""
@@ -704,7 +716,7 @@ class EditorGTK:
             self.widget("fcbOpen").set_filename("data/molecule/"+args.molecule + ".cml")
             self.openFile("data/molecule/"+args.molecule + ".cml")
 
-def addStatePermutations(stateless: Any) -> Any:
+def addStatePermutations(stateless: list[str]) -> list[list[str]]:
     states_per_molecule = []
     for formula in stateless:
         m = CachedCml.getMolecule(formula)
@@ -731,7 +743,7 @@ def addStatePermutations(stateless: Any) -> Any:
 
     return unique_permutations
 
-def get_active_text(cmb: Any) -> Any:
+def get_active_text(cmb: Any) -> str:
     tree_iter = cmb.get_active_iter()
     model = cmb.get_model()
     return model[tree_iter][0]
@@ -744,7 +756,7 @@ def MsgBox(message: Any) -> None:
         dialog.run()
         dialog.destroy()
 
-def YesNo(message: Any) -> Any:
+def YesNo(message: str) -> str:
         dialog = Gtk.MessageDialog(None,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
@@ -759,7 +771,7 @@ def YesNo(message: Any) -> Any:
 def responseToDialog(entry: Any, dialog: Any, response: Any) -> None:
     dialog.response(response)
 
-def InputBox(title: Any, questions: Any) -> Any:
+def InputBox(title: str, questions: list[str]) -> list[str] | None:
     dialog = Gtk.Dialog(title, None, 0,
     (Gtk.STOCK_OK, Gtk.ResponseType.OK,
     "Cancel", Gtk.ResponseType.CANCEL))
@@ -811,16 +823,16 @@ class ReactionInfo:
         self.title = reaction.cml.title
 
     @property
-    def key(self) -> Any:
+    def key(self) -> str:
         return str(self.reaction.reactants)+ "->" + str(self.reaction.products)
     
 
-def format_elements(elements: Any) -> Any:
+def format_elements(elements: list[str]) -> str:
     element_count = Counter(elements)
     formatted_elements = [f"{count} {element}" if count > 1 else element for element, count in element_count.items()]
     return " + ".join(formatted_elements)
 
-def split_formated_elements(formated_elements: Any) -> Any:
+def split_formated_elements(formated_elements: str) -> list[str]:
     elements_with_counts = formated_elements.split(" + ")
     result = []
     for item in elements_with_counts:
@@ -832,7 +844,7 @@ def split_formated_elements(formated_elements: Any) -> Any:
         result.extend([element] * count)
     return result
 
-def unicodeFormulaToAscii(unicodeFormula: Any) -> Any:
+def unicodeFormulaToAscii(unicodeFormula: str) -> str:
     """Convert possible unicode formula to an ascii formula"""
     unicode_to_ascii = {
         '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4',

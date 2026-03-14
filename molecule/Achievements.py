@@ -1,14 +1,29 @@
+from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, TypedDict
+
+if TYPE_CHECKING:
+    from molecule.Persistence import Persistence
+
+
+class UnlockedAchievement(TypedDict):
+    key: str
+    name: str
+    level: str
+    description: str
+
+
 class Achievement:
-    def __init__(self, key: Any, name: Any, description: Any, thresholds: Any) -> None:
+    def __init__(
+        self, key: str, name: str, description: str, thresholds: dict[str, int]
+    ) -> None:
         self.key = key
         self.name = name
         self.description = description
         self.thresholds = thresholds  # dict: {"bronze": val, "silver": val, "gold": val}
 
-    def check(self, current_value: Any, unlocked_levels: Any) -> Any:
-        new_unlocks = []
+    def check(self, current_value: int, unlocked_levels: set[str]) -> list[str]:
+        new_unlocks: list[str] = []
         for level, threshold in self.thresholds.items():
             if current_value >= threshold and level not in unlocked_levels:
                 new_unlocks.append(level)
@@ -29,7 +44,9 @@ class AchievementManager:
                         {"bronze": 10, "silver": 20, "gold": 50}),
         ]
 
-    def get_player_stats(self, player_id: Any, persistence: Any) -> Any:
+    def get_player_stats(
+        self, player_id: int | None, persistence: Persistence
+    ) -> dict[str, int]:
         if player_id is None:
             return {}
 
@@ -61,7 +78,9 @@ class AchievementManager:
             "level_crusher": count_levels
         }
 
-    def check_and_unlock(self, player_id: Any, persistence: Any) -> Any:
+    def check_and_unlock(
+        self, player_id: int | None, persistence: Persistence
+    ) -> list[UnlockedAchievement]:
         if player_id is None:
             return []
 
@@ -72,13 +91,13 @@ class AchievementManager:
         # existing is list of dicts: {'key': '...', 'level': '...', ...}
         
         # Organize existing check
-        unlocked_map = {} # key -> set of levels
+        unlocked_map: dict[str, set[str]] = {} # key -> set of levels
         for entry in existing:
             if entry["key"] not in unlocked_map:
                 unlocked_map[entry["key"]] = set()
             unlocked_map[entry["key"]].add(entry["level"])
 
-        newly_unlocked = []
+        newly_unlocked: list[UnlockedAchievement] = []
 
         for ach in self.achievements:
             current_val = stats.get(ach.key, 0)

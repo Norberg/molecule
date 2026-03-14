@@ -16,6 +16,7 @@
 import math
 import random
 import time
+from typing import cast
 
 import pyglet
 from pyglet import gl
@@ -57,12 +58,13 @@ class Molecule:
         self.formula = formula
         self.cml = CachedCml.getMolecule(formula)
         self.cml.normalize_pos()
-        self.current_state = self.cml.get_state(state)
-        if self.current_state is None and render_only:
-            self.current_state = Cml.State("Gas")
-        elif self.current_state is None:
+        parsed_state = self.cml.get_state(state)
+        if parsed_state is None and render_only:
+            parsed_state = Cml.State("Gas")
+        elif parsed_state is None:
             raise Exception("Did not find state for:" + formula_with_state
                     + " existing states are:" + str(self.cml.states.keys()))
+        self.current_state: Cml.State = parsed_state
         if pos is None:
             pos = (random.randint(10, 600), random.randint(200, 500))
         self.pos = pos
@@ -196,8 +198,8 @@ class Bond:
         return joint
 
     def get_bond_lenght(self, bond: Cml.Bond) -> float:
-        rA = CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]
-        rB = CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]
+        rA = float(cast(float, CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]))
+        rB = float(cast(float, CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]))
         bond_lenght = (rA + rB) * SPRITE_RADIUS * scaleFactor()
         if bond.bonds != 0:
             bond_lenght *= BOND_LENGTH_FACTOR
@@ -272,7 +274,7 @@ class Atom(pyglet.sprite.Sprite):
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
         self.cml = CachedCml.getMolecule(symbol)
-        self.scale = self.cml.property["Radius"] * scaleFactor()
+        self.scale = float(cast(float, self.cml.property["Radius"])) * scaleFactor()
         self.molecule = molecule
         self.symbol = symbol
         self.charge = charge

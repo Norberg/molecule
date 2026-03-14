@@ -1,4 +1,6 @@
-from typing import Any
+from __future__ import annotations
+
+from typing import Any, Callable
 from pyglet.shapes import Rectangle
 from pyglet.text import HTMLLabel
 from molecule import RenderingOrder
@@ -6,8 +8,19 @@ from .base import Widget, draw_nine_patch
 from .theme import theme
 
 class Button(Widget):
-    def __init__(self, text: Any, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None,
-                 on_click: Any=None, background_color: Any=None, button_type: Any="button") -> None:
+    def __init__(
+        self,
+        text: str,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+        on_click: Callable[[Button], None] | None = None,
+        background_color: list[int] | None = None,
+        button_type: str = "button",
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.text = text
         self.on_click = on_click
@@ -16,7 +29,7 @@ class Button(Widget):
         self.pressed = False
         self._create_button()
 
-    def _create_button(self) -> Any:
+    def _create_button(self) -> None:
         if not self.batch:
             self.bg_slices = []
             self.bg_sprite = None
@@ -29,7 +42,7 @@ class Button(Widget):
         self._up_text_color = (btn_theme.get("up") or {}).get("text_color", [0,0,0,255])
         self._down_text_color = (btn_theme.get("down") or {}).get("text_color", self._up_text_color)
 
-        def build_slices(conf: Any) -> Any:
+        def build_slices(conf: dict[str, Any] | None) -> dict[str, Any] | None:
             if not conf:
                 return None
             img = theme.get_image(conf.get("source", ""))
@@ -59,7 +72,7 @@ class Button(Widget):
             anchor_x='center', anchor_y='center'
         )
 
-    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
         self.pressed = True
@@ -78,7 +91,7 @@ class Button(Widget):
             self.bg_rect.color = (max(0,int(r*0.7)), max(0,int(g*0.7)), max(0,int(b*0.7)))
         return True
 
-    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> None:
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> None:
         was_pressed = self.pressed
         self.pressed = False
         if self._down_slices and self._up_slices:
@@ -104,19 +117,19 @@ class Button(Widget):
             self.bg_rect.delete()
         super().delete()
 
-    def get_padding(self) -> Any:
+    def get_padding(self) -> list[int]:
         btn_theme = theme.theme_data.get(self.button_type, theme.theme_data.get("button"))
         if btn_theme and "up" in btn_theme and "image" in btn_theme["up"]:
             return btn_theme["up"]["image"].get("padding", [8, 8, 8, 8])
         return [8, 8, 8, 8]
 
-    def shift(self, dx: Any, dy: Any) -> None:
+    def shift(self, dx: float, dy: float) -> None:
         self.x += dx
         self.y += dy
         if self.label:
             self.label.x += dx
             self.label.y += dy
-        def shift_slices(conf: Any) -> None:
+        def shift_slices(conf: dict[str, Any] | None) -> None:
             if not conf:
                 return
             for s in conf['slices']:
@@ -132,12 +145,22 @@ class Button(Widget):
         self._create_button()
 
 class OneTimeButton(Button):
-    def __init__(self, text: Any, x: Any=0, y: Any=0, width: Any=100, height: Any=30, batch: Any=None, group: Any=None,
-                 on_click: Any=None, background_color: Any=None) -> None:
+    def __init__(
+        self,
+        text: str,
+        x: float = 0,
+        y: float = 0,
+        width: float = 100,
+        height: float = 30,
+        batch: object | None = None,
+        group: object | None = None,
+        on_click: Callable[[Button], None] | None = None,
+        background_color: list[int] | None = None,
+    ) -> None:
         super().__init__(text, x, y, width, height, batch, group, on_click, background_color, "molecule-button")
         self.is_pressed = False
 
-    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> None:
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> None:
         if self.pressed and self.contains_point(x, y):
             self.is_pressed = True
             if self.on_click:
@@ -151,7 +174,7 @@ class OneTimeButton(Button):
     def change_state(self) -> None:
         self.is_pressed = not self.is_pressed
 
-    def get_path(self) -> Any:
+    def get_path(self) -> list[str]:
         path = ["molecule-button"]
         if self.is_pressed:
             path.append('down')

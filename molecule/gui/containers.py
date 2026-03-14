@@ -1,20 +1,27 @@
-from typing import Any
 from .base import Widget
 
 class Container(Widget):
-    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None) -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
-        self.children = []
+        self.children: list[Widget] = []
         self.align = 'left'
 
-    def add(self, widget: Any, do_layout: Any=True) -> None:
+    def add(self, widget: Widget, do_layout: bool = True) -> None:
         if widget:
             widget.parent = self
             self.children.append(widget)
             if do_layout:
                 self.layout()
 
-    def remove(self, widget: Any) -> None:
+    def remove(self, widget: Widget) -> None:
         if widget in self.children:
             self.children.remove(widget)
             if hasattr(widget, 'delete'):
@@ -53,7 +60,7 @@ class Container(Widget):
             if hasattr(child, 'layout'):
                 child.layout()
 
-    def shift(self, dx: Any, dy: Any) -> None:
+    def shift(self, dx: float, dy: float) -> None:
         super().shift(dx, dy)
         for child in self.children:
             if child:
@@ -63,7 +70,9 @@ class Container(Widget):
                     child.x += dx
                     child.y += dy
 
-    def on_mouse_scroll(self, x: Any, y: Any, scroll_x: Any, scroll_y: Any) -> Any:
+    def on_mouse_scroll(
+        self, x: float, y: float, scroll_x: float, scroll_y: float
+    ) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -72,14 +81,14 @@ class Container(Widget):
                     return True
         return False
 
-    def on_mouse_motion(self, x: Any, y: Any, dx: Any, dy: Any) -> Any:
+    def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_motion'):
                 if child.on_mouse_motion(x, y, dx, dy):
                     return True
         return False
 
-    def on_mouse_press(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -88,14 +97,18 @@ class Container(Widget):
                     return True
         return False
 
-    def on_mouse_release(self, x: Any, y: Any, button: Any, modifiers: Any) -> Any:
+    def on_mouse_release(
+        self, x: float, y: float, button: int, modifiers: int
+    ) -> bool:
         for child in reversed(self.children):
             if child and hasattr(child, 'on_mouse_release'):
                 if child.on_mouse_release(x, y, button, modifiers):
                     return True
         return False
 
-    def on_mouse_drag(self, x: Any, y: Any, dx: Any, dy: Any, buttons: Any, modifiers: Any) -> Any:
+    def on_mouse_drag(
+        self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int
+    ) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
@@ -105,7 +118,16 @@ class Container(Widget):
         return False
 
 class VerticalContainer(Container):
-    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None, spacing: Any=0) -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+        spacing: float = 0,
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.spacing = spacing
 
@@ -132,7 +154,16 @@ class VerticalContainer(Container):
                 child.x = self.x
 
 class HorizontalContainer(Container):
-    def __init__(self, x: Any, y: Any, width: Any, height: Any, batch: Any=None, group: Any=None, spacing: Any=0) -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        batch: object | None = None,
+        group: object | None = None,
+        spacing: float = 0,
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.spacing = spacing
 
