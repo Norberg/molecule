@@ -16,7 +16,6 @@
 import os
 import getopt
 import sys
-from typing import Any
 import pyglet
 from pyglet import gl
 from molecule.Elements import Molecule
@@ -95,7 +94,7 @@ def cmd_help() -> None:
     print("cml2img.py -f formula -o <pngfile>")
 
 class SpaceMock():
-    def add(*args: Any) -> None:
+    def add(self, *args: object) -> None:
         pass
 
 if __name__ == "__main__":

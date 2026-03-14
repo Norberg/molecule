@@ -276,6 +276,8 @@ class EditorGTK:
         self.init_reactions()
         self.reactionStates.clear()
         for reaction in self.reactor.reactions:
+            if reaction.reactants is None or reaction.products is None:
+                continue
             if formula not in reaction.reactants and formula not in list_without_state(reaction.products):
                  continue
             state_permutations = addStatePermutations(reaction.reactants)
@@ -288,11 +290,11 @@ class EditorGTK:
                     expected_products_str = format_elements(expected_products)
                     self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), None])
 
-                for reaction in reactions.values():
-                    reactants_str = format_elements(reaction.reactants)
-                    expected_products_str = format_elements(reaction.products)
-                    reactingTemp_str = " , ".join([str(temp) for temp in reaction.temperatures])
-                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction.title])
+                for reaction_info in reactions.values():
+                    reactants_str = format_elements(reaction_info.reactants)
+                    expected_products_str = format_elements(reaction_info.products)
+                    reactingTemp_str = " , ".join([str(temp) for temp in reaction_info.temperatures])
+                    self.reactionStates.append([str(reactants_str), str(expected_products_str), str(reactingTemp_str), reaction_info.title])
 
     def findReactingTemperatures(
         self,

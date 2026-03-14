@@ -12,17 +12,17 @@ isn't registered yet we import a known module path for that name.
 """
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, Tuple
+from typing import Callable
 from importlib import import_module
 
 # Registry mapping emitter name to a callable factory
-_EMITTER_REGISTRY: Dict[str, Callable[..., object]] = {}
+_EMITTER_REGISTRY: dict[str, Callable[..., object]] = {}
 # Separate policy map (explicit) instead of introspecting class attributes
-_EMITTER_POLICY: Dict[str, bool] = {}
+_EMITTER_POLICY: dict[str, bool] = {}
 
 # Map emitter registry names to module paths providing their implementation.
 # Extend this as new emitters are added without forcing unconditional imports.
-_EMITTER_MODULES: Dict[str, str] = {
+_EMITTER_MODULES: dict[str, str] = {
     "golden_rain": "molecule.emitters.GoldenRain",
     "fireworks": "molecule.emitters.Fireworks",
 }
@@ -53,7 +53,7 @@ def _lazy_import(name: str) -> None:
 
 
 def spawn_emitter(
-    name: str, batch: Any, position: Tuple[float, float], **kwargs: Any
+    name: str, batch: object, position: tuple[float, float], **kwargs: object
 ) -> object | None:
     factory = _EMITTER_REGISTRY.get(name)
     if not factory:
@@ -97,7 +97,7 @@ def should_autospawn(name: str) -> bool:
 
 
 def spawn_reaction_emitter(
-    name: str, batch: Any, position: Tuple[float, float], **kwargs: Any
+    name: str, batch: object, position: tuple[float, float], **kwargs: object
 ) -> object | None:
     """Spawn an emitter as a consequence of a chemical reaction.
 

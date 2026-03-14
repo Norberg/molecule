@@ -1,11 +1,20 @@
-from typing import Any
 from molecule import RenderingOrder
 from .base import Widget
 from .section import SectionHeader
 
 class FoldingSection(Widget):
-    def __init__(self, title: Any, content: Any, x: Any=0, y: Any=0, width: Any=200, height: Any=100,
-                 batch: Any=None, group: Any=None, is_open: Any=True) -> None:
+    def __init__(
+        self,
+        title: str,
+        content: Widget | None,
+        x: float = 0,
+        y: float = 0,
+        width: float = 200,
+        height: float = 100,
+        batch: object | None = None,
+        group: object | None = None,
+        is_open: bool = True,
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.title = title
         self.content = content

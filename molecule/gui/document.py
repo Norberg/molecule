@@ -1,12 +1,24 @@
-from typing import Any
 from pyglet.text import Label, HTMLLabel
 from molecule import RenderingOrder
 from .base import Widget
 from .theme import theme
 
 class Document(Widget):
-    def __init__(self, text: Any, x: Any, y: Any, width: Any, height: Any=None, batch: Any=None, group: Any=None,
-                 font_size: Any=12, color: Any=None, multiline: Any=True, is_fixed_size: Any=False, autosize_height: Any=False) -> None:
+    def __init__(
+        self,
+        text: str,
+        x: float,
+        y: float,
+        width: float,
+        height: float | None = None,
+        batch: object | None = None,
+        group: object | None = None,
+        font_size: int = 12,
+        color: tuple[int, int, int, int] | list[int] | None = None,
+        multiline: bool = True,
+        is_fixed_size: bool = False,
+        autosize_height: bool = False,
+    ) -> None:
         super().__init__(x, y, width, height or 100, batch, group)
         self.text = text
         self.font_size = font_size
@@ -49,7 +61,7 @@ class Document(Widget):
         else:
             self.label = None
 
-    def set_text(self, text: Any) -> None:
+    def set_text(self, text: str) -> None:
         self.text = text
         if self.label:
             self.label.delete()
@@ -60,7 +72,7 @@ class Document(Widget):
             self.label.delete()
         super().delete()
 
-    def shift(self, dx: Any, dy: Any) -> None:
+    def shift(self, dx: float, dy: float) -> None:
         self.x += dx
         self.y += dy
         if self.label:

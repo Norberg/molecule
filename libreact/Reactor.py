@@ -15,32 +15,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from typing import Any, Iterable, Iterator
+from collections.abc import Sequence
+from typing import Iterable, Iterator
 
+from libcml import Cml
 from libreact import Reaction
 from libreact.MultiMap import MultiMap, MultiMapEntry
 
-
 class ReactionEntryMapper:
-    def __init__(self, cml_reaction: Any) -> None:
+    def __init__(self, cml_reaction: Cml.Reaction) -> None:
         self.keys = cml_reaction.reactants
         self.value = cml_reaction
 
 
 class Energy:
-    def __init__(self, type: Any) -> None:
+    def __init__(self, type: Cml.Requirement.EnergyType) -> None:
         self.type = type
 
 
 class Reactor:
-    def __init__(self, cml_reactions: Iterable[Any]) -> None:
-        self.reactions = cml_reactions
-        self.reaction_map = MultiMap[Any, Any, Any](
-            cml_reactions,
+    def __init__(self, cml_reactions: Iterable[Cml.Reaction]) -> None:
+        self.reactions = list(cml_reactions)
+        self.reaction_map = MultiMap[str | None, Cml.Reaction, Cml.Reaction](
+            self.reactions,
             lambda reaction: MultiMapEntry(reaction.reactants, reaction),
         )
  
-    def find_all_reactions(self, reactants: list[str]) -> Iterator[Any]:
+    def find_all_reactions(self, reactants: list[str]) -> Iterator[Cml.Reaction]:
         normalized_reactants: list[str | None] = list(Reaction.list_without_state(reactants))
         if len(normalized_reactants) == 1:
             # Add a None to the end of the list to make sure that the next loop
@@ -57,7 +58,7 @@ class Reactor:
                 if sublist_in_list(r.reactants, normalized_reactants):
                     yield r
 
-    def find_reactions(self, reactants: list[str]) -> set[Any]:
+    def find_reactions(self, reactants: list[str]) -> set[Cml.Reaction]:
         """ check if all elements needed for a reaction exists in
              in the reacting elements. 
             Return the reactions, or empty set if none exists
@@ -69,7 +70,7 @@ class Reactor:
         reactants: list[str],
         K: float = 298,
         trace: bool = False,
-        energy_source: list[Any] | None = None,
+        energy_source: list[Cml.Requirement.EnergyType] | None = None,
     ) -> Reaction.Reaction | None:
         """ check if all elements needed for the reaction exists in
              in the reacting elements and that the reaction is spontaneous
@@ -88,15 +89,16 @@ class Reactor:
         reactions: list[tuple[float, Reaction.Reaction]] = []
 
         for reactionCml in reactionCmls:
-            additional_energy = 0
-            if len(reactionCml.requirements) > 0 and not all([req.type in [e for e in energy_source] for req in reactionCml.requirements]):
+            requirements = reactionCml.requirements or []
+            additional_energy = 0.0
+            if len(requirements) > 0 and not all(req.type in energy_source for req in requirements):
                 if trace:
-                    print(f"Reaction {reactionCml.reactants} -> {reactionCml.products} requires {reactionCml.requirements} to occur where only {energy_source} is available.")
+                    print(f"Reaction {reactionCml.reactants} -> {reactionCml.products} requires {requirements} to occur where only {energy_source} is available.")
                 continue
-            elif len(reactionCml.requirements) > 0:
-                additional_energy = sum([req.molar_energy for req in reactionCml.requirements])
+            elif len(requirements) > 0:
+                additional_energy = sum(req.molar_energy for req in requirements)
                 if trace:
-                    print(f"additional_energy = {additional_energy} for reaction {reactionCml.reactants} -> {reactionCml.products} with requirements {reactionCml.requirements}")
+                    print(f"additional_energy = {additional_energy} for reaction {reactionCml.reactants} -> {reactionCml.products} with requirements {requirements}")
 
             r = Reaction.Reaction(reactionCml, reactants)
             reactions.append((r.energyChange(K) - additional_energy, r))
@@ -132,7 +134,7 @@ class Reactor:
 
 
 
-def sublist_in_list(sublist: list[Any], superlist: list[Any]) -> bool:
+def sublist_in_list(sublist: Sequence[object], superlist: Sequence[object]) -> bool:
     for e in sublist:
         if sublist.count(e) > superlist.count(e):
             return False

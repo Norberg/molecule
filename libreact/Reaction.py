@@ -17,14 +17,14 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from typing import Any, Iterator
+from typing import Iterator
 
 from libcml import CachedCml
 from libcml import Cml
 
 
 class Reaction:
-    def __init__(self, cml: Any, reacting_elements: list[str]) -> None:
+    def __init__(self, cml: Cml.Reaction, reacting_elements: list[str]) -> None:
         self.cml = cml
         self.products = cml.products
         self.reactants: list[str] = list(cml.reactants)

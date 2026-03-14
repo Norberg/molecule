@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from typing import Any, Callable, Generic, Iterable, TypeVar
+from typing import Callable, Generic, Iterable, TypeVar, cast
 
 K = TypeVar("K")
 V = TypeVar("V")
@@ -31,13 +31,13 @@ class MultiMapEntry(Generic[K, V]):
 class MultiMap(Generic[K, V, E]):
     def __init__(
         self,
-        entries: Iterable[Any],
+        entries: Iterable[E],
         entry_mapper: Callable[[E], MultiMapEntry[K, V]] | None = None,
     ) -> None:
         self.multi_map: dict[K, list[V]] = {}
         for e in entries:
             if entry_mapper is None:
-                entry = e
+                entry = cast(MultiMapEntry[K, V], e)
             else:
                 entry = entry_mapper(e)
             self.add_entry(entry)
@@ -51,4 +51,3 @@ class MultiMap(Generic[K, V, E]):
 
     def __getitem__(self, key: K) -> list[V]:
         return self.multi_map[key]
-

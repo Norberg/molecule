@@ -241,11 +241,11 @@ def validateFormula(formula: str) -> None:
 def stripAtomSymbol(symbol: str) -> str:
     return ''.join(filter(str.isalpha, symbol))[:3]
 
-def reactingElements(elements: list[Any]) -> list[str]:
+def reactingElements(elements: list[object]) -> list[str]:
     return [element.formula for element in elements]
 
-def reactionHint(reactions: list[Any]) -> list[dict[str, Any]]:
-    response: list[dict[str, Any]] = []
+def reactionHint(reactions: list[Cml.Reaction]) -> list[dict[str, object]]:
+    response: list[dict[str, object]] = []
     for reaction in reactions:
         description = reaction.description
         tags = reaction.tags
@@ -262,7 +262,11 @@ def reactionHint(reactions: list[Any]) -> list[dict[str, Any]]:
             "reactionHintPath" : Skeletal.reactionUnknownProductFileName(reaction) })
     return response
 
-def handleIons(reaction: Any) -> tuple[str, list[str]]:
+def handleIons(reaction: Cml.Reaction) -> tuple[str, list[str]]:
+    if not reaction.reactants or not reaction.products:
+        raise ValueError(
+            f"Invalid ionization reaction data: reactants={reaction.reactants}, products={reaction.products}"
+        )
     reactant = reaction.reactants[0]
     ionStrings = " and ".join(list_without_state(reaction.products))
     description = f"{reactant} dissociates in an aqueous solution to form the ions {ionStrings}."

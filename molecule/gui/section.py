@@ -1,10 +1,18 @@
-from typing import Any
 from pyglet.text import Label
 from molecule import RenderingOrder
 from .base import Widget
 
 class SectionHeader(Widget):
-    def __init__(self, text: Any, x: Any=0, y: Any=0, width: Any=200, height: Any=30, batch: Any=None, group: Any=None) -> None:
+    def __init__(
+        self,
+        text: str,
+        x: float = 0,
+        y: float = 0,
+        width: float = 200,
+        height: float = 30,
+        batch: object | None = None,
+        group: object | None = None,
+    ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.text = text
         self._create_label()

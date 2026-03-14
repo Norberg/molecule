@@ -3,7 +3,6 @@ from __future__ import annotations
 import uvicorn
 import threading
 import logging
-from typing import Any
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,7 +10,7 @@ from molecule.server.routes import router
 
 
 class Server:
-    def __init__(self, game: Any) -> None:
+    def __init__(self, game: object) -> None:
         self.app = FastAPI()
         self.app.include_router(router)
         self.app.state.server = self

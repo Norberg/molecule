@@ -16,7 +16,6 @@
 import sys
 import getopt
 from types import FrameType
-from typing import Any
 
 import pyglet
 
