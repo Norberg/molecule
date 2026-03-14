@@ -6,7 +6,7 @@ import glob
 import os
 import subprocess
 import json
-from typing import Any, NotRequired, TypedDict
+from typing import NotRequired, TypedDict
 from molecule.Levels import Level
 
 from libcml import Cml
@@ -19,9 +19,29 @@ from molecule.Achievements import AchievementManager
 
 class MoleculeInfo(TypedDict):
     formula: str
-    property: dict[str, Any]
+    property: dict[str, float | str]
     isAtom: bool
     createdCount: NotRequired[int]
+
+
+class AchievementResponse(TypedDict):
+    key: str
+    name: str
+    description: str
+    thresholds: dict[str, int]
+    current: int
+    currentLevel: str | None
+    unlockedLevels: dict[str, str]
+
+
+class ReactionResponse(TypedDict):
+    reactants: list[str]
+    products: list[str]
+    description: str | None
+    tags: list[str]
+    reactionCount: int
+    reactionPath: str
+    reactionHintPath: str
 
 
 def getMolecule(filename: str) -> MoleculeInfo:
@@ -49,7 +69,7 @@ async def getTags() -> dict[str, str]:
     return tag_descriptions
 
 @router.get("/achievements")
-async def getAchievements(request: Request) -> list[dict[str, Any]]:
+async def getAchievements(request: Request) -> list[AchievementResponse]:
     levels = request.app.state.server.levels
     if levels is None:
         return []
@@ -58,7 +78,7 @@ async def getAchievements(request: Request) -> list[dict[str, Any]]:
     player_achievements = levels.persistence.get_player_achievements(player_id)
     
     # helper for fast lookup
-    unlocked_map: dict[str, dict[str, Any]] = {} # key -> {level: unlocked_at}
+    unlocked_map: dict[str, dict[str, str]] = {} # key -> {level: unlocked_at}
     for entry in player_achievements:
         if entry["key"] not in unlocked_map:
             unlocked_map[entry["key"]] = {}
@@ -66,7 +86,7 @@ async def getAchievements(request: Request) -> list[dict[str, Any]]:
 
     manager = AchievementManager()
     stats = manager.get_player_stats(player_id, levels.persistence)
-    response: list[dict[str, Any]] = []
+    response: list[AchievementResponse] = []
     
     for ach in manager.achievements:
         # Determine highest unlocked level
@@ -120,7 +140,7 @@ async def getMolecules(request: Request) -> list[MoleculeInfo]:
     return response
 
 @router.get("/reaction")
-async def getReactions(request: Request) -> list[dict[str, Any]]:
+async def getReactions(request: Request) -> list[ReactionResponse]:
     levels = request.app.state.server.levels
     if levels.player_id is None:
         return []
@@ -130,7 +150,7 @@ async def getReactions(request: Request) -> list[dict[str, Any]]:
     # We'll use a dictionary to lookup reactions by their key
     reaction_lookup = {r.reaction_key: r for r in universe.reactor.reactions}
     
-    response = []
+    response: list[ReactionResponse] = []
     for perf in performed_reactions:
         title = perf["reaction_title"]
         count = perf["total_count"]
@@ -208,7 +228,7 @@ async def getAtomImage(symbol: str) -> FileResponse:
     return FileResponse(path)
 
 @router.get("/level/current")
-async def getCurrentLevel(request: Request) -> dict[str, Any]:
+async def getCurrentLevel(request: Request) -> dict[str, object]:
     game = request.app.state.server.game
     current_level = game.level
     if current_level is None:
@@ -223,7 +243,7 @@ async def getCurrentLevel(request: Request) -> dict[str, Any]:
             }
 
 @router.post("/level/hint_used")
-async def levelHintUsed(request: Request) -> dict[str, Any]:
+async def levelHintUsed(request: Request) -> dict[str, int | str]:
     game = request.app.state.server.game
     game.add_penalty(30)
     return {"status": "ok", "penalty": game.penalty}

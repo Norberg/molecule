@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Callable
 from pyglet.shapes import Rectangle
 from pyglet.text import HTMLLabel
 from molecule import RenderingOrder
@@ -29,6 +29,10 @@ class Button(Widget):
         self.pressed = False
         self._create_button()
 
+    @staticmethod
+    def _get_theme_dict(value: object) -> dict[str, object]:
+        return value if isinstance(value, dict) else {}
+
     def _create_button(self) -> None:
         if not self.batch:
             self.bg_slices = []
@@ -36,20 +40,35 @@ class Button(Widget):
             self.bg_rect = None
             self.label = None
             return
-        btn_theme = theme.theme_data.get(self.button_type, theme.theme_data.get("button")) or {}
-        self._up_conf = (btn_theme.get("up") or {}).get("image")
-        self._down_conf = (btn_theme.get("down") or {}).get("image")
-        self._up_text_color = (btn_theme.get("up") or {}).get("text_color", [0,0,0,255])
-        self._down_text_color = (btn_theme.get("down") or {}).get("text_color", self._up_text_color)
+        btn_theme = self._get_theme_dict(
+            theme.theme_data.get(self.button_type, theme.theme_data.get("button"))
+        )
+        up_theme = self._get_theme_dict(btn_theme.get("up"))
+        down_theme = self._get_theme_dict(btn_theme.get("down"))
+        self._up_conf = self._get_theme_dict(up_theme.get("image")) or None
+        self._down_conf = self._get_theme_dict(down_theme.get("image")) or None
+        up_text_color = up_theme.get("text_color", [0, 0, 0, 255])
+        self._up_text_color = (
+            up_text_color if isinstance(up_text_color, list) else [0, 0, 0, 255]
+        )
+        down_text_color = down_theme.get("text_color", self._up_text_color)
+        self._down_text_color = (
+            down_text_color if isinstance(down_text_color, list) else self._up_text_color
+        )
 
-        def build_slices(conf: dict[str, Any] | None) -> dict[str, Any] | None:
+        def build_slices(conf: dict[str, object] | None) -> dict[str, object] | None:
             if not conf:
                 return None
-            img = theme.get_image(conf.get("source", ""))
+            source = conf.get("source")
+            img = theme.get_image(source if isinstance(source, str) else "")
             if not img:
                 return None
             frame = conf.get("frame", [6,6,6,6])
+            if not isinstance(frame, list):
+                frame = [6,6,6,6]
             padding = conf.get("padding", [8,8,8,8])
+            if not isinstance(padding, list):
+                padding = [8,8,8,8]
             slices = draw_nine_patch(self.batch, RenderingOrder.gui_background, img, self.x, self.y, self.width, self.height, frame, padding)
             return {'slices': slices, 'frame': frame, 'padding': padding}
 
@@ -118,9 +137,15 @@ class Button(Widget):
         super().delete()
 
     def get_padding(self) -> list[int]:
-        btn_theme = theme.theme_data.get(self.button_type, theme.theme_data.get("button"))
-        if btn_theme and "up" in btn_theme and "image" in btn_theme["up"]:
-            return btn_theme["up"]["image"].get("padding", [8, 8, 8, 8])
+        btn_theme = self._get_theme_dict(
+            theme.theme_data.get(self.button_type, theme.theme_data.get("button"))
+        )
+        up_theme = self._get_theme_dict(btn_theme.get("up"))
+        image_theme = self._get_theme_dict(up_theme.get("image"))
+        if image_theme:
+            padding = image_theme.get("padding", [8, 8, 8, 8])
+            if isinstance(padding, list):
+                return padding
         return [8, 8, 8, 8]
 
     def shift(self, dx: float, dy: float) -> None:
@@ -129,7 +154,7 @@ class Button(Widget):
         if self.label:
             self.label.x += dx
             self.label.y += dy
-        def shift_slices(conf: dict[str, Any] | None) -> None:
+        def shift_slices(conf: dict[str, object] | None) -> None:
             if not conf:
                 return
             for s in conf['slices']:

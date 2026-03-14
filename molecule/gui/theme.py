@@ -1,7 +1,9 @@
-from typing import Any
+from __future__ import annotations
+
 import json
 import os
 import pyglet
+
 
 class Theme:
     def __init__(self, theme_path: str = "molecule/theme/theme.json") -> None:
@@ -10,7 +12,7 @@ class Theme:
         self.images: dict[str, pyglet.image.AbstractImage] = {}
         self._load_images()
 
-    def _load_theme(self) -> dict[str, Any]:
+    def _load_theme(self) -> dict[str, object]:
         try:
             with open(self.theme_path, 'r') as f:
                 return json.load(f)
@@ -45,7 +47,10 @@ class Theme:
         return self.images.get(image_name)
 
     def get_color(self, color_name: str) -> list[int]:
-        return self.theme_data.get(color_name, [0, 0, 0, 255])
+        value = self.theme_data.get(color_name, [0, 0, 0, 255])
+        if isinstance(value, list) and all(isinstance(c, int) for c in value):
+            return value
+        return [0, 0, 0, 255]
 
 # Global theme instance
 theme = Theme()

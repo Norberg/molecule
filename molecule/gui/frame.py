@@ -7,6 +7,10 @@ from .theme import theme
 from .base import Widget, draw_nine_patch
 
 class Frame(Widget):
+    @staticmethod
+    def _get_theme_dict(value: object) -> dict[str, object]:
+        return value if isinstance(value, dict) else {}
+
     def __init__(
         self,
         x: float,
@@ -34,12 +38,19 @@ class Frame(Widget):
             frame = [8, 8, 8, 8]
             padding = [8, 8, 8, 8]
             if self.frame_type and self.frame_type != "none":
-                frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
-                if frame_theme and "image" in frame_theme:
-                    img_name = frame_theme["image"]["source"]
-                    img = theme.get_image(img_name)
-                    frame = frame_theme["image"].get("frame", frame)
-                    padding = frame_theme["image"].get("padding", padding)
+                frame_theme = self._get_theme_dict(
+                    theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
+                )
+                image_theme = self._get_theme_dict(frame_theme.get("image"))
+                if image_theme:
+                    img_name = image_theme.get("source")
+                    img = theme.get_image(img_name if isinstance(img_name, str) else "")
+                    loaded_frame = image_theme.get("frame", frame)
+                    if isinstance(loaded_frame, list):
+                        frame = loaded_frame
+                    loaded_padding = image_theme.get("padding", padding)
+                    if isinstance(loaded_padding, list):
+                        padding = loaded_padding
             if img:
                 self.bg_slices = draw_nine_patch(self.batch, RenderingOrder.gui_background, img, self.x, self.y, self.width, self.height, frame, padding)
                 self.bg_sprite = None
@@ -137,9 +148,14 @@ class Frame(Widget):
         super().delete()
 
     def get_padding(self) -> list[int]:
-        frame_theme = theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
-        if frame_theme and "image" in frame_theme:
-            return frame_theme["image"].get("padding", [8, 8, 8, 8])
+        frame_theme = self._get_theme_dict(
+            theme.theme_data.get(self.frame_type, theme.theme_data.get("frame"))
+        )
+        image_theme = self._get_theme_dict(frame_theme.get("image"))
+        if image_theme:
+            padding = image_theme.get("padding", [8, 8, 8, 8])
+            if isinstance(padding, list):
+                return padding
         return [8, 8, 8, 8]
 
     def shift(self, dx: float, dy: float) -> None:

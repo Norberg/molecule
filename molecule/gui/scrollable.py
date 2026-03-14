@@ -7,6 +7,10 @@ from .scissor_group import ScissorGroup
 from .theme import theme
 
 class Scrollable(Widget):
+    @staticmethod
+    def _get_theme_dict(value: object) -> dict[str, object]:
+        return value if isinstance(value, dict) else {}
+
     def __init__(
         self,
         content: Widget | None,
@@ -92,17 +96,22 @@ class Scrollable(Widget):
         if not self.batch:
             return []
         items = []
-        sb_theme = theme.theme_data.get("vscrollbar", {})
-        part_theme = sb_theme.get(part_name)
-        if part_theme and "image" in part_theme:
-            img_conf = part_theme["image"]
-            img = theme.get_image(img_conf.get("source", ""))
+        sb_theme = self._get_theme_dict(theme.theme_data.get("vscrollbar", {}))
+        part_theme = self._get_theme_dict(sb_theme.get(part_name))
+        img_conf = self._get_theme_dict(part_theme.get("image"))
+        if img_conf:
+            source = img_conf.get("source")
+            img = theme.get_image(source if isinstance(source, str) else "")
             if img:
                 region_rect = img_conf.get("region")
-                if region_rect:
+                if isinstance(region_rect, (list, tuple)):
                     img = img.get_region(*region_rect)
                 frame = img_conf.get("frame", [0, 0, 0, 0])
+                if not isinstance(frame, list):
+                    frame = [0, 0, 0, 0]
                 padding = img_conf.get("padding", [0, 0, 0, 0])
+                if not isinstance(padding, list):
+                    padding = [0, 0, 0, 0]
                 items = draw_nine_patch(self.batch, self.group, img, x, y, width, height, frame, padding)
                 return items
         color = (200, 200, 200, 255) if part_name == "bar" else (100, 100, 100, 255)
