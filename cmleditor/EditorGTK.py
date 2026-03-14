@@ -17,6 +17,7 @@
 from typing import Any
 import sys
 import os
+from types import TracebackType
 import gi
 import glob
 from itertools import product
@@ -36,6 +37,7 @@ import subprocess
 from cmleditor import wiki_fetch
 import utils.rdkit_render as rdkit_render
 from molecule.emitters.Emitters import list_emitters
+
 
 class EditorGTK:
 
@@ -138,13 +140,13 @@ class EditorGTK:
         tv.append_column(col1)
         tv.append_column(col2)
 
-    def on_winMain_destroy(self, widget: Any) -> None:
+    def on_winMain_destroy(self, widget: object) -> None:
         Gtk.main_quit()
 
-    def on_btnExit_clicked(self, widget: Any) -> None:
+    def on_btnExit_clicked(self, widget: object) -> None:
         Gtk.main_quit()
 
-    def on_btnSave_clicked(self, widget: Any) -> None:
+    def on_btnSave_clicked(self, widget: object) -> None:
         self.molecule.states = dict()
         for col in self.modelStates:
             name = col[0]
@@ -171,13 +173,13 @@ class EditorGTK:
         self.preview_molecule()
         self.updateReactions(self.formula)
 
-    def on_btnNext_clicked(self, widget: Any) -> None:
+    def on_btnNext_clicked(self, widget: object) -> None:
         self.switch_molecule(1)
 
-    def on_btnPrev_clicked(self, widget: Any) -> None:
+    def on_btnPrev_clicked(self, widget: object) -> None:
         self.switch_molecule(-1)
 
-    def switch_molecule(self, relative: Any) -> None:
+    def switch_molecule(self, relative: int) -> None:
         new_index = (self.current_pos + relative)
         if new_index > len(self.folder_list)-1:
             new_index = 0
@@ -200,7 +202,7 @@ class EditorGTK:
         filename = os.path.relpath(widget.get_filename())
         self.openFile(filename)
 
-    def openFile(self, filename: Any) -> None:
+    def openFile(self, filename: str) -> None:
         self.filename = filename
         if filename not in self.folder_list:
             print(f"File {filename} not in folder list of lenght {len(self.folder_list)} with content {self.folder_list}")
@@ -262,7 +264,7 @@ class EditorGTK:
         imgSkeletalPreview = self.widget("imgSkeletalPreview")
         imgSkeletalPreview.set_from_pixbuf(pixBuffPreview)
 
-    def setLicense(self, selectedLicense: Any) -> None:
+    def setLicense(self, selectedLicense: str) -> None:
         self.widget("cmbLicense").set_active(-1)
         index = 0
         for license in self.widget("liststoreLicenses"):
@@ -271,7 +273,7 @@ class EditorGTK:
                 break
             index += 1
 
-    def updateReactions(self, formula: Any) -> None:
+    def updateReactions(self, formula: str) -> None:
         #Refresh the reactions in case the reaction file have been changed
         self.init_reactions()
         self.reactionStates.clear()
@@ -328,42 +330,42 @@ class EditorGTK:
         for child in container.get_children():
             child.destroy()
 
-    def createAndAttachLabel(self, text: Any, table: Any, col: Any, row: Any) -> None:
+    def createAndAttachLabel(self, text: str, table: Any, col: int, row: int) -> None:
         label = Gtk.Label(label=text)
         table.attach(label, col, row, col+1, row+1)
         label.set_visible(True)
 
-    def createAndAttachTextBox(self,text: Any,table: Any, row: Any) -> object:
+    def createAndAttachTextBox(self, text: str, table: Any, row: int) -> object:
         self.createAndAttachLabel(text, table, 0, row)
         entry = Gtk.Entry()
         table.attach(entry, 1, row, 2, row+1)
         entry.set_visible(True)
         return entry
 
-    def edited_string(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
+    def edited_string(self, cell: object, path: object, new_text: str, userdata: tuple[Any, int]) -> None:
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def edited_combo(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
+    def edited_combo(self, cell: object, path: object, new_text: str, userdata: tuple[Any, int]) -> None:
         # Same logic as edited_string but kept separate for clarity.
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num, new_text)
 
-    def edited_float(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
+    def edited_float(self, cell: object, path: object, new_text: str, userdata: tuple[Any, int]) -> None:
         if new_text != "":
             new_text = "%.1f" % float(new_text)
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def edited_ions(self, cell: Any, path: Any, new_text: Any, userdata: Any) -> None:
+    def edited_ions(self, cell: object, path: object, new_text: str, userdata: tuple[Any, int]) -> None:
         model, col_num = userdata
         iter = model.get_iter(path)
         model.set(iter, col_num,new_text)
 
-    def on_btnAddState_clicked(self, widget: Any) -> None:
+    def on_btnAddState_clicked(self, widget: object) -> None:
         cmbStates = self.widget("cmbStates")
         new_state = get_active_text(cmbStates)
         if not self.state_already_added(new_state):
@@ -375,13 +377,13 @@ class EditorGTK:
                 return True
         return False
 
-    def on_twStates_key_press_event(self,widget: Any, userdata: Any) -> None:
+    def on_twStates_key_press_event(self, widget: object, userdata: Any) -> None:
         if Gdk.keyval_name(userdata.keyval) == "Delete":
             model, iter = self.widget("twStates").get_selection().get_selected()
             if iter:
                 model.remove(iter)
 
-    def on_twReactions_key_press_event(self, widget: Any, userdata: Any) -> None:
+    def on_twReactions_key_press_event(self, widget: object, userdata: Any) -> None:
         # if pressed t/T trace the reaction with temperature selection
         if Gdk.keyval_name(userdata.keyval) in ["t", "T"]:
             model, tree_iter = self.widget("twReactions").get_selection().get_selected()
@@ -442,7 +444,9 @@ class EditorGTK:
         dialog.destroy()
         return selected_value
 
-    def on_twReactions_row_activated(self, widget: Any, path: Any, column: Any) -> None:
+    def on_twReactions_row_activated(
+        self, widget: Any, path: object, column: Any
+    ) -> None:
         """When a cell is double clicked allow user to select bettween the molecules in that cell to open in the editor"""
         if column.get_title() == "Temperature (K)":
             return
@@ -476,13 +480,17 @@ class EditorGTK:
                 self.openFile(f"data/molecule/{selected_molecule}.cml")
             dialog.destroy()
 
-    def on_twReactions_row_selected(self, selection: Any, model: Any, path: Any, is_selected_data: Any) -> bool:
+    def on_twReactions_row_selected(
+        self, selection: object, model: Any, path: object, is_selected_data: object
+    ) -> bool:
         reactants = split_formated_elements(model[path][0])
         products = split_formated_elements(model[path][1])
         self.update_reaction_preview(reactants, products)
         return True
 
-    def on_twReactions_query_tooltip(self, widget: Any, x: Any, y: Any, keyboard_mode: Any, tooltip: Any) -> bool:
+    def on_twReactions_query_tooltip(
+        self, widget: Any, x: int, y: int, keyboard_mode: object, tooltip: Any
+    ) -> bool:
         x_bin_window, y_bin_window = widget.convert_widget_to_bin_window_coords(x, y)
         path_info = widget.get_path_at_pos(x_bin_window, y_bin_window)
 
@@ -496,7 +504,7 @@ class EditorGTK:
                 return True
         return False
 
-    def on_btnNewMolecule_clicked(self, widget: Any) -> None:
+    def on_btnNewMolecule_clicked(self, widget: object) -> None:
         answers = InputBox("Molecule", ["Formula:", "SMILES:"])
         print(answers)
         if answers is None:
@@ -521,15 +529,15 @@ class EditorGTK:
         self.on_fcbOpen_file_set(self.widget("fcbOpen"))
         self.widget("txtSmiles").set_text(smiles) 
 
-    def on_btnSearch_clicked(self, widget: Any) -> None:
+    def on_btnSearch_clicked(self, widget: object) -> None:
         self.widget("winSearch").show_all()
         self.widget("entSearch").grab_focus()
 
-    def on_winSearch_delete_event(self, widget: Any, event: Any) -> bool:
+    def on_winSearch_delete_event(self, widget: object, event: object) -> bool:
         self.widget("winSearch").hide()
         return True
 
-    def on_winSearch_key_press_event(self, widget: Any, event: Any) -> bool:
+    def on_winSearch_key_press_event(self, widget: object, event: Any) -> bool:
         if Gdk.keyval_name(event.keyval) == "Escape":
             self.widget("winSearch").hide()
             return True
@@ -572,7 +580,9 @@ class EditorGTK:
             except Exception as e:
                 print(f"Error indexing {path}: {e}")
 
-    def on_tvSearchResults_row_activated(self, tv: Any, path: Any, column: Any) -> None:
+    def on_tvSearchResults_row_activated(
+        self, tv: Any, path: object, column: Any
+    ) -> None:
         model = tv.get_model()
         iter = model.get_iter(path)
         filepath = model.get_value(iter, 2)
@@ -580,7 +590,7 @@ class EditorGTK:
         self.openFile(filepath)
         self.widget("winSearch").hide()
     
-    def on_btnNewMoleculeFromWiki_clicked(self, widget: Any) -> None:
+    def on_btnNewMoleculeFromWiki_clicked(self, widget: object) -> None:
         answers = InputBox("Molecule", ["Wikipedia link:"])
         print(answers)
         if answers is None:
@@ -624,7 +634,7 @@ class EditorGTK:
         if btn_refresh:
             btn_refresh.set_visible(True)
 
-    def on_btnRefreshSmiles_clicked(self, widget: Any) -> None:
+    def on_btnRefreshSmiles_clicked(self, widget: object) -> None:
         """Regenerate current molecule's atom/bond arrays from updated SMILES using obabel.
 
         Steps:
@@ -695,7 +705,7 @@ class EditorGTK:
             pass
         MsgBox("Structure updated from SMILES.")
 
-    def update_reaction_preview(self, reactants: Any, products: Any) -> None:
+    def update_reaction_preview(self, reactants: list[str], products: list[str]) -> None:
         reactants = list_without_state(reactants)
         products = list_without_state(products)
         rdkit_render.render_reaction_image(reactants, products, "reaction-preview.png")
@@ -703,7 +713,12 @@ class EditorGTK:
         imgReactionPreview = self.widget("imgReactionPreview")
         imgReactionPreview.set_from_pixbuf(pixBuffPreview)
 
-    def excepthook(self, type: Any, value: Any, traceback: Any) -> None:
+    def excepthook(
+        self,
+        type: type[BaseException],
+        value: BaseException,
+        traceback: TracebackType | None,
+    ) -> None:
         MsgBox("Error:"+ str(type) +"\n"+ str(value))
         sys.__excepthook__(type, value, traceback)
 
@@ -750,7 +765,7 @@ def get_active_text(cmb: Any) -> str:
     model = cmb.get_model()
     return model[tree_iter][0]
 
-def MsgBox(message: Any) -> None:
+def MsgBox(message: str) -> None:
         dialog = Gtk.MessageDialog(None,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
@@ -770,7 +785,7 @@ def YesNo(message: str) -> str:
         else:
                 return "No"
 
-def responseToDialog(entry: Any, dialog: Any, response: Any) -> None:
+def responseToDialog(entry: object, dialog: Any, response: object) -> None:
     dialog.response(response)
 
 def InputBox(title: str, questions: list[str]) -> list[str] | None:
@@ -817,7 +832,7 @@ def InputBox(title: str, questions: list[str]) -> list[str] | None:
     return answers
 
 class ReactionInfo:
-    def __init__(self, reaction: Any) -> None:
+    def __init__(self, reaction: Reaction) -> None:
         self.reaction = reaction
         self.temperatures = list()
         self.reactants = reaction.reactants
