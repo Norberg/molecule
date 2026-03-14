@@ -1,3 +1,4 @@
+import pyglet
 from pyglet.text import Label
 from molecule import RenderingOrder
 from .base import Widget
@@ -10,8 +11,8 @@ class SectionHeader(Widget):
         y: float = 0,
         width: float = 200,
         height: float = 30,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.text = text

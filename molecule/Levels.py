@@ -33,6 +33,7 @@ from molecule import Gui
 from molecule import pyglet_util
 from molecule import HUD
 from molecule.gui import GUI_PADDING
+from molecule.gui.popup import PopupMessage
 from molecule.emitters import Emitters
 from molecule.Persistence import Persistence
 from molecule.Achievements import AchievementManager
@@ -44,7 +45,12 @@ Vec2 = tuple[float, float]
 
 
 class Levels:
-    def __init__(self, path: str, start_level: int | None = 1, window: object | None = None) -> None:
+    def __init__(
+        self,
+        path: str,
+        start_level: int | None = 1,
+        window: pyglet.window.Window | None = None,
+    ) -> None:
         if start_level is None:
             start_level = 1
         self.path = path
@@ -123,7 +129,7 @@ class Levels:
 
 
 class Level:
-    def __init__(self, cml: Cml.Level, window: object, path: str) -> None:
+    def __init__(self, cml: Cml.Level, window: pyglet.window.Window, path: str) -> None:
         self.cml = cml
         self.path = path
         self.finished = False
@@ -137,7 +143,7 @@ class Level:
         self.molecules_seen: set[str] = set()  # molecule_formula
         self.molecules_created: dict[str, int] = {}  # molecule_formula -> count
         self.emitters: list[object] = []
-        self.victory_popup: object | None = None
+        self.victory_popup: PopupMessage | None = None
         self.hud: HUD.HUD | None = None
         Config.current.zoom = self.cml.zoom
         self.init_chipmunk()
@@ -220,7 +226,7 @@ class Level:
         self.elements.extend(Universe.create_elements(self.space, elements,
                                           self.batch, pos))
 
-    def get_colliding_molecules(self, collisions: list[object]) -> list[Molecule]:
+    def get_colliding_molecules(self, collisions: list[pymunk.Shape]) -> list[Molecule]:
         molecules: list[Molecule] = []
         for collision in collisions:
             #TODO: Should be possible to filter collision type earlier
@@ -243,7 +249,7 @@ class Level:
         return False
 
     def get_molecules_in_reaction(
-        self, collisions: list[object], reaction: ReactorReaction
+        self, collisions: list[pymunk.Shape], reaction: ReactorReaction
     ) -> list[Molecule]:
         """Return all molecules included in the reaction."""
         reactants = list(reaction.reactants)
@@ -254,12 +260,16 @@ class Level:
                 molecules.append(molecule)
         return molecules
 
-    def react(self, collisions: list[object], reacting_areas: list[object]) -> ReactorReaction | None:
+    def react(
+        self, collisions: list[pymunk.Shape], reacting_areas: list[Effects.Effect]
+    ) -> ReactorReaction | None:
         colliding_molecules = self.get_colliding_molecules(collisions)
         reacting_formulas = [molecule.state_formula for molecule in colliding_molecules]
         return Universe.universe.react(reacting_formulas, reacting_areas)
 
-    def perform_reaction(self, reaction: ReactorReaction, collisions: list[object], position: Vec2) -> None:
+    def perform_reaction(
+        self, reaction: ReactorReaction, collisions: list[pymunk.Shape], position: Vec2
+    ) -> None:
         if len(collisions) == 1:
             if Config.current.DEBUG:
                 print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
@@ -307,13 +317,13 @@ class Level:
         self.points += 1
         self.reaction_log.append(reaction)
 
-    def element_collision(self, arbiter: object, space: object, data: object) -> None:
+    def element_collision(self, arbiter: pymunk.Arbiter, space: pymunk.Space, data: object) -> None:
         """ Called if two elements collides"""
         a, b = arbiter.shapes
         pos = a.body.position
         reacting_areas = list(self.get_affecting_areas(pos))
 
-        def perform_query(distance: float) -> tuple[list[object], ReactorReaction | None]:
+        def perform_query(distance: float) -> tuple[list[pymunk.Shape], ReactorReaction | None]:
             query = space.point_query(pos, distance, shape_filter=pymunk.ShapeFilter(categories=CollisionTypes.ELEMENT))
             colls = [point.shape for point in query]
             reaction = self.react(colls, reacting_areas)
@@ -333,7 +343,7 @@ class Level:
             if reaction is not None and len(reaction.reactants) >= big_reaction_threshold:
                 self.perform_reaction(reaction, collisions, pos)
 
-    def effect_reaction(self, arbiter: object, space: object, data: object) -> bool:
+    def effect_reaction(self, arbiter: pymunk.Arbiter, space: pymunk.Space, data: object) -> bool:
         """Called when an element touches an effect; only react after 1s continuous contact."""
         a, b = arbiter.shapes
         molecule = a.molecule
@@ -363,7 +373,9 @@ class Level:
             return False
         return True
 
-    def effect_reaction_separate(self, arbiter: object, space: object, data: object) -> bool:
+    def effect_reaction_separate(
+        self, arbiter: pymunk.Arbiter, space: pymunk.Space, data: object
+    ) -> bool:
         a, b = arbiter.shapes
         molecule = a.molecule
         effect = b.effect

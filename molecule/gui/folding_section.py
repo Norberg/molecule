@@ -1,3 +1,4 @@
+import pyglet
 from molecule import RenderingOrder
 from .base import Widget
 from .section import SectionHeader
@@ -11,8 +12,8 @@ class FoldingSection(Widget):
         y: float = 0,
         width: float = 200,
         height: float = 100,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         is_open: bool = True,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)

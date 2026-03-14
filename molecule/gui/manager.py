@@ -1,4 +1,5 @@
 from typing import Literal
+import pyglet
 from .constants import GUI_PADDING
 from .base import Widget
 
@@ -6,11 +7,11 @@ class Manager:
     def __init__(
         self,
         content: Widget,
-        window: object,
-        batch: object,
-        group: object | None = None,
+        window: pyglet.window.Window,
+        batch: pyglet.graphics.Batch,
+        group: pyglet.graphics.Group | None = None,
         anchor: Literal['bottom_left', 'bottom_right', 'top_left', 'top_right', 'center'] | None = 'bottom_left',
-        theme_obj: object | None = None,
+        theme_obj: dict[str, object] | None = None,
         is_movable: bool = False,
         push_handlers: bool = True,
     ) -> None:

@@ -14,9 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from collections.abc import Iterable
+from typing import TYPE_CHECKING, TypeAlias
 import xml.etree.ElementTree as etree
 import operator
 from enum import Enum
+
+if TYPE_CHECKING:
+    from xml.etree.ElementTree import Element as _Element
+    from xml.etree.ElementTree import ElementTree as _ElementTree
+    ETElement: TypeAlias = _Element[str]
+    ETTree: TypeAlias = _ElementTree[ETElement]
+else:
+    ETElement = etree.Element
+    ETTree = etree.ElementTree
 
 
 class Atom:
@@ -160,16 +170,16 @@ class Requirement:
 class Cml:
     NS = "{http://www.xml-cml.org/schema}"
 
-    def treefind(self, xpath: str) -> object:
+    def treefind(self, xpath: str) -> ETElement | None:
         return self.xmlfind(self.tree, xpath)
 
-    def xmlfind(self, document: object, xpath: str) -> object:
+    def xmlfind(self, document: ETTree, xpath: str) -> ETElement | None:
         element = document.find(xpath)
         if element is None:
             element = self.tree.find(self.NS + xpath)
         return element
     
-    def parseReaction(self, reactionTag: object) -> Reaction:
+    def parseReaction(self, reactionTag: ETElement) -> Reaction:
         reaction = Reaction()
         reaction.title = reactionTag.get("title")
         for part in reactionTag:
@@ -182,16 +192,16 @@ class Cml:
             elif part.tag.endswith("description"):
                 reaction.description = part.text
             elif part.tag.endswith("tagList"):
-                reaction.tags = [tag.text for tag in part]
+                reaction.tags = [tag.text for tag in part if tag.text is not None]
         return reaction
 
-    def parseMoleculeList(self, moleculesTag: object) -> list[str]:
+    def parseMoleculeList(self, moleculesTag: ETElement) -> list[str]:
         molecules: list[str] = []
         for molecule in moleculesTag:
             molecules.append(molecule.attrib["title"])
         return molecules
     
-    def parseRequirements(self, requirementsTag: object) -> list[Requirement]:
+    def parseRequirements(self, requirementsTag: ETElement) -> list[Requirement]:
         requirements: list[Requirement] = []
         for requirement in requirementsTag:
             type = requirement.attrib["type"]
@@ -199,7 +209,7 @@ class Cml:
             requirements.append(Requirement(type, molar_energy))
         return requirements
 
-    def writeReaction(self, reaction: Reaction | None, parrentTag: object) -> None:
+    def writeReaction(self, reaction: Reaction | None, parrentTag: ETElement) -> None:
         if reaction is None:
             return
         tagReaction = etree.SubElement(parrentTag, "reaction")
@@ -212,7 +222,7 @@ class Cml:
             tagReactants = etree.SubElement(tagReaction, "reactantList")
             self.writeReactionMolecules(reaction.reactants, tagReactants)
 
-    def writeReactionMolecules(self, products: list[str], parrentTag: object) -> None:
+    def writeReactionMolecules(self, products: list[str], parrentTag: ETElement) -> None:
         for product in products:
             etree.SubElement(parrentTag, "molecule", {"title":product})
 
@@ -231,7 +241,7 @@ class Level(Cml):
     INVENTORY_LIST = "inventoryList"
 
     def __init__(self) -> None:
-        self.tree: object | None = None
+        self.tree: ETTree | None = None
         self.molecules: list[str] = []
         self.effects: list[Effect] = []
         self.objective: str | None = None
@@ -264,7 +274,7 @@ class Level(Cml):
         if inventory_list_tag is not None:
             self.inventory = self.parseMoleculeList(inventory_list_tag)
 
-    def parseReactionHints(self, hint_tag: object) -> list[Reaction]:
+    def parseReactionHints(self, hint_tag: ETElement | None) -> list[Reaction]:
         if hint_tag is None:
             return []
         hints: list[Reaction] = []
@@ -273,12 +283,12 @@ class Level(Cml):
             hints.append(r)
         return hints
 
-    def parseEffectList(self, effect_list_tag: object) -> None:
+    def parseEffectList(self, effect_list_tag: ETElement) -> None:
         for effect_tag in effect_list_tag:
             effect = self.parseEffect(effect_tag)
             self.effects.append(effect)
 
-    def parseEffect(self, effect_tag: object) -> Effect:
+    def parseEffect(self, effect_tag: ETElement) -> Effect:
         effect = Effect()
         effect.title = effect_tag.attrib["title"]
         if "value" in effect_tag.attrib:
@@ -294,7 +304,7 @@ class Level(Cml):
 
 class Reactions(Cml):
     def __init__(self) -> None:
-        self.tree: object | None = None
+        self.tree: ETTree | None = None
         self.reactions: list[Reaction] = []
 
     def parse(self, filename: str) -> None:
@@ -316,12 +326,12 @@ class Reactions(Cml):
             self.parseReactions(self.tree.getroot())
 
 
-    def parseReactions(self, reactions: object) -> None:
+    def parseReactions(self, reactions: ETElement) -> None:
         for reaction in reactions:
             r = self.parseReaction(reaction)
             self.reactions.append(r)
 
-    def empty_cml(self) -> object:
+    def empty_cml(self) -> ETTree:
         reactions = etree.Element("reactions")
         return etree.ElementTree(reactions)
 
@@ -351,7 +361,7 @@ class Molecule(Cml):
         self.atoms: dict[str, Atom] = {}
         self.bonds: list[Bond] = []
         self.states: dict[str, State] = {}
-        self.tree: object | None = None
+        self.tree: ETTree | None = None
         self.property: dict[str, float | str] = {}
 
     def __str__(self) -> str:
@@ -422,7 +432,7 @@ class Molecule(Cml):
         self.parseStates(self.treefind(self.STATES))
         self.parseProperties(self.treefind(self.PROPERTY))
 
-    def parseAtoms(self, atoms: object) -> None:
+    def parseAtoms(self, atoms: ETElement) -> None:
         for atom in atoms:
             new = Atom()
             new.id = atom.attrib["id"]
@@ -441,7 +451,7 @@ class Molecule(Cml):
                 pass
             self.atoms[new.id] = new
 
-    def parseBonds(self, bonds: object) -> None:
+    def parseBonds(self, bonds: ETElement | None) -> None:
         if bonds == None:
             return
         for bond in bonds:
@@ -452,7 +462,7 @@ class Molecule(Cml):
             new.bonds = int(bond.attrib["order"])
             self.bonds.append(new)
 
-    def parseStates(self, states: object) -> None:
+    def parseStates(self, states: ETElement | None) -> None:
         if states == None:
             return
         for state in states:
@@ -470,7 +480,7 @@ class Molecule(Cml):
                 elif title == "ions":
                     new_state.ions = self.parseIons(property)
 
-    def parseProperties(self, properties: object) -> None:
+    def parseProperties(self, properties: ETElement | None) -> None:
         if properties == None:
             return
         for property in properties:
@@ -482,12 +492,12 @@ class Molecule(Cml):
             except ValueError:
                 self.property[name] = property.text
 
-    def parseIons(self, ions: list[object]) -> list[str]:
+    def parseIons(self, ions: list[ETElement]) -> list[str]:
         reaction = self.parseReaction(ions[0])
         return reaction.products or []
 
 
-    def empty_cml(self) -> object:
+    def empty_cml(self) -> ETTree:
         molecule = etree.Element("molecule")
         atomArray = etree.SubElement(molecule, "atomArray")
         bondArray = etree.SubElement(molecule, "bondArray")
@@ -552,7 +562,7 @@ class Molecule(Cml):
             self.writeEntropy(state, stateTag)
             self.writeIons(state.ions, stateTag)
 
-    def writeEnthalpy(self, state: State, stateTag: object) -> None:
+    def writeEnthalpy(self, state: State, stateTag: ETElement) -> None:
         if state.enthalpy is None:
             return
         tagEnthalpy = etree.SubElement(stateTag, "property",
@@ -561,7 +571,7 @@ class Molecule(Cml):
                                   {"units":"units:molar_energy"})
         scalar.text = str(state.enthalpy)
 
-    def writeEntropy(self, state: State, stateTag: object) -> None:
+    def writeEntropy(self, state: State, stateTag: ETElement) -> None:
         if state.entropy is None:
             return
         tagEntropy = etree.SubElement(stateTag, "property",
@@ -570,7 +580,7 @@ class Molecule(Cml):
                                   {"units":"units:molar_energy"})
         scalar.text = str(state.entropy)
 
-    def writeIons(self, ions: list[str] | None, parrentTag: object) -> None:
+    def writeIons(self, ions: list[str] | None, parrentTag: ETElement) -> None:
         if ions is None or len(ions) == 0:
             return
         r = Reaction(None, ions)

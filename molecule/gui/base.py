@@ -10,8 +10,8 @@ class Widget:
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
     ) -> None:
         self.x = x
         self.y = y
@@ -63,8 +63,8 @@ class Widget:
         return [0, 0, 0, 0]
 
 def draw_nine_patch(
-    batch: object | None,
-    group: object | None,
+    batch: pyglet.graphics.Batch | None,
+    group: pyglet.graphics.Group | None,
     img: pyglet.image.AbstractImage,
     x: float,
     y: float,

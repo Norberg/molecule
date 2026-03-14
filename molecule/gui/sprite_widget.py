@@ -9,8 +9,8 @@ class SpriteWidget(Widget):
         y: float = 0,
         width: float | None = None,
         height: float | None = None,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
     ) -> None:
         w = width or image.width
         h = height or image.height

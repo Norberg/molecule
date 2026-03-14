@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Sequence
+import pyglet
 from pyglet.shapes import Rectangle
 from molecule import RenderingOrder
 from .theme import theme
@@ -17,8 +18,8 @@ class Frame(Widget):
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         background_color: Sequence[int] | None = None,
         border_color: Sequence[int] | None = None,
         is_expandable: bool = False,
@@ -28,8 +29,8 @@ class Frame(Widget):
         self.background_color = background_color or theme.get_color("gui_color")
         self.border_color = border_color or [100, 100, 100, 255]
         self.children: list[Widget] = []
-        self.bg_slices: list[object] = []
-        self.bg_sprite: object | None = None
+        self.bg_slices: list[pyglet.sprite.Sprite] = []
+        self.bg_sprite: pyglet.sprite.Sprite | None = None
         self.bg_rect: Rectangle | None = None
         self.border_rect: Rectangle | None = None
         self.is_expandable = is_expandable

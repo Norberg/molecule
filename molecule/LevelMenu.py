@@ -176,7 +176,7 @@ class LevelMenu:
             prog.is_fixed_size = True
             content.add(prog, do_layout=False)
             
-            def make_click(name: str) -> Callable[[object], None]:
+            def make_click(name: str) -> Callable[[Button], None]:
                 return lambda btn: self.on_biome_clicked(name)
 
             if is_unlocked:
@@ -197,21 +197,21 @@ class LevelMenu:
         nav_y = 50
         
         if self.page_index > 0:
-            def prev_page(btn: object) -> None:
+            def prev_page(btn: Button) -> None:
                 self.page_index -= 1
                 self.refresh()
             prev_btn = Button("<< PREV PAGE", 50, nav_y, 150, 40, self.batch, on_click=prev_page, button_type="molecule-button")
             root.add(prev_btn)
             
         if self.page_index < len(PAGES) - 1:
-            def next_page(btn: object) -> None:
+            def next_page(btn: Button) -> None:
                 self.page_index += 1
                 self.refresh()
             next_btn = Button("NEXT PAGE >>", width - 200, nav_y, 150, 40, self.batch, on_click=next_page, button_type="molecule-button")
             root.add(next_btn)
 
         # Exit Button
-        def on_exit(btn: object) -> None:
+        def on_exit(btn: Button) -> None:
             pyglet.app.exit()
         
         exit_btn = Button("EXIT GAME", width - 150, height - 70, 120, 40, self.batch, on_click=on_exit, button_type="molecule-button")
@@ -219,7 +219,7 @@ class LevelMenu:
 
         # Change Player Button
         player_name = Config.current.player or "Unknown"
-        def change_player(btn: object) -> None:
+        def change_player(btn: Button) -> None:
             self.state = "PLAYER"
             self.refresh()
         
@@ -308,7 +308,7 @@ class LevelMenu:
             icon_w = SpriteWidget(icon_img, 0, 0, icon_size, icon_size, self.batch, RenderingOrder.gui)
             row.add(icon_w, do_layout=False)
             
-            def make_lvl_click(p: str) -> Callable[[object], None]:
+            def make_lvl_click(p: str) -> Callable[[Button], None]:
                 return lambda btn: self.on_level_selected(p)
                 
             btn_text = display_name
@@ -326,7 +326,7 @@ class LevelMenu:
             content.add(row, do_layout=False)
             prev_done = is_done
             
-        def go_back(btn: object) -> None:
+        def go_back(btn: Button) -> None:
             self.state = "MAIN"
             self.refresh()
             
@@ -373,7 +373,7 @@ class LevelMenu:
         player_list_cont = VerticalContainer(0, 0, frame_w - 60, max(1, len(players) * (item_h + 4)), spacing=4)
         player_list_cont.align = 'center'
         
-        def make_player_click(name: str) -> Callable[[object], None]:
+        def make_player_click(name: str) -> Callable[[Button], None]:
             return lambda btn: self.on_player_selected(name)
 
         total_levels = len(self.levels.levels)
@@ -387,7 +387,7 @@ class LevelMenu:
         scrollable = Scrollable(player_list_cont, 0, 0, frame_w - 40, list_h, self.batch)
         content.add(scrollable, do_layout=False)
         
-        def on_new_player(btn: object) -> None:
+        def on_new_player(btn: Button) -> None:
             # Use random name for now as we don't have text input
             import random
             adjectives = ["Cool", "Smart", "Swift", "Atomic", "Brave"]

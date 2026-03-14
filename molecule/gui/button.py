@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Callable
+import pyglet
 from pyglet.shapes import Rectangle
 from pyglet.text import HTMLLabel
 from molecule import RenderingOrder
@@ -15,8 +16,8 @@ class Button(Widget):
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         on_click: Callable[[Button], None] | None = None,
         background_color: list[int] | None = None,
         button_type: str = "button",
@@ -27,8 +28,8 @@ class Button(Widget):
         self.background_color = background_color or [150, 150, 150, 255]
         self.button_type = button_type
         self.pressed = False
-        self.bg_slices: list[object] = []
-        self.bg_sprite: object | None = None
+        self.bg_slices: list[pyglet.sprite.Sprite] = []
+        self.bg_sprite: pyglet.sprite.Sprite | None = None
         self.bg_rect: Rectangle | None = None
         self.label: HTMLLabel | None = None
         self._orig_color: tuple[int, int, int] | None = None
@@ -182,8 +183,8 @@ class OneTimeButton(Button):
         y: float = 0,
         width: float = 100,
         height: float = 30,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         on_click: Callable[[Button], None] | None = None,
         background_color: list[int] | None = None,
     ) -> None:

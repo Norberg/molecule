@@ -1,4 +1,5 @@
 from typing import Callable
+import pyglet
 from molecule import RenderingOrder
 from .base import Widget
 from .frame import Frame
@@ -9,10 +10,10 @@ class PopupMessage(Widget):
     def __init__(
         self,
         text: str,
-        window: object,
-        batch: object,
-        group: object | None = None,
-        theme_obj: object | None = None,
+        window: pyglet.window.Window,
+        batch: pyglet.graphics.Batch,
+        group: pyglet.graphics.Group | None = None,
+        theme_obj: dict[str, object] | None = None,
         on_escape: Callable[..., None] | None = None,
     ) -> None:
         self.window = window
@@ -50,7 +51,7 @@ class PopupMessage(Widget):
             self.document = Document(self.text, self.x + margin_x, self.y + self.height - top_margin - doc_height,
                                    self.width - 2*margin_x, doc_height,
                                    self.batch, RenderingOrder.gui)
-            def ok_popup(button: object) -> None:
+            def ok_popup(button: Button) -> None:
                 if self.on_escape:
                     try:
                         self.on_escape()

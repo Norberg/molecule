@@ -1,3 +1,4 @@
+import pyglet
 from pyglet.text import Label, HTMLLabel
 from molecule import RenderingOrder
 from .base import Widget
@@ -11,8 +12,8 @@ class Document(Widget):
         y: float,
         width: float,
         height: float | None = None,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         font_size: int = 12,
         color: tuple[int, int, int, int] | list[int] | None = None,
         multiline: bool = True,

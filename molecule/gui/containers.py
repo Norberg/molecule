@@ -1,3 +1,5 @@
+import pyglet
+
 from .base import Widget
 
 class Container(Widget):
@@ -7,8 +9,8 @@ class Container(Widget):
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)
         self.children: list[Widget] = []
@@ -111,8 +113,8 @@ class VerticalContainer(Container):
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         spacing: float = 0,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)
@@ -145,8 +147,8 @@ class HorizontalContainer(Container):
         y: float,
         width: float,
         height: float,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         spacing: float = 0,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)

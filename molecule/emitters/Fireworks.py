@@ -12,6 +12,7 @@ import pyglet
 from pyglet import shapes
 from molecule import RenderingOrder
 from molecule.emitters.Emitters import register_emitter
+from molecule.Elements import Molecule
 
 def _parse_hex(color_hex: str | None) -> tuple[int, int, int] | None:
     if not color_hex:
@@ -33,11 +34,11 @@ class _ExplosionParticle:
     """
     def __init__(
         self,
-        batch: object,
+        batch: pyglet.graphics.Batch,
         x: float,
         y: float,
         base_color: tuple[int, int, int] | None,
-        group: object,
+        group: pyglet.graphics.Group,
         scale: float = 1.0,
     ) -> None:
         angle = random.uniform(0, 2*math.pi)
@@ -118,7 +119,13 @@ class _ExplosionParticle:
 
 class _SmokeParticle:
     """Soft expanding smoke puff used in trail and post‑explosion."""
-    def __init__(self, batch: object, x: float, y: float, group: object) -> None:
+    def __init__(
+        self,
+        batch: pyglet.graphics.Batch,
+        x: float,
+        y: float,
+        group: pyglet.graphics.Group,
+    ) -> None:
         self.x = x; self.y = y
         self.life = random.uniform(0.4, 0.8)
         self.age = 0.0
@@ -144,7 +151,13 @@ class _SmokeParticle:
 
 class _EmberParticle:
     """Short-lived warm ember drifting downward after explosion."""
-    def __init__(self, batch: object, x: float, y: float, group: object) -> None:
+    def __init__(
+        self,
+        batch: pyglet.graphics.Batch,
+        x: float,
+        y: float,
+        group: pyglet.graphics.Group,
+    ) -> None:
         angle = random.uniform(0, 2*math.pi)
         speed = random.uniform(30, 90)
         self.vx = math.cos(angle) * speed * 0.55  # slightly flattened radial
@@ -192,11 +205,11 @@ class FireworksEmitter:
     # Controlled exclusively by the Fireworks effect; do not auto-spawn on product creation.
     def __init__(
         self,
-        batch: object,
+        batch: pyglet.graphics.Batch,
         position: tuple[float, float],
         color: str | None = None,
-        consume_callback: Callable[[object], None] | None = None,
-        molecule: object | None = None,
+        consume_callback: Callable[[Molecule], bool] | None = None,
+        molecule: Molecule | None = None,
     ) -> None:
         self.batch = batch
         self.group = RenderingOrder.charge
@@ -239,7 +252,7 @@ class FireworksEmitter:
             self.x+3.5, self.y-2,
             self.x+8.0, self.y+1,
             color=(200,200,210), batch=batch, group=self.group)
-        self.rocket_shapes: list[object] | None = [
+        self.rocket_shapes: list[pyglet.shapes.ShapeBase] | None = [
             self.rocket_body,
             self.rocket_stripe,
             self.rocket_nose,

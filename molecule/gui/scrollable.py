@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pyglet
 from pyglet.shapes import Rectangle
 from molecule import RenderingOrder
 from .base import Widget, draw_nine_patch
@@ -19,8 +20,8 @@ class Scrollable(Widget):
         y: float = 0,
         width: float = 200,
         height: float = 100,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
         height_limit: float | None = None,
     ) -> None:
         super().__init__(x, y, width, height, batch, group)
@@ -34,8 +35,8 @@ class Scrollable(Widget):
         else:
             self.scissor_group = None
         self._setup_scrolling()
-        self.scrollbar_bg_items: list[object] = []
-        self.scrollbar_handle_items: list[object] = []
+        self.scrollbar_bg_items: list[pyglet.sprite.Sprite | Rectangle] = []
+        self.scrollbar_handle_items: list[pyglet.sprite.Sprite | Rectangle] = []
 
     def _setup_scrolling(self) -> None:
         if self.content:
@@ -93,7 +94,7 @@ class Scrollable(Widget):
 
     def _create_scrollbar_part(
         self, part_name: str, x: float, y: float, width: float, height: float
-    ) -> list[object]:
+    ) -> list[pyglet.sprite.Sprite | Rectangle]:
         if not self.batch:
             return []
         items = []

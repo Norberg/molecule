@@ -13,7 +13,13 @@ from molecule.emitters.Emitters import register_emitter
 
 
 class GoldenRainParticle:
-    def __init__(self, batch: object, x: float, y: float, group: object) -> None:
+    def __init__(
+        self,
+        batch: pyglet.graphics.Batch,
+        x: float,
+        y: float,
+        group: pyglet.graphics.Group,
+    ) -> None:
         ox = random.uniform(-15, 15)
         oy = random.uniform(-10, 10)
         self.x = x + ox
@@ -58,7 +64,10 @@ class GoldenRainParticle:
 @register_emitter("golden_rain", auto_spawn=True)
 class GoldenRainEmitter:
     def __init__(
-        self, batch: object, position: tuple[float, float], particle_count: int = 15
+        self,
+        batch: pyglet.graphics.Batch,
+        position: tuple[float, float],
+        particle_count: int = 15,
     ) -> None:
         # Use a higher layer so particles are visible above beakers/effects
         group = RenderingOrder.charge  # above elements & background

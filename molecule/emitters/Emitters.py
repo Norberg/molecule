@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import Callable
 from importlib import import_module
+import pyglet
 
 # Registry mapping emitter name to a callable factory
 _EMITTER_REGISTRY: dict[str, Callable[..., object]] = {}
@@ -53,7 +54,10 @@ def _lazy_import(name: str) -> None:
 
 
 def spawn_emitter(
-    name: str, batch: object, position: tuple[float, float], **kwargs: object
+    name: str,
+    batch: pyglet.graphics.Batch,
+    position: tuple[float, float],
+    **kwargs: object,
 ) -> object | None:
     factory = _EMITTER_REGISTRY.get(name)
     if not factory:
@@ -97,7 +101,10 @@ def should_autospawn(name: str) -> bool:
 
 
 def spawn_reaction_emitter(
-    name: str, batch: object, position: tuple[float, float], **kwargs: object
+    name: str,
+    batch: pyglet.graphics.Batch,
+    position: tuple[float, float],
+    **kwargs: object,
 ) -> object | None:
     """Spawn an emitter as a consequence of a chemical reaction.
 
