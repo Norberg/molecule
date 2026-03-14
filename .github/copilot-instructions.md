@@ -1,6 +1,8 @@
 # Copilot Instructions for the Molecule Project
 
 Concise guide for AI coding agents working in this repository. Focus on existing patterns; avoid inventing new architecture.
+For project-specific coding preferences and design constraints, also read `AGENTS.md` in the repository root.
+Treat both files as a combined instruction set: `AGENTS.md` + `.github/copilot-instructions.md`.
 The game and all code is written in English.
 get_attr and has_attr is not used, and avoid defensive exception handling when not explicitly asked for. Also avoid keeping backwards compatibility when features are changed.
 
