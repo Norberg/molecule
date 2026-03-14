@@ -24,7 +24,6 @@ from molecule.gui import (
     ANCHOR_BOTTOM_RIGHT, HALIGN_LEFT
 )
 from molecule import RenderingOrder
-import re
 
 # Theme is no longer needed as we use simple colors
 NA = "<b>N<sub>A<sub><b>"
@@ -32,8 +31,8 @@ formula_pattern = re.compile(r"([A-Z][a-z]?)(\d*)|(\+|\-)(\d*)?")
 identify_formula_pattern = re.compile(r"([A-Z][a-z]?)(\d+|[+-]\d*)")
 
 def create_folding_description(
-    window: object,
-    batch: object,
+    window: pyglet.window.Window,
+    batch: pyglet.graphics.Batch,
     heading: str,
     description: str,
     chapters: list[tuple[str, str]] | None = None,
@@ -65,7 +64,10 @@ def create_folding_description(
            anchor=ANCHOR_BOTTOM_RIGHT, is_movable=False)
 
 def create_popup(
-    window: object, batch: object, text: str, on_escape: Callable[..., None] | None = None
+    window: pyglet.window.Window,
+    batch: pyglet.graphics.Batch,
+    text: str,
+    on_escape: Callable[..., None] | None = None,
 ) -> PopupMessage:
     """
         window - window
@@ -82,8 +84,8 @@ class MoleculeButton(OneTimeButton):
         element: str,
         count: int,
         on_click: Callable[..., None] | None = None,
-        batch: object | None = None,
-        group: object | None = None,
+        batch: pyglet.graphics.Batch | None = None,
+        group: pyglet.graphics.Group | None = None,
     ) -> None:
         self.element = element
         self.count = count

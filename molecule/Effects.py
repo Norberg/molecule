@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import TYPE_CHECKING
 import glob
 import random
 import time
@@ -35,15 +34,15 @@ from libcml import Cml
 Vec2 = tuple[float, float]
 InventoryMap = OrderedDict[str, int]
 
-if TYPE_CHECKING:
-    from molecule.Elements import Molecule
+from molecule.Elements import Molecule
+from molecule.gui import VerticalContainer
 
 
 class Effect:
     """Effect base class, act as a sensor"""
     def __init__(
         self,
-        space: object | None = None,
+        space: pymunk.Space | None = None,
         width: float | None = None,
         height: float | None = None,
         pos: Vec2 | None = None,
@@ -54,7 +53,8 @@ class Effect:
             self.width = width
         if height != None:
             self.height = height
-        self.init_chipmunk(space, pos)
+        if space is not None:
+            self.init_chipmunk(space, pos)
         if pos != None:
             self.set_pos(pos)
         self.supported_attributes: list[str] = []
@@ -66,7 +66,7 @@ class Effect:
         self.x = x - self.width/2
         self.y = y - self.height/2
 
-    def init_chipmunk(self, space: object, pos: Vec2 | None) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2 | None) -> None:
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         body.position = pos
         shape = pymunk.Poly.create_box(body, (self.width,self.height))
@@ -89,18 +89,18 @@ class Effect:
         return attribute in self.supported_attributes
 
     def update(self) -> None:
-        pass
+        return None
 
-    def react(self, element: object) -> None:
-        pass
+    def react(self, element: Molecule) -> Reaction.Reaction | None:
+        return None
 
     def on_click(self, callback: Callable[..., None] | None = None) -> None:
-        pass
+        return None
 
     def on_release(self, callback: Callable[..., None] | None = None) -> None:
-        pass
+        return None
 
-    def put_element(self, element: object) -> bool:
+    def put_element(self, element: Molecule) -> bool:
         return False
 
     def clamp_pos(self, pos: Vec2) -> Vec2:
@@ -110,7 +110,7 @@ class Effect:
 
 class EffectSprite(pyglet.sprite.Sprite, Effect):
     """Effect base class + sprite"""
-    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, img_path: str, name: str) -> None:
         group = RenderingOrder.background
         img = pyglet_util.load_image(img_path)
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
@@ -118,14 +118,14 @@ class EffectSprite(pyglet.sprite.Sprite, Effect):
 
 
 class Action(EffectSprite):
-    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, img_path: str, name: str) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.supported_attributes.append("action")
         self.is_clicked = False
         self.callback: Callable[..., None] | None = None
 
 class Temperature(EffectSprite):
-    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str, temp: float) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, img_path: str, name: str, temp: float) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         if temp is None:
             raise Exception("Temperature must be specified for effect: " + name)
@@ -135,17 +135,25 @@ class Temperature(EffectSprite):
 
 class Fire(Temperature):
     """Fire effect"""
-    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 1000) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, temp: float = 1000) -> None:
         Temperature.__init__(self, space, batch, pos, "fire.png", "Fire", temp)
 
 class Cold(Temperature):
     """Cold effect"""
-    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 250) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, temp: float = 250) -> None:
         Temperature.__init__(self, space, batch, pos, "cold.png", "Cold", temp)
 
 class EnergySource(EffectSprite):
     """EnergySource effect"""
-    def __init__(self, space: object, batch: object, pos: Vec2, img_path: str, name: str, energy_source: object) -> None:
+    def __init__(
+        self,
+        space: pymunk.Space,
+        batch: pyglet.graphics.Batch,
+        pos: Vec2,
+        img_path: str,
+        name: str,
+        energy_source: Cml.Requirement.EnergyType,
+    ) -> None:
         EffectSprite.__init__(self, space, batch, pos, img_path, name)
         self.energy_source = energy_source
         self.supported_attributes.append("energy_source")
@@ -153,16 +161,16 @@ class EnergySource(EffectSprite):
 
 class UvLight(EnergySource):
     """UvLight effect"""
-    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2) -> None:
         EnergySource.__init__(self, space, batch, pos, "uv-light.png", "UvLight", Cml.Requirement.EnergyType.UV_LIGHT)
 
 class Electrolysis(EnergySource):
     """Electrolysis effect"""
-    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2) -> None:
         EnergySource.__init__(self, space, batch, pos, "electrolysis-beaker.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
         self.body = None
         self.space = space
-        self.ion_joints: dict[object, list[tuple[object, object, float]]] = {}
+        self.ion_joints: dict[Molecule, list[tuple[object, pymunk.DampedSpring, float]]] = {}
 
     def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the electrolysis beaker walls"""
@@ -178,7 +186,7 @@ class Electrolysis(EnergySource):
         px, py = pos
         return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
 
-    def init_chipmunk(self, space: object, pos: Vec2) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         static_body.position = pos
         
@@ -295,7 +303,7 @@ class Electrolysis(EnergySource):
 
 class WaterBeaker(EffectSprite):
     """WaterBeaker"""
-    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2) -> None:
         EffectSprite.__init__(self, space, batch, pos, "water-beaker.png","Water Beaker")
         self.supported_attributes.append("reaction")
         self.supported_attributes.append("action")
@@ -316,7 +324,7 @@ class WaterBeaker(EffectSprite):
         px, py = pos
         return (max(min_x, min(max_x, px)), max(min_y, min(max_y, py)))
 
-    def init_chipmunk(self, space: object, pos: Vec2) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -354,7 +362,7 @@ class WaterBeaker(EffectSprite):
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def react(self, molecule: object) -> object | None:
+    def react(self, molecule: Molecule) -> Reaction.Reaction | None:
         ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
             print(molecule.formula, "-(Water)>", ions)
@@ -370,11 +378,11 @@ class WaterBeaker(EffectSprite):
 
 class InertSolventBeaker(EffectSprite):
     """InertSolventBeaker"""
-    def __init__(self, space: object, batch: object, pos: Vec2) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2) -> None:
         EffectSprite.__init__(self, space, batch, pos, "inert-solvent-beaker.png","Inert Solvent Beaker")
         self.body = None
 
-    def init_chipmunk(self, space: object, pos: Vec2) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -414,7 +422,7 @@ class InertSolventBeaker(EffectSprite):
 
 class HotplateBeaker(EffectSprite):
     """HotplateBeaker"""
-    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 100) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, temp: float = 100) -> None:
         EffectSprite.__init__(self, space, batch, pos, "hotplate.png","Hotplate Beaker")
         self.supported_attributes.append("reaction")
         self.supported_attributes.append("temp")
@@ -422,7 +430,7 @@ class HotplateBeaker(EffectSprite):
         self.is_clicked = False
         self.body = None
 
-    def init_chipmunk(self, space: object, pos: Vec2) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -460,7 +468,7 @@ class HotplateBeaker(EffectSprite):
         self.x = x - self.width/2 + OFFSET_X
         self.y = y - self.height/2 + OFFSET_Y
 
-    def react(self, molecule: object) -> object | None:
+    def react(self, molecule: Molecule) -> Reaction.Reaction | None:
         ions = molecule.to_aqueous()
         if ions != None and len(ions) > 0:
             print(molecule.formula, "-(Water)>", ions)
@@ -473,7 +481,7 @@ class HotplateBeaker(EffectSprite):
 
 class Furnace(EffectSprite):
     """Furnace"""
-    def __init__(self, space: object, batch: object, pos: Vec2, temp: float = 100) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, temp: float = 100) -> None:
         EffectSprite.__init__(self, space, batch, pos, "furnace.png","Furnace")
         self.supported_attributes.append("temp")
         self.supported_attributes.append("reaction")
@@ -481,7 +489,7 @@ class Furnace(EffectSprite):
         self.is_clicked = False
         self.body = None
 
-    def init_chipmunk(self, space: object, pos: Vec2) -> None:
+    def init_chipmunk(self, space: pymunk.Space, pos: Vec2) -> None:
         static_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         x, y = pos
         # Rectangle dimensions
@@ -533,11 +541,11 @@ class Fireworks(EffectSprite):
     ROCKET_TIME = 1.2  # shorter internal fuse for snappier feedback
     def __init__(
         self,
-        space: object,
-        batch: object,
+        space: pymunk.Space,
+        batch: pyglet.graphics.Batch,
         pos: Vec2,
         emitters_ref: list[object],
-        consume_callback: Callable[[Molecule], None] | None,
+        consume_callback: Callable[[Molecule], bool] | None,
     ) -> None:
         EffectSprite.__init__(self, space, batch, pos, "fireworks.png", "Fireworks")
         self._active_fuse: tuple[Molecule, float] | None = None  # (molecule, start_time)
@@ -607,7 +615,7 @@ class Fireworks(EffectSprite):
 class Mining(Action):
     ACTION_TIME = 3
     FRAME_DURATION = 5
-    def __init__(self, space: object, batch: object, pos: Vec2, mineral_list: list[str]) -> None:
+    def __init__(self, space: pymunk.Space, batch: pyglet.graphics.Batch, pos: Vec2, mineral_list: list[str]) -> None:
         Action.__init__(self, space, batch, pos,
                         "mining_animation/frame_0000.png","mining")
         self.mineral_list = mineral_list
@@ -654,16 +662,16 @@ class Mining(Action):
 class Inventory(Effect):
     def __init__(
         self,
-        space: object,
+        space: pymunk.Space,
         pos: Vec2,
         name: str,
         width: float,
         height: float,
         content: list[str] | None = None,
         capacity: int = 0,
-        gui_container: object | None = None,
-        create_element_callback: Callable[[str, Vec2], None] | None = None,
-        batch: object | None = None,
+        gui_container: VerticalContainer | None = None,
+        create_element_callback: Callable[[str | list[str], Vec2 | None], None] | None = None,
+        batch: pyglet.graphics.Batch | None = None,
     ) -> None:
         Effect.__init__(self, space = space, pos = pos, width =
                 width, height = height, name = name)
@@ -675,12 +683,12 @@ class Inventory(Effect):
         self.create_element_callback = create_element_callback
         self.reload_gui()
 
-    def put_element(self, element: object) -> bool:
+    def put_element(self, element: Molecule) -> bool:
         self.add_to_inventory(self.content, element.state_formula)
         self.reload_gui()
         return True
 
-    def get_callback(self, button: object) -> None:
+    def get_callback(self, button: Gui.MoleculeButton) -> None:
         if self.create_element_callback is None:
             return
         self.create_element_callback(button.element, (button.x, button.y))
@@ -741,19 +749,27 @@ class Inventory(Effect):
                 self.gui_container.add(button)
 
 class VictoryInventory(Inventory):
-    def __init__(self, space: object, pos: Vec2, name: str, width: float, height: float, victory_condition: list[str]) -> None:
+    def __init__(
+        self,
+        space: pymunk.Space,
+        pos: Vec2,
+        name: str,
+        width: float,
+        height: float,
+        victory_condition: list[str],
+    ) -> None:
         Inventory.__init__(self, space, pos, name, width, height)
         self.victory_condition = self.list_to_inventory(victory_condition)
         self.supported_attributes.append("put")
         self.supported_attributes.append("victory")
 
-    def put_element(self, element: object) -> bool:
-        element = element.formula
-        if element in self.victory_condition:
-            if self.victory_condition_fullfilled(element):
+    def put_element(self, element: Molecule) -> bool:
+        formula = element.formula
+        if formula in self.victory_condition:
+            if self.victory_condition_fullfilled(formula):
                 return False
             else:
-                self.add_to_inventory(self.content, element)
+                self.add_to_inventory(self.content, formula)
                 return True
         return False
 
@@ -793,11 +809,11 @@ def between(a: float, b: float, B: float) -> bool:
     return a >= b and a <= B
 
 def create_effects(
-    space: object,
-    batch: object,
-    effects: list[object],
+    space: pymunk.Space,
+    batch: pyglet.graphics.Batch,
+    effects: list[Cml.Effect],
     emitters: list[object],
-    consume_molecule_cb: Callable[[object], None] | None,
+    consume_molecule_cb: Callable[[Molecule], bool] | None,
 ) -> list[Effect]:
     new_effects: list[Effect] = []
     for effect in effects:
@@ -836,6 +852,6 @@ def create_effects(
             fireworks = Fireworks(space, batch, (x, y), emitters, consume_molecule_cb)
             new_effects.append(fireworks)
         else:
-            raise Exception("Effect not implemented:" + effect.title)
+            raise Exception(f"Effect not implemented: {effect.title}")
 
     return new_effects

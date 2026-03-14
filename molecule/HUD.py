@@ -18,6 +18,7 @@ import os
 import time
 
 import pyglet
+import pymunk
 from molecule.gui import (
     Manager, Container, HorizontalContainer, VerticalContainer, Document, Frame,
     PopupMessage, Scrollable, Button, OneTimeButton,
@@ -27,6 +28,7 @@ from molecule import RenderingOrder
 from molecule import Effects
 from molecule import Gui
 from libcml import CachedCml
+from libcml import Cml
 
 class HUD:
     HEIGHT = 108 # 5 lines of text
@@ -34,10 +36,10 @@ class HUD:
 
     def __init__(
         self,
-        window: object,
-        batch: object,
-        space: object,
-        level: object,
+        window: pyglet.window.Window,
+        batch: pyglet.graphics.Batch,
+        space: pymunk.Space,
+        level: Cml.Level,
         create_elements_callback: Callable[[list[str], tuple[float, float] | None], None],
     ) -> None:
         height = self.HEIGHT
@@ -57,18 +59,26 @@ class HUD:
     def update_info_text(self, formula: str) -> None:
         self.horizontal.update_info_text(formula)
 
-    def get_effects(self) -> list[object]:
-        l = list()
-        l.extend(self.horizontal.get_effects())
-        l.extend(self.vertical.get_effects())
-        return l
+    def get_effects(self) -> list[Effects.Effect]:
+        effects: list[Effects.Effect] = []
+        effects.extend(self.horizontal.get_effects())
+        effects.extend(self.vertical.get_effects())
+        return effects
 
     def delete(self) -> None:
         self.horizontal.delete()
         self.vertical.delete()
 
 class HorizontalHUD:
-    def __init__(self, window: object, batch: object, space: object, level: object, height: int, width: int) -> None:
+    def __init__(
+        self,
+        window: pyglet.window.Window,
+        batch: pyglet.graphics.Batch,
+        space: pymunk.Space,
+        level: Cml.Level,
+        height: int,
+        width: int,
+    ) -> None:
         self.window = window
         self.batch = batch
         self.space = space
@@ -135,14 +145,14 @@ class HorizontalHUD:
         self.init_effects(space, level)
         self.manager.update_position()
 
-    def init_effects(self, space: object, level: object) -> None:
+    def init_effects(self, space: pymunk.Space, level: Cml.Level) -> None:
         pos = (self.left_container.x + self.left_container.width / 2,
                self.left_container.y + self.left_container.height / 2 - 50)
         self.victory = Effects.VictoryInventory(space, pos, "Victory Inventory",
                 self.left_container.width, self.left_container.height + 100,
                 level.victory_condition)
 
-    def get_effects(self) -> list[object]:
+    def get_effects(self) -> list[Effects.Effect]:
         return [self.victory]
 
     def update_info_text(self, formula: str) -> None:
@@ -177,10 +187,10 @@ class HorizontalHUD:
 class VerticalHUD:
     def __init__(
         self,
-        window: object,
-        batch: object,
-        space: object,
-        level: object,
+        window: pyglet.window.Window,
+        batch: pyglet.graphics.Batch,
+        space: pymunk.Space,
+        level: Cml.Level,
         height: int,
         width: int,
         create_elements_callback: Callable[[list[str], tuple[float, float] | None], None],
@@ -229,14 +239,14 @@ FPS: 00.00 FPS'''
         self.frame_count = 0
         self.fps = 0.0
 
-    def init_effects(self, space: object, level: object) -> None:
+    def init_effects(self, space: pymunk.Space, level: Cml.Level) -> None:
         pos = (self.inventory_frame.x + self.inventory_frame.width / 2,
                self.inventory_frame.y + self.inventory_frame.height / 2 - 400)
         self.inventory_effect = Effects.Inventory(space, pos, "Inventory",
                 self.inventory_frame.width, self.inventory_frame.height + 800,
                 level.inventory, gui_container=self.inventory_container, create_element_callback=self.create_element_callback, batch=self.batch)
 
-    def get_effects(self) -> list[object]:
+    def get_effects(self) -> list[Effects.Effect]:
         return [self.inventory_effect]
 
     def on_draw(self) -> None:

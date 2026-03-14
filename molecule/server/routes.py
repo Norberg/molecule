@@ -8,6 +8,7 @@ import subprocess
 import json
 from typing import NotRequired, TypedDict
 from molecule.Levels import Level
+from molecule.Elements import Molecule
 
 from libcml import Cml
 import cml2img
@@ -42,6 +43,25 @@ class ReactionResponse(TypedDict):
     reactionCount: int
     reactionPath: str
     reactionHintPath: str
+
+
+class ReactionHintResponse(TypedDict):
+    reactants: list[str]
+    products: list[str]
+    description: str | None
+    tags: list[str]
+    reactionPath: str
+    reactionHintPath: str
+
+
+class LevelStateResponse(TypedDict):
+    points: int
+    time: float
+    victoryCondition: list[str]
+    hint: str
+    reactionHint: list[ReactionHintResponse]
+    reactingElements: list[str]
+    reactionLog: list[ReactionHintResponse]
 
 
 def getMolecule(filename: str) -> MoleculeInfo:
@@ -228,7 +248,7 @@ async def getAtomImage(symbol: str) -> FileResponse:
     return FileResponse(path)
 
 @router.get("/level/current")
-async def getCurrentLevel(request: Request) -> dict[str, object]:
+async def getCurrentLevel(request: Request) -> LevelStateResponse:
     game = request.app.state.server.game
     current_level = game.level
     if current_level is None:
@@ -261,11 +281,11 @@ def validateFormula(formula: str) -> None:
 def stripAtomSymbol(symbol: str) -> str:
     return ''.join(filter(str.isalpha, symbol))[:3]
 
-def reactingElements(elements: list[object]) -> list[str]:
+def reactingElements(elements: list[Molecule]) -> list[str]:
     return [element.formula for element in elements]
 
-def reactionHint(reactions: list[Cml.Reaction]) -> list[dict[str, object]]:
-    response: list[dict[str, object]] = []
+def reactionHint(reactions: list[Cml.Reaction]) -> list[ReactionHintResponse]:
+    response: list[ReactionHintResponse] = []
     for reaction in reactions:
         description = reaction.description
         tags = reaction.tags
