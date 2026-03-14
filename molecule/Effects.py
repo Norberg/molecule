@@ -49,6 +49,8 @@ class Effect:
         name: str | None = None,
     ) -> None:
         self.name = name
+        self.ph: float | None = None
+        self.last_click_pos: Vec2 | None = None
         if width != None:
             self.width = width
         if height != None:
@@ -78,6 +80,7 @@ class Effect:
         space.add(shape, body)
 
     def clicked(self, pos: Vec2) -> bool:
+        self.last_click_pos = pos
         return self.inside(pos)
 
     def inside(self, pos: Vec2) -> bool:
@@ -375,6 +378,242 @@ class WaterBeaker(EffectSprite):
 
     def on_click(self, callback: Callable[..., None]) -> None:
         print("Water beaker clicked")
+
+class TitrationBeaker(WaterBeaker):
+    MIN_PH = 0.0
+    MAX_PH = 14.0
+    CLICK_DELTA = 1.0
+    DRIFT_PER_SECOND = 0.0625
+    BUTTON_RADIUS = 36.0
+    LIQUID_OPACITY = 72
+
+    def __init__(
+        self,
+        space: pymunk.Space,
+        batch: pyglet.graphics.Batch,
+        pos: Vec2,
+        ph: float = 7.0,
+    ) -> None:
+        self._initialized = False
+        self._last_update_time = time.time()
+        super().__init__(space, batch, pos)
+        self.image = pyglet_util.load_image("titration-beaker-frame.png")
+        self.name = "Titration Beaker"
+        self.ph = max(self.MIN_PH, min(self.MAX_PH, ph))
+        self.is_clicked = False
+        self.supported_attributes.append("ph")
+        self._minus_pos: Vec2 = (0.0, 0.0)
+        self._plus_pos: Vec2 = (0.0, 0.0)
+        liquid_img = pyglet_util.load_image("titration-liquid-mask.png")
+        self._liquid = pyglet.sprite.Sprite(
+            liquid_img,
+            x=0,
+            y=0,
+            batch=batch,
+            group=RenderingOrder.hud,
+        )
+        self._liquid.opacity = self.LIQUID_OPACITY
+        self._minus_button_bg = pyglet.shapes.Circle(
+            x=0,
+            y=0,
+            radius=self.BUTTON_RADIUS + 6.0,
+            color=(58, 64, 74),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._minus_button_bg.opacity = 230
+        self._plus_button_bg = pyglet.shapes.Circle(
+            x=0,
+            y=0,
+            radius=self.BUTTON_RADIUS + 6.0,
+            color=(58, 64, 74),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._plus_button_bg.opacity = 230
+        self._minus_button = pyglet.shapes.Circle(
+            x=0,
+            y=0,
+            radius=self.BUTTON_RADIUS,
+            color=(235, 102, 102),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._minus_button.opacity = 220
+        self._plus_button = pyglet.shapes.Circle(
+            x=0,
+            y=0,
+            radius=self.BUTTON_RADIUS,
+            color=(98, 173, 255),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._plus_button.opacity = 220
+        self._label = pyglet.text.Label(
+            "",
+            font_size=13,
+            color=(20, 20, 20, 255),
+            x=0,
+            y=0,
+            anchor_x="center",
+            anchor_y="center",
+            batch=batch,
+            group=RenderingOrder.gui,
+        )
+        self._minus_mark = pyglet.shapes.Rectangle(
+            x=0,
+            y=0,
+            width=28,
+            height=6,
+            color=(255, 255, 255),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._minus_mark.opacity = 255
+        self._plus_mark_h = pyglet.shapes.Rectangle(
+            x=0,
+            y=0,
+            width=24,
+            height=6,
+            color=(255, 255, 255),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._plus_mark_h.opacity = 255
+        self._plus_mark_v = pyglet.shapes.Rectangle(
+            x=0,
+            y=0,
+            width=6,
+            height=24,
+            color=(255, 255, 255),
+            batch=batch,
+            group=RenderingOrder.state,
+        )
+        self._plus_mark_v.opacity = 255
+        self._initialized = True
+        self._update_liquid_style()
+        self._update_label()
+        self._update_label_pos()
+
+    def _update_label(self) -> None:
+        self._label.text = f"pH {self._current_ph():.1f}"
+
+    def _current_ph(self) -> float:
+        if self.ph is None:
+            raise Exception("TitrationBeaker.pH is not initialized")
+        return self.ph
+
+    def _ph_color(self) -> tuple[int, int, int]:
+        ph = self._current_ph()
+        if ph <= 7.0:
+            ratio = max(0.0, min(1.0, ph / 7.0))
+            red = int(228 - 138 * ratio)
+            green = int(85 + 109 * ratio)
+            blue = int(85 + 35 * ratio)
+            return (red, green, blue)
+        ratio = max(0.0, min(1.0, (ph - 7.0) / 7.0))
+        red = int(90 - 30 * ratio)
+        green = int(194 - 74 * ratio)
+        blue = int(120 + 110 * ratio)
+        return (red, green, blue)
+
+    def _update_liquid_style(self) -> None:
+        self._liquid.color = self._ph_color()
+        self._liquid.opacity = self.LIQUID_OPACITY
+
+    def _update_liquid_pos(self) -> None:
+        # The liquid mask uses the same canvas geometry as titration-beaker.png.
+        self._liquid.x = self.x
+        self._liquid.y = self.y
+
+    def _update_button_pos(self) -> None:
+        center_x = self.shape.body.position.x
+        center_y = self.shape.body.position.y
+        offset_x = 150.0
+        button_y = center_y + 170.0
+        self._minus_pos = (center_x - offset_x, button_y)
+        self._plus_pos = (center_x + offset_x, button_y)
+        self._minus_button_bg.x = self._minus_pos[0]
+        self._minus_button_bg.y = self._minus_pos[1]
+        self._plus_button_bg.x = self._plus_pos[0]
+        self._plus_button_bg.y = self._plus_pos[1]
+        self._minus_button.x = self._minus_pos[0]
+        self._minus_button.y = self._minus_pos[1]
+        self._plus_button.x = self._plus_pos[0]
+        self._plus_button.y = self._plus_pos[1]
+        self._minus_mark.x = int(self._minus_pos[0] - self._minus_mark.width / 2)
+        self._minus_mark.y = int(self._minus_pos[1] - self._minus_mark.height / 2)
+        self._plus_mark_h.x = int(self._plus_pos[0] - self._plus_mark_h.width / 2)
+        self._plus_mark_h.y = int(self._plus_pos[1] - self._plus_mark_h.height / 2)
+        self._plus_mark_v.x = int(self._plus_pos[0] - self._plus_mark_v.width / 2)
+        self._plus_mark_v.y = int(self._plus_pos[1] - self._plus_mark_v.height / 2)
+
+    def _update_label_pos(self) -> None:
+        if not self._initialized:
+            return
+        bp = self.shape.body.position
+        self._label.x = int(bp.x)
+        self._label.y = int(bp.y + self.height / 2 - 35)
+        self._update_liquid_pos()
+        self._update_button_pos()
+
+    def set_pos(self, pos: Vec2) -> None:
+        super().set_pos(pos)
+        self._update_label_pos()
+
+    def on_click(self, callback: Callable[..., None] | None = None) -> None:
+        self.is_clicked = True
+        if self.last_click_pos is None:
+            return
+        ph = self._current_ph()
+        click_x, _ = self.last_click_pos
+        click_y = self.last_click_pos[1]
+        dx = click_x - self._minus_pos[0]
+        dy = click_y - self._minus_pos[1]
+        if (dx * dx + dy * dy) <= (self.BUTTON_RADIUS * self.BUTTON_RADIUS):
+            self.ph = max(self.MIN_PH, ph - self.CLICK_DELTA)
+            self._update_label()
+            self._update_liquid_style()
+            return
+        dx = click_x - self._plus_pos[0]
+        dy = click_y - self._plus_pos[1]
+        if (dx * dx + dy * dy) <= (self.BUTTON_RADIUS * self.BUTTON_RADIUS):
+            self.ph = min(self.MAX_PH, ph + self.CLICK_DELTA)
+            self._update_label()
+            self._update_liquid_style()
+            return
+
+        # pH only changes when clicking explicit +/- controls.
+        if Config.current.DEBUG:
+            print("Titration beaker click outside controls")
+
+    def on_release(self, callback: Callable[..., None] | None = None) -> None:
+        self.is_clicked = False
+
+    def update(self) -> None:
+        now = time.time()
+        dt = now - self._last_update_time
+        self._last_update_time = now
+        ph = self._current_ph()
+        target = 7.0
+        delta = self.DRIFT_PER_SECOND * dt
+        if ph > target:
+            self.ph = max(target, ph - delta)
+        elif ph < target:
+            self.ph = min(target, ph + delta)
+        self._update_label()
+        self._update_liquid_style()
+
+    def delete(self) -> None:
+        self._liquid.delete()
+        self._minus_button_bg.delete()
+        self._plus_button_bg.delete()
+        self._minus_button.delete()
+        self._plus_button.delete()
+        self._minus_mark.delete()
+        self._plus_mark_h.delete()
+        self._plus_mark_v.delete()
+        self._label.delete()
 
 class InertSolventBeaker(EffectSprite):
     """InertSolventBeaker"""
@@ -830,6 +1069,9 @@ def create_effects(
         elif effect.title == "WaterBeaker":
             water = WaterBeaker(space, batch, (x, y))
             new_effects.append(water)
+        elif effect.title == "TitrationBeaker":
+            titration = TitrationBeaker(space, batch, (x, y), 7.0 if value is None else value)
+            new_effects.append(titration)
         elif effect.title == "InertSolventBeaker":
             inertSolvedBeaker = InertSolventBeaker(space, batch, (x, y))
             new_effects.append(inertSolvedBeaker)

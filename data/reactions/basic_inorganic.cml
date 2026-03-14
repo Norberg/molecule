@@ -78,6 +78,110 @@
   </reaction>
   <reaction>
     <reactantList>
+      <molecule title="H3O+"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2O(l)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <requirementList>
+      <requirement type="pH max" value="6.0"/>
+    </requirementList>
+    <description>
+      Hydronium and hydroxide undergo rapid proton transfer to form two water molecules.
+      In strongly acidic solution, the high hydronium activity drives this neutralization efficiently to water.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="HSO4-"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="SO4-2(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <description>
+      Hydrogen sulfate donates a proton to hydroxide, yielding sulfate and water.
+      This is a Br&#xF8;nsted acid-base deprotonation step driven by water formation.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="NH3"/>
+      <molecule title="H3O+"/>
+    </reactantList>
+    <productList>
+      <molecule title="NH4+(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <requirementList>
+      <requirement type="pH max" value="7.0"/>
+    </requirementList>
+    <description>
+      Ammonia is protonated by hydronium to form ammonium and water.
+      The NH4+/NH3 conjugate pair has pKa about 9.25, so lower pH shifts composition toward NH4+.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Protonation</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="HCO3-"/>
+      <molecule title="H3O+"/>
+    </reactantList>
+    <productList>
+      <molecule title="H2CO3(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <requirementList>
+      <requirement type="pH max" value="6.0"/>
+    </requirementList>
+    <description>
+      Hydronium protonates hydrogen carbonate to carbonic acid and water.
+      Below the first carbonic-acid pKa, carbonate speciation shifts toward the protonated form.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Protonation</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
+      <molecule title="HCO3-"/>
+      <molecule title="OH-"/>
+    </reactantList>
+    <productList>
+      <molecule title="CO3-2(aq)"/>
+      <molecule title="H2O(l)"/>
+    </productList>
+    <requirementList>
+      <requirement type="pH min" value="10.0"/>
+    </requirementList>
+    <description>
+      In strongly basic solution, hydrogen carbonate is further deprotonated to carbonate.
+      This corresponds to the second dissociation step of the carbonic-acid system.
+    </description>
+    <tagList>
+      <tag>Acid-base reaction</tag>
+      <tag>Equilibrium</tag>
+    </tagList>
+  </reaction>
+  <reaction>
+    <reactantList>
       <molecule title="CH4"/>
       <molecule title="H2O"/>
     </reactantList>

@@ -103,23 +103,37 @@ class TestReact(unittest.TestCase):
         unsupported_reactions = [["C2H7NO3S(l)"], ["Pb+2(aq)", "OH-(aq)", "OH-(aq)"], ["AlO3H3(s)", "Na+(aq)", "OH-(aq)"]]
         all_energy_sources = [Requirement.EnergyType.UV_LIGHT, Requirement.EnergyType.ELECTROLYSIS]
         tempranges = [0, 298, 1000, 2000, 4000, 8000, 50]
+        phranges = [2.0, 7.0, 10.0, 12.0]
         reactor = self.setupRealReactor()
         for reaction in reactor.reactions:
             reactants = self.addState(reaction.reactants)
             expected_products = reaction.products
             result = None
             temp = None
+            ph = None
             for temp in tempranges:
-                result = reactor.react(reactants, temp, energy_source=all_energy_sources)
+                for ph in phranges:
+                    result = reactor.react(reactants, temp, energy_source=all_energy_sources, ph=ph)
+                    if result is not None and expected_products == result.products:
+                        break # have found a state where the expected reaction occurs
                 if result is not None and expected_products == result.products:
-                    break # have found a temp where the expected reaction occurs
+                    break
             if expected_products in unsupported_reactions:
                 continue
             msg = "Expected reaction did not occur" + str(reactants) + "->" + \
-                  str(expected_products) + " at:" + str(temp) + "K"
+                  str(expected_products) + " at:" + str(temp) + "K pH=" + str(ph)
             self.assertNotEqual(result, None, msg)
             self.assertEqual(result.products, expected_products, f"For reaction {reactants} -> {expected_products} at {temp}K")
             self.assertEqual(result.reactants, reactants, f"For reaction {reactants} -> {expected_products} at {temp}K")
+
+    def testPhRequirement(self):
+        reactor = self.setupRealReactor()
+        blocked = reactor.react(["H3O+(aq)", "OH-(aq)"], ph=7.0)
+        self.assertEqual(blocked, None)
+
+        allowed = reactor.react(["H3O+(aq)", "OH-(aq)"], ph=6.0)
+        self.assertIsNotNone(allowed)
+        self.assertEqual(allowed.products, ["H2O(l)", "H2O(l)"])
 
     def testPidgenonProcess(self):
         reactor = self.setupRealReactor()

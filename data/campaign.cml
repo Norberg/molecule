@@ -29,6 +29,7 @@
       <level file="50-Copper-1.cml"/>
       <level file="51-Aluminum-1.cml"/>
       <level file="52-Electrolytic-Bromine-1.cml"/>
+      <level file="53-pH-Control-Ammonia.cml"/>
     </biome>
   </page>
   <page id="2" name="Organic &amp; Life">

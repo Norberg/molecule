@@ -156,13 +156,15 @@ class Requirement:
     class EnergyType(Enum):
         UV_LIGHT = "UV light"
         ELECTROLYSIS = "Electrolysis"
+        PH_MIN = "pH min"
+        PH_MAX = "pH max"
 
-    def __init__(self, type: str, molar_energy: float) -> None:
+    def __init__(self, type: str, value: float) -> None:
         self.type = Requirement.EnergyType(type)
-        self.molar_energy = molar_energy
+        self.value = value
 
     def __str__(self) -> str:
-        return f"Requirement: {self.type} {self.molar_energy}"
+        return f"Requirement: {self.type} {self.value}"
     
     def __repr__(self) -> str:
         return self.__str__()
@@ -205,8 +207,13 @@ class Cml:
         requirements: list[Requirement] = []
         for requirement in requirementsTag:
             type = requirement.attrib["type"]
-            molar_energy = float(requirement.attrib["molar_energy"])
-            requirements.append(Requirement(type, molar_energy))
+            if "value" in requirement.attrib:
+                value = float(requirement.attrib["value"])
+            elif "molar_energy" in requirement.attrib:
+                value = float(requirement.attrib["molar_energy"])
+            else:
+                raise Exception(f"Requirement missing value in {requirement.attrib}")
+            requirements.append(Requirement(type, value))
         return requirements
 
     def writeReaction(self, reaction: Reaction | None, parrentTag: ETElement) -> None:

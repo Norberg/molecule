@@ -71,6 +71,7 @@ class Reactor:
         K: float = 298,
         trace: bool = False,
         energy_source: list[Cml.Requirement.EnergyType] | None = None,
+        ph: float | None = None,
     ) -> Reaction.Reaction | None:
         """ check if all elements needed for the reaction exists in
              in the reacting elements and that the reaction is spontaneous
@@ -91,14 +92,34 @@ class Reactor:
         for reactionCml in reactionCmls:
             requirements = reactionCml.requirements or []
             additional_energy = 0.0
-            if len(requirements) > 0 and not all(req.type in energy_source for req in requirements):
+            requirements_met = True
+            for req in requirements:
+                if req.type == Cml.Requirement.EnergyType.PH_MIN:
+                    if ph is None or ph < req.value:
+                        requirements_met = False
+                        break
+                    continue
+                if req.type == Cml.Requirement.EnergyType.PH_MAX:
+                    if ph is None or ph > req.value:
+                        requirements_met = False
+                        break
+                    continue
+                if req.type not in energy_source:
+                    requirements_met = False
+                    break
+                additional_energy += req.value
+            if not requirements_met:
                 if trace:
-                    print(f"Reaction {reactionCml.reactants} -> {reactionCml.products} requires {requirements} to occur where only {energy_source} is available.")
+                    print(
+                        f"Reaction {reactionCml.reactants} -> {reactionCml.products} "
+                        f"requires {requirements} to occur where only {energy_source} and pH={ph} are available."
+                    )
                 continue
-            elif len(requirements) > 0:
-                additional_energy = sum(req.molar_energy for req in requirements)
-                if trace:
-                    print(f"additional_energy = {additional_energy} for reaction {reactionCml.reactants} -> {reactionCml.products} with requirements {requirements}")
+            if len(requirements) > 0 and trace:
+                print(
+                    f"additional_energy = {additional_energy} for reaction "
+                    f"{reactionCml.reactants} -> {reactionCml.products} with requirements {requirements}"
+                )
 
             r = Reaction.Reaction(reactionCml, reactants)
             reactions.append((r.energyChange(K) - additional_energy, r))

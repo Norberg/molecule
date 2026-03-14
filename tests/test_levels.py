@@ -79,6 +79,14 @@ class TestLevels(unittest.TestCase):
             # de-duplicate while preserving order
             seen = set()
             K_options = [k for k in K_options if not (k in seen or seen.add(k))]
+            ph_options = [7.0]
+            for e in cml.effects:
+                if e.title == "TitrationBeaker":
+                    ph_options.extend([2.0, 4.0, 6.0, 7.0, 8.0, 10.0, 12.0])
+                    if e.value is not None:
+                        ph_options.append(float(e.value))
+            seen_ph = set()
+            ph_options = [p for p in ph_options if not (p in seen_ph or seen_ph.add(p))]
             beaker_effects = {e.title for e in cml.effects}
             has_beaker_env = any(t in beaker_effects for t in [
                 'WaterBeaker', 'HotplateBeaker'
@@ -203,11 +211,17 @@ class TestLevels(unittest.TestCase):
                     # Try relevant temperatures
                     result = None
                     for K in K_options:
-                        try:
-                            result = reactor.react(reactants_to_use, K=K, energy_source=energy_sources)
-                        except Exception as exc:
-                            print(f"[ERROR] Level {level_path} step {step_index+1} reactants {reactants_to_use} at {K}K raised: {exc}")
-                            raise
+                        for ph in ph_options:
+                            try:
+                                result = reactor.react(reactants_to_use, K=K, energy_source=energy_sources, ph=ph)
+                            except Exception as exc:
+                                print(
+                                    f"[ERROR] Level {level_path} step {step_index+1} reactants "
+                                    f"{reactants_to_use} at {K}K pH={ph} raised: {exc}"
+                                )
+                                raise
+                            if result is not None:
+                                break
                         if result is not None:
                             break
                     if result is None:
@@ -218,11 +232,17 @@ class TestLevels(unittest.TestCase):
                                 return f"{base}({state})"
                             converted_reactants = [to_state(m, 'aq') for m in reactants_to_use]
                             for K in K_options:
-                                try:
-                                    result = reactor.react(converted_reactants, K=K, energy_source=energy_sources)
-                                except Exception as exc:
-                                    print(f"[ERROR] Level {level_path} step {step_index+1} converted reactants {converted_reactants} at {K}K raised: {exc}")
-                                    raise
+                                for ph in ph_options:
+                                    try:
+                                        result = reactor.react(converted_reactants, K=K, energy_source=energy_sources, ph=ph)
+                                    except Exception as exc:
+                                        print(
+                                            f"[ERROR] Level {level_path} step {step_index+1} converted reactants "
+                                            f"{converted_reactants} at {K}K pH={ph} raised: {exc}"
+                                        )
+                                        raise
+                                    if result is not None:
+                                        break
                                 if result is not None:
                                     break
                         if result is None:
@@ -233,6 +253,7 @@ class TestLevels(unittest.TestCase):
                                     "reason": "no-reaction",
                                     "reaction": {"reactants": reaction.reactants, "products": reaction.products},
                                     "K_options": K_options,
+                                    "ph_options": ph_options,
                                     "reactants_used": reactants_to_use,
                                     "inventory": inventory.copy(),
                                 })
@@ -281,6 +302,7 @@ class TestLevels(unittest.TestCase):
                                 print(f"  Missing reactant: {f['missing_reactant']}")
                             else:
                                 print(f"  Tried temperatures K={f.get('K_options')}")
+                                print(f"  Tried pH values={f.get('ph_options')}")
                                 print(f"  Reactants used: {f.get('reactants_used')}")
                             print(f"  Inventory at step: {f['inventory']}")
 

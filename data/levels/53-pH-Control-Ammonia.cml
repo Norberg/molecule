@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<level>
+  <moleculeList>
+  </moleculeList>
+  <inventoryList>
+    <molecule title="HCO3-(aq)"/>
+    <molecule title="HCO3-(aq)"/>
+    <molecule title="H3O+(aq)"/>
+    <molecule title="OH-(aq)"/>
+    <molecule title="Ca+2(aq)"/>
+  </inventoryList>
+  <effectList>
+    <effect title="TitrationBeaker" value="9.0" x2="650" y2="480"/>
+  </effectList>
+  <victoryCondition>
+    <molecule title="CaCO3"/>
+    <molecule title="H2CO3"/>
+    <molecule title="H2O"/>
+    <molecule title="H2O"/>
+  </victoryCondition>
+  <objective text="Use acidic and basic carbonate speciation, then precipitate calcium carbonate."/>
+  <hint text="Stage 1 (acidic): set pH to 6 or lower so one HCO3- is protonated to H2CO3. Stage 2 (basic): raise pH to 10+ so the other HCO3- is deprotonated to CO3-2. Stage 3: combine CO3-2 with Ca+2 to precipitate CaCO3.">
+    <reactions>
+      <reaction title="Hydrogen carbonate protonation">
+        <reactantList>
+          <molecule title="HCO3-"/>
+          <molecule title="H3O+"/>
+        </reactantList>
+        <productList>
+          <molecule title="H2CO3(aq)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+        <requirementList>
+          <requirement type="pH max" value="6.0"/>
+        </requirementList>
+      </reaction>
+      <reaction title="Hydrogen carbonate deprotonation">
+        <reactantList>
+          <molecule title="HCO3-"/>
+          <molecule title="OH-"/>
+        </reactantList>
+        <productList>
+          <molecule title="CO3-2(aq)"/>
+          <molecule title="H2O(l)"/>
+        </productList>
+        <requirementList>
+          <requirement type="pH min" value="10.0"/>
+        </requirementList>
+      </reaction>
+      <reaction title="Calcium carbonate precipitation">
+        <reactantList>
+          <molecule title="Ca+2"/>
+          <molecule title="CO3-2"/>
+        </reactantList>
+        <productList>
+          <molecule title="CaCO3(s)"/>
+        </productList>
+      </reaction>
+    </reactions>
+  </hint>
+</level>

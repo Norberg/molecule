@@ -202,7 +202,8 @@ class VerticalHUD:
         status_height = 100
         status_text = '''Time: 0 sec
 Points: 0 points
-FPS: 00.00 FPS'''
+FPS: 00.00 FPS
+pH: -'''
         self.status_doc = Document(status_text, 0, 0, width, status_height, batch)
         status_frame = Frame(0, 0, width, status_height, batch)
         status_frame.add_child(self.status_doc)
@@ -261,9 +262,15 @@ FPS: 00.00 FPS'''
     def update_status(self) -> None:
         level_time = self.window.level.get_time()
         points = self.window.level.get_points()
+        ph_values = [effect.ph for effect in self.window.level.get_effect_supporting("ph") if effect.ph is not None]
+        if len(ph_values) > 0:
+            ph_text = f"{ph_values[0]:.1f}"
+        else:
+            ph_text = "-"
         status_text = '''Time: %d sec
 Points: %d points
-FPS: %.2f FPS''' % (level_time, points, self.fps)
+FPS: %.2f FPS
+pH: %s''' % (level_time, points, self.fps, ph_text)
         self.status_doc.set_text(status_text)
 
     def delete(self) -> None:
