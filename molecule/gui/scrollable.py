@@ -5,6 +5,7 @@ from molecule import RenderingOrder
 from .base import Widget, draw_nine_patch
 from .scissor_group import ScissorGroup
 from .theme import theme
+from .document import Document
 
 class Scrollable(Widget):
     @staticmethod
@@ -33,15 +34,15 @@ class Scrollable(Widget):
         else:
             self.scissor_group = None
         self._setup_scrolling()
-        self.scrollbar_bg_items = []
-        self.scrollbar_handle_items = []
+        self.scrollbar_bg_items: list[object] = []
+        self.scrollbar_handle_items: list[object] = []
 
     def _setup_scrolling(self) -> None:
         if self.content:
             if self.scissor_group:
                 self.content.group = self.scissor_group
-                if hasattr(self.content, '_create_label'):
-                    if hasattr(self.content, 'label') and self.content.label:
+                if isinstance(self.content, Document):
+                    if self.content.label:
                         self.content.label.delete()
                     self.content._create_label()
             self.content.x = self.x
@@ -70,14 +71,14 @@ class Scrollable(Widget):
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
-        if self.content and hasattr(self.content, 'on_mouse_press'):
+        if self.content:
             return self.content.on_mouse_press(x, y, button, modifiers)
         return False
 
     def on_mouse_release(
         self, x: float, y: float, button: int, modifiers: int
     ) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_release'):
+        if self.content:
             return self.content.on_mouse_release(x, y, button, modifiers)
         return False
 
@@ -86,7 +87,7 @@ class Scrollable(Widget):
     ) -> bool:
         if not self.contains_point(x, y):
             return False
-        if self.content and hasattr(self.content, 'on_mouse_drag'):
+        if self.content:
             return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
         return False
 
@@ -123,8 +124,7 @@ class Scrollable(Widget):
             self.content.width = self.width - self.scrollbar_width
             self.content.y = self.y + self.height - self.content.height + self.scroll_offset
             self.content.x = self.x
-            if hasattr(self.content, 'layout'):
-                self.content.layout()
+            self.content.layout()
             if self.scissor_group:
                 self.scissor_group.x = int(self.x)
                 self.scissor_group.y = int(self.y)

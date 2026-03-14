@@ -27,7 +27,11 @@ class Frame(Widget):
         super().__init__(x, y, width, height, batch, group)
         self.background_color = background_color or theme.get_color("gui_color")
         self.border_color = border_color or [100, 100, 100, 255]
-        self.children = []
+        self.children: list[Widget] = []
+        self.bg_slices: list[object] = []
+        self.bg_sprite: object | None = None
+        self.bg_rect: Rectangle | None = None
+        self.border_rect: Rectangle | None = None
         self.is_expandable = is_expandable
         self.frame_type = frame_type
         self._create_background()
@@ -95,16 +99,14 @@ class Frame(Widget):
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_scroll'):
-                if child.on_mouse_scroll(x, y, scroll_x, scroll_y):
-                    return True
+            if child and child.on_mouse_scroll(x, y, scroll_x, scroll_y):
+                return True
         return False
 
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_motion'):
-                if child.on_mouse_motion(x, y, dx, dy):
-                    return True
+            if child and child.on_mouse_motion(x, y, dx, dy):
+                return True
         return False
 
     def layout(self) -> None:
@@ -126,11 +128,10 @@ class Frame(Widget):
                 continue
             child.x = self.x + pad_left
             child.y = self.y + pad_bottom
-            if not getattr(child, 'is_fixed_size', False):
+            if not child.is_fixed_size:
                 child.width = self.width - pad_left - pad_right
                 child.height = self.height - pad_top - pad_bottom
-            if hasattr(child, 'layout'):
-                child.layout()
+            child.layout()
 
     def delete(self) -> None:
         for child in self.children:
@@ -139,11 +140,11 @@ class Frame(Widget):
         for s in self.bg_slices:
             s.delete()
         self.bg_slices = []
-        if hasattr(self, 'bg_sprite') and self.bg_sprite:
+        if self.bg_sprite:
             self.bg_sprite.delete()
-        if hasattr(self, 'bg_rect') and self.bg_rect is not None:
+        if self.bg_rect is not None:
             self.bg_rect.delete()
-        if hasattr(self, 'border_rect') and self.border_rect is not None:
+        if self.border_rect is not None:
             self.border_rect.delete()
         super().delete()
 
@@ -173,28 +174,22 @@ class Frame(Widget):
         for c in self.children:
             if c is None:
                 continue
-            if hasattr(c, 'shift'):
-                c.shift(dx, dy)
-            else:
-                c.x += dx
-                c.y += dy
+            c.shift(dx, dy)
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_press'):
-                if child.on_mouse_press(x, y, button, modifiers):
-                    return True
+            if child and child.on_mouse_press(x, y, button, modifiers):
+                return True
         return False
 
     def on_mouse_release(
         self, x: float, y: float, button: int, modifiers: int
     ) -> bool:
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_release'):
-                if child.on_mouse_release(x, y, button, modifiers):
-                    return True
+            if child and child.on_mouse_release(x, y, button, modifiers):
+                return True
         return False
 
     def on_mouse_drag(
@@ -203,7 +198,6 @@ class Frame(Widget):
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_drag'):
-                if child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
-                    return True
+            if child and child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+                return True
         return False

@@ -19,6 +19,8 @@ class Widget:
         self.height = height
         self.batch = batch
         self.group = group
+        self.parent: Widget | None = None
+        self.is_fixed_size = False
         self.visible = True
 
     def contains_point(self, x: float, y: float) -> bool:
@@ -36,6 +38,29 @@ class Widget:
         self, x: float, y: float, scroll_x: float, scroll_y: float
     ) -> bool:
         return False
+
+    def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
+        return False
+
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
+        return False
+
+    def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> bool:
+        return False
+
+    def on_mouse_drag(
+        self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int
+    ) -> bool:
+        return False
+
+    def on_key_press(self, symbol: int, modifiers: int) -> bool:
+        return False
+
+    def layout(self) -> None:
+        pass
+
+    def get_padding(self) -> list[int]:
+        return [0, 0, 0, 0]
 
 def draw_nine_patch(
     batch: object | None,

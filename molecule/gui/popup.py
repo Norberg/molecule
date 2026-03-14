@@ -96,7 +96,7 @@ class PopupMessage(Widget):
         self, x: float, y: float, button: int, modifiers: int
     ) -> bool:
         if self._inside_button(x, y):
-            if hasattr(self.close_button, 'on_mouse_press'):
+            if self.close_button:
                 self.close_button.on_mouse_press(x, y, button, modifiers)
             self._mouse_press_within = True
             return True
@@ -108,7 +108,7 @@ class PopupMessage(Widget):
         self, x: float, y: float, button: int, modifiers: int
     ) -> bool:
         if self._mouse_press_within and self._inside_button(x, y):
-            if hasattr(self.close_button, 'on_mouse_release'):
+            if self.close_button:
                 self.close_button.on_mouse_release(x, y, button, modifiers)
             self._mouse_press_within = False
             return True

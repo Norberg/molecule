@@ -1,10 +1,11 @@
 from typing import Literal
 from .constants import GUI_PADDING
+from .base import Widget
 
 class Manager:
     def __init__(
         self,
-        content: object,
+        content: Widget,
         window: object,
         batch: object,
         group: object | None = None,
@@ -20,8 +21,7 @@ class Manager:
         self.anchor = anchor
         self.theme_obj = theme_obj
         self.is_movable = is_movable
-        if hasattr(self.content, 'layout'):
-            self.content.layout()
+        self.content.layout()
         self.update_position()
         if push_handlers:
             self.window.push_handlers(self)
@@ -29,6 +29,8 @@ class Manager:
     def update_position(self) -> None:
         window_width, window_height = self.window.get_size()
         old_x, old_y = self.content.x, self.content.y
+        target_x: float
+        target_y: float
         if self.anchor == 'bottom_left':
             target_x = GUI_PADDING
             target_y = GUI_PADDING
@@ -54,38 +56,25 @@ class Manager:
         self.content.shift(dx, dy)
 
     def on_mouse_scroll(self, x: float, y: float, scroll_x: float, scroll_y: float) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_scroll'):
-            return self.content.on_mouse_scroll(x, y, scroll_x, scroll_y)
-        return False
+        return self.content.on_mouse_scroll(x, y, scroll_x, scroll_y)
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_press'):
-            return self.content.on_mouse_press(x, y, button, modifiers)
-        return False
+        return self.content.on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_release'):
-            return self.content.on_mouse_release(x, y, button, modifiers)
-        return False
+        return self.content.on_mouse_release(x, y, button, modifiers)
 
     def on_mouse_drag(
         self, x: float, y: float, dx: float, dy: float, buttons: int, modifiers: int
     ) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_drag'):
-            return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
-        return False
+        return self.content.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
 
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
-        if self.content and hasattr(self.content, 'on_mouse_motion'):
-            return self.content.on_mouse_motion(x, y, dx, dy)
-        return False
+        return self.content.on_mouse_motion(x, y, dx, dy)
 
     def on_key_press(self, symbol: int, modifiers: int) -> bool:
-        if self.content and hasattr(self.content, 'on_key_press'):
-            return self.content.on_key_press(symbol, modifiers)
-        return False
+        return self.content.on_key_press(symbol, modifiers)
 
     def delete(self) -> None:
         self.window.remove_handlers(self)
-        if self.content:
-            self.content.delete()
+        self.content.delete()

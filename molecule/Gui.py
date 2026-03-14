@@ -87,8 +87,8 @@ class MoleculeButton(OneTimeButton):
     ) -> None:
         self.element = element
         self.count = count
-        self.update_label()
-        OneTimeButton.__init__(self, self.text, batch=batch, group=group, on_click=on_click)
+        label_text = "%d - %s" % (self.count, formula_to_html(self.element))
+        OneTimeButton.__init__(self, label_text, batch=batch, group=group, on_click=on_click)
 
     def update_label(self) -> None:
         label_text = "%d - %s" % (self.count, formula_to_html(self.element))
@@ -96,7 +96,7 @@ class MoleculeButton(OneTimeButton):
         # CRITICAL: Always update self.text because layout() might recreate the button
         self.text = label_text
         
-        if hasattr(self, 'label') and self.label:
+        if self.label:
             # HTMLLabel doesn't update visually when .text is changed
             # So we need to delete the old label and create a new one
             old_x, old_y = self.label.x, self.label.y
@@ -126,9 +126,9 @@ class MoleculeButton(OneTimeButton):
                 s.visible = False
             for s in self._up_slices['slices']:
                 s.visible = True
-            if self.label and hasattr(self.label, 'color'):
+            if self.label:
                 self.label.color = tuple(self._up_text_color)
-        elif self.bg_rect is not None and hasattr(self, '_orig_color'):
+        elif self.bg_rect is not None and self._orig_color is not None:
             self.bg_rect.color = self._orig_color
 
     def get_path(self) -> list[str]:

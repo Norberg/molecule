@@ -16,7 +16,6 @@
 import math
 import random
 import time
-from typing import cast
 
 import pyglet
 from pyglet import gl
@@ -198,8 +197,8 @@ class Bond:
         return joint
 
     def get_bond_lenght(self, bond: Cml.Bond) -> float:
-        rA = float(cast(float, CachedCml.getMolecule(bond.atomA.elementType).property["Radius"]))
-        rB = float(cast(float, CachedCml.getMolecule(bond.atomB.elementType).property["Radius"]))
+        rA = float(CachedCml.getMolecule(bond.atomA.elementType).property["Radius"])
+        rB = float(CachedCml.getMolecule(bond.atomB.elementType).property["Radius"])
         bond_lenght = (rA + rB) * SPRITE_RADIUS * scaleFactor()
         if bond.bonds != 0:
             bond_lenght *= BOND_LENGTH_FACTOR
@@ -274,7 +273,7 @@ class Atom(pyglet.sprite.Sprite):
         group = RenderingOrder.elements
         pyglet.sprite.Sprite.__init__(self, img, batch=batch, group=group)
         self.cml = CachedCml.getMolecule(symbol)
-        self.scale = float(cast(float, self.cml.property["Radius"])) * scaleFactor()
+        self.scale = float(self.cml.property["Radius"]) * scaleFactor()
         self.molecule = molecule
         self.symbol = symbol
         self.charge = charge

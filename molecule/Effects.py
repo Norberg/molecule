@@ -13,7 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 import glob
 import random
 import time
@@ -31,6 +34,9 @@ from libcml import Cml
 
 Vec2 = tuple[float, float]
 InventoryMap = OrderedDict[str, int]
+
+if TYPE_CHECKING:
+    from molecule.Elements import Molecule
 
 
 class Effect:
@@ -51,7 +57,8 @@ class Effect:
         self.init_chipmunk(space, pos)
         if pos != None:
             self.set_pos(pos)
-        self.supported_attributes = list()
+        self.supported_attributes: list[str] = []
+        self.areas: list[Effect] = []
 
     def set_pos(self, pos: Vec2) -> None:
         self.shape.body.position = pos
@@ -92,6 +99,9 @@ class Effect:
 
     def on_release(self, callback: Callable[..., None] | None = None) -> None:
         pass
+
+    def put_element(self, element: object) -> bool:
+        return False
 
     def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the effect, if possible"""
@@ -152,6 +162,7 @@ class Electrolysis(EnergySource):
         EnergySource.__init__(self, space, batch, pos, "electrolysis-beaker.png", "Electrolysis", Cml.Requirement.EnergyType.ELECTROLYSIS)
         self.body = None
         self.space = space
+        self.ion_joints: dict[object, list[tuple[object, object, float]]] = {}
 
     def clamp_pos(self, pos: Vec2) -> Vec2:
         """Clamp position to be inside the electrolysis beaker walls"""
@@ -208,9 +219,6 @@ class Electrolysis(EnergySource):
     def update(self) -> None:
         if not self.space:
             return
-            
-        if not hasattr(self, 'ion_joints'):
-            self.ion_joints = {}
 
         # Find molecules inside the electrolysis area
         bp = self.shape.body.position
@@ -529,10 +537,10 @@ class Fireworks(EffectSprite):
         batch: object,
         pos: Vec2,
         emitters_ref: list[object],
-        consume_callback: Callable[[object], None] | None,
+        consume_callback: Callable[[Molecule], None] | None,
     ) -> None:
         EffectSprite.__init__(self, space, batch, pos, "fireworks.png", "Fireworks")
-        self._active_fuse: tuple[object, float] | None = None  # (molecule, start_time)
+        self._active_fuse: tuple[Molecule, float] | None = None  # (molecule, start_time)
         self._pending_launches: list[tuple[float, str | None]] = []  # list of (launch_time, color)
         self.batch = batch
         self.emitters_ref = emitters_ref  # direct list reference
@@ -541,10 +549,10 @@ class Fireworks(EffectSprite):
         self._last_pulse = time.time()
         # Mark as put-capable so Level/Inventory can call put_element
         self.supported_attributes.append("put")
-        self._pending_victory: object | None = None  # (molecule) to be added after explosion
+        self._pending_victory: Molecule | None = None  # (molecule) to be added after explosion
 
 
-    def put_element(self, molecule: object) -> bool:
+    def put_element(self, molecule: Molecule) -> bool:
         # Only allow one active rocket at a time
         if self._active_fuse is not None or self._pending_victory is not None:
             return False
@@ -560,7 +568,7 @@ class Fireworks(EffectSprite):
             molecule, start = self._active_fuse
             elapsed = now - start
             if elapsed >= self.ROCKET_TIME:
-                color_hex = getattr(molecule.current_state, 'emitter_color', None)
+                color_hex = molecule.current_state.emitter_color
                 # Spawn emitter, pass callback for explosion
                 from molecule.emitters import Emitters
                 emitter = Emitters.spawn_emitter(
@@ -583,15 +591,15 @@ class Fireworks(EffectSprite):
         if self._pending_victory is not None:
             molecule = self._pending_victory
             # Find VictoryInventory effect and put molecule
-            for area in getattr(self, 'areas', []):
-                if hasattr(area, 'put_element') and 'victory' in getattr(area, 'supported_attributes', []):
+            for area in self.areas:
+                if 'victory' in area.supported_attributes:
                     area.put_element(molecule)
                     if Config.current.DEBUG:
                         print("Fireworks: molecule added to VictoryInventory", molecule.formula)
                     break
             self._pending_victory = None
 
-    def _on_explosion(self, molecule: object) -> None:
+    def _on_explosion(self, molecule: Molecule) -> None:
         # Called by emitter when explosion/fade is done
         if self.consume_callback:
             self.consume_callback(molecule)
@@ -708,9 +716,9 @@ class Inventory(Effect):
             return
         
         # Track which elements we have buttons for
-        existing_buttons = {}
+        existing_buttons: dict[str, Gui.MoleculeButton] = {}
         for button in list(self.gui_container.children):
-            if hasattr(button, 'element'):
+            if isinstance(button, Gui.MoleculeButton):
                 existing_buttons[button.element] = button
 
         # Update existing buttons and remove stale ones

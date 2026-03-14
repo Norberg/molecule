@@ -154,9 +154,8 @@ class HorizontalHUD:
                 )
         self.info_doc.set_text(info_text)
         # Force scrollable layout update
-        if hasattr(self, 'info_scroll'):
-            self.info_scroll.scroll_offset = 0
-            self.info_scroll.layout()
+        self.info_scroll.scroll_offset = 0
+        self.info_scroll.layout()
 
     def on_draw(self) -> None:
         self.tick += 1

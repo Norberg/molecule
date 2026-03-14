@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from typing import Callable, Generic, Iterable, TypeVar, cast
+from typing import Callable, Generic, Iterable, TypeVar, overload
 
 K = TypeVar("K")
 V = TypeVar("V")
@@ -29,15 +29,31 @@ class MultiMapEntry(Generic[K, V]):
 
 
 class MultiMap(Generic[K, V, E]):
+    @overload
+    def __init__(
+        self,
+        entries: Iterable[MultiMapEntry[K, V]],
+        entry_mapper: None = None,
+    ) -> None: ...
+
+    @overload
     def __init__(
         self,
         entries: Iterable[E],
+        entry_mapper: Callable[[E], MultiMapEntry[K, V]],
+    ) -> None: ...
+
+    def __init__(
+        self,
+        entries: Iterable[object],
         entry_mapper: Callable[[E], MultiMapEntry[K, V]] | None = None,
     ) -> None:
         self.multi_map: dict[K, list[V]] = {}
         for e in entries:
             if entry_mapper is None:
-                entry = cast(MultiMapEntry[K, V], e)
+                if not isinstance(e, MultiMapEntry):
+                    raise TypeError("MultiMap entries must be MultiMapEntry when entry_mapper is None")
+                entry = e
             else:
                 entry = entry_mapper(e)
             self.add_entry(entry)

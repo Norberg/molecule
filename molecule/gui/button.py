@@ -27,6 +27,11 @@ class Button(Widget):
         self.background_color = background_color or [150, 150, 150, 255]
         self.button_type = button_type
         self.pressed = False
+        self.bg_slices: list[object] = []
+        self.bg_sprite: object | None = None
+        self.bg_rect: Rectangle | None = None
+        self.label: HTMLLabel | None = None
+        self._orig_color: tuple[int, int, int] | None = None
         self._create_button()
 
     @staticmethod
@@ -104,9 +109,9 @@ class Button(Widget):
             if self.label:
                 self.label.color = tuple(self._down_text_color)
         elif self.bg_rect is not None:
-            if not hasattr(self, '_orig_color'):
+            if self._orig_color is None:
                 self._orig_color = tuple(self.bg_rect.color)
-            r,g,b = self._orig_color
+            r, g, b = self._orig_color
             self.bg_rect.color = (max(0,int(r*0.7)), max(0,int(g*0.7)), max(0,int(b*0.7)))
         return True
 
@@ -120,7 +125,7 @@ class Button(Widget):
                 s.visible = True
             if self.label:
                 self.label.color = tuple(self._up_text_color)
-        elif self.bg_rect is not None and hasattr(self, '_orig_color'):
+        elif self.bg_rect is not None and self._orig_color is not None:
             self.bg_rect.color = self._orig_color
         if was_pressed and self.contains_point(x, y) and self.on_click:
             self.on_click(self)
@@ -128,11 +133,11 @@ class Button(Widget):
     def delete(self) -> None:
         if self.label:
             self.label.delete()
-        for s in self.bg_slices if hasattr(self, 'bg_slices') and self.bg_slices else []:
+        for s in self.bg_slices:
             s.delete()
-        if hasattr(self, 'bg_sprite') and self.bg_sprite:
+        if self.bg_sprite:
             self.bg_sprite.delete()
-        if hasattr(self, 'bg_rect') and self.bg_rect is not None:
+        if self.bg_rect is not None:
             self.bg_rect.delete()
         super().delete()
 
@@ -191,7 +196,7 @@ class OneTimeButton(Button):
             if self.on_click:
                 self.on_click(self)
         self.pressed = False
-        if hasattr(self, 'bg_sprite') and self.bg_sprite:
+        if self.bg_sprite:
             normal_img = theme.get_image("green-button-up.png")
             if normal_img:
                 self.bg_sprite.image = normal_img

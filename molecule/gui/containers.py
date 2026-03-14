@@ -24,21 +24,18 @@ class Container(Widget):
     def remove(self, widget: Widget) -> None:
         if widget in self.children:
             self.children.remove(widget)
-            if hasattr(widget, 'delete'):
-                widget.delete()
+            widget.delete()
             self.layout()
 
     def delete(self) -> None:
         for child in list(self.children):
-            if child and hasattr(child, 'delete'):
+            if child:
                 child.delete()
         self.children = []
         super().delete()
 
     def _layout_children(self) -> None:
-        pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
-        if hasattr(self, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
+        pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
         current_y = self.y + self.height - pad_top
         for child in self.children:
             if child is None:
@@ -57,18 +54,13 @@ class Container(Widget):
     def layout(self) -> None:
         self._layout_children()
         for child in self.children:
-            if hasattr(child, 'layout'):
-                child.layout()
+            child.layout()
 
     def shift(self, dx: float, dy: float) -> None:
         super().shift(dx, dy)
         for child in self.children:
             if child:
-                if hasattr(child, 'shift'):
-                    child.shift(dx, dy)
-                else:
-                    child.x += dx
-                    child.y += dy
+                child.shift(dx, dy)
 
     def on_mouse_scroll(
         self, x: float, y: float, scroll_x: float, scroll_y: float
@@ -76,34 +68,30 @@ class Container(Widget):
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_scroll'):
-                if child.on_mouse_scroll(x, y, scroll_x, scroll_y):
-                    return True
+            if child and child.on_mouse_scroll(x, y, scroll_x, scroll_y):
+                return True
         return False
 
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float) -> bool:
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_motion'):
-                if child.on_mouse_motion(x, y, dx, dy):
-                    return True
+            if child and child.on_mouse_motion(x, y, dx, dy):
+                return True
         return False
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> bool:
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_press'):
-                if child.on_mouse_press(x, y, button, modifiers):
-                    return True
+            if child and child.on_mouse_press(x, y, button, modifiers):
+                return True
         return False
 
     def on_mouse_release(
         self, x: float, y: float, button: int, modifiers: int
     ) -> bool:
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_release'):
-                if child.on_mouse_release(x, y, button, modifiers):
-                    return True
+            if child and child.on_mouse_release(x, y, button, modifiers):
+                return True
         return False
 
     def on_mouse_drag(
@@ -112,9 +100,8 @@ class Container(Widget):
         if not self.contains_point(x, y):
             return False
         for child in reversed(self.children):
-            if child and hasattr(child, 'on_mouse_drag'):
-                if child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
-                    return True
+            if child and child.on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+                return True
         return False
 
 class VerticalContainer(Container):
@@ -132,9 +119,7 @@ class VerticalContainer(Container):
         self.spacing = spacing
 
     def _layout_children(self) -> None:
-        pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
-        if hasattr(self, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
+        pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
         spacing = self.spacing
         current_y = self.y + self.height - pad_top
         for i, child in enumerate(self.children):
@@ -168,9 +153,7 @@ class HorizontalContainer(Container):
         self.spacing = spacing
 
     def _layout_children(self) -> None:
-        pad_left, pad_right, pad_top, pad_bottom = 0, 0, 0, 0
-        if hasattr(self, 'get_padding'):
-            pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
+        pad_left, pad_right, pad_top, pad_bottom = self.get_padding()
         current_x = self.x + pad_left
         for child in self.children:
             if child is None:
