@@ -28,7 +28,7 @@ class Widget:
                 self.y <= y <= self.y + self.height)
 
     def delete(self) -> None:
-        pass
+        return None
 
     def shift(self, dx: float, dy: float) -> None:
         self.x += dx
@@ -57,7 +57,7 @@ class Widget:
         return False
 
     def layout(self) -> None:
-        pass
+        return None
 
     def get_padding(self) -> list[int]:
         return [0, 0, 0, 0]

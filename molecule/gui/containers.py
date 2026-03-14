@@ -167,4 +167,4 @@ class AbsoluteContainer(Container):
     """A container that does not enforce width/height on its children during layout."""
     def _layout_children(self) -> None:
         # Simply don't do anything to children coordinates or sizes
-        pass
+        return None

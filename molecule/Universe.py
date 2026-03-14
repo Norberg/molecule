@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from typing import Sequence
 import random
-import time
+import pyglet
+import pymunk
 from molecule.Elements import Molecule
 from molecule import Config
 from libreact.Reactor import Reactor
@@ -25,7 +26,7 @@ from libcml import Cml
 class Universe:
     """Universe contains all fundamental particles and laws needed to get the universe to spin"""
     def __init__(self) -> None:
-        self.moelcules = {}
+        self.molecules: dict[str, Molecule] = {}
         cml = Cml.Reactions()
         cml.parse("data/reactions")
         self.reactor = Reactor(cml.reactions)
@@ -34,9 +35,9 @@ class Universe:
         if len(reactants) == 0:
             return None
         elif len(reactants) == 1 and Config.current.DEBUG:
-            # Check if decomposition reaction, might be a bit innificient
+            # Check if decomposition reaction, might be a bit inefficient
             # and also relies on self collision within the molecule
-            # Self colltions should optimaly be handled by the physics engine instead
+            # Self collisions should ideally be handled by the physics engine instead
             print(f"Single reactant: {reactants}")
 
         temp = 298
@@ -59,9 +60,9 @@ class Universe:
             return reaction
 
 def create_elements(
-    space: object,
+    space: pymunk.Space,
     elements: str | list[str],
-    batch: object,
+    batch: pyglet.graphics.Batch,
     pos: tuple[float, float] | None = None,
 ) -> list[Molecule]:
     """ Create a set of elements

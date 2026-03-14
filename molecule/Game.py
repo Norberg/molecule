@@ -22,7 +22,7 @@ from pyglet import gl
 
 from molecule import Universe
 from molecule import Config
-from molecule.Levels import Levels
+from molecule.Levels import Level, Levels
 from molecule import Gui
 from molecule.server.Server import Server
 from molecule.LevelMenu import LevelMenu
@@ -42,11 +42,11 @@ class Game(pyglet.window.Window):
             width=width, height=height)
         self.init_pyglet()
         self.DEBUG_GRAPHICS = False
-        self.level: object | None = None
-        self.menu: object | None = None # Add menu state
+        self.level: Level | None = None
+        self.menu: LevelMenu | None = None
         self.start()
 
-    def create_config(self) -> object:
+    def create_config(self) -> pyglet.gl.Config:
         # In pyglet 2+, we can create a config directly without going through canvas
         try:
             config = pyglet.gl.Config(sample_buffers=1,
@@ -120,13 +120,13 @@ class Game(pyglet.window.Window):
             options = pyglet_util.DrawOptions()
             self.space.debug_draw(options)
 
-    def switch_level(self, level: object) -> None:
+    def switch_level(self, level: Level) -> None:
         """ Switch to level """
         if self.level is not None:
             self.level.delete()
         self.run_level(level)
 
-    def run_level(self, level: object) -> None:
+    def run_level(self, level: Level) -> None:
         self.batch = level.batch
         self.level = level
         self.space = level.space

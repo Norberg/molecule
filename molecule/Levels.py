@@ -13,6 +13,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from collections.abc import Iterator
 import glob
 import math
@@ -35,6 +37,8 @@ from molecule.emitters import Emitters
 from molecule.Persistence import Persistence
 from molecule.Achievements import AchievementManager
 from libcml import Cml
+from libreact.Reaction import Reaction as ReactorReaction
+from molecule.Elements import Molecule
 
 Vec2 = tuple[float, float]
 
@@ -73,9 +77,6 @@ class Levels:
     def load_progress(self) -> None:
         self.completed_levels = self.persistence.get_completed_levels(self.player_id)
 
-    def save_progress(self) -> None:
-        pass # No longer needed for SQLite
-
     def mark_completed(
         self,
         level_path: str,
@@ -111,7 +112,7 @@ class Levels:
         self.levels.sort()
 
 
-    def get_current_level(self) -> "Level":
+    def get_current_level(self) -> Level:
         if self.current_level is None:
             raise Exception("No current level selected")
         path = self.levels[self.current_level]
@@ -130,11 +131,11 @@ class Level:
         self.batch = pyglet.graphics.Batch()
         self.start_time = time.time()
         self.points = 0
-        self.reaction_log: list[object] = []
+        self.reaction_log: list[Cml.Reaction] = []
 
 
-        self.molecules_seen: set[str] = set() # molecure_formula
-        self.molecules_created: dict[str, int] = {} # molecule_formula -> count
+        self.molecules_seen: set[str] = set()  # molecule_formula
+        self.molecules_created: dict[str, int] = {}  # molecule_formula -> count
         self.emitters: list[object] = []
         self.victory_popup: object | None = None
         self.hud: HUD.HUD | None = None
@@ -205,8 +206,8 @@ class Level:
         )
         self.areas.extend(self.hud.get_effects())
 
-    def consume_molecule(self, molecule: object) -> bool:
-        """Callback from effects when a molecule is consumed, returnes true if used for victory condition"""
+    def consume_molecule(self, molecule: Molecule) -> bool:
+        """Callback from effects when a molecule is consumed, returns true if used for victory condition."""
         for area in self.areas:
             if isinstance(area, Effects.VictoryInventory):
                 return area.put_element(molecule)
@@ -219,19 +220,19 @@ class Level:
         self.elements.extend(Universe.create_elements(self.space, elements,
                                           self.batch, pos))
 
-    def get_colliding_molecules(self, collisions: list[object]) -> list[object]:
-        molecules: list[object] = []
+    def get_colliding_molecules(self, collisions: list[object]) -> list[Molecule]:
+        molecules: list[Molecule] = []
         for collision in collisions:
             #TODO: Should be possible to filter collision type earlier
             if collision.collision_type == CollisionTypes.ELEMENT:
                 molecule = collision.molecule
                 #each atom in the molecule can have 1 entry in the collision
                 #map, make sure that the molecule is only added once.
-                if not molecule in molecules and molecule.can_react():
+                if molecule not in molecules and molecule.can_react():
                     molecules.append(molecule)
         return molecules
 
-    def is_molecule_part_of_reactants(self, molecule: object, reactants: list[str]) -> bool:
+    def is_molecule_part_of_reactants(self, molecule: Molecule, reactants: list[str]) -> bool:
         """
         check if the molecule is part of the reactants,
         and if it is remove itself from the list of reactants
@@ -241,33 +242,38 @@ class Level:
             return True
         return False
 
-    def get_molecules_in_reaction(self, collisions: list[object], reaction: object) -> list[object]:
-        """ return all molecules included in the reaction """
+    def get_molecules_in_reaction(
+        self, collisions: list[object], reaction: ReactorReaction
+    ) -> list[Molecule]:
+        """Return all molecules included in the reaction."""
         reactants = list(reaction.reactants)
-        molecules: list[object] = []
-        collidingMolecules = self.get_colliding_molecules(collisions)
-        for molecule in collidingMolecules:
+        molecules: list[Molecule] = []
+        colliding_molecules = self.get_colliding_molecules(collisions)
+        for molecule in colliding_molecules:
             if self.is_molecule_part_of_reactants(molecule, reactants):
                 molecules.append(molecule)
         return molecules
 
-    def react(self, collisions: list[object], reacting_areas: list[object]) -> object | None:
-        collidingMolecules = self.get_colliding_molecules(collisions)
-        reactingForumlas = list(map((lambda m: m.state_formula), collidingMolecules))
-        return Universe.universe.react(reactingForumlas, reacting_areas)
+    def react(self, collisions: list[object], reacting_areas: list[object]) -> ReactorReaction | None:
+        colliding_molecules = self.get_colliding_molecules(collisions)
+        reacting_formulas = [molecule.state_formula for molecule in colliding_molecules]
+        return Universe.universe.react(reacting_formulas, reacting_areas)
 
-    def perform_reaction(self, reaction: object, collisions: list[object], position: Vec2) -> None:
+    def perform_reaction(self, reaction: ReactorReaction, collisions: list[object], position: Vec2) -> None:
         if len(collisions) == 1:
-            print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
+            if Config.current.DEBUG:
+                print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} with only one reacting molecule")
             reactingMolecules = [collisions[0].molecule]
             if collisions[0].molecule.is_deleted():
-                print(f"self.perform_reaction(): reactants {reaction.reactants} is already deleted")
+                if Config.current.DEBUG:
+                    print(f"self.perform_reaction(): reactants {reaction.reactants} is already deleted")
                 return
         else:
             reactingMolecules = self.get_molecules_in_reaction(collisions, reaction)
         self.add_to_reaction_log(reaction.cml)
         if len(reactingMolecules) < 1:
-            print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} without any reacting molecules")
+            if Config.current.DEBUG:
+                print(f"self.perform_reaction(): {reaction.reactants} -> {reaction.products} without any reacting molecules")
             return
         for molecule in reactingMolecules:
             self.delete_molecule(molecule)
@@ -278,7 +284,8 @@ class Level:
 
         new_elements = Universe.create_elements(self.space, reaction.products, self.batch, position)
         self.elements.extend(new_elements)
-        print("Reaction products:", reaction.products)
+        if Config.current.DEBUG:
+            print("Reaction products:", reaction.products)
         
         # Track stats
         for mol in new_elements:
@@ -286,17 +293,17 @@ class Level:
             self.molecules_created[mol.formula] = self.molecules_created.get(mol.formula, 0) + 1
 
         for mol in new_elements:
-            base = mol.formula
             emitter_name = mol.current_state.emitter
             if emitter_name:
                 emitter = Emitters.spawn_reaction_emitter(emitter_name, self.batch, position)
                 if emitter:
-                    print(f"Emitter trigger: product {mol.state_formula} -> {emitter_name} at {position}")
+                    if Config.current.DEBUG:
+                        print(f"Emitter trigger: product {mol.state_formula} -> {emitter_name} at {position}")
                     self.emitters.append(emitter)
                 elif Config.current.DEBUG:
                     print(f"Emitter suppressed (no reaction autospawn): {emitter_name} for {mol.state_formula}")
 
-    def add_to_reaction_log(self, reaction: object) -> None:
+    def add_to_reaction_log(self, reaction: Cml.Reaction) -> None:
         self.points += 1
         self.reaction_log.append(reaction)
 
@@ -306,7 +313,7 @@ class Level:
         pos = a.body.position
         reacting_areas = list(self.get_affecting_areas(pos))
 
-        def perform_query(distance: float) -> tuple[list[object], object | None]:
+        def perform_query(distance: float) -> tuple[list[object], ReactorReaction | None]:
             query = space.point_query(pos, distance, shape_filter=pymunk.ShapeFilter(categories=CollisionTypes.ELEMENT))
             colls = [point.shape for point in query]
             reaction = self.react(colls, reacting_areas)
@@ -317,13 +324,13 @@ class Level:
             self.perform_reaction(reaction, collisions, pos)
             return
 
-        # If we have many collideing molecule we increase the search area to make sure we
+        # If we have many colliding molecules we increase the search area to make sure we
         # find all elements if its a big reaction
-        collidingMolecules = [molecule.state_formula for molecule in self.get_colliding_molecules(collisions)]
-        bigReactionThreshold = 8
-        if a.molecule != b.molecule and len(collidingMolecules) >= bigReactionThreshold:
+        colliding_molecules = [molecule.state_formula for molecule in self.get_colliding_molecules(collisions)]
+        big_reaction_threshold = 8
+        if a.molecule != b.molecule and len(colliding_molecules) >= big_reaction_threshold:
             collisions, reaction = perform_query(300)
-            if reaction is not None and len(reaction.reactants) >= bigReactionThreshold:
+            if reaction is not None and len(reaction.reactants) >= big_reaction_threshold:
                 self.perform_reaction(reaction, collisions, pos)
 
     def effect_reaction(self, arbiter: object, space: object, data: object) -> bool:
@@ -363,8 +370,8 @@ class Level:
         self._effect_collision_times.pop((id(molecule), id(effect)), None)
         return True
 
-    def get_affecting_areas(self, position: Vec2) -> Iterator[object]:
-        """Return all areas that have a affect on reactions in the area """
+    def get_affecting_areas(self, position: Vec2) -> Iterator[Effects.Effect]:
+        """Return all areas that have an effect on reactions in the area."""
         for area in self.get_effect_supporting("reaction"):
             if area.inside(position):
                 yield area
@@ -373,7 +380,6 @@ class Level:
         return time.time() - self.start_time + self.window.penalty
 
     def get_points(self) -> int:
-
         return self.points
 
     def victory(self) -> bool:
@@ -387,7 +393,7 @@ class Level:
         y = min(h,y)
         return x,y
 
-    def get_effect_supporting(self, support: str) -> Iterator[object]:
+    def get_effect_supporting(self, support: str) -> Iterator[Effects.Effect]:
         for effect in self.areas:
             if effect.supports(support):
                 yield effect
@@ -429,7 +435,7 @@ class Level:
     def on_mouse_release(self, x: float, y: float, button: int, modifiers: int) -> None:
         self.handle_element_released(x, y, button, modifiers)
         for action in self.get_effect_supporting("action"):
-            if action.is_clicked == True:
+            if action.is_clicked:
                 action.on_release()
 
     def handle_element_released(self, x: float, y: float, button: int, modifiers: int) -> None:
@@ -472,7 +478,8 @@ class Level:
         for area in self.areas:
             area.update()
         if self.finished == False and self.victory():
-            print("Victory")
+            if Config.current.DEBUG:
+                print("Victory")
             reactions = {}
             for reaction in self.reaction_log:
                 key = reaction.reaction_key
@@ -483,7 +490,8 @@ class Level:
                                              self.molecules_created)
             self.victory_popup = Gui.create_popup(self.window, self.batch, "Congratulation, you finished the level",
                              on_escape=self.window.show_menu)
-            print("Victory popup created")
+            if Config.current.DEBUG:
+                print("Victory popup created")
             self.finished = True
 
         self.update_emitters(dt)
@@ -498,10 +506,10 @@ class Level:
         # Remove dead emitters without creating a new list
         self.emitters[:] = alive_emitters
 
-    def delete_molecule(self, molecule: object) -> None:
+    def delete_molecule(self, molecule: Molecule) -> None:
         if molecule in self.elements:
             self.elements.remove(molecule)
-        else:
+        elif Config.current.DEBUG:
             print(f"Warning: Attempted to delete a molecule not in the list: {molecule}")
         molecule.delete()
 

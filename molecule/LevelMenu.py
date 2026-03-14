@@ -11,6 +11,7 @@ from . import RenderingOrder
 from molecule import Config
 
 from libcml import Cml
+from molecule.Levels import Levels
 
 BiomeEntry = tuple[str, str, list[str]]
 Pages = list[list[BiomeEntry]]
@@ -32,8 +33,8 @@ PAGES = load_pages()
 class LevelMenu:
     def __init__(
         self,
-        window: object,
-        levels: object,
+        window: pyglet.window.Window,
+        levels: Levels,
         on_level_selected: Callable[[str], None],
         start_at_map: bool = False,
     ) -> None:
@@ -64,6 +65,8 @@ class LevelMenu:
         # Determine initial state based on current level
         if not start_at_map:
             try:
+                if self.levels.current_level is None:
+                    raise ValueError("No current level selected")
                 current_level_path = self.levels.levels[self.levels.current_level]
                 for page in PAGES:
                     for b_name, b_icon, b_paths in page:
@@ -72,8 +75,9 @@ class LevelMenu:
                             self.state = "BIOME"
                             break
                     if self.selected_biome: break
-            except:
-                pass
+            except Exception:
+                # Keep menu usable if current-level metadata is incomplete.
+                self.selected_biome = None
 
         self.page_index = 0
         # If we found a biome, make sure we are on the right page
