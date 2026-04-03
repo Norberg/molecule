@@ -19,7 +19,7 @@ cmleditor = [
   "PyGObject==3.48.2",
   "rdkit==2024.3.5",
   "openbabel-wheel",
-  "requests==2.32.4",
+  "requests==2.33.0",
   "beautifulsoup4==4.13.3",
 ]
 
