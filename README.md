@@ -7,26 +7,23 @@ Molecule - a chemical reaction puzzle game
 
 Dependencies
 -------
-We maintain two requirement files:
-* requirements.txt – core game + server runtime
-* requirements-cmleditor.txt – editor & chemistry features (rdkit, GTK bindings, etc.)
+We manage Python dependencies with `uv` in `pyproject.toml`.
 
 Python: 3.12 recommended (3.11 should also work, lower versions untested recently).
 
-Core runtime (requirements.txt):
-* pyglet==1.5.16 (rendering)
+Core runtime dependencies:
+* pyglet==2.1.12 (rendering)
 * pymunk==7.1.0 (physics)
-* pyglet-gui (UI widgets, installed from GitHub)
 * fastapi, uvicorn (local API server)
 * numpy (numeric helpers / chemistry utilities)
 * Pillow (image handling)
 * pycairo (SVG / Cairo based rendering pieces)
 * xmlschema (validating CML files)
 
-Editor & chemistry (requirements-cmleditor.txt):
+Editor & chemistry extras:
 * PyGObject (GTK3 bindings for the CML editor)
 * rdkit (molecule and reaction generation/rendering)
-* (Optionally) you can repeat shared deps here or keep only the extra ones – but every pip-installable dependency for editor features is listed in one of the two files.
+* openbabel-wheel, requests, beautifulsoup4
 
 System packages (Debian/Ubuntu example):
 ```
@@ -39,25 +36,31 @@ sudo apt update && sudo apt install -y \
 ```
 openbabel is only required for some optional molecule generation workflows.
 
-Create and activate a virtual environment (example with pyenv – optional):
-```
-curl https://pyenv.run | bash
-pyenv install 3.12
-pyenv virtualenv 3.12 venv-molecule
-pyenv activate venv-molecule
+Install `uv`:
+```bash
+python3 -m pip install --user uv
 ```
 
-Install Python dependencies:
+Create the environment and install dependencies:
+```bash
+uv python install 3.12
+uv sync --group dev
+uv sync --group dev --extra cmleditor   # if you want the editor & chemistry features
 ```
-pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
-pip install -r requirements-cmleditor.txt   # if you want the editor & chemistry features
+
+The project uses a 14-day dependency cooldown via `tool.uv.exclude-newer`, so newly published package versions are ignored until they are at least 14 days old.
+
+Run commands through `uv`:
+```bash
+uv run start.py --help
+uv run python -m unittest discover
+uv run mypy
 ```
 
 
 How to play:
 ---------
-    python start.py --help
+    uv run start.py --help
     Molecule - a chemical reaction puzzle game
     -h --help print this help
     --level=LEVEL choose what level to start on

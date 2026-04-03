@@ -1,3 +1,36 @@
+[project]
+name = "molecule"
+version = "0.0.0"
+description = "A chemical reaction puzzle game."
+requires-python = ">=3.12"
+dependencies = [
+  "pyglet==2.1.12",
+  "pymunk==7.1.0",
+  "fastapi==0.115.8",
+  "uvicorn==0.33.0",
+  "numpy==1.26.4",
+  "Pillow==12.1.1",
+  "pycairo==1.26.1",
+  "xmlschema==3.4.3",
+]
+
+[project.optional-dependencies]
+cmleditor = [
+  "PyGObject==3.48.2",
+  "rdkit==2024.3.5",
+  "openbabel-wheel",
+  "requests==2.32.4",
+  "beautifulsoup4==4.13.3",
+]
+
+[dependency-groups]
+dev = [
+  "mypy",
+]
+
+[tool.uv]
+exclude-newer = "14 days"
+
 [tool.mypy]
 python_version = "3.12"
 files = [

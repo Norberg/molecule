@@ -2,9 +2,14 @@
 
 set -eu
 
+UV_BIN="${UV_BIN:-$HOME/.local/bin/uv}"
+UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/uv-cache}"
+PYGLET_HEADLESS="${PYGLET_HEADLESS:-1}"
+
 run_once() {
-	python3 -m mypy
-	python3 -m unittest discover
+	mkdir -p "$UV_CACHE_DIR"
+	UV_CACHE_DIR="$UV_CACHE_DIR" "$UV_BIN" run mypy
+	UV_CACHE_DIR="$UV_CACHE_DIR" PYGLET_HEADLESS="$PYGLET_HEADLESS" "$UV_BIN" run python -m unittest discover
 	date
 }
 

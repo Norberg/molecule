@@ -53,11 +53,11 @@ During play loop (`pyglet.app.run()`):
 
 ### Quick Test Run (Python game)
 Minimal loop while iterating on core logic (ensure correct Python env first):
-0. (Once) create env if missing: `pyenv virtualenv 3.12 venv-molecule`
-0. Activate env each session: `pyenv activate venv-molecule` (or `pyenv shell venv-molecule`).
-1. From repo root `molecule/`: `python3 -m unittest discover -v` (49 tests, ~1–2s).
-2. To run a single test file: `python3 -m unittest tests.test_libreact`.
-3. To run a single test case or method: `python3 -m unittest tests.test_libreact.TestReact.testSimpleReaction`.
+0. (Once) install Python if missing: `uv python install 3.12`
+0. Sync the environment: `uv sync --group dev` (or `uv sync --group dev --extra cmleditor` when editor dependencies are needed).
+1. From repo root `molecule/`: `uv run python -m unittest discover -v` (49 tests, ~1–2s).
+2. To run a single test file: `uv run python -m unittest tests.test_libreact`.
+3. To run a single test case or method: `uv run python -m unittest tests.test_libreact.TestReact.testSimpleReaction`.
 
 ### Quick Test Run (lab book frontend `/molecule-lab-book`)
 If you need to touch the separate Vite/React lab book project:
